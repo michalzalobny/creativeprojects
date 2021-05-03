@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import Link from 'next/link';
 
 import { Wrapper } from './styled/Wrapper';
+import { LinkItem } from './styled/LinkItem';
 
 interface NavigationProps {}
 
@@ -11,16 +12,10 @@ export const Navigation = memo<NavigationProps>(props => {
     <>
       <Wrapper>
         <Link href="/" passHref>
-          <a>Landing</a>
+          <LinkItem>Landing page</LinkItem>
         </Link>
-        <Link href="/reveal/10" passHref>
-          <a>reveal</a>
-        </Link>
-        <Link href="/infinite-timeline" passHref>
-          <a>infinite timeline</a>
-        </Link>
-        <Link href="/timeline" passHref>
-          <a>timeline</a>
+        <Link href="/stack-tower" passHref>
+          <LinkItem>Stack tower</LinkItem>
         </Link>
       </Wrapper>
     </>
