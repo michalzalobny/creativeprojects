@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "name": "project"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "localizedHead": {
+      "type": "component",
+      "repeatable": false,
+      "component": "page.localized-head"
+    },
+    "localizedName": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.localized-short-text"
+    },
+    "urlSlug": {
+      "type": "uid"
+    }
+  }
+}

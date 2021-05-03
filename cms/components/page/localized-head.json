@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_page_localized_heads",
+  "info": {
+    "name": "localizedHead",
+    "icon": "atlas"
+  },
+  "options": {},
+  "attributes": {
+    "localizedTitle": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.localized-short-text"
+    },
+    "localizedDescription": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.localized-long-text"
+    },
+    "ogType": {
+      "type": "enumeration",
+      "enum": [
+        "website"
+      ]
+    },
+    "ogImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}
