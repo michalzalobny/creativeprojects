@@ -5,12 +5,12 @@ export const basicTransition = {
     initial: {
       opacity: 0,
       x: '-15%',
-      scale: 1.1,
+      // scale: 1.1,
     },
     animate: {
       opacity: 1,
       x: '0%',
-      scale: 1,
+      // scale: 1,
       transition: {
         delayChildren: BASIC_TRANSITION_DURATION,
         duration: BASIC_TRANSITION_DURATION,
@@ -20,7 +20,7 @@ export const basicTransition = {
     exit: {
       opacity: 0,
       x: '15%',
-      scale: 1.1,
+      // scale: 1.1,
       transition: {
         delayChildren: 0,
         duration: BASIC_TRANSITION_DURATION,
