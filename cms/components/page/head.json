@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_page_heads",
+  "info": {
+    "name": "head",
+    "icon": "ad"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "ogType": {
+      "type": "enumeration",
+      "enum": [
+        "website"
+      ],
+      "default": "website"
+    },
+    "ogImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

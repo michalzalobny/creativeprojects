@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_page_localized_short_texts",
+  "info": {
+    "name": "localizedShortText",
+    "icon": "align-left",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "language": {
+      "model": "language"
+    }
+  }
+}

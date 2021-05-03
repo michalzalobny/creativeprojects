@@ -1,0 +1,110 @@
+{
+  "Typescript React Function Component": {
+    "prefix": "rc",
+    "body": [
+      "import React, {memo} from 'react'",
+      "",
+      "import { Wrapper } from './styled/Wrapper';",
+      "",
+      "export interface ${TM_FILENAME_BASE}Props {$1}",
+      "",
+      "export const $TM_FILENAME_BASE = memo<${TM_FILENAME_BASE}Props>((props) => {",
+      "const { ...rest } = props",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t<Wrapper {...rest}>test</Wrapper>",
+      "\t\t</>",
+      "\t)",
+      "})",
+      "",
+      "${TM_FILENAME_BASE}.displayName = '${TM_FILENAME_BASE}'"
+    ],
+    "description": "Typescript React Function Component with memo"
+  },
+  "Switch statement": {
+    "prefix": "ss",
+    "body": [
+      "switch ($1){",
+      "  case '$2' :",
+      "    break",
+      "  default :",
+      "    break",
+      "}"
+    ],
+    "description": "Switch statement"
+  },
+  "Console.log": {
+    "prefix": "clg",
+    "body": ["console.log($1)"],
+    "description": "Console log"
+  },
+  "Styled component with framer-motion": {
+    "prefix": "sc",
+    "body": [
+      "import styled from 'styled-components'",
+      "import { motion } from 'framer-motion'",
+      "",
+      "interface Props {}",
+      "",
+      "export const ${TM_FILENAME_BASE} = styled(motion.div)<Props>``"
+    ],
+    "description": "Styled component with framer-motion"
+  },
+  "framer-motion default props": {
+    "prefix": "dp",
+    "body": [
+      "${TM_FILENAME_BASE}.defaultProps = {",
+      " variants: {",
+      "   initial: {},",
+      "   animate: {},",
+      "   exit: {},",
+      " },",
+      " initial: 'initial',",
+      " animate: 'animate',",
+      " exit: 'exit',",
+      " transition: { ",
+      "   ...springElastic,",
+      " },",
+      "}"
+    ],
+    "description": "Inject default props with framer-motion"
+  },
+  "import animation transitions": {
+    "prefix": "it",
+    "body": "import { springElastic } from 'components/Animations/framerTransitions';"
+  },
+  "media import": {
+    "prefix": "im",
+    "body": ["import { media } from 'utils/responsive'"],
+    "description": "Importing media"
+  },
+  "media sharedValues": {
+    "prefix": "is",
+    "body": ["import { sharedValues } from 'utils/sharedValues'"],
+    "description": "Importing sharedValues"
+  },
+  "insert breakpoint": {
+    "prefix": "br",
+    "body": [
+      "${media.tablet} {",
+      "",
+      "}",
+      "",
+      "${media.custom(sharedValues.containers.normal.breakpoint)} {",
+      "",
+      "}"
+    ],
+    "description": "Insert breakpoint to the styled component"
+  },
+  "Use compute value to count vw": {
+    "prefix": "cv",
+    "body": [
+      "$1: ${computeValue({",
+      "\tpixelValue: $2,",
+      "\treferenceWidth: sharedValues.containers.normal.referenceWidth,",
+      "})};",
+      "$4"
+    ],
+    "description": "Use compute value to count vw"
+  }
+}

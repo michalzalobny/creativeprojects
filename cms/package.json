@@ -1,0 +1,47 @@
+{
+  "name": "cms",
+  "private": true,
+  "version": "0.7.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "npm run sync-db:initial && strapi develop",
+    "start": "npm run sync-db:initial && strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "dump-db": "node ./scripts/dump-db.js",
+    "dump-db:production": "node ./scripts/dump-db.js --dump-production",
+    "sync-db": "node ./scripts/sync-db.js",
+    "sync-db:initial": "node ./scripts/sync-db.js --initial-only"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^8.2.0",
+    "knex": "<0.20.0",
+    "mysql": "^2.18.1",
+    "mysql-parse": "2.0.8",
+    "mysqldump": "^3.2.0",
+    "strapi": "3.4.1",
+    "strapi-admin": "3.4.1",
+    "strapi-connector-bookshelf": "3.4.1",
+    "strapi-plugin-content-manager": "3.4.1",
+    "strapi-plugin-content-type-builder": "3.4.1",
+    "strapi-plugin-email": "3.4.1",
+    "strapi-plugin-graphql": "3.4.1",
+    "strapi-plugin-upload": "3.4.1",
+    "strapi-plugin-users-permissions": "3.4.1",
+    "strapi-provider-upload-cloudinary": "^3.4.1",
+    "strapi-utils": "3.4.1"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "6c65eff0-8daf-4d10-9f49-5d83b20bb346"
+  },
+  "engines": {
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

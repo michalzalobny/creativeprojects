@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/",
+      "handler": "dump-production-db.index",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

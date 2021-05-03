@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/",
+      "handler": "sync-db.index",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+node_modules
+.*-key.json
+.DS_Store
+.next
+dist
+.env
+debug.log
+

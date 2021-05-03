@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_page_videos",
+  "info": {
+    "name": "video",
+    "icon": "angle-double-right"
+  },
+  "options": {},
+  "attributes": {
+    "videoURI": {
+      "type": "string"
+    },
+    "videoSrc": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

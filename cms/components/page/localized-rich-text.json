@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_localized_rich_texts",
+  "info": {
+    "name": "localizedRichText",
+    "icon": "align-justify"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "text": {
+      "type": "richtext"
+    },
+    "language": {
+      "model": "language"
+    }
+  }
+}

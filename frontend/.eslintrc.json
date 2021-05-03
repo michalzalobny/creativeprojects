@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "./node_modules/gts/",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "no-empty": "off",
+    "react/prop-types": 0,
+    "node/no-unsupported-features/es-syntax": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

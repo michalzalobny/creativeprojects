@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_page_localized_long_texts",
+  "info": {
+    "name": "localizedLongText",
+    "icon": "align-center"
+  },
+  "options": {},
+  "attributes": {
+    "language": {
+      "model": "language"
+    },
+    "text": {
+      "type": "text"
+    }
+  }
+}
