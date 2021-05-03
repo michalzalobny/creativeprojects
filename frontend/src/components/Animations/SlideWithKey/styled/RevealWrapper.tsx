@@ -9,5 +9,5 @@ export const RevealWrapper = styled(motion.div)<Props>`
   display: flex;
   justify-content: center;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 `;
