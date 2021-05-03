@@ -1,11 +1,11 @@
 {
   "name": "cms",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Strapi application",
   "scripts": {
     "develop": "npm run sync-db:initial && strapi develop",
-    "start": "npm run sync-db:initial && strapi start",
+    "start": "npm run sync-db && strapi start",
     "build": "strapi build",
     "strapi": "strapi",
     "dump-db": "node ./scripts/dump-db.js",
