@@ -21,7 +21,7 @@ export const CAMERA_POS = 6;
 
 interface AppObj {
   appTime: AppTime;
-  camera: THREE.OrthographicCamera;
+  camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   sizes: DOMRect;
@@ -147,7 +147,7 @@ export const application = (appProps: AppProps) => {
   };
 
   const destroy = () => {
-    appObj.camera.orbitControls && appObj.camera.orbitControls.dispose();
+    // appObj.camera.orbitControls.dispose();
     destroySetWorld();
     appObj.appTime.stop();
     appObj.debugGUI && appObj.debugGUI.destroy();
