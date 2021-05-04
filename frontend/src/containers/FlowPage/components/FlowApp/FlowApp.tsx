@@ -5,10 +5,6 @@ import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
 
 import { application } from './functions/application';
-import { StatWrapper } from './styled/StatWrapper';
-import { Counter } from './styled/Counter';
-import { NewGameComp } from './styled/NewGameComp';
-import { ContinueGameComp } from './styled/ContinueGameComp';
 
 interface FlowAppProps {}
 
