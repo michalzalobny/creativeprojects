@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { globalState } from 'utils/globalState';
 
-import { appObj } from './application';
+import { appObj, AppProps } from './application';
 
 interface ImagePlane {
   item: FlowItemRef;
@@ -11,7 +11,11 @@ interface ImagePlane {
   bounds: DOMRect;
 }
 
-export const imagePlane = () => {
+interface ImagePlaneProps {
+  appProps: AppProps;
+}
+
+export const imagePlane = ({ appProps }: ImagePlaneProps) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -67,26 +71,27 @@ export const imagePlane = () => {
       const { top, left, height, width } = imagePlane.bounds;
       const { sizes } = appObj;
       imagePlane.threejs.position.y =
-        globalState.scrollValues.scrollY.get() +
-        -top +
-        sizes.height / 2 -
-        height / 2;
+        appProps.offsetY.get() + -top + sizes.height / 2 - height / 2;
       imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
     });
   };
 
-  const handleScroll = () => {
+  // const handleScroll = () => {
+  //   setPlanesPosition(imagePlanes);
+  // };
+
+  appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
     setPlanesPosition(imagePlanes);
-  };
+  });
 
   const setListeners = () => {
-    globalState.pageWrapper.current.addEventListener('scroll', handleScroll);
+    // globalState.pageWrapper.current.addEventListener('scroll', handleScroll);
   };
 
   setListeners();
 
   const destroy = () => {
-    globalState.pageWrapper.current.removeEventListener('scroll', handleScroll);
+    // globalState.pageWrapper.current.removeEventListener('scroll', handleScroll);
   };
 
   return {

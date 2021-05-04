@@ -16,6 +16,7 @@ import { ImageDescription } from './styled/ImageDescription';
 export interface FlowPageContentProps {
   pageData: PageData;
   updateFlowItemsArray: UpdateFlowItemsArray;
+  style: unknown;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {

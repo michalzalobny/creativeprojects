@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
+import { MotionValue } from 'framer-motion';
 
 import AppTime from './utils/AppTime';
 import { world } from './world';
@@ -14,6 +15,8 @@ export interface AppProps {
   canvasWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItemRef[];
+  offsetX: MotionValue<number>;
+  offsetY: MotionValue<number>;
 }
 
 interface Config {

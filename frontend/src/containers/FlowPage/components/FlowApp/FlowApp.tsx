@@ -6,7 +6,9 @@ import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { Wrapper } from './styled/Wrapper';
 import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
-import { FlowPageContent } from './components/FlowPageContent/FlowPageContent';
+import { useScroll } from './customScroll/hooks/useScroll';
+import { FlowPageContentComp } from './styled/FlowPageContentComp';
+import { FlowPageContentWrapper } from './styled/FlowPageContentWrapper';
 
 interface FlowAppProps {
   pageData: PageData;
@@ -22,6 +24,10 @@ export type UpdateFlowItemsArray = (FlowItemRef) => void;
 export const FlowApp = memo<FlowAppProps>(props => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
+  const scrollWrapper = useRef<HTMLDivElement>(null);
+  const { offsetX, offsetY, seekTo } = useScroll({
+    contentWrapperRef: scrollWrapper,
+  });
 
   const flowItemsArray = useRef<FlowItemRef[]>([]);
 
@@ -38,6 +44,8 @@ export const FlowApp = memo<FlowAppProps>(props => {
       canvasWrapperRefEl: canvasWrapperRef.current,
       setIsReady,
       flowItemsArray: flowItemsArray.current,
+      offsetX,
+      offsetY,
     });
 
     return () => {
@@ -50,10 +58,14 @@ export const FlowApp = memo<FlowAppProps>(props => {
     <>
       <Wrapper>
         <Cover animate={isReady ? 'animate' : 'initial'} />
-        <FlowPageContent
-          updateFlowItemsArray={updateFlowItemsArray}
-          pageData={props.pageData}
-        />
+        <FlowPageContentWrapper ref={scrollWrapper}>
+          <FlowPageContentComp
+            style={{ x: offsetX, y: offsetY }}
+            updateFlowItemsArray={updateFlowItemsArray}
+            pageData={props.pageData}
+          />
+        </FlowPageContentWrapper>
+
         <RendererWrapper ref={canvasWrapperRef}>
           <canvas ref={canvasRef} />
         </RendererWrapper>

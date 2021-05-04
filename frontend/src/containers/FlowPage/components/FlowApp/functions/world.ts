@@ -19,7 +19,7 @@ export const world = ({ appProps }: World) => {
     destroy: destroyImagePlane,
     generatePlanes,
     container: imagePlaneContainer,
-  } = imagePlane();
+  } = imagePlane({ appProps });
 
   container.add(new THREE.AxesHelper());
   container.add(lightsContainer);
