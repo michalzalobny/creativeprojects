@@ -26,7 +26,7 @@ interface AppObj {
   debugGUI: dat.GUI;
 }
 
-export const appObj: AppObj = {
+export let appObj: AppObj = {
   appTime: new AppTime(),
   camera: null,
   scene: null,
@@ -144,6 +144,17 @@ export const application = (appProps: AppProps) => {
     appObj.renderer.dispose();
     window.removeEventListener('resize', onResize);
     window.removeEventListener('visibilitychange', onVisibilityChange);
+
+    //Resets appObj
+    appObj = {
+      appTime: new AppTime(),
+      camera: null,
+      scene: null,
+      renderer: null,
+      sizes: null,
+      config: { showDebugGui: false },
+      debugGUI: null,
+    };
   };
 
   setSizes();
