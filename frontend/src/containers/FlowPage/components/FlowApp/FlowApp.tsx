@@ -18,7 +18,6 @@ export const FlowApp = memo<FlowAppProps>(props => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    console.log(props.pageData);
     const { application } = require('./functions/application');
     const { destroy } = application({
       canvasRefEl: canvasRef.current,
