@@ -19,7 +19,7 @@ export const world = ({ appProps }: World) => {
 
   container.add(new THREE.AxesHelper());
   container.add(lightsContainer);
-  container.add(boxContainer);
+  // container.add(boxContainer);
   container.add(imagePlaneContainer);
   generatePlanes(appProps.flowItemsArray);
 

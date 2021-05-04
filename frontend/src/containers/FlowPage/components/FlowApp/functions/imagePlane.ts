@@ -24,8 +24,23 @@ export const imagePlane = () => {
       1,
       1,
     );
+
+    const imageSrc = flowItem.flowItem.image.formats
+      ? flowItem.flowItem.image.formats.large?.url ||
+        flowItem.flowItem.image.formats.medium?.url ||
+        flowItem.flowItem.image.formats.small?.url ||
+        flowItem.flowItem.image.formats.thumbnail.url
+      : flowItem.flowItem.image.url;
+
+    const image = new Image();
+    image.src = imageSrc;
+    image.crossOrigin = 'anonymous';
+
+    const texture = new THREE.Texture(image);
+    texture.needsUpdate = true;
+
     const material = new THREE.MeshBasicMaterial({
-      color: new THREE.Color('red'),
+      map: texture,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
