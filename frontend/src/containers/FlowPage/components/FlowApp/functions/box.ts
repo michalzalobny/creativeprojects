@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import { appObj } from './application';
+
 import boxVertexShader from './shaders/box/vertex.glsl';
 import boxFragmentShader from './shaders/box/fragment.glsl';
 
@@ -15,9 +17,16 @@ export const box = () => {
       wireframe: true,
       fragmentShader: boxFragmentShader,
       vertexShader: boxVertexShader,
+      uniforms: {
+        uTime: { value: 0 },
+      },
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(0, 0, 0);
+
+    appObj.appTime.on('tick', (slowDownFactor, time, _delta) => {
+      material.uniforms.uTime.value = (time * slowDownFactor) / 1000;
+    });
 
     container.add(mesh);
   };

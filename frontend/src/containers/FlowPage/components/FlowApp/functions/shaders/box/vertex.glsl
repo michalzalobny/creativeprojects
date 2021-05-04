@@ -1,5 +1,7 @@
 #define PI 3.1415926535897932384626433832795
 
+uniform float uTime;
+
 // Classic Perlin 3D Noise 
 // by Stefan Gustavson
 //
@@ -93,7 +95,7 @@ void main() {
   vec3 newPosition = position;
 
   // newPosition.z += cnoise(vec3(position.x * 3., position.y * 3., 0));
-  newPosition.z += cos(((newPosition.x) / 2.0)  * PI);
+  newPosition.z += cos(((newPosition.x + uTime) / 2.0)  * PI);
 
   vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
   vec4 viewPosition = viewMatrix * modelPosition;
