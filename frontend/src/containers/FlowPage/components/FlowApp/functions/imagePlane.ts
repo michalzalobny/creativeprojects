@@ -49,7 +49,7 @@ export const imagePlane = () => {
   const setPlanePosition = (imagePlane: ImagePlane) => {
     const { top, left, height, width } = imagePlane.bounds;
     const { sizes } = appObj;
-    imagePlane.threejs.position.y = top + sizes.height / 2 - height / 2;
+    imagePlane.threejs.position.y = -top + sizes.height / 2 - height / 2;
     imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
   };
 

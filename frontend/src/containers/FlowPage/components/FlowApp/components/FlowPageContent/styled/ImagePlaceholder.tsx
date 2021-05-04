@@ -8,4 +8,5 @@ export const ImagePlaceholder = styled(motion.div)<Props>`
   display: block;
   padding-top: 56.25%;
   background: pink;
+  opacity: 0.3;
 `;
