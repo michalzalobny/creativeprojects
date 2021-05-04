@@ -13,7 +13,7 @@ export const box = () => {
   const textureLoader = new THREE.TextureLoader();
 
   const generateBox = () => {
-    const geometry = new THREE.PlaneBufferGeometry(200, 200, 50, 50);
+    const geometry = new THREE.PlaneBufferGeometry(200, 450, 50, 50);
 
     const oceanTexture = textureLoader.load(oceanTextureSrc.src);
 

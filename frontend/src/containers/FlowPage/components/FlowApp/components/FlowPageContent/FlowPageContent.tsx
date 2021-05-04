@@ -39,6 +39,12 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
               </ImageWrapper>
               <ImageDescription>Image 2 description</ImageDescription>
             </ImageItem>
+            <ImageItem>
+              <ImageWrapper>
+                <ImagePlaceholder />
+              </ImageWrapper>
+              <ImageDescription>Image 3 description</ImageDescription>
+            </ImageItem>
           </ImagesColumn>
         </ContentWrapper>
       </Wrapper>
