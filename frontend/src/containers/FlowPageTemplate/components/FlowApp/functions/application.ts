@@ -18,7 +18,7 @@ export const CAMERA_POS = 6;
 
 interface AppObj {
   appTime: AppTime;
-  camera: THREE.OrthographicCamera;
+  camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   sizes: DOMRect;
