@@ -3,6 +3,7 @@
 uniform float uTime;
 
 varying float vNoise;
+varying vec2 vUv;
 
 // Classic Perlin 3D Noise 
 // by Stefan Gustavson
@@ -93,19 +94,24 @@ float cnoise(vec3 P)
 
 
 void main() {
+    vec3 newPosition = position;
 
-  vec3 newPosition = position;
+    float noise = cnoise(vec3(position.x * 2.0, position.y * 2.0, uTime / 10.0));
 
 
-  float noise = cnoise(vec3(position.x * 2.0, position.y * 2.0, uTime / 10.0));
+    float dist = distance(uv, vec2(0.5));
 
-  newPosition.z += 0.3 * noise;
-  // newPosition.z += cos(((newPosition.x + uTime) / 2.0)  * PI);
+    // newPosition.z += 0.3 * noise;
+    // newPosition.z += cos(((newPosition.x + uTime) / 2.0)  * PI);
+    newPosition.z += 0.05 * sin(dist * 40.0 - uTime);
 
-  vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
-  vec4 viewPosition = viewMatrix * modelPosition;
-  vec4 projectedPosition = projectionMatrix * viewPosition;
-  gl_Position = projectedPosition;
+    
 
-  vNoise = noise;
+    vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
+    vec4 viewPosition = viewMatrix * modelPosition;
+    vec4 projectedPosition = projectionMatrix * viewPosition;
+    gl_Position = projectedPosition;
+
+    vNoise = dist;
+    vUv = uv;
 }
