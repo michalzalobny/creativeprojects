@@ -3,8 +3,10 @@ import React, { memo, useRef, useEffect, useState } from 'react';
 import { Wrapper } from './styled/Wrapper';
 import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
+import { FlowPageContent } from './components/FlowPageContent/FlowPageContent';
 
 import { application } from './functions/application';
+import { ContentWrapper } from 'components/InfiniteTimeline/styled/ContentWrapper';
 
 interface FlowAppProps {}
 
@@ -31,6 +33,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
     <>
       <Wrapper>
         <Cover animate={isReady ? 'animate' : 'initial'} />
+        <FlowPageContent />
 
         <RendererWrapper ref={canvasWrapperRef}>
           <canvas ref={canvasRef} />

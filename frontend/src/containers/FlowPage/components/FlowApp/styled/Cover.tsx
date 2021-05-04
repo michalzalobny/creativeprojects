@@ -6,11 +6,11 @@ import { tween } from 'components/Animations/framerTransitions';
 interface Props {}
 
 export const Cover = styled(motion.div)<Props>`
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background-color: white;
-  z-index: 20;
+  z-index: 1;
 `;
 
 Cover.defaultProps = {
