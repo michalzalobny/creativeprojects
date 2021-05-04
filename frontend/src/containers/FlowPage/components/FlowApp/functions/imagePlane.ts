@@ -71,7 +71,7 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
       const { top, left, height, width } = imagePlane.bounds;
       const { sizes } = appObj;
       imagePlane.threejs.position.y =
-        appProps.offsetY.get() + -top + sizes.height / 2 - height / 2;
+        -appProps.offsetY.get() + -top + sizes.height / 2 - height / 2;
       imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
     });
   };
