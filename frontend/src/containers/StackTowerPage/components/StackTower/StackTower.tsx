@@ -15,7 +15,7 @@ interface StackTowerProps {}
 
 export type GameState = 'playing' | 'animating' | 'readyToStart';
 
-const StackTower = memo<StackTowerProps>(props => {
+export const StackTower = memo<StackTowerProps>(props => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const initGameRef = useRef(null);
@@ -79,7 +79,5 @@ const StackTower = memo<StackTowerProps>(props => {
     </>
   );
 });
-
-export default StackTower;
 
 StackTower.displayName = 'StackTower';

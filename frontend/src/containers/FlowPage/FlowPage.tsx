@@ -7,21 +7,20 @@ import { Wrapper } from './styled/Wrapper';
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { PageProps } from './data';
 
-const StackTower = dynamic(
-  () =>
-    import('./components/StackTower/StackTower').then(mod => mod.StackTower),
+const FlowApp = dynamic(
+  () => import('./components/FlowApp/FlowApp').then(mod => mod.FlowApp),
   {
     ssr: false,
   },
 );
 
-export default function StackTowerPage(props: PageProps) {
+export default function FlowPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
       <Wrapper>
         <CanvasWrapper>
-          <StackTower />
+          <FlowApp />
         </CanvasWrapper>
       </Wrapper>
     </>
