@@ -1,5 +1,8 @@
 import React, { memo } from 'react';
 
+import { PageData } from 'containers/FlowPage/data';
+import { UpdateFlowItemsArray } from 'containers/FlowPage/components/FlowApp/FlowApp';
+
 import { Wrapper } from './styled/Wrapper';
 import { ContentWrapper } from './styled/ContentWrapper';
 import { InfoColumn } from './styled/InfoColumn';
@@ -11,42 +14,33 @@ import { ImageItem } from './styled/ImageItem';
 import { ImageDescription } from './styled/ImageDescription';
 
 export interface FlowPageContentProps {
-  // updateImageRefs: () => void;
+  pageData: PageData;
+  updateFlowItemsArray: UpdateFlowItemsArray;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
-  const { ...rest } = props;
+  const { updateFlowItemsArray, pageData, ...rest } = props;
+  const { asideDescription, flowItems, name } = pageData;
   return (
     <>
       <Wrapper {...rest}>
         <ContentWrapper>
           <InfoColumn>
-            <Description>
-              Lorem ipsum dolor sit amet, conse ctetur adipiscing elit, sed do
-              eiusmod tempor incididunt aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in vol
-            </Description>
+            <Description>{asideDescription}</Description>
           </InfoColumn>
           <ImagesColumn>
-            <ImageItem>
-              <ImageWrapper>
-                <ImagePlaceholder />
-              </ImageWrapper>
-              <ImageDescription>Image 1 description</ImageDescription>
-            </ImageItem>
-            <ImageItem>
-              <ImageWrapper>
-                <ImagePlaceholder />
-              </ImageWrapper>
-              <ImageDescription>Image 2 description</ImageDescription>
-            </ImageItem>
-            <ImageItem>
-              <ImageWrapper>
-                <ImagePlaceholder />
-              </ImageWrapper>
-              <ImageDescription>Image 3 description</ImageDescription>
-            </ImageItem>
+            {flowItems.map((flowItem, _key) => {
+              return (
+                <ImageItem key={flowItem.name}>
+                  <ImageWrapper
+                    ref={refEl => updateFlowItemsArray({ refEl, flowItem })}
+                  >
+                    <ImagePlaceholder />
+                  </ImageWrapper>
+                  <ImageDescription>{flowItem.description}</ImageDescription>
+                </ImageItem>
+              );
+            })}
           </ImagesColumn>
         </ContentWrapper>
       </Wrapper>

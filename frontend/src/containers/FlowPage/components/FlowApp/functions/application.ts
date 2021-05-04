@@ -1,8 +1,10 @@
-import AppTime from './utils/AppTime';
-import { world } from './world';
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
+
+import AppTime from './utils/AppTime';
+import { world } from './world';
+import { FlowItemRef } from '../FlowApp';
 
 // eslint-disable-next-line node/no-unpublished-import
 import { OrbitControls } from '../../../../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
@@ -11,6 +13,7 @@ export interface AppProps {
   canvasRefEl: HTMLCanvasElement;
   canvasWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  flowItemsArray: FlowItemRef[];
 }
 
 interface Config {
