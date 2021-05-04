@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_creative_component_creative_items",
+  "info": {
+    "name": "creativeItem",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}

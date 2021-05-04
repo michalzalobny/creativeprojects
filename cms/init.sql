@@ -7,6 +7,17 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 # ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: components_creative_component_creative_items
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+
+# ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
 # ------------------------------------------------------------
 
@@ -38,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -54,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -65,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -88,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -112,7 +123,39 @@ CREATE TABLE IF NOT EXISTS `core_store` (
   `environment` varchar(255) DEFAULT NULL,
   `tag` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 42 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 DEFAULT CHARSET = latin1;
+
+# ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: flow_pages
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `flow_pages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `language` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `asideDescription` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = latin1;
+
+# ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: flow_pages_components
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `flow_pages_components` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `field` varchar(255) NOT NULL,
+  `order` int(10) unsigned NOT NULL,
+  `component_type` varchar(255) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `flow_page_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `flow_page_id_fk` (`flow_page_id`),
+  CONSTRAINT `flow_page_id_fk` FOREIGN KEY (`flow_page_id`) REFERENCES `flow_pages` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: index_pages
@@ -173,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -189,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -224,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 70 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 80 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_role
@@ -292,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -306,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -323,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `users-permissions_permission` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 197 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 209 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_role
@@ -364,6 +407,59 @@ CREATE TABLE IF NOT EXISTS `users-permissions_user` (
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
+# DATA DUMP FOR TABLE: components_creative_component_creative_items
+# ------------------------------------------------------------
+
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    1,
+    'Forest 2021',
+    'Lorem ipsum dolor sit amet, conse ctetur adipiscing elit, sed do eiusmod tempor incididunt ali'
+  );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    2,
+    'Ocean 2020',
+    'Lorem ipsum dolor siqua. Ut enim ad minim veniam, quis nostrud exercitation ur incididunt ali.'
+  );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    3,
+    'Fire 2021',
+    'Isum dolor sit amet, conse ctetum ad minim veniam, quis nostrud exercitation.'
+  );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    4,
+    'Forest',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolor.'
+  );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    5,
+    'Ocean',
+    'Lot, consectetur adipiscirem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod re et dolor.'
+  );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    6,
+    'Fire',
+    'Num vitae sapien pellentesque habitant morbi tristique senectus. Diam vulputate ut pharetra sit amet aliquam id diam. Risus.'
+  );
+
+# ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
 # ------------------------------------------------------------
 
@@ -397,6 +493,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (1, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (2, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -438,6 +538,42 @@ VALUES
     1,
     1
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    3,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    3,
+    2
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    4,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    2,
+    2
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -450,6 +586,14 @@ VALUES
     1,
     1,
     'Stack Tower Game made with THREE.js and React.js'
+  );
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (
+    2,
+    1,
+    'Page built with THREE.js and React.js that merges the worlds of 3D and classical DOM elements. '
   );
 
 # ------------------------------------------------------------
@@ -469,6 +613,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (2, 'Stack Tower Game', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (3, 'Flow Transition Page', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (4, 'Flow Page', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -930,6 +1082,190 @@ VALUES
     '',
     ''
   );
+INSERT INTO
+  `core_store` (`id`, `key`, `value`, `type`, `environment`, `tag`)
+VALUES
+  (
+    42,
+    'model_def_application::flow-page.flow-page',
+    '{\"uid\":\"application::flow-page.flow-page\",\"collectionName\":\"flow_pages\",\"kind\":\"collectionType\",\"info\":{\"name\":\"flowPage\",\"description\":\"\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"language\":{\"model\":\"language\"},\"flowItems\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"creative-component.creative-item\"},\"asideDescription\":{\"type\":\"richtext\"},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
+    'object',
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `core_store` (`id`, `key`, `value`, `type`, `environment`, `tag`)
+VALUES
+  (
+    43,
+    'plugin_content_manager_configuration_content_types::application::flow-page.flow-page',
+    '{\"uid\":\"application::flow-page.flow-page\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"name\",\"defaultSortBy\":\"name\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"name\":{\"edit\":{\"label\":\"Name\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Name\",\"searchable\":true,\"sortable\":true}},\"language\":{\"edit\":{\"label\":\"Language\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true,\"mainField\":\"name\"},\"list\":{\"label\":\"Language\",\"searchable\":false,\"sortable\":false}},\"flowItems\":{\"edit\":{\"label\":\"FlowItems\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"FlowItems\",\"searchable\":false,\"sortable\":false}},\"asideDescription\":{\"edit\":{\"label\":\"AsideDescription\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"AsideDescription\",\"searchable\":false,\"sortable\":false}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"name\",\"language\",\"created_at\"],\"edit\":[[{\"name\":\"name\",\"size\":6}],[{\"name\":\"asideDescription\",\"size\":12}],[{\"name\":\"flowItems\",\"size\":12}]],\"editRelations\":[\"language\"]}}',
+    'object',
+    '',
+    ''
+  );
+INSERT INTO
+  `core_store` (`id`, `key`, `value`, `type`, `environment`, `tag`)
+VALUES
+  (
+    44,
+    'model_def_creative-component.creative-item',
+    '{\"uid\":\"creative-component.creative-item\",\"collectionName\":\"components_creative_component_creative_items\",\"info\":{\"name\":\"creativeItem\",\"icon\":\"address-book\"},\"options\":{\"timestamps\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"image\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false},\"description\":{\"type\":\"richtext\"}}}',
+    'object',
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `core_store` (`id`, `key`, `value`, `type`, `environment`, `tag`)
+VALUES
+  (
+    45,
+    'plugin_content_manager_configuration_components::creative-component.creative-item',
+    '{\"uid\":\"creative-component.creative-item\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"name\",\"defaultSortBy\":\"name\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":false,\"sortable\":false}},\"name\":{\"edit\":{\"label\":\"Name\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Name\",\"searchable\":true,\"sortable\":true}},\"image\":{\"edit\":{\"label\":\"Image\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Image\",\"searchable\":false,\"sortable\":false}},\"description\":{\"edit\":{\"label\":\"Description\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Description\",\"searchable\":false,\"sortable\":false}}},\"layouts\":{\"list\":[\"id\",\"name\",\"image\"],\"edit\":[[{\"name\":\"name\",\"size\":6},{\"name\":\"image\",\"size\":6}],[{\"name\":\"description\",\"size\":12}]],\"editRelations\":[]},\"isComponent\":true}',
+    'object',
+    '',
+    ''
+  );
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: flow_pages
+# ------------------------------------------------------------
+
+INSERT INTO
+  `flow_pages` (
+    `id`,
+    `name`,
+    `language`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`,
+    `asideDescription`
+  )
+VALUES
+  (
+    1,
+    'flowPage (en-US)',
+    1,
+    1,
+    1,
+    '2021-05-04 17:49:44',
+    '2021-05-04 19:33:34',
+    'Lorem ipsum dolor sit amet, conse ctetur adipiscing elit, sed do eiusmod tempor incididunt aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in vol'
+  );
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: flow_pages_components
+# ------------------------------------------------------------
+
+INSERT INTO
+  `flow_pages_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `flow_page_id`
+  )
+VALUES
+  (
+    1,
+    'flowItem',
+    1,
+    'components_creative_component_creative_items',
+    1,
+    1
+  );
+INSERT INTO
+  `flow_pages_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `flow_page_id`
+  )
+VALUES
+  (
+    2,
+    'flowItem',
+    2,
+    'components_creative_component_creative_items',
+    2,
+    1
+  );
+INSERT INTO
+  `flow_pages_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `flow_page_id`
+  )
+VALUES
+  (
+    3,
+    'flowItem',
+    3,
+    'components_creative_component_creative_items',
+    3,
+    1
+  );
+INSERT INTO
+  `flow_pages_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `flow_page_id`
+  )
+VALUES
+  (
+    4,
+    'flowItems',
+    1,
+    'components_creative_component_creative_items',
+    4,
+    1
+  );
+INSERT INTO
+  `flow_pages_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `flow_page_id`
+  )
+VALUES
+  (
+    5,
+    'flowItems',
+    2,
+    'components_creative_component_creative_items',
+    5,
+    1
+  );
+INSERT INTO
+  `flow_pages_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `flow_page_id`
+  )
+VALUES
+  (
+    6,
+    'flowItems',
+    3,
+    'components_creative_component_creative_items',
+    6,
+    1
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: index_pages
@@ -1019,6 +1355,24 @@ VALUES
     '2021-05-03 21:11:03',
     '2021-05-03 21:11:03'
   );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    2,
+    'flow',
+    1,
+    1,
+    '2021-05-04 17:59:07',
+    '2021-05-04 17:59:08'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: projects_components
@@ -1060,6 +1414,42 @@ VALUES
     2,
     1
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    3,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    2,
+    2
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    4,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    4,
+    2
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -1085,7 +1475,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$wvkAieaiHt0HPu4Dby5l4.qmXMWWeS.aW2wrAnOgf/9ewLOLhyC3y',
+    '$2b$10$UkbYM7Y4xdb1XICBkgkeQeMZt2AFoEM/AP58W89fLW1GCacfU3PKC',
     NULL,
     NULL,
     1,
@@ -2614,6 +3004,94 @@ VALUES
     '2021-05-03 21:02:17',
     '2021-05-03 21:02:17'
   );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    72,
+    'plugins::content-manager.explorer.delete',
+    'application::flow-page.flow-page',
+    NULL,
+    '[]',
+    1,
+    '2021-05-04 17:33:19',
+    '2021-05-04 17:33:19'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    77,
+    'plugins::content-manager.explorer.create',
+    'application::flow-page.flow-page',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\"]',
+    '[]',
+    1,
+    '2021-05-04 18:44:27',
+    '2021-05-04 18:44:27'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    78,
+    'plugins::content-manager.explorer.read',
+    'application::flow-page.flow-page',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\"]',
+    '[]',
+    1,
+    '2021-05-04 18:44:27',
+    '2021-05-04 18:44:27'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    79,
+    'plugins::content-manager.explorer.update',
+    'application::flow-page.flow-page',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\"]',
+    '[]',
+    1,
+    '2021-05-04 18:44:27',
+    '2021-05-04 18:44:27'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_role
@@ -2780,6 +3258,138 @@ VALUES
     '2021-05-03 23:19:21',
     '2021-05-03 23:19:21'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    3,
+    'e1.jpg',
+    '',
+    '',
+    1047,
+    699,
+    '{\"thumbnail\":{\"name\":\"thumbnail_e1.jpg\",\"hash\":\"thumbnail_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":6.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150467/thumbnail_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e1_d826090c67\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e1.jpg\",\"hash\":\"large_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":668,\"size\":93.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150468/large_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"large_e1_d826090c67\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e1.jpg\",\"hash\":\"medium_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":501,\"size\":54.44,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150469/medium_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e1_d826090c67\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e1.jpg\",\"hash\":\"small_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":334,\"size\":23.9,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150470/small_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"small_e1_d826090c67\",\"resource_type\":\"image\"}}}',
+    'e1_d826090c67',
+    '.jpg',
+    'image/jpeg',
+    105.08,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150466/e1_d826090c67.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"e1_d826090c67\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-04 17:47:50',
+    '2021-05-04 17:47:50'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    4,
+    'e3.jpg',
+    '',
+    '',
+    1500,
+    844,
+    '{\"thumbnail\":{\"name\":\"thumbnail_e3.jpg\",\"hash\":\"thumbnail_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":8.37,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150517/thumbnail_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e3.jpg\",\"hash\":\"large_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":116,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150519/large_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"large_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e3.jpg\",\"hash\":\"medium_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":65.44,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150521/medium_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e3.jpg\",\"hash\":\"small_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":30.38,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150522/small_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"small_e3_592a5fb80b\",\"resource_type\":\"image\"}}}',
+    'e3_592a5fb80b',
+    '.jpg',
+    'image/jpeg',
+    259.05,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150517/e3_592a5fb80b.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"e3_592a5fb80b\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-04 17:48:42',
+    '2021-05-04 17:48:42'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    5,
+    'e2.jpg',
+    '',
+    '',
+    800,
+    533,
+    '{\"thumbnail\":{\"name\":\"thumbnail_e2.jpg\",\"hash\":\"thumbnail_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":11.98,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150553/thumbnail_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e2.jpg\",\"hash\":\"medium_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":79.29,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150554/medium_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e2.jpg\",\"hash\":\"small_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":41.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150555/small_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"small_e2_a59f9b0802\",\"resource_type\":\"image\"}}}',
+    'e2_a59f9b0802',
+    '.jpg',
+    'image/jpeg',
+    92.33,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150552/e2_a59f9b0802.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"e2_a59f9b0802\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-04 17:49:16',
+    '2021-05-04 17:49:16'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -2814,6 +3424,132 @@ INSERT INTO
   )
 VALUES
   (2, 2, 1, 'components_page_heads', 'ogImage', 1);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    3,
+    3,
+    1,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    4,
+    4,
+    2,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    5,
+    5,
+    3,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    6,
+    3,
+    2,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    7,
+    3,
+    4,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    8,
+    4,
+    5,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    9,
+    5,
+    6,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users-permissions_permission
@@ -7336,6 +8072,294 @@ VALUES
     196,
     'application',
     'project',
+    'update',
+    0,
+    '',
+    2,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    197,
+    'application',
+    'flow-page',
+    'count',
+    0,
+    '',
+    1,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    198,
+    'application',
+    'flow-page',
+    'count',
+    0,
+    '',
+    2,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    199,
+    'application',
+    'flow-page',
+    'create',
+    0,
+    '',
+    1,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    200,
+    'application',
+    'flow-page',
+    'create',
+    0,
+    '',
+    2,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    201,
+    'application',
+    'flow-page',
+    'delete',
+    0,
+    '',
+    1,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    202,
+    'application',
+    'flow-page',
+    'delete',
+    0,
+    '',
+    2,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    203,
+    'application',
+    'flow-page',
+    'find',
+    0,
+    '',
+    1,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    204,
+    'application',
+    'flow-page',
+    'find',
+    1,
+    '',
+    2,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    205,
+    'application',
+    'flow-page',
+    'findone',
+    0,
+    '',
+    1,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    206,
+    'application',
+    'flow-page',
+    'findone',
+    1,
+    '',
+    2,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    207,
+    'application',
+    'flow-page',
+    'update',
+    0,
+    '',
+    1,
+    NULL,
+    NULL
+  );
+INSERT INTO
+  `users-permissions_permission` (
+    `id`,
+    `type`,
+    `controller`,
+    `action`,
+    `enabled`,
+    `policy`,
+    `role`,
+    `created_by`,
+    `updated_by`
+  )
+VALUES
+  (
+    208,
+    'application',
+    'flow-page',
     'update',
     0,
     '',

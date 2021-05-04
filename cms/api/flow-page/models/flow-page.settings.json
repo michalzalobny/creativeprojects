@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "flow_pages",
+  "info": {
+    "name": "flowPage",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "language": {
+      "model": "language"
+    },
+    "flowItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "creative-component.creative-item"
+    },
+    "asideDescription": {
+      "type": "richtext"
+    }
+  }
+}

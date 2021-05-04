@@ -1,18 +1,11 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 
 import { Head } from 'utils/seo/Head';
 
 import { Wrapper } from './styled/Wrapper';
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { PageProps } from './data';
-
-const FlowApp = dynamic(
-  () => import('./components/FlowApp/FlowApp').then(mod => mod.FlowApp),
-  {
-    ssr: false,
-  },
-);
+import { FlowApp } from './components/FlowApp/FlowApp';
 
 export default function FlowPage(props: PageProps) {
   return (
@@ -20,7 +13,7 @@ export default function FlowPage(props: PageProps) {
       <Head {...props.head} />
       <Wrapper>
         <CanvasWrapper>
-          <FlowApp />
+          <FlowApp pageData={props.pageData} />
         </CanvasWrapper>
       </Wrapper>
     </>

@@ -10,7 +10,9 @@ import { ImagePlaceholder } from './styled/ImagePlaceholder';
 import { ImageItem } from './styled/ImageItem';
 import { ImageDescription } from './styled/ImageDescription';
 
-export interface FlowPageContentProps {}
+export interface FlowPageContentProps {
+  // updateImageRefs: () => void;
+}
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
   const { ...rest } = props;

@@ -1,14 +1,15 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
 
+import { PageData } from 'containers/FlowPage/data';
+
 import { Wrapper } from './styled/Wrapper';
 import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
 import { FlowPageContent } from './components/FlowPageContent/FlowPageContent';
 
-import { application } from './functions/application';
-import { ContentWrapper } from 'components/InfiniteTimeline/styled/ContentWrapper';
-
-interface FlowAppProps {}
+interface FlowAppProps {
+  pageData: PageData;
+}
 
 export const FlowApp = memo<FlowAppProps>(props => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,6 +18,8 @@ export const FlowApp = memo<FlowAppProps>(props => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    console.log(props.pageData);
+    const { application } = require('./functions/application');
     const { destroy } = application({
       canvasRefEl: canvasRef.current,
       canvasWrapperRefEl: canvasWrapperRef.current,

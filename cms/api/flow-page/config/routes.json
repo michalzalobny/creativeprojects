@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/flow-pages",
+      "handler": "flow-page.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/flow-pages/count",
+      "handler": "flow-page.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/flow-pages/:id",
+      "handler": "flow-page.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/flow-pages",
+      "handler": "flow-page.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/flow-pages/:id",
+      "handler": "flow-page.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/flow-pages/:id",
+      "handler": "flow-page.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
