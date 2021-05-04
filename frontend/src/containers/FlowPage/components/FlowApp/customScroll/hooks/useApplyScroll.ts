@@ -66,8 +66,6 @@ export const useApplyScroll = (props: UseApplyScroll) => {
       const boundary = contentHeight.current - windowHeight.current;
       const newOffsetY = offsetY.get() + amountPx;
 
-      console.log(contentHeight.current);
-
       if (-newOffsetY >= boundary) {
         offsetY.set(-boundary);
         progressRatio.set(getProgressValues().calculatedProgress);

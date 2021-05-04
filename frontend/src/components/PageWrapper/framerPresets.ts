@@ -4,7 +4,7 @@ export const basicTransition = {
   variants: {
     initial: {
       opacity: 0,
-      x: '-15%',
+      x: '0%',
       // scale: 1.1,
     },
     animate: {
@@ -19,7 +19,7 @@ export const basicTransition = {
     },
     exit: {
       opacity: 0,
-      x: '15%',
+      x: '0%',
       // scale: 1.1,
       transition: {
         delayChildren: 0,
