@@ -17,7 +17,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 6;
+export const CAMERA_POS = 100;
 
 interface AppObj {
   appTime: AppTime;
@@ -43,38 +43,26 @@ export let appObj: AppObj = {
 
 export const application = (appProps: AppProps) => {
   const setCamera = () => {
-    // Orthographic camera
-    // const aspectRatio = appObj.sizes.width / appObj.sizes.height;
-    // appObj.camera = new THREE.OrthographicCamera(
-    //   -1 * aspectRatio,
-    //   1 * aspectRatio,
-    //   1,
-    //   -1,
-    //   0.1,
-    //   100,
-    // );
-
-    //Perspective camera
     appObj.camera = new THREE.PerspectiveCamera();
+
+    appObj.camera.near = 0.1;
+    appObj.camera.far = 200;
 
     updateCameraSettings();
 
-    appObj.camera.position.set(CAMERA_POS, CAMERA_POS * 0, CAMERA_POS);
+    appObj.camera.position.set(0, 0, CAMERA_POS);
     appObj.camera.lookAt(0, 0, 0);
   };
 
   const updateCameraSettings = () => {
     const aspectRatio = appObj.sizes.width / appObj.sizes.height;
-
-    // Orthographic camera
-    // const distance = CAMERA_POS;
-    // appObj.camera.left = (aspectRatio / -1) * distance;
-    // appObj.camera.right = (aspectRatio / 1) * distance;
-    // appObj.camera.top = 1 * distance;
-    // appObj.camera.bottom = -1 * distance;
-
-    //Perspective camera
     appObj.camera.aspect = aspectRatio;
+
+    //Set to match pixel size of the elements in three with pixel size of DOM elements
+    appObj.camera.fov =
+      2 *
+      Math.atan(appObj.sizes.height / 2 / appObj.camera.position.z) *
+      (180 / Math.PI);
 
     appObj.camera.updateProjectionMatrix();
   };
