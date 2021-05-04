@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+import boxVertexShader from './shaders/box/vertex.glsl';
+import boxFragmentShader from './shaders/box/fragment.glsl';
+
 export const box = () => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
@@ -8,19 +11,8 @@ export const box = () => {
     const geometry = new THREE.BoxGeometry(2, 2, 2);
 
     const material = new THREE.ShaderMaterial({
-      fragmentShader: `
-        void main() {
-          gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-        }
-      `,
-      vertexShader: `
-        void main() {
-          vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-          vec4 viewPosition = viewMatrix * modelPosition;
-          vec4 projectedPosition = projectionMatrix * viewPosition;
-          gl_Position = projectedPosition;
-        }
-      `,
+      fragmentShader: boxFragmentShader,
+      vertexShader: boxVertexShader,
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(0, 0, 0);
