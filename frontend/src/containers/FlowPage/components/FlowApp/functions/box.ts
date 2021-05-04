@@ -8,7 +8,7 @@ export const box = () => {
   container.matrixAutoUpdate = false;
 
   const generateBox = () => {
-    const geometry = new THREE.PlaneBufferGeometry(2, 2, 10, 10);
+    const geometry = new THREE.PlaneBufferGeometry(2, 2, 50, 50);
 
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,

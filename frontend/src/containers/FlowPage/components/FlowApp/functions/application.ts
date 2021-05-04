@@ -4,6 +4,9 @@ import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 
+// eslint-disable-next-line node/no-unpublished-import
+import { OrbitControls } from '../../../../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
+
 export interface AppProps {
   canvasRefEl: HTMLCanvasElement;
   canvasWrapperRefEl: HTMLDivElement;
@@ -24,6 +27,7 @@ interface AppObj {
   sizes: DOMRect;
   config: Config;
   debugGUI: dat.GUI;
+  controls: OrbitControls;
 }
 
 export let appObj: AppObj = {
@@ -34,6 +38,7 @@ export let appObj: AppObj = {
   sizes: null,
   config: { showDebugGui: false },
   debugGUI: null,
+  controls: null,
 };
 
 export const application = (appProps: AppProps) => {
@@ -87,6 +92,9 @@ export const application = (appProps: AppProps) => {
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
     appObj.renderer.setClearColor(new THREE.Color('#c2d0ff'));
     appObj.renderer.physicallyCorrectLights = true;
+
+    appObj.controls = new OrbitControls(appObj.camera, appProps.canvasRefEl);
+    appObj.controls.enableDamping = true;
   };
 
   const setSizes = () => {
@@ -116,6 +124,7 @@ export const application = (appProps: AppProps) => {
     window.addEventListener('visibilitychange', onVisibilityChange);
 
     appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
+      appObj.controls.update();
       TWEEN.update(time);
       appObj.renderer.render(appObj.scene, appObj.camera);
     });
@@ -138,6 +147,7 @@ export const application = (appProps: AppProps) => {
   };
 
   const destroy = () => {
+    appObj.camera.orbitControls && appObj.camera.orbitControls.dispose();
     destroySetWorld();
     appObj.appTime.stop();
     appObj.debugGUI && appObj.debugGUI.destroy();
@@ -154,6 +164,7 @@ export const application = (appProps: AppProps) => {
       sizes: null,
       config: { showDebugGui: false },
       debugGUI: null,
+      controls: null,
     };
   };
 
