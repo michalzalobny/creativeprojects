@@ -14,7 +14,7 @@ export const box = () => {
 
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
-      wireframe: true,
+      wireframe: false,
       fragmentShader: boxFragmentShader,
       vertexShader: boxVertexShader,
       uniforms: {
