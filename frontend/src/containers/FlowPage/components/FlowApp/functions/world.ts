@@ -15,7 +15,11 @@ export const world = ({ appProps }: World) => {
 
   const { container: lightsContainer } = lights();
   const { container: boxContainer } = box();
-  const { generatePlanes, container: imagePlaneContainer } = imagePlane();
+  const {
+    destroy: destroyImagePlane,
+    generatePlanes,
+    container: imagePlaneContainer,
+  } = imagePlane();
 
   container.add(new THREE.AxesHelper());
   container.add(lightsContainer);
@@ -23,7 +27,9 @@ export const world = ({ appProps }: World) => {
   container.add(imagePlaneContainer);
   generatePlanes(appProps.flowItemsArray);
 
-  const destroy = () => {};
+  const destroy = () => {
+    destroyImagePlane();
+  };
 
   return {
     container,
