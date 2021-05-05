@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import sync, { cancelSync } from 'framesync';
 
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
@@ -63,7 +62,6 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
       const imagePlane = generatePlaneImage(item);
       imagePlanes.push(imagePlane);
     });
-    setPlanesPosition(imagePlanes);
   };
 
   const setPlanesPosition = (imagePlanes: ImagePlane[]) => {
