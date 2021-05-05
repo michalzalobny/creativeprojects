@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import sync from 'framesync';
+import sync, { cancelSync } from 'framesync';
 
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { globalState } from 'utils/globalState';
@@ -77,13 +77,9 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
     });
   };
 
-  const setListeners = () => {
-    sync.render(() => {
-      setPlanesPosition(imagePlanes);
-    }, true);
+  const update = () => {
+    setPlanesPosition(imagePlanes);
   };
-
-  setListeners();
 
   const destroy = () => {
     imagePlanes = [];
@@ -93,5 +89,6 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
     container,
     generatePlanes,
     destroy,
+    update,
   };
 };

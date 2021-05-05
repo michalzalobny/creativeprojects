@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 import { MotionValue } from 'framer-motion';
-import sync from 'framesync';
+import sync, { cancelSync, FrameData } from 'framesync';
 
 import AppTime from './utils/AppTime';
 import { world } from './world';
@@ -118,10 +118,7 @@ export const application = (appProps: AppProps) => {
     window.addEventListener('resize', onResize);
     window.addEventListener('visibilitychange', onVisibilityChange);
 
-    sync.render(() => {
-      appObj.renderer.render(appObj.scene, appObj.camera);
-      appObj.controls.update();
-    }, true);
+    sync.render(render, true);
 
     // appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
     //   TWEEN.update(time);
@@ -129,9 +126,9 @@ export const application = (appProps: AppProps) => {
   };
 
   const setWorld = () => {
-    const { destroy, container } = world({ appProps });
+    const { update, destroy, container } = world({ appProps });
     appObj.scene.add(container);
-    return { destroy };
+    return { update, destroy };
   };
 
   const setConfig = () => {
@@ -145,6 +142,7 @@ export const application = (appProps: AppProps) => {
   };
 
   const destroy = () => {
+    cancelSync.render(render);
     // appObj.camera.orbitControls.dispose();
     destroySetWorld();
     appObj.appTime.stop();
@@ -166,13 +164,20 @@ export const application = (appProps: AppProps) => {
     };
   };
 
+  const render = (frameData: FrameData) => {
+    TWEEN.update(frameData.timestamp);
+    updateSetWorld();
+    appObj.renderer.render(appObj.scene, appObj.camera);
+    appObj.controls.update();
+  };
+
   setSizes();
   setCamera();
   setRenderer();
   onResize();
   setConfig();
   setDebug();
-  const { destroy: destroySetWorld } = setWorld();
+  const { update: updateSetWorld, destroy: destroySetWorld } = setWorld();
   setListeners();
   appProps.setIsReady(true);
 

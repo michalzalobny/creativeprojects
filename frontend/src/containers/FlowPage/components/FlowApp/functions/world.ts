@@ -16,6 +16,7 @@ export const world = ({ appProps }: World) => {
   const { container: lightsContainer } = lights();
   const { container: boxContainer } = box();
   const {
+    update: updateImagePlane,
     destroy: destroyImagePlane,
     generatePlanes,
     container: imagePlaneContainer,
@@ -31,8 +32,13 @@ export const world = ({ appProps }: World) => {
     destroyImagePlane();
   };
 
+  const update = () => {
+    updateImagePlane();
+  };
+
   return {
     container,
     destroy,
+    update,
   };
 };
