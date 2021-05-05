@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import sync from 'framesync';
 
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { globalState } from 'utils/globalState';
@@ -19,7 +20,7 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const imagePlanes: ImagePlane[] = [];
+  let imagePlanes: ImagePlane[] = [];
 
   const generatePlaneImage = (flowItem: FlowItemRef): ImagePlane => {
     const bounds = flowItem.refEl.getBoundingClientRect();
@@ -76,22 +77,16 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
     });
   };
 
-  // const handleScroll = () => {
-  //   setPlanesPosition(imagePlanes);
-  // };
-
-  appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
-    setPlanesPosition(imagePlanes);
-  });
-
   const setListeners = () => {
-    // globalState.pageWrapper.current.addEventListener('scroll', handleScroll);
+    sync.update(() => {
+      setPlanesPosition(imagePlanes);
+    }, true);
   };
 
   setListeners();
 
   const destroy = () => {
-    // globalState.pageWrapper.current.removeEventListener('scroll', handleScroll);
+    imagePlanes = [];
   };
 
   return {
