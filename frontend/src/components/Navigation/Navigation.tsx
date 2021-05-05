@@ -14,9 +14,9 @@ export const Navigation = memo<NavigationProps>(props => {
         <Link href="/" passHref>
           <LinkItem>Landing page</LinkItem>
         </Link>
-        <Link href="/stack-tower" passHref>
+        {/* <Link href="/stack-tower" passHref>
           <LinkItem>Stack tower</LinkItem>
-        </Link>
+        </Link> */}
         <Link href="/flow" passHref>
           <LinkItem>Flow</LinkItem>
         </Link>
