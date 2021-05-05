@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import sync, { cancelSync } from 'framesync';
 
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
-import { globalState } from 'utils/globalState';
 
 import { appObj, AppProps } from './application';
 
