@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 import { MotionValue } from 'framer-motion';
+import sync from 'framesync';
 
 import AppTime from './utils/AppTime';
 import { world } from './world';
@@ -117,11 +118,14 @@ export const application = (appProps: AppProps) => {
     window.addEventListener('resize', onResize);
     window.addEventListener('visibilitychange', onVisibilityChange);
 
-    appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
-      appObj.controls.update();
-      TWEEN.update(time);
+    sync.update(() => {
       appObj.renderer.render(appObj.scene, appObj.camera);
-    });
+      appObj.controls.update();
+    }, true);
+
+    // appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
+    //   TWEEN.update(time);
+    // });
   };
 
   const setWorld = () => {
