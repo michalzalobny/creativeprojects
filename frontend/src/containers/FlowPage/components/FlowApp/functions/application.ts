@@ -118,7 +118,7 @@ export const application = (appProps: AppProps) => {
     window.addEventListener('resize', onResize);
     window.addEventListener('visibilitychange', onVisibilityChange);
 
-    sync.update(() => {
+    sync.render(() => {
       appObj.renderer.render(appObj.scene, appObj.camera);
       appObj.controls.update();
     }, true);

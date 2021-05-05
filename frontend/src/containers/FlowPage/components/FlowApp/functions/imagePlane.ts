@@ -78,7 +78,7 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
   };
 
   const setListeners = () => {
-    sync.update(() => {
+    sync.render(() => {
       setPlanesPosition(imagePlanes);
     }, true);
   };
