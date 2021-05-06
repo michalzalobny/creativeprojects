@@ -1,8 +1,7 @@
 import * as THREE from 'three';
+import { MotionValue } from 'framer-motion';
 
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
-
-import { appObj, AppProps } from './application';
 
 interface ImagePlane {
   item: FlowItemRef;
@@ -11,10 +10,13 @@ interface ImagePlane {
 }
 
 interface ImagePlaneProps {
-  appProps: AppProps;
+  offsetX: MotionValue<number>;
+  offsetY: MotionValue<number>;
+  sizes: DOMRect;
 }
 
-export const imagePlane = ({ appProps }: ImagePlaneProps) => {
+export const imagePlane = (props: ImagePlaneProps) => {
+  const { sizes, offsetX, offsetY } = props;
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -29,22 +31,23 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
       1,
     );
 
-    const imageSrc = flowItem.flowItem.image.formats
-      ? flowItem.flowItem.image.formats.large?.url ||
-        flowItem.flowItem.image.formats.medium?.url ||
-        flowItem.flowItem.image.formats.small?.url ||
-        flowItem.flowItem.image.formats.thumbnail.url
-      : flowItem.flowItem.image.url;
+    // const imageSrc = flowItem.flowItem.image.formats
+    //   ? flowItem.flowItem.image.formats.large?.url ||
+    //     flowItem.flowItem.image.formats.medium?.url ||
+    //     flowItem.flowItem.image.formats.small?.url ||
+    //     flowItem.flowItem.image.formats.thumbnail.url
+    //   : flowItem.flowItem.image.url;
 
-    const image = new Image();
-    image.src = imageSrc;
-    image.crossOrigin = 'anonymous';
+    // const image = new Image();
+    // image.src = imageSrc;
+    // image.crossOrigin = 'anonymous';
 
-    const texture = new THREE.Texture(image);
-    texture.needsUpdate = true;
+    // const texture = new THREE.Texture(image);
+    // texture.needsUpdate = true;
 
     const material = new THREE.MeshBasicMaterial({
-      map: texture,
+      // map: texture,
+      color: new THREE.Color('red'),
     });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -67,9 +70,8 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
   const setPlanesPosition = (imagePlanes: ImagePlane[]) => {
     imagePlanes.forEach(imagePlane => {
       const { top, left, height, width } = imagePlane.bounds;
-      const { sizes } = appObj;
       imagePlane.threejs.position.y =
-        -appProps.offsetY.get() + -top + sizes.height / 2 - height / 2;
+        -offsetY.get() + -top + sizes.height / 2 - height / 2;
       imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
     });
   };

@@ -29,6 +29,7 @@ interface UseScroll {
 interface UseScrollReturn {
   offsetX: MotionValue<number>;
   offsetY: MotionValue<number>;
+  offsetYRef: number;
   seekTo: (props: SeekTo) => void;
 }
 
@@ -173,8 +174,27 @@ export const useScroll = (props: UseScroll): UseScrollReturn => {
   const offsetXSpring = useSpring(offsetX, { stiffness: 1000, damping: 200 });
   const offsetYSpring = useSpring(offsetY, { stiffness: 800, damping: 100 });
 
+  const offsetYSpringRef = useRef(0);
+
+  const offsetSet = useTransform(offsetYSpring, newz => {
+    offsetYSpringRef.current = newz;
+    return newz;
+  });
+
+  const prevY = useMotionValue(offsetYSpring.getPrevious());
+
+  offsetYSpring.onChange(() => {
+    prevY.set(offsetYSpring.getPrevious());
+  });
+
+  // offsetYSpring.onChange(e => {
+  //   // console.log(e);
+
+  // });
+
   return {
-    offsetY: offsetYSpring,
+    offsetY: prevY,
+    offsetYRef: offsetYSpring,
     offsetX: offsetXSpring,
     seekTo,
   };

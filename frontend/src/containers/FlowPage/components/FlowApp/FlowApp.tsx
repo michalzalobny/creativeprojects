@@ -22,7 +22,7 @@ export type UpdateFlowItemsArray = (FlowItemRef) => void;
 
 export const FlowApp = memo<FlowAppProps>(props => {
   const scrollWrapper = useRef<HTMLDivElement>(null);
-  const { offsetX, offsetY, seekTo } = useScroll({
+  const { offsetYRef, offsetX, offsetY, seekTo } = useScroll({
     contentWrapperRef: scrollWrapper,
   });
 
@@ -43,6 +43,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
           />
           <CanvasSectionComp
             flowItemsArray={flowItemsArray}
+            offsetYRef={offsetYRef}
             offsetX={offsetX}
             offsetY={offsetY}
           />
