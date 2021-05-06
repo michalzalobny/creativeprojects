@@ -14,9 +14,9 @@ export interface CanvasSectionProps {
 
 export const CanvasSection = memo<CanvasSectionProps>(props => {
   const { offsetX, offsetY, flowItemsArray } = props;
+  const [isReady, setIsReady] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
-  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const { application } = require('./functions/application');
