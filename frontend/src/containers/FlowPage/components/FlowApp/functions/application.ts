@@ -118,8 +118,6 @@ export const application = (appProps: AppProps) => {
     window.addEventListener('resize', onResize);
     window.addEventListener('visibilitychange', onVisibilityChange);
 
-    sync.render(render, true);
-
     // appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
     //   TWEEN.update(time);
     // });
@@ -143,6 +141,7 @@ export const application = (appProps: AppProps) => {
 
   const destroy = () => {
     cancelSync.render(render);
+    cancelSync.update(updateSetWorld);
     // appObj.camera.orbitControls.dispose();
     destroySetWorld();
     appObj.appTime.stop();
@@ -166,7 +165,7 @@ export const application = (appProps: AppProps) => {
 
   const render = (frameData: FrameData) => {
     TWEEN.update(frameData.timestamp);
-    updateSetWorld();
+    // updateSetWorld();
     appObj.renderer.render(appObj.scene, appObj.camera);
     appObj.controls.update();
   };
@@ -180,6 +179,9 @@ export const application = (appProps: AppProps) => {
   const { update: updateSetWorld, destroy: destroySetWorld } = setWorld();
   setListeners();
   appProps.setIsReady(true);
+
+  sync.render(render, true, true);
+  sync.update(updateSetWorld, true, true);
 
   return { destroy };
 };
