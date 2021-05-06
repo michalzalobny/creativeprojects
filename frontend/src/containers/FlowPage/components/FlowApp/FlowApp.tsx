@@ -1,14 +1,13 @@
-import React, { memo, useRef, useEffect, useState } from 'react';
+import React, { memo, useRef } from 'react';
 
 import { PageData } from 'containers/FlowPage/data';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
 import { Wrapper } from './styled/Wrapper';
-import { RendererWrapper } from './styled/RendererWrapper';
-import { Cover } from './styled/Cover';
 import { useScroll } from './customScroll/hooks/useScroll';
 import { FlowPageContentComp } from './styled/FlowPageContentComp';
 import { FlowPageContentWrapper } from './styled/FlowPageContentWrapper';
+import { CanvasSectionComp } from './styled/CanvasSectionComp';
 
 interface FlowAppProps {
   pageData: PageData;
@@ -22,8 +21,6 @@ export interface FlowItemRef {
 export type UpdateFlowItemsArray = (FlowItemRef) => void;
 
 export const FlowApp = memo<FlowAppProps>(props => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const scrollWrapper = useRef<HTMLDivElement>(null);
   const { offsetX, offsetY, seekTo } = useScroll({
     contentWrapperRef: scrollWrapper,
@@ -35,40 +32,21 @@ export const FlowApp = memo<FlowAppProps>(props => {
     flowItemsArray.current = flowItemsArray.current.concat(itemObj);
   };
 
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    const { application } = require('./functions/application');
-    const { destroy } = application({
-      canvasRefEl: canvasRef.current,
-      canvasWrapperRefEl: canvasWrapperRef.current,
-      setIsReady,
-      flowItemsArray: flowItemsArray.current,
-      offsetX,
-      offsetY,
-    });
-
-    return () => {
-      destroy();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <Wrapper>
-        <Cover animate={isReady ? 'animate' : 'initial'} />
         <FlowPageContentWrapper ref={scrollWrapper}>
           <FlowPageContentComp
             style={{ x: offsetX, y: offsetY }}
             updateFlowItemsArray={updateFlowItemsArray}
             pageData={props.pageData}
           />
+          <CanvasSectionComp
+            flowItemsArray={flowItemsArray}
+            offsetX={offsetX}
+            offsetY={offsetY}
+          />
         </FlowPageContentWrapper>
-
-        <RendererWrapper ref={canvasWrapperRef}>
-          <canvas ref={canvasRef} />
-        </RendererWrapper>
       </Wrapper>
     </>
   );

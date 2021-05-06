@@ -6,10 +6,10 @@ import sync, { cancelSync, FrameData } from 'framesync';
 
 import AppTime from './utils/AppTime';
 import { world } from './world';
-import { FlowItemRef } from '../FlowApp';
+import { FlowItemRef } from '../../../FlowApp';
 
 // eslint-disable-next-line node/no-unpublished-import
-import { OrbitControls } from '../../../../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from '../../../../../../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
 
 export interface AppProps {
   canvasRefEl: HTMLCanvasElement;
