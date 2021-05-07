@@ -20,6 +20,9 @@ export const Navigation = memo<NavigationProps>(props => {
         <Link href="/flow" passHref>
           <LinkItem>Flow</LinkItem>
         </Link>
+        <Link href="/flow-photos" passHref>
+          <LinkItem>Flow Photos</LinkItem>
+        </Link>
       </Wrapper>
     </>
   );
