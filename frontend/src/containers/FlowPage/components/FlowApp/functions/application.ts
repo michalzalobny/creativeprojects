@@ -35,6 +35,7 @@ interface AppObj {
   config: Config;
   debugGUI: dat.GUI;
   controls: OrbitControls;
+  renderedFromPositionChange: boolean;
 }
 
 export let appObj: AppObj = {
@@ -46,6 +47,7 @@ export let appObj: AppObj = {
   config: { showDebugGui: false },
   debugGUI: null,
   controls: null,
+  renderedFromPositionChange: null,
 };
 
 export const application = (appProps: AppProps) => {
@@ -160,14 +162,19 @@ export const application = (appProps: AppProps) => {
       config: { showDebugGui: false },
       debugGUI: null,
       controls: null,
+      renderedFromPositionChange: null,
     };
   };
 
   const render = (frameData: FrameData) => {
-    TWEEN.update(frameData.timestamp);
-    // updateSetWorld();
-    appObj.renderer.render(appObj.scene, appObj.camera);
-    appObj.controls.update();
+    if (!appObj.renderedFromPositionChange) {
+      TWEEN.update(frameData.timestamp);
+      updateSetWorld();
+      appObj.renderer.render(appObj.scene, appObj.camera);
+      appObj.controls.update();
+    }
+
+    appObj.renderedFromPositionChange = false;
   };
 
   setSizes();
@@ -181,7 +188,7 @@ export const application = (appProps: AppProps) => {
   appProps.setIsReady(true);
 
   sync.render(render, true, true);
-  sync.update(updateSetWorld, true, true);
+  // sync.update(updateSetWorld, true, true);
 
   return { destroy };
 };

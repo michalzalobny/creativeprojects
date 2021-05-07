@@ -74,8 +74,20 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
     });
   };
 
+  appProps.offsetY.onRenderRequest(e => {
+    imagePlanes.forEach(imagePlane => {
+      const { top, left, height, width } = imagePlane.bounds;
+      const { sizes } = appObj;
+      imagePlane.threejs.position.y = -e + -top + sizes.height / 2 - height / 2;
+      imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
+    });
+
+    appObj.renderer.render(appObj.scene, appObj.camera);
+    appObj.renderedFromPositionChange = true;
+  });
+
   const update = () => {
-    setPlanesPosition(imagePlanes);
+    // setPlanesPosition(imagePlanes);
   };
 
   const destroy = () => {
