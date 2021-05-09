@@ -1,7 +1,7 @@
 import normalizeWheel from 'normalize-wheel';
 
 import { scrollObj, ScrollMode } from '../scroll';
-import { MOMENTUM_CARRY, MOUSE_EVENT_MULTIPLIER } from '../constants';
+import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
 import { applyScroll } from './applyScroll';
 import { appObj } from '../../app';
 
@@ -22,15 +22,13 @@ export const handleEvents = () => {
       return;
     }
 
-    const touchX = event.touches
-      ? event.touches[0].clientX
-      : event.clientX * MOUSE_EVENT_MULTIPLIER;
-    const touchY = event.touches
-      ? event.touches[0].clientY
-      : event.clientY * MOUSE_EVENT_MULTIPLIER;
+    const touchX = event.touches ? event.touches[0].clientX : event.clientX;
+    const touchY = event.touches ? event.touches[0].clientY : event.clientY;
 
-    const deltaX = touchX - scrollObj.lastTouchX;
-    const deltaY = touchY - scrollObj.lastTouchY;
+    const deltaX =
+      (touchX - scrollObj.lastTouchX) * (event.touches ? 1 : MOUSE_MULTIPLIER);
+    const deltaY =
+      (touchY - scrollObj.lastTouchY) * (event.touches ? 1 : MOUSE_MULTIPLIER);
 
     scrollObj.lastTouchX = touchX;
     scrollObj.lastTouchY = touchY;
