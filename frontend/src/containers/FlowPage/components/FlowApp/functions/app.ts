@@ -4,7 +4,7 @@ import TWEEN from '@tweenjs/tween.js';
 
 import { world } from './world';
 import { FlowItemRef } from '../FlowApp';
-import { scroll } from './scroll/scroll';
+import { scroll, ScrollReturn } from './scroll/scroll';
 
 export interface App {
   canvasRefEl: HTMLCanvasElement;
@@ -14,7 +14,7 @@ export interface App {
 }
 
 interface AppObj {
-  scroll: unknown;
+  scroll: ScrollReturn;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
@@ -41,7 +41,7 @@ export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
 export let appObj: AppObj = {
-  scroll: scroll(),
+  scroll: null,
   camera: null,
   scene: null,
   renderer: null,
@@ -180,7 +180,7 @@ export const app = (appProps: App) => {
       return;
     }
 
-    appObj.scroll.update();
+    appObj.scroll.update(time);
 
     const delta = time - appObj.lastFrameTime;
     let slowDownFactor = delta / DT_FPS;
@@ -212,6 +212,8 @@ export const app = (appProps: App) => {
     setDebug();
     setListeners();
     resumeAppFrame();
+
+    appObj.scroll = scroll();
 
     const {
       init: initWorld,

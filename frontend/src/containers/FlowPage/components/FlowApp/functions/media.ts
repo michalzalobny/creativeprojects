@@ -83,26 +83,28 @@ export const media = (flowItem: FlowItemRef): MediaItem => {
     mesh.position.x =
       -(appObj.sizes.width / 2) +
       mesh.scale.x / 2 +
-      ((bounds.left - x) / appObj.sizes.width) * appObj.sizes.width;
+      ((bounds.left + x) / appObj.sizes.width) * appObj.sizes.width;
   };
 
   const updateY = (y = 0) => {
     mesh.position.y =
       appObj.sizes.height / 2 -
       mesh.scale.y / 2 -
-      ((bounds.top - y) / appObj.sizes.height) * appObj.sizes.height;
+      ((bounds.top + y) / appObj.sizes.height) * appObj.sizes.height;
   };
 
-  const update = (y = { current: 0, last: 0 }) => {
+  const update = scrollObj => {
+    const { currentY, lastY } = scrollObj;
+
     updateScale();
     updateX();
-    updateY(y.current);
+    updateY(currentY);
 
     const planeOffset = mesh.scale.y / 2;
     const viewportOffset = appObj.sizes.height / 2;
 
     mesh.material.uniforms.uStrength.value =
-      ((y.current - y.last) / appObj.sizes.width) * 10;
+      ((currentY - lastY) / appObj.sizes.width) * 10;
   };
 
   const onResize = () => {

@@ -1,58 +1,50 @@
-import { MotionValue } from 'framer-motion';
-import React from 'react';
-import { Group } from '@tweenjs/tween.js';
-
-import { TimelineMode } from './useScroll';
-import { ProgressValues } from './useProgress';
+import { scrollObj, ScrollMode } from '../scroll';
+import { getProgressValues } from './getProgressValues';
 
 export type ApplyScroll = {
   horizontalAmountPx: number;
   verticalAmountPx: number;
 };
 
-export const useApplyScroll = props => {
-  const applyScroll = (props: ApplyScroll) => {
-    const { horizontalAmountPx, verticalAmountPx } = props;
-    switch (timelineMode.current) {
-      case TimelineMode.TIMELINE_MODE_VERTICAL:
-        applyScrollVertical(verticalAmountPx);
-        break;
-      case TimelineMode.TIMELINE_MODE_HORIZONTAL:
-        applyScrollHorizontal(horizontalAmountPx);
-        break;
-      default:
-        throw new Error('Invalid timeline mode');
+export const applyScroll = (props: ApplyScroll) => {
+  scrollObj.TWEEN_GROUP_SEEK.removeAll();
+  const { horizontalAmountPx, verticalAmountPx } = props;
+  switch (scrollObj.scrollMode) {
+    case ScrollMode.VERTICAL:
+      applyScrollVertical(verticalAmountPx);
+      break;
+    case ScrollMode.HORIZONTAL:
+      applyScrollHorizontal(horizontalAmountPx);
+      break;
+    default:
+      throw new Error('Invalid timeline mode');
+  }
+};
+
+//TODO : ADD BOUNDARIES AS FOR VERTICAL
+const applyScrollHorizontal = (amountPx: number) => {
+  if (scrollObj.contentWidth > scrollObj.windowWidth) {
+    const newOffsetX = scrollObj.targetX + amountPx;
+
+    scrollObj.targetX = newOffsetX;
+    scrollObj.progressRatio = getProgressValues().calculatedProgress;
+  }
+};
+
+const applyScrollVertical = (amountPx: number) => {
+  if (scrollObj.contentHeight > scrollObj.windowHeight) {
+    const boundary = scrollObj.contentHeight - scrollObj.windowHeight;
+    const newOffsetY = scrollObj.targetY + amountPx;
+
+    if (-newOffsetY >= boundary) {
+      scrollObj.targetY = -boundary;
+      scrollObj.progressRatio = getProgressValues().calculatedProgress;
+    } else if (-newOffsetY >= 0) {
+      scrollObj.targetY = newOffsetY;
+      scrollObj.progressRatio = getProgressValues().calculatedProgress;
+    } else {
+      scrollObj.targetY = 0;
+      scrollObj.progressRatio = getProgressValues().calculatedProgress;
     }
-  };
-
-  const applyScrollHorizontal = (amountPx: number) => {
-    if (contentWidth.current > windowWidth.current) {
-      const newOffsetX = offsetX.get() + amountPx;
-
-      offsetX.set(newOffsetX);
-      progressRatio.set(getProgressValues().calculatedProgress);
-    }
-  };
-
-  const applyScrollVertical = (amountPx: number) => {
-    if (contentHeight.current > windowHeight.current) {
-      const boundary = contentHeight.current - windowHeight.current;
-      const newOffsetY = offsetY.get() + amountPx;
-
-      if (-newOffsetY >= boundary) {
-        offsetY.set(-boundary);
-        progressRatio.set(getProgressValues().calculatedProgress);
-      } else if (-newOffsetY >= 0) {
-        offsetY.set(newOffsetY);
-        progressRatio.set(getProgressValues().calculatedProgress);
-      } else {
-        offsetY.set(0);
-        progressRatio.set(getProgressValues().calculatedProgress);
-      }
-    }
-  };
-
-  return {
-    applyScroll,
-  };
+  }
 };
