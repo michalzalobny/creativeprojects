@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
 import { media, MediaItem } from './media';
-import { App } from './app';
+import { App, appObj } from './app';
 
 interface ImagePlane {
   appProps: App;
@@ -28,7 +28,7 @@ export const imagePlane = ({ appProps }: ImagePlane) => {
 
   const update = () => {
     if (mediaItemsArray) {
-      mediaItemsArray.forEach(media => media.update());
+      mediaItemsArray.forEach(media => media.update(appObj.scroll.scrollObj));
     }
   };
 
