@@ -65,7 +65,10 @@ export const scroll = (): ScrollReturn => {
   initHandleEvents();
 
   const update = (time: number) => {
-    if (Math.abs(scrollObj.currentY - scrollObj.targetY) < 0.01) {
+    const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
+    const deltaX = Math.abs(scrollObj.currentX - scrollObj.targetX);
+
+    if ((deltaY < 0.01 && deltaY > 0) || (deltaX < 0.01 && deltaX > 0)) {
       return;
     }
 
@@ -99,21 +102,6 @@ export const scroll = (): ScrollReturn => {
       });
     }
   };
-
-  // const addEventListeners = () => {
-  //   window.addEventListener('mousewheel', onWheel);
-  //   window.addEventListener('wheel', onWheel);
-
-  //   window.addEventListener('mousedown', onTouchDown);
-  //   window.addEventListener('mousemove', onTouchMove);
-  //   window.addEventListener('mouseup', onTouchUp);
-
-  //   window.addEventListener('touchstart', onTouchDown);
-  //   window.addEventListener('touchmove', onTouchMove);
-  //   window.addEventListener('touchend', onTouchUp);
-  // };
-
-  // addEventListeners();
 
   return {
     update,
