@@ -1,21 +1,33 @@
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
-import { MotionValue } from 'framer-motion';
-import sync, { cancelSync, FrameData } from 'framesync';
 
-import AppTime from './utils/AppTime';
 import { world } from './world';
 import { FlowItemRef } from '../FlowApp';
 
-// eslint-disable-next-line node/no-unpublished-import
-import { OrbitControls } from '../../../../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
-
-export interface AppProps {
+export interface App {
   canvasRefEl: HTMLCanvasElement;
   canvasWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItemRef[];
+}
+
+interface AppObj {
+  camera: THREE.PerspectiveCamera;
+  scene: THREE.Scene;
+  renderer: THREE.WebGLRenderer;
+  sizes: DOMRect;
+  config: Config;
+  debugGUI: dat.GUI;
+  rafId: number;
+  isResumed: boolean;
+  lastFrameTime: number;
+}
+
+interface AppManager {
+  updateWorld: () => void;
+  destroyWorld: () => void;
+  initWorld: () => void;
 }
 
 interface Config {
@@ -23,32 +35,28 @@ interface Config {
 }
 
 export const CAMERA_POS = 100;
-
-interface AppObj {
-  appTime: AppTime;
-  camera: THREE.PerspectiveCamera;
-  scene: THREE.Scene;
-  renderer: THREE.WebGLRenderer;
-  sizes: DOMRect;
-  config: Config;
-  debugGUI: dat.GUI;
-  controls: OrbitControls;
-  renderedFromPositionChange: boolean;
-}
+export const DEFALUT_FPS = 60;
+const DT_FPS = 1000 / DEFALUT_FPS;
 
 export let appObj: AppObj = {
-  appTime: new AppTime(),
   camera: null,
   scene: null,
   renderer: null,
   sizes: null,
   config: { showDebugGui: false },
   debugGUI: null,
-  controls: null,
-  renderedFromPositionChange: null,
+  rafId: null,
+  isResumed: false,
+  lastFrameTime: null,
 };
 
-export const application = (appProps: AppProps) => {
+let appManager: AppManager = {
+  destroyWorld: null,
+  updateWorld: null,
+  initWorld: null,
+};
+
+export const app = (appProps: App) => {
   const setCamera = () => {
     appObj.camera = new THREE.PerspectiveCamera();
 
@@ -87,9 +95,6 @@ export const application = (appProps: AppProps) => {
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
     appObj.renderer.setClearColor(new THREE.Color('#c2d0ff'));
     appObj.renderer.physicallyCorrectLights = true;
-
-    appObj.controls = new OrbitControls(appObj.camera, appProps.canvasRefEl);
-    appObj.controls.enableDamping = true;
   };
 
   const setSizes = () => {
@@ -108,25 +113,15 @@ export const application = (appProps: AppProps) => {
 
   const onVisibilityChange = () => {
     if (document.hidden) {
-      appObj.appTime.stop();
+      stopAppFrame();
     } else {
-      appObj.appTime.resume();
+      resumeAppFrame();
     }
   };
 
   const setListeners = () => {
     window.addEventListener('resize', onResize);
     window.addEventListener('visibilitychange', onVisibilityChange);
-
-    // appObj.appTime.on('tick', (_slowDownFactor, time, _delta) => {
-    //   TWEEN.update(time);
-    // });
-  };
-
-  const setWorld = () => {
-    const { update, destroy, container } = world({ appProps });
-    appObj.scene.add(container);
-    return { update, destroy };
   };
 
   const setConfig = () => {
@@ -140,11 +135,8 @@ export const application = (appProps: AppProps) => {
   };
 
   const destroy = () => {
-    cancelSync.render(render);
-    cancelSync.update(updateSetWorld);
-    // appObj.camera.orbitControls.dispose();
-    destroySetWorld();
-    appObj.appTime.stop();
+    stopAppFrame();
+    appManager.destroyWorld();
     appObj.debugGUI && appObj.debugGUI.destroy();
     appObj.renderer.dispose();
     window.removeEventListener('resize', onResize);
@@ -152,41 +144,87 @@ export const application = (appProps: AppProps) => {
 
     //Resets appObj
     appObj = {
-      appTime: new AppTime(),
       camera: null,
       scene: null,
       renderer: null,
       sizes: null,
       config: { showDebugGui: false },
       debugGUI: null,
-      controls: null,
-      renderedFromPositionChange: null,
+      rafId: null,
+      isResumed: false,
+      lastFrameTime: null,
+    };
+
+    //Resets appManager
+    appManager = {
+      destroyWorld: null,
+      updateWorld: null,
+      initWorld: null,
     };
   };
 
-  const render = (frameData: FrameData) => {
-    if (!appObj.renderedFromPositionChange) {
-      TWEEN.update(frameData.timestamp);
-      updateSetWorld();
-      appObj.renderer.render(appObj.scene, appObj.camera);
-      appObj.controls.update();
-    }
-
-    appObj.renderedFromPositionChange = false;
+  const resumeAppFrame = () => {
+    appObj.rafId = window.requestAnimationFrame(renderOnFrame);
+    appObj.isResumed = true;
   };
 
-  setSizes();
-  setCamera();
-  setRenderer();
-  onResize();
-  setConfig();
-  setDebug();
-  const { update: updateSetWorld, destroy: destroySetWorld } = setWorld();
-  setListeners();
-  appProps.setIsReady(true);
+  const renderOnFrame = (time: number) => {
+    appObj.rafId = window.requestAnimationFrame(renderOnFrame);
 
-  sync.render(render, true, true);
-  // sync.update(updateSetWorld, true, true);
+    if (appObj.isResumed) {
+      appObj.lastFrameTime = window.performance.now();
+      appObj.isResumed = false;
+      return;
+    }
 
-  return { destroy };
+    const delta = time - appObj.lastFrameTime;
+    let slowDownFactor = delta / DT_FPS;
+
+    //Rounded slowDown factor to the nearest integer reduces physics lags
+    const slowDownFactorRounded = Math.round(slowDownFactor);
+
+    if (slowDownFactorRounded >= 1) {
+      slowDownFactor = slowDownFactorRounded;
+    }
+    appObj.lastFrameTime = time;
+
+    //Update the app
+    TWEEN.update(time);
+    appObj.renderer.render(appObj.scene, appObj.camera);
+    appManager.updateWorld();
+  };
+
+  const stopAppFrame = () => {
+    window.cancelAnimationFrame(appObj.rafId);
+  };
+
+  const init = () => {
+    resumeAppFrame();
+    setSizes();
+    setCamera();
+    setRenderer();
+    onResize();
+    setConfig();
+    setDebug();
+    setListeners();
+
+    const {
+      init: initWorld,
+      update: updateWorld,
+      destroy: destroyWorld,
+      container: containerWorld,
+    } = world({
+      appProps,
+    });
+
+    appObj.scene.add(containerWorld);
+    appManager.updateWorld = updateWorld;
+    appManager.destroyWorld = destroyWorld;
+    appManager.initWorld = initWorld;
+    appManager.initWorld();
+
+    appProps.setIsReady(true);
+  };
+
+  return { destroy, init };
 };

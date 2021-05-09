@@ -38,13 +38,15 @@ export const FlowApp = memo<FlowAppProps>(props => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const { application } = require('./functions/application');
-    const { destroy } = application({
+    const { app } = require('./functions/app');
+    const { destroy, init } = app({
       canvasRefEl: canvasRef.current,
       canvasWrapperRefEl: canvasWrapperRef.current,
       setIsReady,
       flowItemsArray: flowItemsArray.current,
     });
+
+    init();
 
     return () => {
       destroy();

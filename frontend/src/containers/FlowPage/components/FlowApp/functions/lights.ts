@@ -13,9 +13,12 @@ export const lights = () => {
     container.add(directionalLight);
   };
 
-  generateLights();
+  const init = () => {
+    generateLights();
+  };
 
   return {
     container,
+    init,
   };
 };

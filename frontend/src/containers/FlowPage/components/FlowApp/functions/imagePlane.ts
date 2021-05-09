@@ -2,25 +2,25 @@ import * as THREE from 'three';
 
 import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
-import { appObj, AppProps } from './application';
+import { appObj, App } from './app';
 
-interface ImagePlane {
+interface ImagePlaneObject {
   item: FlowItemRef;
   threejs: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
   bounds: DOMRect;
 }
 
-interface ImagePlaneProps {
-  appProps: AppProps;
+interface ImagePlane {
+  appProps: App;
 }
 
-export const imagePlane = ({ appProps }: ImagePlaneProps) => {
+export const imagePlane = ({ appProps }: ImagePlane) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  let imagePlanes: ImagePlane[] = [];
+  let imagePlaneObjects: ImagePlaneObject[] = [];
 
-  const generatePlaneImage = (flowItem: FlowItemRef): ImagePlane => {
+  const generatePlaneImage = (flowItem: FlowItemRef): ImagePlaneObject => {
     const bounds = flowItem.refEl.getBoundingClientRect();
     const geometry = new THREE.PlaneBufferGeometry(
       bounds.width,
@@ -60,31 +60,34 @@ export const imagePlane = ({ appProps }: ImagePlaneProps) => {
   const generatePlanes = (flowItems: FlowItemRef[]) => {
     flowItems.forEach(item => {
       const imagePlane = generatePlaneImage(item);
-      imagePlanes.push(imagePlane);
+      imagePlaneObjects.push(imagePlane);
     });
   };
 
-  const setPlanesPosition = (imagePlanes: ImagePlane[]) => {
-    imagePlanes.forEach(imagePlane => {
+  const setPlanesPosition = (imagePlaneObjects: ImagePlaneObject[]) => {
+    imagePlaneObjects.forEach(imagePlane => {
       const { top, left, height, width } = imagePlane.bounds;
       const { sizes } = appObj;
-      imagePlane.threejs.position.y =
-        -'appProps.offsetY.get()' + -top + sizes.height / 2 - height / 2;
+      imagePlane.threejs.position.y = -0 + -top + sizes.height / 2 - height / 2;
       imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
     });
   };
 
   const update = () => {
-    setPlanesPosition(imagePlanes);
+    setPlanesPosition(imagePlaneObjects);
   };
 
   const destroy = () => {
-    imagePlanes = [];
+    imagePlaneObjects = [];
+  };
+
+  const init = () => {
+    generatePlanes(appProps.flowItemsArray);
   };
 
   return {
     container,
-    generatePlanes,
+    init,
     destroy,
     update,
   };
