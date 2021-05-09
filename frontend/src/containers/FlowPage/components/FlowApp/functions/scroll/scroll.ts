@@ -38,7 +38,7 @@ export interface ScrollReturn {
 }
 
 export const scrollObj: ScrollObj = {
-  ease: 0.05,
+  ease: 0.04,
   currentX: 0,
   targetX: 0,
   lastX: 0,
@@ -64,40 +64,11 @@ export const scroll = (): ScrollReturn => {
 
   initHandleEvents();
 
-  // let isDown = false;
-  // let start;
-
-  // /**
-  //  * Events.
-  //  */
-  // const onTouchDown = event => {
-  //   isDown = true;
-
-  //   scrollObj.position = scrollObj.current;
-  //   start = event.touches ? event.touches[0].clientY : event.clientY;
-  // };
-
-  // const onTouchMove = event => {
-  //   if (!isDown) return;
-
-  //   const y = event.touches ? event.touches[0].clientY : event.clientY;
-  //   const distance = (start - y) * 2;
-
-  //   scrollObj.target = scrollObj.position + distance;
-  // };
-
-  // const onTouchUp = event => {
-  //   isDown = false;
-  // };
-
-  // const onWheel = event => {
-  //   const normalized = normalizeWheel(event);
-  //   const speed = normalized.pixelY;
-
-  //   scrollObj.target += speed * 0.5;
-  // };
-
   const update = (time: number) => {
+    if (Math.abs(scrollObj.currentY - scrollObj.targetY) < 0.01) {
+      return;
+    }
+
     scrollObj.lastX = scrollObj.currentX;
     scrollObj.currentX = lerp(
       scrollObj.currentX,

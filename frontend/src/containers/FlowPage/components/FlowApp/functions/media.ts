@@ -88,9 +88,12 @@ export const media = (flowItem: FlowItemRef): MediaItem => {
 
   const updateY = (y = 0) => {
     mesh.position.y =
-      appObj.sizes.height / 2 -
-      mesh.scale.y / 2 -
-      ((bounds.top + y) / appObj.sizes.height) * appObj.sizes.height;
+      -y - bounds.top + appObj.sizes.height / 2 - bounds.height / 2;
+
+    // mesh.position.y =
+    //   appObj.sizes.height / 2 -
+    //   mesh.scale.y / 2 -
+    //   ((bounds.top + y) / appObj.sizes.height) * appObj.sizes.height;
   };
 
   const update = scrollObj => {
@@ -104,7 +107,7 @@ export const media = (flowItem: FlowItemRef): MediaItem => {
     const viewportOffset = appObj.sizes.height / 2;
 
     mesh.material.uniforms.uStrength.value =
-      ((currentY - lastY) / appObj.sizes.width) * 10;
+      ((currentY - lastY) / appObj.sizes.width) * 15;
   };
 
   const onResize = () => {

@@ -103,7 +103,7 @@ export const app = (appProps: App) => {
 
     appObj.renderer.shadowMap.enabled = true;
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
-    appObj.renderer.setClearColor(new THREE.Color('#c2d0ff'));
+    appObj.renderer.setClearColor(new THREE.Color('#EDE6DD'));
     appObj.renderer.physicallyCorrectLights = true;
   };
 
@@ -193,8 +193,6 @@ export const app = (appProps: App) => {
       return;
     }
 
-    appObj.scroll.update(time);
-
     const delta = time - appObj.lastFrameTime;
     let slowDownFactor = delta / DT_FPS;
 
@@ -205,11 +203,12 @@ export const app = (appProps: App) => {
       slowDownFactor = slowDownFactorRounded;
     }
     appObj.lastFrameTime = time;
-
     //Update the app
-    TWEEN.update(time);
-    appObj.renderer.render(appObj.scene, appObj.camera);
+    appProps.scrollWrapperRefEl.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
     appManager.updateWorld();
+    TWEEN.update(time);
+    appObj.scroll.update(time);
+    appObj.renderer.render(appObj.scene, appObj.camera);
   };
 
   const stopAppFrame = () => {

@@ -7,4 +7,5 @@ export const Wrapper = styled(motion.div)<Props>`
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `;
