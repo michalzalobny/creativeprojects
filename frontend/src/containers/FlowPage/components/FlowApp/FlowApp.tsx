@@ -6,7 +6,6 @@ import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { Wrapper } from './styled/Wrapper';
 import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
-// import { useScroll } from './customScroll/hooks/useScroll';
 import { FlowPageContentComp } from './styled/FlowPageContentComp';
 import { FlowPageContentWrapper } from './styled/FlowPageContentWrapper';
 
@@ -25,9 +24,6 @@ export const FlowApp = memo<FlowAppProps>(props => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const scrollWrapper = useRef<HTMLDivElement>(null);
-  // const { offsetX, offsetY, seekTo } = useScroll({
-  //   contentWrapperRef: scrollWrapper,
-  // });
 
   const flowItemsArray = useRef<FlowItemRef[]>([]);
 
@@ -42,6 +38,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
     const { destroy, init } = app({
       canvasRefEl: canvasRef.current,
       canvasWrapperRefEl: canvasWrapperRef.current,
+      scrollWrapperRefEl: scrollWrapper.current,
       setIsReady,
       flowItemsArray: flowItemsArray.current,
     });

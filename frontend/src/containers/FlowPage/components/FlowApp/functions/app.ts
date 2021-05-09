@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 
+import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
+
 import { world } from './world';
 import { FlowItemRef } from '../FlowApp';
 import { scroll, ScrollReturn } from './scroll/scroll';
@@ -9,6 +11,7 @@ import { scroll, ScrollReturn } from './scroll/scroll';
 export interface App {
   canvasRefEl: HTMLCanvasElement;
   canvasWrapperRefEl: HTMLDivElement;
+  scrollWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItemRef[];
 }
@@ -24,6 +27,10 @@ interface AppObj {
   rafId: number;
   isResumed: boolean;
   lastFrameTime: number;
+  scrollWrapperSizes: {
+    width: number;
+    height: number;
+  };
 }
 
 interface AppManager {
@@ -51,6 +58,7 @@ export let appObj: AppObj = {
   rafId: null,
   isResumed: false,
   lastFrameTime: null,
+  scrollWrapperSizes: null,
 };
 
 let appManager: AppManager = {
@@ -100,6 +108,10 @@ export const app = (appProps: App) => {
   };
 
   const setSizes = () => {
+    appObj.scrollWrapperSizes = {
+      width: getElWidth(appProps.scrollWrapperRefEl),
+      height: getElHeight(appProps.scrollWrapperRefEl),
+    };
     appObj.sizes = appProps.canvasWrapperRefEl.getBoundingClientRect();
   };
 
@@ -156,6 +168,7 @@ export const app = (appProps: App) => {
       rafId: null,
       isResumed: false,
       lastFrameTime: null,
+      scrollWrapperSizes: null,
     };
 
     //Resets appManager

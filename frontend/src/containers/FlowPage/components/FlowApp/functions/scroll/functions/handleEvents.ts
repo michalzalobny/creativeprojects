@@ -69,8 +69,8 @@ export const handleEvents = () => {
     scrollObj.TWEEN_GROUP_SEEK && scrollObj.TWEEN_GROUP_SEEK.removeAll();
     scrollObj.useMomentum = false;
 
-    scrollObj.contentHeight = appObj.sizes.height * 2.5;
-    scrollObj.contentWidth = appObj.sizes.width;
+    scrollObj.contentHeight = appObj.scrollWrapperSizes.height;
+    scrollObj.contentWidth = appObj.scrollWrapperSizes.width;
 
     scrollObj.windowHeight = appObj.sizes.height;
     scrollObj.windowWidth = appObj.sizes.width;
