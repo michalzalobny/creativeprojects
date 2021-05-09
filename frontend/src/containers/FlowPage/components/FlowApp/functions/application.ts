@@ -16,8 +16,6 @@ export interface AppProps {
   canvasWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItemRef[];
-  offsetX: MotionValue<number>;
-  offsetY: MotionValue<number>;
 }
 
 interface Config {
