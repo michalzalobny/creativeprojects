@@ -34,7 +34,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 100;
+export const CAMERA_POS = 5;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
@@ -61,12 +61,11 @@ export const app = (appProps: App) => {
     appObj.camera = new THREE.PerspectiveCamera();
 
     appObj.camera.near = 0.1;
-    appObj.camera.far = 200;
+    appObj.camera.far = 100;
 
     updateCameraSettings();
 
     appObj.camera.position.set(0, 0, CAMERA_POS);
-    appObj.camera.lookAt(0, 0, 0);
   };
 
   const updateCameraSettings = () => {
@@ -199,7 +198,6 @@ export const app = (appProps: App) => {
   };
 
   const init = () => {
-    resumeAppFrame();
     setSizes();
     setCamera();
     setRenderer();
@@ -207,6 +205,7 @@ export const app = (appProps: App) => {
     setConfig();
     setDebug();
     setListeners();
+    resumeAppFrame();
 
     const {
       init: initWorld,
