@@ -28,7 +28,7 @@ export const imagePlane = ({ appProps }: ImagePlane) => {
 
   const update = () => {
     if (mediaItemsArray) {
-      mediaItemsArray.forEach(media => media.update(appObj.scroll.scrollObj));
+      mediaItemsArray.forEach(media => media.update());
     }
   };
 

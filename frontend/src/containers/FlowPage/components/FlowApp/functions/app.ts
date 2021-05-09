@@ -204,8 +204,8 @@ export const app = (appProps: App) => {
     }
     appObj.lastFrameTime = time;
     //Update the app
-    appProps.scrollWrapperRefEl.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
     appManager.updateWorld();
+    appProps.scrollWrapperRefEl.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
     TWEEN.update(time);
     appObj.scroll.update(time);
     appObj.renderer.render(appObj.scene, appObj.camera);

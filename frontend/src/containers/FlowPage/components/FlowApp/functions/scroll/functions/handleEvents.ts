@@ -4,6 +4,7 @@ import { scrollObj, ScrollMode } from '../scroll';
 import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
 import { applyScroll } from './applyScroll';
 import { appObj } from '../../app';
+import { getProgressValues } from './getProgressValues';
 
 export const handleEvents = () => {
   const onTouchDown = (event: TouchEvent & PointerEvent) => {
@@ -75,20 +76,34 @@ export const handleEvents = () => {
     scrollObj.windowHeight = appObj.sizes.height;
     scrollObj.windowWidth = appObj.sizes.width;
 
-    // contentHeight.current = getElHeight(contentWrapperRef);
-    // contentWidth.current = getElWidth(contentWrapperRef);
-    // windowHeight.current = window.innerHeight;
-    // windowWidth.current = window.innerWidth;
+    let currentOffset;
 
-    // if (windowWidth.current >= breakpoints.tablet) {
-    //   timelineMode.current = TimelineMode.TIMELINE_MODE_HORIZONTAL;
-    //   offsetY.set(0);
-    //   offsetX.set(getProgressValues().currentOffset);
-    // } else {
-    // timelineMode.current = TimelineMode.TIMELINE_MODE_VERTICAL;
-    // offsetX.set(0);
-    // offsetY.set(getProgressValues().currentOffset);
-    // }
+    switch (scrollObj.scrollMode) {
+      case ScrollMode.VERTICAL:
+        currentOffset = getProgressValues().currentOffset;
+        scrollObj.lastX = 0;
+        scrollObj.currentX = 0;
+        scrollObj.targetX = 0;
+
+        scrollObj.lastY = currentOffset;
+        scrollObj.currentY = currentOffset;
+        scrollObj.targetY = currentOffset;
+
+        break;
+      case ScrollMode.HORIZONTAL:
+        currentOffset = getProgressValues().currentOffset;
+        scrollObj.lastY = 0;
+        scrollObj.currentY = 0;
+        scrollObj.targetY = 0;
+
+        scrollObj.lastX = currentOffset;
+        scrollObj.currentX = currentOffset;
+        scrollObj.targetX = currentOffset;
+
+        break;
+      default:
+        throw new Error('Invalid timeline mode');
+    }
   };
 
   const init = () => {

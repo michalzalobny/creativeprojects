@@ -8,7 +8,7 @@ import vertexShader from './shaders/media/vertex.glsl';
 
 export interface MediaItem {
   mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;
-  update: (y: unknown) => unknown;
+  update: () => unknown;
   onResize: () => void;
 }
 
@@ -65,80 +65,49 @@ export const media = (flowItem: FlowItemRef): MediaItem => {
   };
 
   const createBounds = () => {
+    const { currentY, lastY, currentX, lastX } = appObj.scroll.scrollObj;
     bounds = element.getBoundingClientRect();
 
     updateScale();
-    updateX();
-    updateY();
+    updateX(currentX);
+    updateY(currentY);
 
     mesh.material.uniforms.uPlaneSizes.value = [mesh.scale.x, mesh.scale.y];
   };
 
   const updateScale = () => {
-    mesh.scale.x = (appObj.sizes.width * bounds.width) / appObj.sizes.width;
-    mesh.scale.y = (appObj.sizes.height * bounds.height) / appObj.sizes.height;
+    mesh.scale.x = bounds.width;
+    mesh.scale.y = bounds.height;
   };
 
   const updateX = (x = 0) => {
     mesh.position.x =
-      -(appObj.sizes.width / 2) +
-      mesh.scale.x / 2 +
-      ((bounds.left + x) / appObj.sizes.width) * appObj.sizes.width;
+      -x + bounds.left - appObj.sizes.width / 2 + mesh.scale.x / 2;
   };
 
   const updateY = (y = 0) => {
     mesh.position.y =
-      -y - bounds.top + appObj.sizes.height / 2 - bounds.height / 2;
-
-    // mesh.position.y =
-    //   appObj.sizes.height / 2 -
-    //   mesh.scale.y / 2 -
-    //   ((bounds.top + y) / appObj.sizes.height) * appObj.sizes.height;
+      -y - bounds.top + appObj.sizes.height / 2 - mesh.scale.y / 2;
   };
 
-  const update = scrollObj => {
-    const { currentY, lastY } = scrollObj;
+  const update = () => {
+    const { currentY, lastY, currentX, lastX } = appObj.scroll.scrollObj;
 
     updateScale();
-    updateX();
+    updateX(currentX);
     updateY(currentY);
 
-    const planeOffset = mesh.scale.y / 2;
-    const viewportOffset = appObj.sizes.height / 2;
-
     mesh.material.uniforms.uStrength.value =
-      ((currentY - lastY) / appObj.sizes.width) * 15;
+      (Math.abs(currentY - lastY) / appObj.sizes.width) * -10;
   };
 
   const onResize = () => {
+    createBounds();
     mesh.material.uniforms.uViewportSizes.value = [
       appObj.sizes.width,
       appObj.sizes.height,
     ];
-
-    createBounds();
   };
-
-  // const setPlanesPosition = (imagePlaneObjects: ImagePlaneObject[]) => {
-  //   imagePlaneObjects.forEach(imagePlane => {
-  //     const { top, left, height, width } = imagePlane.bounds;
-  //     const { sizes } = appObj;
-  //     imagePlane.threejs.position.y = -0 + -top + sizes.height / 2 - height / 2;
-  //     imagePlane.threejs.position.x = left - sizes.width / 2 + width / 2;
-  //   });
-  // };
-
-  // const update = () => {
-  //   setPlanesPosition(imagePlaneObjects);
-  // };
-
-  // const destroy = () => {
-  //   imagePlaneObjects = [];
-  // };
-
-  // const init = () => {
-  //   generatePlanes(appProps.flowItemsArray);
-  // };
 
   const init = () => {
     createGeometry();
