@@ -27,8 +27,14 @@ export const FlowApp = memo<FlowAppProps>(props => {
 
   const flowItemsArray = useRef<FlowItem[]>([]);
 
+  const refsToOffset = useRef<HTMLDivElement[]>([]);
+
   const updateFlowItemsArray = itemObj => {
     flowItemsArray.current = flowItemsArray.current.concat(itemObj);
+  };
+
+  const updateRefsToOffset = itemObj => {
+    refsToOffset.current = refsToOffset.current.concat(itemObj);
   };
 
   const [isReady, setIsReady] = useState(false);
@@ -41,6 +47,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
       scrollWrapperRefEl: scrollWrapper.current,
       setIsReady,
       flowItemsArray: flowItemsArray.current,
+      refsToOffset: refsToOffset.current,
     });
 
     init();
@@ -57,6 +64,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
         <Cover animate={isReady ? 'animate' : 'initial'} />
         <FlowPageContentWrapper ref={scrollWrapper}>
           <FlowPageContentComp
+            updateRefsToOffset={updateRefsToOffset}
             updateFlowItemsArray={updateFlowItemsArray}
             pageData={props.pageData}
           />

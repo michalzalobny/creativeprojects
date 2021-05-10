@@ -16,16 +16,17 @@ import { ImageDescription } from './styled/ImageDescription';
 export interface FlowPageContentProps {
   pageData: PageData;
   updateFlowItemsArray: UpdateFlowItemsArray;
+  updateRefsToOffset: (el: HTMLDivElement) => void;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
-  const { updateFlowItemsArray, pageData, ...rest } = props;
+  const { updateRefsToOffset, updateFlowItemsArray, pageData, ...rest } = props;
   const { asideDescription, flowItems, name } = pageData;
   return (
     <>
       <Wrapper {...rest}>
         <ContentWrapper>
-          <InfoColumn>
+          <InfoColumn ref={el => updateRefsToOffset(el)}>
             <Description>{asideDescription}</Description>
           </InfoColumn>
           <ImagesColumn>
@@ -37,7 +38,9 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
                   >
                     <ImagePlaceholder />
                   </ImageWrapper>
-                  <ImageDescription>{flowItem.description}</ImageDescription>
+                  <ImageDescription ref={el => updateRefsToOffset(el)}>
+                    {flowItem.description}
+                  </ImageDescription>
                 </ImageItem>
               );
             })}

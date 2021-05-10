@@ -14,6 +14,7 @@ export interface App {
   scrollWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItem[];
+  refsToOffset: HTMLDivElement[];
 }
 
 interface AppObj {
@@ -205,7 +206,11 @@ export const app = (appProps: App) => {
     appObj.lastFrameTime = time;
     //Update the app
     appManager.updateWorld();
-    appProps.scrollWrapperRefEl.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
+
+    appProps.refsToOffset.forEach(item => {
+      item.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
+    });
+
     TWEEN.update(time);
     appObj.scroll.update(time);
     appObj.renderer.render(appObj.scene, appObj.camera);
