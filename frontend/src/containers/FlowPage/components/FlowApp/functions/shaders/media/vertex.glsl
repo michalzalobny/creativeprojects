@@ -3,12 +3,9 @@
 precision highp float;
 precision highp int;
 
-
-
-
-
 uniform float uStrength;
 uniform vec2 uViewportSizes;
+uniform vec2 uPlaneSizes;
 
 varying vec2 vUv;
 
@@ -17,7 +14,9 @@ void main() {
 
   newPosition.z += sin(newPosition.y / uViewportSizes.y * PI + PI / 2.0) * -uStrength;
 
-  vUv = uv;
+  
 
   gl_Position = projectionMatrix * newPosition;
+
+  vUv = uv;
 }

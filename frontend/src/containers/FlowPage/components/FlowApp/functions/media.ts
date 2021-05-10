@@ -22,7 +22,7 @@ export const media = (flowItem: FlowItem): MediaItem => {
   let geometry: THREE.PlaneBufferGeometry;
 
   const createGeometry = () => {
-    geometry = new THREE.PlaneBufferGeometry();
+    geometry = new THREE.PlaneBufferGeometry(1, 1, 50, 50);
   };
 
   const createMesh = (flowItem: FlowItem) => {
@@ -91,14 +91,20 @@ export const media = (flowItem: FlowItem): MediaItem => {
   };
 
   const update = () => {
-    const { currentY, lastY, currentX, lastX } = appObj.scroll.scrollObj;
+    const {
+      currentY,
+      lastY,
+      currentX,
+      lastX,
+      currentStrength,
+    } = appObj.scroll.scrollObj;
 
     updateScale();
     updateX(currentX);
     updateY(currentY);
 
     mesh.material.uniforms.uStrength.value =
-      (Math.abs(currentY - lastY) / appObj.sizes.width) * -10;
+      (currentStrength / appObj.sizes.width) * -25;
   };
 
   const onResize = () => {

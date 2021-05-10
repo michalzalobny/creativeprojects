@@ -18,6 +18,9 @@ interface ScrollObj {
   currentY: number;
   targetY: number;
   lastY: number;
+  currentStrength: number;
+  targetStrength: number;
+  lastStrength: number;
   useMomentum: boolean;
   touchMomentum: number;
   lastTouchX: number;
@@ -47,6 +50,9 @@ export let scrollObj: ScrollObj = {
   currentY: 0,
   targetY: 0,
   lastY: 0,
+  currentStrength: 0,
+  targetStrength: 0,
+  lastStrength: 0,
   useMomentum: false,
   touchMomentum: 0,
   lastTouchX: 0,
@@ -82,6 +88,9 @@ export const scroll = (): ScrollReturn => {
       currentY: 0,
       targetY: 0,
       lastY: 0,
+      currentStrength: 0,
+      targetStrength: 0,
+      lastStrength: 0,
       useMomentum: false,
       touchMomentum: 0,
       lastTouchX: 0,
@@ -118,6 +127,14 @@ export const scroll = (): ScrollReturn => {
       scrollObj.targetY,
       scrollObj.ease,
     );
+
+    scrollObj.lastStrength = scrollObj.currentStrength;
+    scrollObj.currentStrength = lerp(
+      scrollObj.currentStrength,
+      scrollObj.targetStrength,
+      scrollObj.ease,
+    );
+    scrollObj.targetStrength = Math.abs(scrollObj.currentY - scrollObj.lastY);
 
     scrollObj.TWEEN_GROUP_SEEK.update(time);
 
