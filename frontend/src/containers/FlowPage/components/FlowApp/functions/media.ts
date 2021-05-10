@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
+import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
 import { appObj, App } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
@@ -12,7 +12,7 @@ export interface MediaItem {
   onResize: () => void;
 }
 
-export const media = (flowItem: FlowItemRef): MediaItem => {
+export const media = (flowItem: FlowItem): MediaItem => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -25,7 +25,7 @@ export const media = (flowItem: FlowItemRef): MediaItem => {
     geometry = new THREE.PlaneBufferGeometry();
   };
 
-  const createMesh = (flowItem: FlowItemRef) => {
+  const createMesh = (flowItem: FlowItem) => {
     const imageSrc = flowItem.flowItem.image.formats
       ? flowItem.flowItem.image.formats.large?.url ||
         flowItem.flowItem.image.formats.medium?.url ||

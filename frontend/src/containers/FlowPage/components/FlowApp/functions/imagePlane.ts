@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { FlowItemRef } from 'containers/FlowPage/components/FlowApp/FlowApp';
+import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
 import { media, MediaItem } from './media';
 import { App, appObj } from './app';
@@ -15,7 +15,7 @@ export const imagePlane = ({ appProps }: ImagePlane) => {
 
   let mediaItemsArray: MediaItem[] = [];
 
-  const generatePlanes = (flowItems: FlowItemRef[]) => {
+  const generatePlanes = (flowItems: FlowItem[]) => {
     mediaItemsArray = flowItems.map(item => {
       const mediaObject = media(item);
       return mediaObject;

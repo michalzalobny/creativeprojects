@@ -13,19 +13,19 @@ interface FlowAppProps {
   pageData: PageData;
 }
 
-export interface FlowItemRef {
+export interface FlowItem {
   refEl: HTMLDivElement;
   flowItem: CreativeItem;
 }
 
-export type UpdateFlowItemsArray = (FlowItemRef) => void;
+export type UpdateFlowItemsArray = (FlowItem) => void;
 
 export const FlowApp = memo<FlowAppProps>(props => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const scrollWrapper = useRef<HTMLDivElement>(null);
 
-  const flowItemsArray = useRef<FlowItemRef[]>([]);
+  const flowItemsArray = useRef<FlowItem[]>([]);
 
   const updateFlowItemsArray = itemObj => {
     flowItemsArray.current = flowItemsArray.current.concat(itemObj);
