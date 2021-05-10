@@ -156,6 +156,7 @@ export const app = (appProps: App) => {
     appObj.renderer.dispose();
     window.removeEventListener('resize', onResize);
     window.removeEventListener('visibilitychange', onVisibilityChange);
+    appObj.scroll.destroy();
 
     //Resets appObj
     appObj = {
@@ -231,6 +232,7 @@ export const app = (appProps: App) => {
     resumeAppFrame();
 
     appObj.scroll = scroll();
+    appObj.scroll.init();
 
     const {
       init: initWorld,

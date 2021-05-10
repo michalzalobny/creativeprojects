@@ -123,7 +123,23 @@ export const handleEvents = () => {
     onResize();
   };
 
+  const destroy = () => {
+    window.removeEventListener('mousewheel', onWheel);
+    window.removeEventListener('wheel', onWheel);
+
+    window.removeEventListener('mousedown', onTouchDown);
+    window.removeEventListener('mousemove', onTouchMove);
+    window.removeEventListener('mouseup', onTouchUp);
+
+    window.removeEventListener('touchstart', onTouchDown);
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchUp);
+
+    window.removeEventListener('resize', onResize);
+  };
+
   return {
     init,
+    destroy,
   };
 };

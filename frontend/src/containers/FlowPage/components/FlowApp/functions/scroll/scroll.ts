@@ -34,10 +34,12 @@ interface ScrollObj {
 
 export interface ScrollReturn {
   update: (time: number) => void;
+  destroy: () => void;
+  init: () => void;
   scrollObj: ScrollObj;
 }
 
-export const scrollObj: ScrollObj = {
+export let scrollObj: ScrollObj = {
   ease: 0.07,
   currentX: 0,
   targetX: 0,
@@ -60,9 +62,40 @@ export const scrollObj: ScrollObj = {
 };
 
 export const scroll = (): ScrollReturn => {
-  const { init: initHandleEvents } = handleEvents();
+  const {
+    destroy: destroyHandleEvents,
+    init: initHandleEvents,
+  } = handleEvents();
 
-  initHandleEvents();
+  const init = () => {
+    initHandleEvents();
+  };
+
+  const destroy = () => {
+    destroyHandleEvents();
+
+    scrollObj = {
+      ease: 0.07,
+      currentX: 0,
+      targetX: 0,
+      lastX: 0,
+      currentY: 0,
+      targetY: 0,
+      lastY: 0,
+      useMomentum: false,
+      touchMomentum: 0,
+      lastTouchX: 0,
+      lastTouchY: 0,
+      scrollMode: ScrollMode.VERTICAL,
+      TWEEN_GROUP_SEEK: new TWEEN.Group(),
+      contentWidth: 0,
+      contentHeight: 0,
+      windowWidth: 0,
+      windowHeight: 0,
+      progressRatio: 0,
+      isTouching: false,
+    };
+  };
 
   const update = (time: number) => {
     const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
@@ -105,6 +138,8 @@ export const scroll = (): ScrollReturn => {
 
   return {
     update,
+    init,
+    destroy,
     scrollObj,
   };
 };
