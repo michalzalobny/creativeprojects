@@ -38,7 +38,7 @@ export interface ScrollReturn {
 }
 
 export const scrollObj: ScrollObj = {
-  ease: 0.06,
+  ease: 0.07,
   currentX: 0,
   targetX: 0,
   lastX: 0,
