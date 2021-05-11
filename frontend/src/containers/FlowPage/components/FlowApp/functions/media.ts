@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import TWEEN from '@tweenjs/tween.js';
 
 import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
@@ -43,6 +44,7 @@ export const media = (
         image.naturalWidth,
         image.naturalHeight,
       ];
+      animateImage();
     };
 
     const material = new THREE.ShaderMaterial({
@@ -54,6 +56,7 @@ export const media = (
         uImageSizes: { value: [0, 0] },
         uViewportSizes: { value: [appObj.sizes.width, appObj.sizes.height] },
         uStrength: { value: 0 },
+        uOpacity: { value: 0 },
       },
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
@@ -61,6 +64,19 @@ export const media = (
 
     mesh = new THREE.Mesh(geometry, material);
     container.add(mesh);
+  };
+
+  const animateImage = () => {
+    const tweenProgress = new TWEEN.Tween({
+      progress: mesh.material.uniforms.uOpacity.value,
+    })
+      .to({ progress: 1 }, 1000)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(obj => {
+        mesh.material.uniforms.uOpacity.value = obj.progress;
+      });
+
+    tweenProgress.start();
   };
 
   const createBounds = () => {
