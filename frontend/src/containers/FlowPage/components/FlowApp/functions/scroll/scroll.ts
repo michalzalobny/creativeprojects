@@ -18,9 +18,12 @@ export interface ScrollObj {
   currentY: number;
   targetY: number;
   lastY: number;
-  currentStrength: number;
-  targetStrength: number;
-  lastStrength: number;
+  currentStrengthY: number;
+  targetStrengthY: number;
+  lastStrengthY: number;
+  currentStrengthX: number;
+  targetStrengthX: number;
+  lastStrengthX: number;
   useMomentum: boolean;
   touchMomentum: number;
   lastTouchX: number;
@@ -51,9 +54,12 @@ export const scroll = (): ScrollReturn => {
     currentY: 0,
     targetY: 0,
     lastY: 0,
-    currentStrength: 0,
-    targetStrength: 0,
-    lastStrength: 0,
+    currentStrengthY: 0,
+    targetStrengthY: 0,
+    lastStrengthY: 0,
+    currentStrengthX: 0,
+    targetStrengthX: 0,
+    lastStrengthX: 0,
     useMomentum: false,
     touchMomentum: 0,
     lastTouchX: 0,
@@ -103,13 +109,23 @@ export const scroll = (): ScrollReturn => {
       scrollObj.ease,
     );
 
-    scrollObj.lastStrength = scrollObj.currentStrength;
-    scrollObj.currentStrength = lerp(
-      scrollObj.currentStrength,
-      scrollObj.targetStrength,
+    //Update strengthY
+    scrollObj.lastStrengthY = scrollObj.currentStrengthY;
+    scrollObj.currentStrengthY = lerp(
+      scrollObj.currentStrengthY,
+      scrollObj.targetStrengthY,
       scrollObj.ease,
     );
-    scrollObj.targetStrength = Math.abs(scrollObj.currentY - scrollObj.lastY);
+    scrollObj.targetStrengthY = Math.abs(scrollObj.currentY - scrollObj.lastY);
+
+    //Update strengthX
+    scrollObj.lastStrengthX = scrollObj.currentStrengthX;
+    scrollObj.currentStrengthX = lerp(
+      scrollObj.currentStrengthX,
+      scrollObj.targetStrengthX,
+      scrollObj.ease,
+    );
+    scrollObj.targetStrengthX = Math.abs(scrollObj.currentX - scrollObj.lastX);
 
     scrollObj.TWEEN_GROUP_SEEK.update(time);
 

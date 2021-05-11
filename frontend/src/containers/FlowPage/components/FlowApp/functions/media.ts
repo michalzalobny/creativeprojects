@@ -96,15 +96,24 @@ export const media = (flowItem: FlowItem): MediaItem => {
       lastY,
       currentX,
       lastX,
-      currentStrength,
+      currentStrengthY,
+      currentStrengthX,
+      scrollMode,
     } = appObj.scroll.scrollObj;
 
     updateScale();
     updateX(currentX);
     updateY(currentY);
 
-    mesh.material.uniforms.uStrength.value =
-      (currentStrength / appObj.sizes.width) * -25;
+    let strength;
+
+    if (scrollMode === 'VERTICAL') {
+      strength = currentStrengthY / appObj.sizes.width;
+    } else {
+      strength = currentStrengthX / appObj.sizes.height;
+    }
+
+    mesh.material.uniforms.uStrength.value = strength * -25;
   };
 
   const onResize = () => {
