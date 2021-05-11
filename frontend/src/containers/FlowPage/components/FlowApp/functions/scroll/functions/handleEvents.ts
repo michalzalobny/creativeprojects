@@ -1,12 +1,16 @@
 import normalizeWheel from 'normalize-wheel';
 
-import { scrollObj, ScrollMode } from '../scroll';
+import { ScrollObj, ScrollMode } from '../scroll';
 import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
 import { applyScroll } from './applyScroll';
 import { appObj } from '../../app';
 import { getProgressValues } from './getProgressValues';
 
-export const handleEvents = () => {
+interface HandleEvents {
+  scrollObj: ScrollObj;
+}
+
+export const handleEvents = ({ scrollObj }: HandleEvents) => {
   const onTouchDown = (event: TouchEvent & PointerEvent) => {
     scrollObj.isTouching = true;
     scrollObj.useMomentum = false;
@@ -47,7 +51,11 @@ export const handleEvents = () => {
         throw new Error('Invalid timeline mode');
     }
 
-    applyScroll({ horizontalAmountPx: deltaX, verticalAmountPx: deltaY });
+    applyScroll({
+      horizontalAmountPx: deltaX,
+      verticalAmountPx: deltaY,
+      scrollObj,
+    });
   };
 
   const onTouchUp = () => {
@@ -63,6 +71,7 @@ export const handleEvents = () => {
     applyScroll({
       horizontalAmountPx: -pixelY,
       verticalAmountPx: -pixelY,
+      scrollObj,
     });
   };
 
@@ -80,7 +89,7 @@ export const handleEvents = () => {
 
     switch (scrollObj.scrollMode) {
       case ScrollMode.VERTICAL:
-        currentOffset = getProgressValues().currentOffset;
+        currentOffset = getProgressValues(scrollObj).currentOffset;
         scrollObj.lastX = 0;
         scrollObj.currentX = 0;
         scrollObj.targetX = 0;
@@ -91,7 +100,7 @@ export const handleEvents = () => {
 
         break;
       case ScrollMode.HORIZONTAL:
-        currentOffset = getProgressValues().currentOffset;
+        currentOffset = getProgressValues(scrollObj).currentOffset;
         scrollObj.lastY = 0;
         scrollObj.currentY = 0;
         scrollObj.targetY = 0;

@@ -10,7 +10,7 @@ export enum ScrollMode {
   HORIZONTAL = 'HORIZONTAL',
 }
 
-interface ScrollObj {
+export interface ScrollObj {
   ease: number;
   currentX: number;
   targetX: number;
@@ -42,36 +42,36 @@ export interface ScrollReturn {
   scrollObj: ScrollObj;
 }
 
-export let scrollObj: ScrollObj = {
-  ease: 0.07,
-  currentX: 0,
-  targetX: 0,
-  lastX: 0,
-  currentY: 0,
-  targetY: 0,
-  lastY: 0,
-  currentStrength: 0,
-  targetStrength: 0,
-  lastStrength: 0,
-  useMomentum: false,
-  touchMomentum: 0,
-  lastTouchX: 0,
-  lastTouchY: 0,
-  scrollMode: ScrollMode.VERTICAL,
-  TWEEN_GROUP_SEEK: new TWEEN.Group(),
-  contentWidth: 0,
-  contentHeight: 0,
-  windowWidth: 0,
-  windowHeight: 0,
-  progressRatio: 0,
-  isTouching: false,
-};
-
 export const scroll = (): ScrollReturn => {
+  const scrollObj: ScrollObj = {
+    ease: 0.07,
+    currentX: 0,
+    targetX: 0,
+    lastX: 0,
+    currentY: 0,
+    targetY: 0,
+    lastY: 0,
+    currentStrength: 0,
+    targetStrength: 0,
+    lastStrength: 0,
+    useMomentum: false,
+    touchMomentum: 0,
+    lastTouchX: 0,
+    lastTouchY: 0,
+    scrollMode: ScrollMode.VERTICAL,
+    TWEEN_GROUP_SEEK: new TWEEN.Group(),
+    contentWidth: 0,
+    contentHeight: 0,
+    windowWidth: 0,
+    windowHeight: 0,
+    progressRatio: 0,
+    isTouching: false,
+  };
+
   const {
     destroy: destroyHandleEvents,
     init: initHandleEvents,
-  } = handleEvents();
+  } = handleEvents({ scrollObj });
 
   const init = () => {
     initHandleEvents();
@@ -79,31 +79,6 @@ export const scroll = (): ScrollReturn => {
 
   const destroy = () => {
     destroyHandleEvents();
-
-    scrollObj = {
-      ease: 0.07,
-      currentX: 0,
-      targetX: 0,
-      lastX: 0,
-      currentY: 0,
-      targetY: 0,
-      lastY: 0,
-      currentStrength: 0,
-      targetStrength: 0,
-      lastStrength: 0,
-      useMomentum: false,
-      touchMomentum: 0,
-      lastTouchX: 0,
-      lastTouchY: 0,
-      scrollMode: ScrollMode.VERTICAL,
-      TWEEN_GROUP_SEEK: new TWEEN.Group(),
-      contentWidth: 0,
-      contentHeight: 0,
-      windowWidth: 0,
-      windowHeight: 0,
-      progressRatio: 0,
-      isTouching: false,
-    };
   };
 
   const update = (time: number) => {
@@ -149,6 +124,7 @@ export const scroll = (): ScrollReturn => {
       applyScroll({
         verticalAmountPx: scrollObj.touchMomentum,
         horizontalAmountPx: scrollObj.touchMomentum,
+        scrollObj,
       });
     }
   };

@@ -2,7 +2,7 @@ import { calculateProgress } from '../utils/calculateProgress';
 import { getPaddedOffset } from '../utils/getPaddedOffset';
 import { retrieveCurrentOffset } from '../utils/retrieveCurrentOffset';
 
-import { ScrollMode, scrollObj } from '../scroll';
+import { ScrollMode, ScrollObj } from '../scroll';
 import { appObj } from '../../app';
 
 export interface ProgressValues {
@@ -11,7 +11,7 @@ export interface ProgressValues {
   currentOffset: number;
 }
 
-export const getProgressValues = (): ProgressValues => {
+export const getProgressValues = (scrollObj: ScrollObj): ProgressValues => {
   let calculatedProgress;
   let paddedOffset;
   let currentOffset;

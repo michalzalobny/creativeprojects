@@ -1,20 +1,21 @@
-import { scrollObj, ScrollMode } from '../scroll';
+import { ScrollObj, ScrollMode } from '../scroll';
 import { getProgressValues } from './getProgressValues';
 
 export type ApplyScroll = {
   horizontalAmountPx: number;
   verticalAmountPx: number;
+  scrollObj: ScrollObj;
 };
 
 export const applyScroll = (props: ApplyScroll) => {
+  const { scrollObj, horizontalAmountPx, verticalAmountPx } = props;
   scrollObj.TWEEN_GROUP_SEEK.removeAll();
-  const { horizontalAmountPx, verticalAmountPx } = props;
   switch (scrollObj.scrollMode) {
     case ScrollMode.VERTICAL:
-      applyScrollVertical(verticalAmountPx);
+      applyScrollVertical(verticalAmountPx, scrollObj);
       break;
     case ScrollMode.HORIZONTAL:
-      applyScrollHorizontal(horizontalAmountPx);
+      applyScrollHorizontal(horizontalAmountPx, scrollObj);
       break;
     default:
       throw new Error('Invalid timeline mode');
@@ -22,36 +23,36 @@ export const applyScroll = (props: ApplyScroll) => {
 };
 
 //TODO : ADD BOUNDARIES AS FOR VERTICAL
-const applyScrollHorizontal = (amountPx: number) => {
+const applyScrollHorizontal = (amountPx: number, scrollObj: ScrollObj) => {
   const boundary = scrollObj.contentWidth - scrollObj.windowWidth;
   const newOffsetX = scrollObj.targetX + amountPx;
 
   if (-newOffsetX >= boundary) {
     scrollObj.targetX = -boundary;
-    scrollObj.progressRatio = getProgressValues().calculatedProgress;
+    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
   } else if (-newOffsetX >= 0) {
     scrollObj.targetX = newOffsetX;
-    scrollObj.progressRatio = getProgressValues().calculatedProgress;
+    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
   } else {
     scrollObj.targetX = 0;
-    scrollObj.progressRatio = getProgressValues().calculatedProgress;
+    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
   }
 };
 
-const applyScrollVertical = (amountPx: number) => {
+const applyScrollVertical = (amountPx: number, scrollObj: ScrollObj) => {
   if (scrollObj.contentHeight > scrollObj.windowHeight) {
     const boundary = scrollObj.contentHeight - scrollObj.windowHeight;
     const newOffsetY = scrollObj.targetY + amountPx;
 
     if (-newOffsetY >= boundary) {
       scrollObj.targetY = -boundary;
-      scrollObj.progressRatio = getProgressValues().calculatedProgress;
+      scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
     } else if (-newOffsetY >= 0) {
       scrollObj.targetY = newOffsetY;
-      scrollObj.progressRatio = getProgressValues().calculatedProgress;
+      scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
     } else {
       scrollObj.targetY = 0;
-      scrollObj.progressRatio = getProgressValues().calculatedProgress;
+      scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
     }
   }
 };
