@@ -23,10 +23,17 @@ export const applyScroll = (props: ApplyScroll) => {
 
 //TODO : ADD BOUNDARIES AS FOR VERTICAL
 const applyScrollHorizontal = (amountPx: number) => {
-  if (scrollObj.contentWidth > scrollObj.windowWidth) {
-    const newOffsetX = scrollObj.targetX + amountPx;
+  const boundary = scrollObj.contentWidth - scrollObj.windowWidth;
+  const newOffsetX = scrollObj.targetX + amountPx;
 
+  if (-newOffsetX >= boundary) {
+    scrollObj.targetX = -boundary;
+    scrollObj.progressRatio = getProgressValues().calculatedProgress;
+  } else if (-newOffsetX >= 0) {
     scrollObj.targetX = newOffsetX;
+    scrollObj.progressRatio = getProgressValues().calculatedProgress;
+  } else {
+    scrollObj.targetX = 0;
     scrollObj.progressRatio = getProgressValues().calculatedProgress;
   }
 };
