@@ -5,6 +5,7 @@ import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { appObj, App } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
 import vertexShader from './shaders/media/vertex.glsl';
+import { ScrollMode } from '../functions/scroll/scroll';
 
 export interface MediaItem {
   mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;
@@ -93,9 +94,7 @@ export const media = (flowItem: FlowItem): MediaItem => {
   const update = () => {
     const {
       currentY,
-      lastY,
       currentX,
-      lastX,
       currentStrengthY,
       currentStrengthX,
       scrollMode,
@@ -107,13 +106,13 @@ export const media = (flowItem: FlowItem): MediaItem => {
 
     let strength;
 
-    if (scrollMode === 'VERTICAL') {
+    if (scrollMode === ScrollMode.VERTICAL) {
       strength = currentStrengthY / appObj.sizes.width;
     } else {
       strength = currentStrengthX / appObj.sizes.height;
     }
 
-    mesh.material.uniforms.uStrength.value = strength * -25;
+    mesh.material.uniforms.uStrength.value = strength * -20;
   };
 
   const onResize = () => {
