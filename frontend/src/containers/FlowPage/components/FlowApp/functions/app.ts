@@ -17,21 +17,23 @@ export interface App {
   refsToOffset: HTMLDivElement[];
 }
 
-interface AppObj {
+interface Sizes {
+  width: number;
+  height: number;
+}
+
+export interface AppObj {
   scroll: ScrollReturn;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
-  sizes: DOMRect;
   config: Config;
   debugGUI: dat.GUI;
   rafId: number;
   isResumed: boolean;
   lastFrameTime: number;
-  scrollWrapperSizes: {
-    width: number;
-    height: number;
-  };
+  contentSizes: Sizes;
+  viewportSizes: Sizes;
 }
 
 interface AppManager {
@@ -48,27 +50,27 @@ export const CAMERA_POS = 5;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
-export let appObj: AppObj = {
-  scroll: null,
-  camera: null,
-  scene: null,
-  renderer: null,
-  sizes: null,
-  config: { showDebugGui: false },
-  debugGUI: null,
-  rafId: null,
-  isResumed: false,
-  lastFrameTime: null,
-  scrollWrapperSizes: null,
-};
-
-let appManager: AppManager = {
-  destroyWorld: null,
-  updateWorld: null,
-  initWorld: null,
-};
-
 export const app = (appProps: App) => {
+  const appObj: AppObj = {
+    scroll: null,
+    camera: null,
+    scene: null,
+    renderer: null,
+    config: { showDebugGui: false },
+    debugGUI: null,
+    rafId: null,
+    isResumed: false,
+    lastFrameTime: null,
+    contentSizes: { height: 0, width: 0 },
+    viewportSizes: { height: 0, width: 0 },
+  };
+
+  const appManager: AppManager = {
+    destroyWorld: null,
+    updateWorld: null,
+    initWorld: null,
+  };
+
   const setCamera = () => {
     appObj.camera = new THREE.PerspectiveCamera();
 
@@ -81,13 +83,14 @@ export const app = (appProps: App) => {
   };
 
   const updateCameraSettings = () => {
-    const aspectRatio = appObj.sizes.width / appObj.sizes.height;
+    const aspectRatio =
+      appObj.viewportSizes.width / appObj.viewportSizes.height;
     appObj.camera.aspect = aspectRatio;
 
     //Set to match pixel size of the elements in three with pixel size of DOM elements
     appObj.camera.fov =
       2 *
-      Math.atan(appObj.sizes.height / 2 / appObj.camera.position.z) *
+      Math.atan(appObj.viewportSizes.height / 2 / appObj.camera.position.z) *
       (180 / Math.PI);
 
     appObj.camera.updateProjectionMatrix();
@@ -109,16 +112,20 @@ export const app = (appProps: App) => {
   };
 
   const setSizes = () => {
-    appObj.scrollWrapperSizes = {
-      width: getElWidth(appProps.scrollWrapperRefEl),
-      height: getElHeight(appProps.scrollWrapperRefEl),
-    };
-    appObj.sizes = appProps.canvasWrapperRefEl.getBoundingClientRect();
+    appObj.contentSizes.width = getElWidth(appProps.scrollWrapperRefEl);
+    appObj.contentSizes.height = getElHeight(appProps.scrollWrapperRefEl);
+
+    const viewportRect = appProps.canvasWrapperRefEl.getBoundingClientRect();
+    appObj.viewportSizes.width = viewportRect.width;
+    appObj.viewportSizes.height = viewportRect.height;
   };
 
   const onResize = () => {
     setSizes();
-    appObj.renderer.setSize(appObj.sizes.width, appObj.sizes.height);
+    appObj.renderer.setSize(
+      appObj.viewportSizes.width,
+      appObj.viewportSizes.height,
+    );
     appObj.renderer.setPixelRatio(
       Math.min(Math.max(window.devicePixelRatio, 1.5), 2),
     );
@@ -157,28 +164,6 @@ export const app = (appProps: App) => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('visibilitychange', onVisibilityChange);
     appObj.scroll.destroy();
-
-    //Resets appObj
-    appObj = {
-      scroll: null,
-      camera: null,
-      scene: null,
-      renderer: null,
-      sizes: null,
-      config: { showDebugGui: false },
-      debugGUI: null,
-      rafId: null,
-      isResumed: false,
-      lastFrameTime: null,
-      scrollWrapperSizes: null,
-    };
-
-    //Resets appManager
-    appManager = {
-      destroyWorld: null,
-      updateWorld: null,
-      initWorld: null,
-    };
   };
 
   const resumeAppFrame = () => {
@@ -231,7 +216,7 @@ export const app = (appProps: App) => {
     setListeners();
     resumeAppFrame();
 
-    appObj.scroll = scroll();
+    appObj.scroll = scroll(appObj.contentSizes, appObj.viewportSizes);
     appObj.scroll.init();
 
     const {
@@ -241,6 +226,7 @@ export const app = (appProps: App) => {
       container: containerWorld,
     } = world({
       appProps,
+      appObj,
     });
 
     appObj.scene.add(containerWorld);

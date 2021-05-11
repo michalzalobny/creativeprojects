@@ -3,7 +3,6 @@ import normalizeWheel from 'normalize-wheel';
 import { ScrollObj, ScrollMode } from '../scroll';
 import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
 import { applyScroll } from './applyScroll';
-import { appObj } from '../../app';
 import { getProgressValues } from './getProgressValues';
 
 interface HandleEvents {
@@ -78,12 +77,6 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
   const onResize = () => {
     scrollObj.TWEEN_GROUP_SEEK && scrollObj.TWEEN_GROUP_SEEK.removeAll();
     scrollObj.useMomentum = false;
-
-    scrollObj.contentHeight = appObj.scrollWrapperSizes.height;
-    scrollObj.contentWidth = appObj.scrollWrapperSizes.width;
-
-    scrollObj.windowHeight = appObj.sizes.height;
-    scrollObj.windowWidth = appObj.sizes.width;
 
     let currentOffset;
 

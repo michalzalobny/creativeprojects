@@ -3,13 +3,14 @@ import * as THREE from 'three';
 import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
 import { media, MediaItem } from './media';
-import { App, appObj } from './app';
+import { App, AppObj } from './app';
 
 interface ImagePlane {
   appProps: App;
+  appObj: AppObj;
 }
 
-export const imagePlane = ({ appProps }: ImagePlane) => {
+export const imagePlane = ({ appObj, appProps }: ImagePlane) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -23,7 +24,7 @@ export const imagePlane = ({ appProps }: ImagePlane) => {
 
   const generatePlanes = (flowItems: FlowItem[]) => {
     mediaItemsArray = flowItems.map(item => {
-      const mediaObject = media(item, geometry);
+      const mediaObject = media(item, geometry, appObj);
       return mediaObject;
     });
 

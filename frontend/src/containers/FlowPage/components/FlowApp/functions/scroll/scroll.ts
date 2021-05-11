@@ -30,10 +30,8 @@ export interface ScrollObj {
   lastTouchY: number;
   scrollMode: ScrollMode;
   TWEEN_GROUP_SEEK: Group;
-  contentWidth: number;
-  contentHeight: number;
-  windowWidth: number;
-  windowHeight: number;
+  viewportSizes: Sizes;
+  contentSizes: Sizes;
   progressRatio: number;
   isTouching: boolean;
 }
@@ -45,7 +43,15 @@ export interface ScrollReturn {
   scrollObj: ScrollObj;
 }
 
-export const scroll = (): ScrollReturn => {
+interface Sizes {
+  width: number;
+  height: number;
+}
+
+export const scroll = (
+  contentSizes: Sizes,
+  viewportSizes: Sizes,
+): ScrollReturn => {
   const scrollObj: ScrollObj = {
     ease: 0.07,
     currentX: 0,
@@ -66,10 +72,8 @@ export const scroll = (): ScrollReturn => {
     lastTouchY: 0,
     scrollMode: ScrollMode.VERTICAL,
     TWEEN_GROUP_SEEK: new TWEEN.Group(),
-    contentWidth: 0,
-    contentHeight: 0,
-    windowWidth: 0,
-    windowHeight: 0,
+    viewportSizes: viewportSizes,
+    contentSizes: contentSizes,
     progressRatio: 0,
     isTouching: false,
   };

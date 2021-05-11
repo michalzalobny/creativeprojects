@@ -3,7 +3,6 @@ import { getPaddedOffset } from '../utils/getPaddedOffset';
 import { retrieveCurrentOffset } from '../utils/retrieveCurrentOffset';
 
 import { ScrollMode, ScrollObj } from '../scroll';
-import { appObj } from '../../app';
 
 export interface ProgressValues {
   calculatedProgress: number;
@@ -19,7 +18,8 @@ export const getProgressValues = (scrollObj: ScrollObj): ProgressValues => {
 
   switch (scrollObj.scrollMode) {
     case ScrollMode.VERTICAL:
-      progressLimit = scrollObj.contentHeight - appObj.sizes.height;
+      progressLimit =
+        scrollObj.contentSizes.height - scrollObj.viewportSizes.height;
       calculatedProgress = calculateProgress(scrollObj.targetY, progressLimit);
       paddedOffset = getPaddedOffset(scrollObj.progressRatio, progressLimit);
       currentOffset = retrieveCurrentOffset(
@@ -28,7 +28,8 @@ export const getProgressValues = (scrollObj: ScrollObj): ProgressValues => {
       );
       break;
     case ScrollMode.HORIZONTAL:
-      progressLimit = scrollObj.contentWidth - appObj.sizes.width;
+      progressLimit =
+        scrollObj.contentSizes.width - scrollObj.viewportSizes.width;
       calculatedProgress = calculateProgress(scrollObj.targetX, progressLimit);
       paddedOffset = getPaddedOffset(scrollObj.progressRatio, progressLimit);
       currentOffset = retrieveCurrentOffset(

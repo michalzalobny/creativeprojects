@@ -2,10 +2,11 @@ import * as THREE from 'three';
 
 import { lights } from './lights';
 import { imagePlane } from './imagePlane';
-import { App } from './app';
+import { App, AppObj } from './app';
 
 interface World {
   appProps: App;
+  appObj: AppObj;
 }
 
 interface WorldManager {
@@ -15,7 +16,7 @@ interface WorldManager {
   initLights: () => void;
 }
 
-export const world = ({ appProps }: World) => {
+export const world = ({ appObj, appProps }: World) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -38,7 +39,7 @@ export const world = ({ appProps }: World) => {
       update: updateImagePlane,
       destroy: destroyImagePlane,
       container: containerImagePlane,
-    } = imagePlane({ appProps });
+    } = imagePlane({ appProps, appObj });
 
     container.add(containerImagePlane);
     worldManager.updateImagePlane = updateImagePlane;

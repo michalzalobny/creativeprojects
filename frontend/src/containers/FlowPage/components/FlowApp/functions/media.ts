@@ -3,7 +3,7 @@ import TWEEN from '@tweenjs/tween.js';
 
 import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
-import { appObj } from './app';
+import { AppObj } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
 import vertexShader from './shaders/media/vertex.glsl';
 import { ScrollMode } from '../functions/scroll/scroll';
@@ -17,6 +17,7 @@ export interface MediaItem {
 export const media = (
   flowItem: FlowItem,
   geometry: THREE.PlaneBufferGeometry,
+  appObj: AppObj,
 ): MediaItem => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
@@ -54,7 +55,9 @@ export const media = (
         tMap: { value: texture },
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
-        uViewportSizes: { value: [appObj.sizes.width, appObj.sizes.height] },
+        uViewportSizes: {
+          value: [appObj.viewportSizes.width, appObj.viewportSizes.height],
+        },
         uStrength: { value: 0 },
         uOpacity: { value: 0 },
       },
@@ -97,12 +100,12 @@ export const media = (
 
   const updateX = (x = 0) => {
     mesh.position.x =
-      -x + bounds.left - appObj.sizes.width / 2 + mesh.scale.x / 2;
+      -x + bounds.left - appObj.viewportSizes.width / 2 + mesh.scale.x / 2;
   };
 
   const updateY = (y = 0) => {
     mesh.position.y =
-      -y - bounds.top + appObj.sizes.height / 2 - mesh.scale.y / 2;
+      -y - bounds.top + appObj.viewportSizes.height / 2 - mesh.scale.y / 2;
   };
 
   const update = () => {
@@ -121,9 +124,9 @@ export const media = (
     let strength;
 
     if (scrollMode === ScrollMode.VERTICAL) {
-      strength = currentStrengthY / appObj.sizes.width;
+      strength = currentStrengthY / appObj.viewportSizes.width;
     } else {
-      strength = currentStrengthX / appObj.sizes.height;
+      strength = currentStrengthX / appObj.viewportSizes.height;
     }
 
     mesh.material.uniforms.uStrength.value = strength * -20;
@@ -132,8 +135,8 @@ export const media = (
   const onResize = () => {
     createBounds();
     mesh.material.uniforms.uViewportSizes.value = [
-      appObj.sizes.width,
-      appObj.sizes.height,
+      appObj.viewportSizes.width,
+      appObj.viewportSizes.height,
     ];
   };
 

@@ -24,7 +24,7 @@ export const applyScroll = (props: ApplyScroll) => {
 
 //TODO : ADD BOUNDARIES AS FOR VERTICAL
 const applyScrollHorizontal = (amountPx: number, scrollObj: ScrollObj) => {
-  const boundary = scrollObj.contentWidth - scrollObj.windowWidth;
+  const boundary = scrollObj.contentSizes.width - scrollObj.viewportSizes.width;
   const newOffsetX = scrollObj.targetX + amountPx;
 
   if (-newOffsetX >= boundary) {
@@ -40,19 +40,18 @@ const applyScrollHorizontal = (amountPx: number, scrollObj: ScrollObj) => {
 };
 
 const applyScrollVertical = (amountPx: number, scrollObj: ScrollObj) => {
-  if (scrollObj.contentHeight > scrollObj.windowHeight) {
-    const boundary = scrollObj.contentHeight - scrollObj.windowHeight;
-    const newOffsetY = scrollObj.targetY + amountPx;
+  const boundary =
+    scrollObj.contentSizes.height - scrollObj.viewportSizes.height;
+  const newOffsetY = scrollObj.targetY + amountPx;
 
-    if (-newOffsetY >= boundary) {
-      scrollObj.targetY = -boundary;
-      scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
-    } else if (-newOffsetY >= 0) {
-      scrollObj.targetY = newOffsetY;
-      scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
-    } else {
-      scrollObj.targetY = 0;
-      scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
-    }
+  if (-newOffsetY >= boundary) {
+    scrollObj.targetY = -boundary;
+    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
+  } else if (-newOffsetY >= 0) {
+    scrollObj.targetY = newOffsetY;
+    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
+  } else {
+    scrollObj.targetY = 0;
+    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
   }
 };
