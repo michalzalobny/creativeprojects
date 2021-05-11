@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
-import { appObj, App } from './app';
+import { appObj } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
 import vertexShader from './shaders/media/vertex.glsl';
 import { ScrollMode } from '../functions/scroll/scroll';
@@ -13,18 +13,16 @@ export interface MediaItem {
   onResize: () => void;
 }
 
-export const media = (flowItem: FlowItem): MediaItem => {
+export const media = (
+  flowItem: FlowItem,
+  geometry: THREE.PlaneBufferGeometry,
+): MediaItem => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
   const element: HTMLDivElement = flowItem.refEl;
   let bounds: DOMRect = element.getBoundingClientRect();
   let mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;
-  let geometry: THREE.PlaneBufferGeometry;
-
-  const createGeometry = () => {
-    geometry = new THREE.PlaneBufferGeometry(1, 1, 50, 50);
-  };
 
   const createMesh = (flowItem: FlowItem) => {
     const imageSrc = flowItem.flowItem.image.formats
@@ -66,7 +64,7 @@ export const media = (flowItem: FlowItem): MediaItem => {
   };
 
   const createBounds = () => {
-    const { currentY, lastY, currentX, lastX } = appObj.scroll.scrollObj;
+    const { currentY, currentX } = appObj.scroll.scrollObj;
     bounds = element.getBoundingClientRect();
 
     updateScale();
@@ -124,7 +122,6 @@ export const media = (flowItem: FlowItem): MediaItem => {
   };
 
   const init = () => {
-    createGeometry();
     createMesh(flowItem);
     createBounds();
     onResize();

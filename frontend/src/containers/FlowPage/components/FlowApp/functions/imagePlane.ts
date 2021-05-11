@@ -15,9 +15,15 @@ export const imagePlane = ({ appProps }: ImagePlane) => {
 
   let mediaItemsArray: MediaItem[] = [];
 
+  let geometry: THREE.PlaneBufferGeometry;
+
+  const createGeometry = () => {
+    geometry = new THREE.PlaneBufferGeometry(1, 1, 50, 50);
+  };
+
   const generatePlanes = (flowItems: FlowItem[]) => {
     mediaItemsArray = flowItems.map(item => {
-      const mediaObject = media(item);
+      const mediaObject = media(item, geometry);
       return mediaObject;
     });
 
@@ -45,6 +51,7 @@ export const imagePlane = ({ appProps }: ImagePlane) => {
 
   const init = () => {
     window.addEventListener('resize', onResize);
+    createGeometry();
     generatePlanes(appProps.flowItemsArray);
   };
 
