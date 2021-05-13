@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { lights } from './lights';
-import { imagePlane } from './imagePlane';
+import { imagePlanes } from './imagePlanes';
 import { App, AppObj } from './app';
 
 interface World {
@@ -10,9 +10,9 @@ interface World {
 }
 
 interface WorldManager {
-  updateImagePlane: () => void;
-  destroyImagePlane: () => void;
-  initImagePlane: () => void;
+  updateImagePlanes: () => void;
+  destroyImagePlanes: () => void;
+  initImagePlanes: () => void;
   initLights: () => void;
 }
 
@@ -20,10 +20,10 @@ export const world = ({ appObj, appProps }: World) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  let worldManager: WorldManager = {
-    destroyImagePlane: null,
-    updateImagePlane: null,
-    initImagePlane: null,
+  const worldManager: WorldManager = {
+    destroyImagePlanes: null,
+    updateImagePlanes: null,
+    initImagePlanes: null,
     initLights: null,
   };
 
@@ -35,34 +35,27 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initLights();
 
     const {
-      init: initImagePlane,
-      update: updateImagePlane,
-      destroy: destroyImagePlane,
-      container: containerImagePlane,
-    } = imagePlane({ appProps, appObj });
+      init: initImagePlanes,
+      update: updateImagePlanes,
+      destroy: destroyImagePlanes,
+      container: containerImagePlanes,
+    } = imagePlanes({ appProps, appObj });
 
-    container.add(containerImagePlane);
-    worldManager.updateImagePlane = updateImagePlane;
-    worldManager.destroyImagePlane = destroyImagePlane;
-    worldManager.initImagePlane = initImagePlane;
-    worldManager.initImagePlane();
+    container.add(containerImagePlanes);
+    worldManager.updateImagePlanes = updateImagePlanes;
+    worldManager.destroyImagePlanes = destroyImagePlanes;
+    worldManager.initImagePlanes = initImagePlanes;
+    worldManager.initImagePlanes();
 
     container.add(new THREE.AxesHelper());
   };
 
   const destroy = () => {
-    worldManager.destroyImagePlane();
-
-    worldManager = {
-      destroyImagePlane: null,
-      updateImagePlane: null,
-      initImagePlane: null,
-      initLights: null,
-    };
+    worldManager.destroyImagePlanes();
   };
 
   const update = () => {
-    worldManager.updateImagePlane();
+    worldManager.updateImagePlanes();
   };
 
   return {

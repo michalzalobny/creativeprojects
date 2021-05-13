@@ -5,12 +5,12 @@ import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { media, MediaItem } from './media';
 import { App, AppObj } from './app';
 
-interface ImagePlane {
+interface ImagePlanes {
   appProps: App;
   appObj: AppObj;
 }
 
-export const imagePlane = ({ appObj, appProps }: ImagePlane) => {
+export const imagePlanes = ({ appObj, appProps }: ImagePlanes) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
