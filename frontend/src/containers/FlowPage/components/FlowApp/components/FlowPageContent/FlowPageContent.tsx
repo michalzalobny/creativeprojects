@@ -17,16 +17,23 @@ export interface FlowPageContentProps {
   pageData: PageData;
   updateFlowItemsArray: UpdateFlowItemsArray;
   updateRefsToOffset: (el: HTMLDivElement) => void;
+  updateStickyRef: (el: HTMLDivElement) => void;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
-  const { updateRefsToOffset, updateFlowItemsArray, pageData, ...rest } = props;
+  const {
+    updateStickyRef,
+    updateRefsToOffset,
+    updateFlowItemsArray,
+    pageData,
+    ...rest
+  } = props;
   const { asideDescription, flowItems, name } = pageData;
   return (
     <>
       <Wrapper {...rest}>
         <ContentWrapper>
-          <InfoColumn ref={el => updateRefsToOffset(el)}>
+          <InfoColumn ref={el => updateStickyRef(el)}>
             <Description>{asideDescription}</Description>
           </InfoColumn>
           <ImagesColumn>

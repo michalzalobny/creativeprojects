@@ -15,6 +15,7 @@ export interface App {
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItem[];
   refsToOffset: HTMLDivElement[];
+  stickyRef: HTMLDivElement;
 }
 
 interface Sizes {
@@ -192,10 +193,7 @@ export const app = (appProps: App) => {
     appObj.lastFrameTime = time;
     //Update the app
     appManager.updateWorld();
-
-    appProps.refsToOffset.forEach(item => {
-      item.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
-    });
+    updateCSS();
 
     TWEEN.update(time);
     appObj.scroll.update(time);
@@ -204,6 +202,18 @@ export const app = (appProps: App) => {
 
   const stopAppFrame = () => {
     window.cancelAnimationFrame(appObj.rafId);
+  };
+
+  const updateCSS = () => {
+    appProps.refsToOffset.forEach(item => {
+      item.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
+    });
+
+    const stickyOffset =
+      appObj.viewportSizes.height - getElHeight(appProps.stickyRef);
+    appProps.stickyRef.style.transform = `translate3d(0,${
+      appObj.scroll.scrollObj.currentY * 0 + stickyOffset
+    }px,0)`;
   };
 
   const init = () => {

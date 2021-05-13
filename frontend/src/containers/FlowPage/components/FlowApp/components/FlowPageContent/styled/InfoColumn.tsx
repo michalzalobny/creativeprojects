@@ -5,7 +5,5 @@ interface Props {}
 
 export const InfoColumn = styled(motion.div)<Props>`
   width: 25%;
-  padding: 30px;
-  position: sticky;
-  top: 0;
+  background: red;
 `;
