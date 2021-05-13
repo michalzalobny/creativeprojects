@@ -16,10 +16,16 @@ export interface App {
   flowItemsArray: FlowItem[];
   refsToOffset: HTMLDivElement[];
   stickyRef: HTMLDivElement;
+  stickyBorderRef: HTMLDivElement;
 }
 
 interface Sizes {
   width: number;
+  height: number;
+}
+
+interface DomEl {
+  top: number;
   height: number;
 }
 
@@ -35,6 +41,7 @@ export interface AppObj {
   lastFrameTime: number;
   contentSizes: Sizes;
   viewportSizes: Sizes;
+  stickyBorderRect: DomEl;
 }
 
 interface AppManager {
@@ -64,6 +71,7 @@ export const app = (appProps: App) => {
     lastFrameTime: null,
     contentSizes: { height: 0, width: 0 },
     viewportSizes: { height: 0, width: 0 },
+    stickyBorderRect: { top: 0, height: 0 },
   };
 
   const appManager: AppManager = {
@@ -119,6 +127,10 @@ export const app = (appProps: App) => {
     const viewportRect = appProps.canvasWrapperRefEl.getBoundingClientRect();
     appObj.viewportSizes.width = viewportRect.width;
     appObj.viewportSizes.height = viewportRect.height;
+
+    const stickyRefRect = appProps.stickyBorderRef.getBoundingClientRect();
+    appObj.stickyBorderRect.top = stickyRefRect.top;
+    appObj.stickyBorderRect.height = getElHeight(appProps.stickyRef);
   };
 
   const onResize = () => {
@@ -210,10 +222,20 @@ export const app = (appProps: App) => {
     });
 
     const stickyOffset =
-      appObj.viewportSizes.height - getElHeight(appProps.stickyRef);
-    appProps.stickyRef.style.transform = `translate3d(0,${
-      appObj.scroll.scrollObj.currentY * 0 + stickyOffset
-    }px,0)`;
+      appObj.viewportSizes.height - appObj.stickyBorderRect.height;
+
+    if (
+      -appObj.scroll.scrollObj.currentY >
+      appObj.stickyBorderRect.top - appObj.viewportSizes.height
+    ) {
+      appProps.stickyRef.style.transform = `translate3d(0,${
+        appObj.stickyBorderRect.top +
+        appObj.scroll.scrollObj.currentY -
+        appObj.stickyBorderRect.height
+      }px,0)`;
+    } else {
+      appProps.stickyRef.style.transform = `translate3d(0,${stickyOffset}px,0)`;
+    }
   };
 
   const init = () => {

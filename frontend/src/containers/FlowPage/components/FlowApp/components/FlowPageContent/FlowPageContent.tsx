@@ -12,16 +12,20 @@ import { ImageWrapper } from './styled/ImageWrapper';
 import { ImagePlaceholder } from './styled/ImagePlaceholder';
 import { ImageItem } from './styled/ImageItem';
 import { ImageDescription } from './styled/ImageDescription';
+import { FinalWrapper } from './styled/FinalWrapper';
+import { FinalContainer } from './styled/FinalContainer';
 
 export interface FlowPageContentProps {
   pageData: PageData;
   updateFlowItemsArray: UpdateFlowItemsArray;
   updateRefsToOffset: (el: HTMLDivElement) => void;
   updateStickyRef: (el: HTMLDivElement) => void;
+  updateStickyBorderRef: (el: HTMLDivElement) => void;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
   const {
+    updateStickyBorderRef,
     updateStickyRef,
     updateRefsToOffset,
     updateFlowItemsArray,
@@ -53,6 +57,17 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
             })}
           </ImagesColumn>
         </ContentWrapper>
+        <FinalContainer
+          ref={el => {
+            updateStickyBorderRef(el);
+          }}
+        >
+          <FinalWrapper
+            ref={el => {
+              updateRefsToOffset(el);
+            }}
+          />
+        </FinalContainer>
       </Wrapper>
     </>
   );
