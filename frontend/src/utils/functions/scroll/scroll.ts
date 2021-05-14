@@ -4,6 +4,7 @@ import { lerp } from './utils/lerp';
 import { handleEvents } from './functions/handleEvents';
 import { MOMENTUM_DAMPING } from './constants';
 import { applyScroll } from './functions/applyScroll';
+import { initSeekTo, SeekTo } from './functions/seekTo';
 
 export enum ScrollMode {
   VERTICAL = 'VERTICAL',
@@ -41,6 +42,7 @@ export interface ScrollReturn {
   destroy: () => void;
   init: () => void;
   scrollObj: ScrollObj;
+  seekTo: (props: SeekTo) => void;
 }
 
 interface Sizes {
@@ -82,6 +84,8 @@ export const scroll = (
     destroy: destroyHandleEvents,
     init: initHandleEvents,
   } = handleEvents({ scrollObj });
+
+  const { seekTo } = initSeekTo(scrollObj);
 
   const init = () => {
     initHandleEvents();
@@ -154,5 +158,6 @@ export const scroll = (
     init,
     destroy,
     scrollObj,
+    seekTo,
   };
 };
