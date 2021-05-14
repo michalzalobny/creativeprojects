@@ -2,7 +2,7 @@ import { calculateProgress } from '../utils/calculateProgress';
 import { getPaddedOffset } from '../utils/getPaddedOffset';
 import { retrieveCurrentOffset } from '../utils/retrieveCurrentOffset';
 
-import { ScrollMode, ScrollObj } from '../scroll';
+import { ScrollMode, ScrollObj } from 'utils/functions/scroll/scroll';
 
 export interface ProgressValues {
   calculatedProgress: number;

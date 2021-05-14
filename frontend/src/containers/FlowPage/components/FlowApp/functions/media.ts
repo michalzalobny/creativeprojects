@@ -6,7 +6,7 @@ import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { AppObj } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
 import vertexShader from './shaders/media/vertex.glsl';
-import { ScrollMode } from '../functions/scroll/scroll';
+import { ScrollMode } from 'utils/functions/scroll/scroll';
 
 export interface MediaItem {
   mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;

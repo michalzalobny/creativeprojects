@@ -1,6 +1,6 @@
 import normalizeWheel from 'normalize-wheel';
 
-import { ScrollObj, ScrollMode } from '../scroll';
+import { ScrollObj, ScrollMode } from 'utils/functions/scroll/scroll';
 import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
 import { applyScroll } from './applyScroll';
 import { getProgressValues } from './getProgressValues';
