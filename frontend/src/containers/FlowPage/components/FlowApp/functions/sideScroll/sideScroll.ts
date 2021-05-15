@@ -11,6 +11,8 @@ export enum ScrollMode {
   HORIZONTAL = 'HORIZONTAL',
 }
 
+const SCROLL_SPEED = 2;
+
 export interface ScrollObj {
   ease: number;
   currentX: number;
@@ -30,6 +32,8 @@ export interface ScrollObj {
   lastTouchX: number;
   lastTouchY: number;
   scrollMode: ScrollMode;
+  direction: 'up' | 'down';
+  speed: number;
   TWEEN_GROUP_SEEK: Group;
   viewportSizes: Sizes;
   contentSizes: Sizes;
@@ -72,6 +76,8 @@ export const sideScroll = (
     touchMomentum: 0,
     lastTouchX: 0,
     lastTouchY: 0,
+    direction: 'up',
+    speed: SCROLL_SPEED,
     scrollMode: ScrollMode.VERTICAL,
     TWEEN_GROUP_SEEK: new TWEEN.Group(),
     viewportSizes: viewportSizes,
@@ -96,11 +102,20 @@ export const sideScroll = (
   };
 
   const update = (time: number) => {
+    scrollObj.targetX += scrollObj.speed;
     const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
     const deltaX = Math.abs(scrollObj.currentX - scrollObj.targetX);
 
     if ((deltaY < 0.01 && deltaY > 0) || (deltaX < 0.01 && deltaX > 0)) {
       return;
+    }
+
+    if (scrollObj.currentX > scrollObj.lastX) {
+      scrollObj.direction = 'down';
+      scrollObj.speed = SCROLL_SPEED;
+    } else if (scrollObj.currentX < scrollObj.lastX) {
+      scrollObj.direction = 'up';
+      scrollObj.speed = -SCROLL_SPEED;
     }
 
     scrollObj.lastX = scrollObj.currentX;

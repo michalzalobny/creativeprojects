@@ -10,33 +10,16 @@ export type ApplyScroll = {
 export const applyScroll = (props: ApplyScroll) => {
   const { scrollObj, horizontalAmountPx, verticalAmountPx } = props;
   scrollObj.TWEEN_GROUP_SEEK.removeAll();
-  switch (scrollObj.scrollMode) {
-    case ScrollMode.VERTICAL:
-      applyScrollVertical(verticalAmountPx, scrollObj);
-      break;
-    case ScrollMode.HORIZONTAL:
-      applyScrollHorizontal(horizontalAmountPx, scrollObj);
-      break;
-    default:
-      throw new Error('Invalid timeline mode');
-  }
+  applyScrollHorizontal(horizontalAmountPx, scrollObj);
+  // applyScrollHorizontal(verticalAmountPx, scrollObj);
 };
 
 //TODO : ADD BOUNDARIES AS FOR VERTICAL
 const applyScrollHorizontal = (amountPx: number, scrollObj: ScrollObj) => {
-  const boundary = scrollObj.contentSizes.width - scrollObj.viewportSizes.width;
   const newOffsetX = scrollObj.targetX + amountPx;
 
-  if (-newOffsetX >= boundary) {
-    scrollObj.targetX = -boundary;
-    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
-  } else if (-newOffsetX >= 0) {
-    scrollObj.targetX = newOffsetX;
-    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
-  } else {
-    scrollObj.targetX = 0;
-    scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
-  }
+  scrollObj.targetX = newOffsetX;
+  scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
 };
 
 const applyScrollVertical = (amountPx: number, scrollObj: ScrollObj) => {

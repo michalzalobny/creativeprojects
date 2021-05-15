@@ -8,7 +8,7 @@ interface Props {}
 export const SliderItem = styled(motion.div)<Props>`
   height: 50vw;
   width: 60vw;
-  margin-right: 10vh;
+  margin-right: 4vw;
 
   ${media.tablet} {
     height: 18vw;

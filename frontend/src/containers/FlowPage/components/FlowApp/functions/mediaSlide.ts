@@ -2,9 +2,8 @@ import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 
 import { AppObj } from './app';
-import fragmentShader from './shaders/media/fragment.glsl';
-import vertexShader from './shaders/media/vertex.glsl';
-import { ScrollMode } from 'utils/functions/scroll/scroll';
+import fragmentShader from './shaders/mediaSlide/fragment.glsl';
+import vertexShader from './shaders/mediaSlide/vertex.glsl';
 import { ImageMediaProps } from 'utils/types/Media';
 
 export interface MediaItem {
@@ -29,6 +28,11 @@ export const mediaSlide = (
   const element: HTMLDivElement = imageEl.refEl;
   let bounds: DOMRect = element.getBoundingClientRect();
   let mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;
+
+  let isBefore;
+  let isAfter;
+  let extra = 0;
+  const parentEl = imageEl.refEl.parentElement;
 
   const createMesh = (imageEl: ImageEl) => {
     const imageSrc = imageEl.image.formats
@@ -104,7 +108,11 @@ export const mediaSlide = (
 
   const updateX = (x = 0) => {
     mesh.position.x =
-      -x + bounds.left - appObj.viewportSizes.width / 2 + mesh.scale.x / 2;
+      -x +
+      bounds.left -
+      appObj.viewportSizes.width / 2 +
+      mesh.scale.x / 2 -
+      extra;
   };
 
   const updateY = (y = 0) => {
@@ -113,30 +121,39 @@ export const mediaSlide = (
   };
 
   const update = () => {
-    const {
-      currentY,
-      currentX,
-      currentStrengthY,
-      currentStrengthX,
-      scrollMode,
-    } = appObj.scroll.scrollObj;
+    const { currentY } = appObj.scroll.scrollObj;
+
+    const { currentX, currentStrengthX } = appObj.sideScroll.scrollObj;
 
     updateScale();
     updateX(currentX);
     updateY(currentY);
 
-    let strength;
+    const strength = currentStrengthX / appObj.viewportSizes.height;
+    mesh.material.uniforms.uStrength.value = strength * -20;
 
-    if (scrollMode === ScrollMode.VERTICAL) {
-      strength = currentStrengthY / appObj.viewportSizes.width;
-    } else {
-      strength = currentStrengthX / appObj.viewportSizes.height;
+    isBefore =
+      mesh.position.x + mesh.scale.x / 2 < -appObj.viewportSizes.width / 2;
+    isAfter =
+      mesh.position.x - mesh.scale.x / 2 > appObj.viewportSizes.width / 2;
+
+    if (appObj.sideScroll.scrollObj.direction === 'down' && isBefore) {
+      extra -= parentEl.clientWidth; //add/remove whole slider container width
+
+      isBefore = false;
+      isAfter = false;
     }
 
-    mesh.material.uniforms.uStrength.value = strength * -20;
+    if (appObj.sideScroll.scrollObj.direction === 'up' && isAfter) {
+      extra += parentEl.clientWidth; //add/remove whole slider container width
+
+      isBefore = false;
+      isAfter = false;
+    }
   };
 
   const onResize = () => {
+    extra = 0;
     createBounds();
     mesh.material.uniforms.uViewportSizes.value = [
       appObj.viewportSizes.width,
