@@ -4,23 +4,19 @@ import { ScrollObj, ScrollMode } from 'utils/functions/scroll/scroll';
 import { getProgressValues } from './getProgressValues';
 
 export type SeekTo = {
-  seekPxMobile: number;
-  seekPxTablet: number;
-  mobileOffset?: number;
-  tabletOffset?: number;
+  seekPxVertical: number;
+  seekPxHorizontal: number;
+  verticalOffset?: number;
+  horizontalOffset?: number;
 };
 
-export type InitSeekToReturn = {
-  seekTo: (props: SeekTo) => void;
-};
-
-export const initSeekTo = (scrollObj: ScrollObj): InitSeekToReturn => {
+export const initSeekTo = (scrollObj: ScrollObj) => {
   const seekTo = (props: SeekTo) => {
     const {
-      seekPxMobile,
-      seekPxTablet,
-      mobileOffset = 0,
-      tabletOffset = 0,
+      seekPxVertical,
+      seekPxHorizontal,
+      verticalOffset = 0,
+      horizontalOffset = 0,
     } = props;
 
     scrollObj.useMomentum = false;
@@ -32,8 +28,8 @@ export const initSeekTo = (scrollObj: ScrollObj): InitSeekToReturn => {
     switch (scrollObj.scrollMode) {
       case ScrollMode.VERTICAL:
         totalSeekValue =
-          seekPxMobile +
-          mobileOffset +
+          seekPxVertical +
+          verticalOffset +
           getProgressValues(scrollObj).paddedOffset;
 
         boundary =
@@ -67,8 +63,8 @@ export const initSeekTo = (scrollObj: ScrollObj): InitSeekToReturn => {
         break;
       case ScrollMode.HORIZONTAL:
         totalSeekValue =
-          seekPxTablet +
-          tabletOffset +
+          seekPxHorizontal +
+          horizontalOffset +
           getProgressValues(scrollObj).paddedOffset;
 
         boundary =
