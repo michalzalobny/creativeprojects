@@ -78,11 +78,10 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
     scrollObj.TWEEN_GROUP_SEEK && scrollObj.TWEEN_GROUP_SEEK.removeAll();
     scrollObj.useMomentum = false;
 
-    let currentOffset;
+    const currentOffset = getProgressValues(scrollObj).currentOffset;
 
     switch (scrollObj.scrollMode) {
       case ScrollMode.VERTICAL:
-        currentOffset = getProgressValues(scrollObj).currentOffset;
         scrollObj.lastX = 0;
         scrollObj.currentX = 0;
         scrollObj.targetX = 0;
@@ -93,7 +92,6 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
 
         break;
       case ScrollMode.HORIZONTAL:
-        currentOffset = getProgressValues(scrollObj).currentOffset;
         scrollObj.lastY = 0;
         scrollObj.currentY = 0;
         scrollObj.targetY = 0;
