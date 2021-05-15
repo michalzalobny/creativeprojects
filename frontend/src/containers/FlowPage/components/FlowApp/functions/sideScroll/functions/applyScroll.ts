@@ -16,7 +16,7 @@ export const applyScroll = (props: ApplyScroll) => {
 
 //TODO : ADD BOUNDARIES AS FOR VERTICAL
 const applyScrollHorizontal = (amountPx: number, scrollObj: ScrollObj) => {
-  const newOffsetX = scrollObj.targetX + amountPx;
+  const newOffsetX = scrollObj.targetX - amountPx;
 
   scrollObj.targetX = newOffsetX;
   scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
