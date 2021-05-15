@@ -37,7 +37,7 @@ export interface ScrollObj {
   isTouching: boolean;
 }
 
-export interface ScrollReturn {
+export interface SideScrollReturn {
   update: (time: number) => void;
   destroy: () => void;
   init: () => void;
@@ -53,7 +53,7 @@ interface Sizes {
 export const sideScroll = (
   contentSizes: Sizes,
   viewportSizes: Sizes,
-): ScrollReturn => {
+): SideScrollReturn => {
   const scrollObj: ScrollObj = {
     ease: 0.08,
     currentX: 0,
