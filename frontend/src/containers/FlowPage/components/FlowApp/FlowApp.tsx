@@ -8,6 +8,7 @@ import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
 import { FlowPageContentComp } from './styled/FlowPageContentComp';
 import { FlowPageContentWrapper } from './styled/FlowPageContentWrapper';
+import { ImageMediaProps } from 'utils/types/Media';
 
 interface FlowAppProps {
   pageData: PageData;
@@ -18,6 +19,13 @@ export interface FlowItem {
   flowItem: CreativeItem;
 }
 
+export interface SlideItem {
+  refEl: HTMLDivElement;
+  image: ImageMediaProps;
+}
+
+export type UpdateSlideItemsArray = (itemObj: SlideItem) => void;
+
 export type UpdateFlowItemsArray = (FlowItem) => void;
 
 export const FlowApp = memo<FlowAppProps>(props => {
@@ -26,6 +34,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
   const scrollWrapper = useRef<HTMLDivElement>(null);
 
   const flowItemsArray = useRef<FlowItem[]>([]);
+  const slideItemsArray = useRef<SlideItem[]>([]);
 
   const refsToOffset = useRef<HTMLDivElement[]>([]);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -43,6 +52,10 @@ export const FlowApp = memo<FlowAppProps>(props => {
     flowItemsArray.current = flowItemsArray.current.concat(itemObj);
   };
 
+  const updateSlideItemsArray = itemObj => {
+    slideItemsArray.current = slideItemsArray.current.concat(itemObj);
+  };
+
   const updateRefsToOffset = itemObj => {
     refsToOffset.current = refsToOffset.current.concat(itemObj);
   };
@@ -57,6 +70,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
       scrollWrapperRefEl: scrollWrapper.current,
       setIsReady,
       flowItemsArray: flowItemsArray.current,
+      slideItemsArray: slideItemsArray.current,
       refsToOffset: refsToOffset.current,
       stickyRef: stickyRef.current,
       stickyBorderRef: stickyBorderRef.current,
@@ -80,6 +94,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
             updateStickyBorderRef={updateStickyBorderRef}
             updateRefsToOffset={updateRefsToOffset}
             updateFlowItemsArray={updateFlowItemsArray}
+            updateSlideItemsArray={updateSlideItemsArray}
             pageData={props.pageData}
           />
         </FlowPageContentWrapper>

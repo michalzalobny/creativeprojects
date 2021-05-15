@@ -20,6 +20,7 @@ import { HeaderTitleSpan } from './styled/Header/HeaderTitleSpan';
 import { SliderWrapper } from './styled/Slider/SliderWrapper';
 import { SliderItem } from './styled/Slider/SliderItem';
 import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
+import { UpdateSlideItemsArray } from '../../FlowApp';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -27,10 +28,12 @@ export interface FlowPageContentProps {
   updateRefsToOffset: (el: HTMLDivElement) => void;
   updateStickyRef: (el: HTMLDivElement) => void;
   updateStickyBorderRef: (el: HTMLDivElement) => void;
+  updateSlideItemsArray: UpdateSlideItemsArray;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
   const {
+    updateSlideItemsArray,
     updateStickyBorderRef,
     updateStickyRef,
     updateRefsToOffset,
@@ -38,7 +41,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
     pageData,
     ...rest
   } = props;
-  const { asideDescription, flowItems, name } = pageData;
+  const { slideImages, asideDescription, flowItems, name } = pageData;
   return (
     <>
       <Wrapper {...rest}>
@@ -51,13 +54,14 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
           </HeaderTitle>
           <SliderWrapper>
             <ItemsWrapper>
-              <SliderItem />
-              <SliderItem />
-              <SliderItem />
-              <SliderItem />
-              <SliderItem />
-              <SliderItem />
-              <SliderItem />
+              {slideImages.map((item, key) => {
+                return (
+                  <SliderItem
+                    ref={refEl => updateSlideItemsArray({ refEl, image: item })}
+                    key={item.url}
+                  />
+                );
+              })}
             </ItemsWrapper>
           </SliderWrapper>
         </HeaderWrapper>

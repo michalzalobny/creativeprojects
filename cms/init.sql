@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 80 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 83 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_role
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1088,7 +1088,7 @@ VALUES
   (
     42,
     'model_def_application::flow-page.flow-page',
-    '{\"uid\":\"application::flow-page.flow-page\",\"collectionName\":\"flow_pages\",\"kind\":\"collectionType\",\"info\":{\"name\":\"flowPage\",\"description\":\"\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"language\":{\"model\":\"language\"},\"flowItems\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"creative-component.creative-item\"},\"asideDescription\":{\"type\":\"richtext\"},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
+    '{\"uid\":\"application::flow-page.flow-page\",\"collectionName\":\"flow_pages\",\"kind\":\"collectionType\",\"info\":{\"name\":\"flowPage\",\"description\":\"\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"language\":{\"model\":\"language\"},\"flowItems\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"creative-component.creative-item\"},\"asideDescription\":{\"type\":\"richtext\"},\"slideImages\":{\"collection\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
     'object',
     NULL,
     NULL
@@ -1099,7 +1099,7 @@ VALUES
   (
     43,
     'plugin_content_manager_configuration_content_types::application::flow-page.flow-page',
-    '{\"uid\":\"application::flow-page.flow-page\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"name\",\"defaultSortBy\":\"name\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"name\":{\"edit\":{\"label\":\"Name\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Name\",\"searchable\":true,\"sortable\":true}},\"language\":{\"edit\":{\"label\":\"Language\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true,\"mainField\":\"name\"},\"list\":{\"label\":\"Language\",\"searchable\":false,\"sortable\":false}},\"flowItems\":{\"edit\":{\"label\":\"FlowItems\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"FlowItems\",\"searchable\":false,\"sortable\":false}},\"asideDescription\":{\"edit\":{\"label\":\"AsideDescription\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"AsideDescription\",\"searchable\":false,\"sortable\":false}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"name\",\"language\",\"created_at\"],\"edit\":[[{\"name\":\"name\",\"size\":6}],[{\"name\":\"asideDescription\",\"size\":12}],[{\"name\":\"flowItems\",\"size\":12}]],\"editRelations\":[\"language\"]}}',
+    '{\"uid\":\"application::flow-page.flow-page\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"name\",\"defaultSortBy\":\"name\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"name\":{\"edit\":{\"label\":\"Name\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Name\",\"searchable\":true,\"sortable\":true}},\"language\":{\"edit\":{\"label\":\"Language\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true,\"mainField\":\"name\"},\"list\":{\"label\":\"Language\",\"searchable\":false,\"sortable\":false}},\"flowItems\":{\"edit\":{\"label\":\"FlowItems\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"FlowItems\",\"searchable\":false,\"sortable\":false}},\"asideDescription\":{\"edit\":{\"label\":\"AsideDescription\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"AsideDescription\",\"searchable\":false,\"sortable\":false}},\"slideImages\":{\"edit\":{\"label\":\"SlideImages\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"SlideImages\",\"searchable\":false,\"sortable\":false}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"name\",\"language\",\"created_at\"],\"edit\":[[{\"name\":\"name\",\"size\":6}],[{\"name\":\"asideDescription\",\"size\":12}],[{\"name\":\"flowItems\",\"size\":12}],[{\"name\":\"slideImages\",\"size\":6}]],\"editRelations\":[\"language\"]}}',
     'object',
     '',
     ''
@@ -1150,7 +1150,7 @@ VALUES
     1,
     1,
     '2021-05-04 17:49:44',
-    '2021-05-04 19:33:34',
+    '2021-05-15 10:40:04',
     'Lorem ipsum dolor sit amet, conse ctetur adipiscing elit, sed do eiusmod tempor incididunt aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in vol'
   );
 
@@ -1475,7 +1475,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$UkbYM7Y4xdb1XICBkgkeQeMZt2AFoEM/AP58W89fLW1GCacfU3PKC',
+    '$2b$10$ai8afJONHUWdmEQTcHF62uQ9FCFt0V6teGygVded5NMe8KSTYugvW',
     NULL,
     NULL,
     1,
@@ -3039,14 +3039,14 @@ INSERT INTO
   )
 VALUES
   (
-    77,
+    80,
     'plugins::content-manager.explorer.create',
     'application::flow-page.flow-page',
-    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\"]',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\",\"slideImages\"]',
     '[]',
     1,
-    '2021-05-04 18:44:27',
-    '2021-05-04 18:44:27'
+    '2021-05-15 10:38:55',
+    '2021-05-15 10:38:55'
   );
 INSERT INTO
   `strapi_permission` (
@@ -3061,14 +3061,14 @@ INSERT INTO
   )
 VALUES
   (
-    78,
+    81,
     'plugins::content-manager.explorer.read',
     'application::flow-page.flow-page',
-    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\"]',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\",\"slideImages\"]',
     '[]',
     1,
-    '2021-05-04 18:44:27',
-    '2021-05-04 18:44:27'
+    '2021-05-15 10:38:55',
+    '2021-05-15 10:38:55'
   );
 INSERT INTO
   `strapi_permission` (
@@ -3083,14 +3083,14 @@ INSERT INTO
   )
 VALUES
   (
-    79,
+    82,
     'plugins::content-manager.explorer.update',
     'application::flow-page.flow-page',
-    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\"]',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\",\"slideImages\"]',
     '[]',
     1,
-    '2021-05-04 18:44:27',
-    '2021-05-04 18:44:27'
+    '2021-05-15 10:38:55',
+    '2021-05-15 10:38:55'
   );
 
 # ------------------------------------------------------------
@@ -3242,21 +3242,21 @@ VALUES
     'bg-100.jpg',
     '',
     '',
-    1200,
-    627,
-    '{\"thumbnail\":{\"name\":\"thumbnail_bg-100.jpg\",\"hash\":\"thumbnail_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":128,\"size\":2.67,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620083957/thumbnail_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_bg_100_a34d767389\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_bg-100.jpg\",\"hash\":\"large_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":523,\"size\":16.04,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620083958/large_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"large_bg_100_a34d767389\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_bg-100.jpg\",\"hash\":\"medium_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":392,\"size\":11.11,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620083959/medium_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"medium_bg_100_a34d767389\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_bg-100.jpg\",\"hash\":\"small_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":261,\"size\":6.62,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620083960/small_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"small_bg_100_a34d767389\",\"resource_type\":\"image\"}}}',
+    1189,
+    669,
+    '{\"thumbnail\":{\"name\":\"thumbnail_bg-100.jpg\",\"hash\":\"thumbnail_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":4.94,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075012/thumbnail_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_bg_100_a34d767389\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_bg-100.jpg\",\"hash\":\"large_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":44.26,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075013/large_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"large_bg_100_a34d767389\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_bg-100.jpg\",\"hash\":\"medium_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":28.32,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075014/medium_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"medium_bg_100_a34d767389\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_bg-100.jpg\",\"hash\":\"small_bg_100_a34d767389\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":14.9,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075014/small_bg_100_a34d767389.jpg\",\"provider_metadata\":{\"public_id\":\"small_bg_100_a34d767389\",\"resource_type\":\"image\"}}}',
     'bg_100_a34d767389',
     '.jpg',
     'image/jpeg',
-    20.30,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620083957/bg_100_a34d767389.jpg',
+    56.42,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075011/bg_100_a34d767389.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"bg_100_a34d767389\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-03 23:19:21',
-    '2021-05-03 23:19:21'
+    '2021-05-15 10:36:56'
   );
 INSERT INTO
   `upload_file` (
@@ -3286,21 +3286,21 @@ VALUES
     'e1.jpg',
     '',
     '',
-    1047,
-    699,
-    '{\"thumbnail\":{\"name\":\"thumbnail_e1.jpg\",\"hash\":\"thumbnail_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":6.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150467/thumbnail_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e1_d826090c67\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e1.jpg\",\"hash\":\"large_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":668,\"size\":93.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150468/large_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"large_e1_d826090c67\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e1.jpg\",\"hash\":\"medium_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":501,\"size\":54.44,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150469/medium_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e1_d826090c67\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e1.jpg\",\"hash\":\"small_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":334,\"size\":23.9,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150470/small_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"small_e1_d826090c67\",\"resource_type\":\"image\"}}}',
+    1050,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_e1.jpg\",\"hash\":\"thumbnail_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":8.93,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074954/thumbnail_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e1_d826090c67\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e1.jpg\",\"hash\":\"large_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":91.6,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074955/large_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"large_e1_d826090c67\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e1.jpg\",\"hash\":\"medium_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":57.3,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074956/medium_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e1_d826090c67\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e1.jpg\",\"hash\":\"small_e1_d826090c67\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":29.12,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074957/small_e1_d826090c67.jpg\",\"provider_metadata\":{\"public_id\":\"small_e1_d826090c67\",\"resource_type\":\"image\"}}}',
     'e1_d826090c67',
     '.jpg',
     'image/jpeg',
-    105.08,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150466/e1_d826090c67.jpg',
+    100.94,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074954/e1_d826090c67.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"e1_d826090c67\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-04 17:47:50',
-    '2021-05-04 17:47:50'
+    '2021-05-15 10:35:58'
   );
 INSERT INTO
   `upload_file` (
@@ -3330,21 +3330,21 @@ VALUES
     'e3.jpg',
     '',
     '',
-    1500,
-    844,
-    '{\"thumbnail\":{\"name\":\"thumbnail_e3.jpg\",\"hash\":\"thumbnail_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":8.37,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150517/thumbnail_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e3.jpg\",\"hash\":\"large_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":116,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150519/large_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"large_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e3.jpg\",\"hash\":\"medium_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":65.44,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150521/medium_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e3.jpg\",\"hash\":\"small_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":30.38,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150522/small_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"small_e3_592a5fb80b\",\"resource_type\":\"image\"}}}',
+    1189,
+    669,
+    '{\"thumbnail\":{\"name\":\"thumbnail_e3.jpg\",\"hash\":\"thumbnail_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":4.94,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074990/thumbnail_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e3.jpg\",\"hash\":\"large_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":44.26,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074991/large_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"large_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e3.jpg\",\"hash\":\"medium_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":28.32,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074992/medium_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e3_592a5fb80b\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e3.jpg\",\"hash\":\"small_e3_592a5fb80b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":14.9,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074993/small_e3_592a5fb80b.jpg\",\"provider_metadata\":{\"public_id\":\"small_e3_592a5fb80b\",\"resource_type\":\"image\"}}}',
     'e3_592a5fb80b',
     '.jpg',
     'image/jpeg',
-    259.05,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150517/e3_592a5fb80b.jpg',
+    56.42,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074990/e3_592a5fb80b.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"e3_592a5fb80b\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-04 17:48:42',
-    '2021-05-04 17:48:42'
+    '2021-05-15 10:36:34'
   );
 INSERT INTO
   `upload_file` (
@@ -3374,21 +3374,329 @@ VALUES
     'e2.jpg',
     '',
     '',
-    800,
-    533,
-    '{\"thumbnail\":{\"name\":\"thumbnail_e2.jpg\",\"hash\":\"thumbnail_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":11.98,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150553/thumbnail_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e2.jpg\",\"hash\":\"medium_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":79.29,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150554/medium_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e2.jpg\",\"hash\":\"small_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":41.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150555/small_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"small_e2_a59f9b0802\",\"resource_type\":\"image\"}}}',
+    1050,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_e2.jpg\",\"hash\":\"thumbnail_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":6.62,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074972/thumbnail_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_e2.jpg\",\"hash\":\"large_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":66.87,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074973/large_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"large_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_e2.jpg\",\"hash\":\"medium_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":43.19,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074974/medium_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"medium_e2_a59f9b0802\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_e2.jpg\",\"hash\":\"small_e2_a59f9b0802\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":22.21,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074975/small_e2_a59f9b0802.jpg\",\"provider_metadata\":{\"public_id\":\"small_e2_a59f9b0802\",\"resource_type\":\"image\"}}}',
     'e2_a59f9b0802',
     '.jpg',
     'image/jpeg',
-    92.33,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620150552/e2_a59f9b0802.jpg',
+    71.42,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621074972/e2_a59f9b0802.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"e2_a59f9b0802\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-04 17:49:16',
-    '2021-05-04 17:49:16'
+    '2021-05-15 10:36:17'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    6,
+    '3.jpg',
+    '',
+    '',
+    675,
+    900,
+    '{\"thumbnail\":{\"name\":\"thumbnail_3.jpg\",\"hash\":\"thumbnail_3_e1d5402125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":117,\"height\":156,\"size\":4.02,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/thumbnail_3_e1d5402125.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_3_e1d5402125\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_3.jpg\",\"hash\":\"medium_3_e1d5402125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":563,\"height\":750,\"size\":32.3,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075190/medium_3_e1d5402125.jpg\",\"provider_metadata\":{\"public_id\":\"medium_3_e1d5402125\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_3.jpg\",\"hash\":\"small_3_e1d5402125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":375,\"height\":500,\"size\":18.46,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075190/small_3_e1d5402125.jpg\",\"provider_metadata\":{\"public_id\":\"small_3_e1d5402125\",\"resource_type\":\"image\"}}}',
+    '3_e1d5402125',
+    '.jpg',
+    'image/jpeg',
+    41.95,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075188/3_e1d5402125.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"3_e1d5402125\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:51',
+    '2021-05-15 10:39:51'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    7,
+    '4.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_4.jpg\",\"hash\":\"thumbnail_4_4273d6ef68\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":4.15,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/thumbnail_4_4273d6ef68.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_4_4273d6ef68\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_4.jpg\",\"hash\":\"medium_4_4273d6ef68\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":52.48,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075190/medium_4_4273d6ef68.jpg\",\"provider_metadata\":{\"public_id\":\"medium_4_4273d6ef68\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_4.jpg\",\"hash\":\"small_4_4273d6ef68\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":28.06,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/small_4_4273d6ef68.jpg\",\"provider_metadata\":{\"public_id\":\"small_4_4273d6ef68\",\"resource_type\":\"image\"}}}',
+    '4_4273d6ef68',
+    '.jpg',
+    'image/jpeg',
+    74.27,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075188/4_4273d6ef68.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"4_4273d6ef68\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:52',
+    '2021-05-15 10:39:52'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    8,
+    '6.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_6.jpg\",\"hash\":\"thumbnail_6_3fbea5e093\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":6.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/thumbnail_6_3fbea5e093.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_6_3fbea5e093\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_6.jpg\",\"hash\":\"medium_6_3fbea5e093\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":77.5,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075190/medium_6_3fbea5e093.jpg\",\"provider_metadata\":{\"public_id\":\"medium_6_3fbea5e093\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_6.jpg\",\"hash\":\"small_6_3fbea5e093\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":41.5,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/small_6_3fbea5e093.jpg\",\"provider_metadata\":{\"public_id\":\"small_6_3fbea5e093\",\"resource_type\":\"image\"}}}',
+    '6_3fbea5e093',
+    '.jpg',
+    'image/jpeg',
+    112.36,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/6_3fbea5e093.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"6_3fbea5e093\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:52',
+    '2021-05-15 10:39:52'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    9,
+    '8.jpg',
+    '',
+    '',
+    615,
+    977,
+    '{\"thumbnail\":{\"name\":\"thumbnail_8.jpg\",\"hash\":\"thumbnail_8_4f8b31dda9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":98,\"height\":156,\"size\":2.22,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/thumbnail_8_4f8b31dda9.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_8_4f8b31dda9\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_8.jpg\",\"hash\":\"medium_8_4f8b31dda9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":472,\"height\":750,\"size\":31.53,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075190/medium_8_4f8b31dda9.jpg\",\"provider_metadata\":{\"public_id\":\"medium_8_4f8b31dda9\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_8.jpg\",\"hash\":\"small_8_4f8b31dda9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":315,\"height\":500,\"size\":16.59,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/small_8_4f8b31dda9.jpg\",\"provider_metadata\":{\"public_id\":\"small_8_4f8b31dda9\",\"resource_type\":\"image\"}}}',
+    '8_4f8b31dda9',
+    '.jpg',
+    'image/jpeg',
+    47.50,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075188/8_4f8b31dda9.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"8_4f8b31dda9\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:52',
+    '2021-05-15 10:39:52'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    10,
+    '7.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_7.jpg\",\"hash\":\"thumbnail_7_726ea90b79\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.49,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/thumbnail_7_726ea90b79.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_7_726ea90b79\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_7.jpg\",\"hash\":\"medium_7_726ea90b79\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":50.17,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/medium_7_726ea90b79.jpg\",\"provider_metadata\":{\"public_id\":\"medium_7_726ea90b79\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_7.jpg\",\"hash\":\"small_7_726ea90b79\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":22.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/small_7_726ea90b79.jpg\",\"provider_metadata\":{\"public_id\":\"small_7_726ea90b79\",\"resource_type\":\"image\"}}}',
+    '7_726ea90b79',
+    '.jpg',
+    'image/jpeg',
+    82.40,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075188/7_726ea90b79.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"7_726ea90b79\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:53',
+    '2021-05-15 10:39:53'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    11,
+    '2.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_2.jpg\",\"hash\":\"thumbnail_2_3f4b8f95b2\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.89,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075190/thumbnail_2_3f4b8f95b2.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_2_3f4b8f95b2\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_2.jpg\",\"hash\":\"medium_2_3f4b8f95b2\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":68.17,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/medium_2_3f4b8f95b2.jpg\",\"provider_metadata\":{\"public_id\":\"medium_2_3f4b8f95b2\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_2.jpg\",\"hash\":\"small_2_3f4b8f95b2\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":32.04,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075192/small_2_3f4b8f95b2.jpg\",\"provider_metadata\":{\"public_id\":\"small_2_3f4b8f95b2\",\"resource_type\":\"image\"}}}',
+    '2_3f4b8f95b2',
+    '.jpg',
+    'image/jpeg',
+    109.48,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075189/2_3f4b8f95b2.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"2_3f4b8f95b2\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:53',
+    '2021-05-15 10:39:53'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    12,
+    '9.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_9.jpg\",\"hash\":\"thumbnail_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.12,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075192/thumbnail_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_9_112f9470bc\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_9.jpg\",\"hash\":\"medium_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":44.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075193/medium_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"medium_9_112f9470bc\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_9.jpg\",\"hash\":\"small_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":22.02,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075193/small_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"small_9_112f9470bc\",\"resource_type\":\"image\"}}}',
+    '9_112f9470bc',
+    '.jpg',
+    'image/jpeg',
+    64.63,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/9_112f9470bc.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"9_112f9470bc\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-15 10:39:55',
+    '2021-05-15 10:39:55'
   );
 
 # ------------------------------------------------------------
@@ -3507,7 +3815,7 @@ INSERT INTO
   )
 VALUES
   (
-    7,
+    10,
     3,
     4,
     'components_creative_component_creative_items',
@@ -3525,7 +3833,7 @@ INSERT INTO
   )
 VALUES
   (
-    8,
+    11,
     4,
     5,
     'components_creative_component_creative_items',
@@ -3543,13 +3851,90 @@ INSERT INTO
   )
 VALUES
   (
-    9,
+    12,
     5,
     6,
     'components_creative_component_creative_items',
     'image',
     1
   );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (13, 6, 1, 'flow_pages', 'slideImages', 1);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (14, 7, 1, 'flow_pages', 'slideImages', 2);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (15, 8, 1, 'flow_pages', 'slideImages', 3);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (16, 9, 1, 'flow_pages', 'slideImages', 4);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (17, 10, 1, 'flow_pages', 'slideImages', 5);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (18, 11, 1, 'flow_pages', 'slideImages', 6);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (19, 12, 1, 'flow_pages', 'slideImages', 7);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users-permissions_permission

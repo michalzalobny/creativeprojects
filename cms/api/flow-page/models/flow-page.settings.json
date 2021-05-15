@@ -24,6 +24,15 @@
     },
     "asideDescription": {
       "type": "richtext"
+    },
+    "slideImages": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

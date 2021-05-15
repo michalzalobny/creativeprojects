@@ -5,7 +5,7 @@ import TWEEN from '@tweenjs/tween.js';
 import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 
 import { world } from './world';
-import { FlowItem } from '../FlowApp';
+import { FlowItem, SlideItem } from '../FlowApp';
 import { scroll, ScrollReturn } from 'utils/functions/scroll/scroll';
 
 export interface App {
@@ -14,6 +14,7 @@ export interface App {
   scrollWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItem[];
+  slideItemsArray: SlideItem[];
   refsToOffset: HTMLDivElement[];
   stickyRef: HTMLDivElement;
   stickyBorderRef: HTMLDivElement;

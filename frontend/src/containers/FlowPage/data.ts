@@ -8,10 +8,12 @@ import { getLocalizedText } from 'utils/i18n';
 import { ProjectData } from 'utils/types/strapi/ProjectData';
 import { getProjectData } from 'utils/functions/strapi/getProjectData';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
+import { ImageMediaProps } from 'utils/types/Media';
 
 export interface PageData {
   name: string;
   flowItems: CreativeItem[];
+  slideImages: ImageMediaProps[];
   asideDescription: string;
 }
 
@@ -36,7 +38,11 @@ async function getPageData(locale: string) {
             },
             description
           },
-          asideDescription
+          asideDescription,
+          slideImages{
+              formats,
+              url
+            },
         }
       }
     `,
