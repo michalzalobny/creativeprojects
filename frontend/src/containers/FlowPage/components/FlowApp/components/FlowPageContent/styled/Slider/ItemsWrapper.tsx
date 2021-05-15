@@ -5,4 +5,5 @@ interface Props {}
 
 export const ItemsWrapper = styled(motion.div)<Props>`
   display: flex;
+  align-items: center;
 `;
