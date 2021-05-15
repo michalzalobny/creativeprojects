@@ -21,6 +21,20 @@ export default function MyApp(props: AppProps) {
     setIsInit(true);
   }, [isInit]);
 
+  React.useLayoutEffect(() => {
+    //https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+    const updateVh = () => {
+      // We execute the same script as before
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    window.addEventListener('resize', updateVh);
+    updateVh();
+    return () => {
+      window.removeEventListener('resize', updateVh);
+    };
+  }, []);
+
   return (
     <ExampleContextProvider>
       <GlobalStyles />
