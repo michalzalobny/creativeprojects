@@ -7,6 +7,7 @@ import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 import { world } from './world';
 import { FlowItem, SlideItem } from '../FlowApp';
 import { scroll, ScrollReturn } from 'utils/functions/scroll/scroll';
+import { sideScroll, SideScrollReturn } from './sideScroll/sideScroll';
 
 export interface App {
   canvasRefEl: HTMLCanvasElement;
@@ -32,6 +33,7 @@ interface DomEl {
 
 export interface AppObj {
   scroll: ScrollReturn;
+  sideScroll: SideScrollReturn;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
@@ -61,6 +63,7 @@ const DT_FPS = 1000 / DEFALUT_FPS;
 
 export const app = (appProps: App) => {
   const appObj: AppObj = {
+    sideScroll: null,
     scroll: null,
     camera: null,
     scene: null,
@@ -178,6 +181,7 @@ export const app = (appProps: App) => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('visibilitychange', onVisibilityChange);
     appObj.scroll.destroy();
+    appObj.sideScroll.destroy();
   };
 
   const resumeAppFrame = () => {
@@ -210,6 +214,7 @@ export const app = (appProps: App) => {
 
     TWEEN.update(time);
     appObj.scroll.update(time);
+    appObj.sideScroll.update(time);
     appObj.renderer.render(appObj.scene, appObj.camera);
   };
 
@@ -251,6 +256,9 @@ export const app = (appProps: App) => {
 
     appObj.scroll = scroll(appObj.contentSizes, appObj.viewportSizes);
     appObj.scroll.init();
+
+    appObj.sideScroll = sideScroll(appObj.contentSizes, appObj.viewportSizes);
+    appObj.sideScroll.init();
 
     const {
       init: initWorld,
