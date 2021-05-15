@@ -5,4 +5,5 @@ interface Props {}
 
 export const HeaderTitleSpan = styled(motion.span)<Props>`
   font-style: italic;
+  font-weight: 800;
 `;

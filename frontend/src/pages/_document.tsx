@@ -68,6 +68,21 @@ export default class Document extends NextDocument {
             crossOrigin="anonymous"
           />
 
+          <link
+            rel="preload"
+            as="font"
+            type="font/woff2"
+            href={'/fonts/playfairItalic800latin.woff2'}
+            crossOrigin="anonymous"
+          />
+
+          <link
+            rel="preload"
+            as="font"
+            type="font/woff2"
+            href={'/fonts/playfair400latin.woff2'}
+            crossOrigin="anonymous"
+          />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         </Head>
         <body>
