@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { SlideItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
-import { media, MediaItem } from './media';
+import { mediaSlide, MediaItem } from './mediaSlide';
 import { App, AppObj } from './app';
 
 interface ImageSlider {
@@ -24,7 +24,7 @@ export const imageSlider = ({ appObj, appProps }: ImageSlider) => {
 
   const generatePlanes = (flowItems: SlideItem[]) => {
     mediaItemsArray = flowItems.map(item => {
-      const mediaObject = media(item, geometry, appObj);
+      const mediaObject = mediaSlide(item, geometry, appObj);
       return mediaObject;
     });
 
