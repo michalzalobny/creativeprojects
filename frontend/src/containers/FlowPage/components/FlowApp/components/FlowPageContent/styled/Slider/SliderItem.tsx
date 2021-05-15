@@ -10,7 +10,8 @@ export const SliderItem = styled(motion.div)<Props>`
   width: 55vw;
 
   ${media.tablet} {
-    width: 26vw;
+    width: 20vw;
+    margin-right: 2vw;
   }
   &:before {
     content: '';
