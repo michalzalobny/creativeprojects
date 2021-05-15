@@ -21,6 +21,7 @@ import { SliderWrapper } from './styled/Slider/SliderWrapper';
 import { SliderItem } from './styled/Slider/SliderItem';
 import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
 import { UpdateSlideItemsArray } from '../../FlowApp';
+import { TitleWrapper } from './styled/Header/TitleWrapper';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -45,13 +46,15 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
   return (
     <>
       <Wrapper {...rest}>
-        <HeaderWrapper ref={el => updateRefsToOffset(el)}>
-          <HeaderTitle>
-            Any <HeaderTitleSpan>Variation</HeaderTitleSpan>
-            <br></br>
-            that fits your
-            <HeaderTitleSpan> Imagination</HeaderTitleSpan>
-          </HeaderTitle>
+        <HeaderWrapper>
+          <TitleWrapper>
+            <HeaderTitle ref={el => updateRefsToOffset(el)}>
+              Any <HeaderTitleSpan>Variation</HeaderTitleSpan>
+              <br></br>
+              that fits your
+              <HeaderTitleSpan> Imagination</HeaderTitleSpan>
+            </HeaderTitle>
+          </TitleWrapper>
           <SliderWrapper>
             <ItemsWrapper>
               {slideImages.map((item, key) => {

@@ -1,12 +1,11 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 
-import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
-
 import { AppObj } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
 import vertexShader from './shaders/media/vertex.glsl';
 import { ScrollMode } from 'utils/functions/scroll/scroll';
+import { ImageMediaProps } from 'utils/types/Media';
 
 export interface MediaItem {
   mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;
@@ -14,25 +13,30 @@ export interface MediaItem {
   onResize: () => void;
 }
 
+type ImageEl = {
+  refEl: HTMLDivElement;
+  image: ImageMediaProps;
+};
+
 export const media = (
-  flowItem: FlowItem,
+  imageEl: ImageEl,
   geometry: THREE.PlaneBufferGeometry,
   appObj: AppObj,
 ): MediaItem => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const element: HTMLDivElement = flowItem.refEl;
+  const element: HTMLDivElement = imageEl.refEl;
   let bounds: DOMRect = element.getBoundingClientRect();
   let mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>;
 
-  const createMesh = (flowItem: FlowItem) => {
-    const imageSrc = flowItem.flowItem.image.formats
-      ? flowItem.flowItem.image.formats.large?.url ||
-        flowItem.flowItem.image.formats.medium?.url ||
-        flowItem.flowItem.image.formats.small?.url ||
-        flowItem.flowItem.image.formats.thumbnail.url
-      : flowItem.flowItem.image.url;
+  const createMesh = (imageEl: ImageEl) => {
+    const imageSrc = imageEl.image.formats
+      ? imageEl.image.formats.large?.url ||
+        imageEl.image.formats.medium?.url ||
+        imageEl.image.formats.small?.url ||
+        imageEl.image.formats.thumbnail.url
+      : imageEl.image.url;
 
     const image = new Image();
     const texture = new THREE.Texture();
@@ -141,7 +145,7 @@ export const media = (
   };
 
   const init = () => {
-    createMesh(flowItem);
+    createMesh(imageEl);
     createBounds();
     onResize();
   };

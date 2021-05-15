@@ -1,16 +1,16 @@
 import * as THREE from 'three';
 
-import { FlowItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
+import { SlideItem } from 'containers/FlowPage/components/FlowApp/FlowApp';
 
 import { media, MediaItem } from './media';
 import { App, AppObj } from './app';
 
-interface ImagePlanes {
+interface ImageSlider {
   appProps: App;
   appObj: AppObj;
 }
 
-export const imagePlanes = ({ appObj, appProps }: ImagePlanes) => {
+export const imageSlider = ({ appObj, appProps }: ImageSlider) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -22,13 +22,9 @@ export const imagePlanes = ({ appObj, appProps }: ImagePlanes) => {
     geometry = new THREE.PlaneBufferGeometry(1, 1, 50, 50);
   };
 
-  const generatePlanes = (flowItems: FlowItem[]) => {
+  const generatePlanes = (flowItems: SlideItem[]) => {
     mediaItemsArray = flowItems.map(item => {
-      const mediaObject = media(
-        { image: item.flowItem.image, refEl: item.refEl },
-        geometry,
-        appObj,
-      );
+      const mediaObject = media(item, geometry, appObj);
       return mediaObject;
     });
 
@@ -57,7 +53,7 @@ export const imagePlanes = ({ appObj, appProps }: ImagePlanes) => {
   const init = () => {
     window.addEventListener('resize', onResize);
     createGeometry();
-    generatePlanes(appProps.flowItemsArray);
+    generatePlanes(appProps.slideItemsArray);
   };
 
   return {

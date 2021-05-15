@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { lights } from './lights';
 import { imagePlanes } from './imagePlanes';
+import { imageSlider } from './imageSlider';
 import { App, AppObj } from './app';
 
 interface World {
@@ -13,6 +14,9 @@ interface WorldManager {
   updateImagePlanes: () => void;
   destroyImagePlanes: () => void;
   initImagePlanes: () => void;
+  updateImageSlider: () => void;
+  destroyImageSlider: () => void;
+  initImageSlider: () => void;
   initLights: () => void;
 }
 
@@ -24,6 +28,9 @@ export const world = ({ appObj, appProps }: World) => {
     destroyImagePlanes: null,
     updateImagePlanes: null,
     initImagePlanes: null,
+    destroyImageSlider: null,
+    updateImageSlider: null,
+    initImageSlider: null,
     initLights: null,
   };
 
@@ -47,15 +54,30 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initImagePlanes = initImagePlanes;
     worldManager.initImagePlanes();
 
+    const {
+      init: initImageSlider,
+      update: updateImageSlider,
+      destroy: destroyImageSlider,
+      container: containerImageSlider,
+    } = imageSlider({ appProps, appObj });
+
+    container.add(containerImageSlider);
+    worldManager.updateImageSlider = updateImageSlider;
+    worldManager.destroyImageSlider = destroyImageSlider;
+    worldManager.initImageSlider = initImageSlider;
+    worldManager.initImageSlider();
+
     container.add(new THREE.AxesHelper());
   };
 
   const destroy = () => {
     worldManager.destroyImagePlanes();
+    worldManager.destroyImageSlider();
   };
 
   const update = () => {
     worldManager.updateImagePlanes();
+    worldManager.updateImageSlider();
   };
 
   return {

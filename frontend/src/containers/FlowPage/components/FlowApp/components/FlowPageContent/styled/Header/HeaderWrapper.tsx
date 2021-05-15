@@ -6,7 +6,7 @@ interface Props {}
 export const HeaderWrapper = styled(motion.div)<Props>`
   width: 100%;
   height: 100vh;
-  background: #aaf8e7;
+
   position: relative;
   display: flex;
   justify-content: center;
