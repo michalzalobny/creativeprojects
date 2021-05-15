@@ -14,6 +14,12 @@ import { ImageItem } from './styled/ImageItem';
 import { ImageDescription } from './styled/ImageDescription';
 import { FinalWrapper } from './styled/FinalWrapper';
 import { FinalContainer } from './styled/FinalContainer';
+import { HeaderWrapper } from './styled/Header/HeaderWrapper';
+import { HeaderTitle } from './styled/Header/HeaderTitle';
+import { HeaderTitleSpan } from './styled/Header/HeaderTitleSpan';
+import { SliderWrapper } from './styled/Slider/SliderWrapper';
+import { SliderItem } from './styled/Slider/SliderItem';
+import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -36,6 +42,25 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
   return (
     <>
       <Wrapper {...rest}>
+        <HeaderWrapper ref={el => updateRefsToOffset(el)}>
+          <HeaderTitle>
+            Any <HeaderTitleSpan>Variation</HeaderTitleSpan>
+            <br></br>
+            that fits your
+            <HeaderTitleSpan> Imagination</HeaderTitleSpan>
+          </HeaderTitle>
+          <SliderWrapper>
+            <ItemsWrapper>
+              <SliderItem />
+              <SliderItem />
+              <SliderItem />
+              <SliderItem />
+              <SliderItem />
+              <SliderItem />
+              <SliderItem />
+            </ItemsWrapper>
+          </SliderWrapper>
+        </HeaderWrapper>
         <ContentWrapper>
           <InfoColumn ref={el => updateStickyRef(el)}>
             <Description>{asideDescription}</Description>
