@@ -11,7 +11,7 @@ export enum ScrollMode {
   HORIZONTAL = 'HORIZONTAL',
 }
 
-const SCROLL_SPEED = 2;
+const SCROLL_SPEED = 1.3;
 
 export interface ScrollObj {
   ease: number;
@@ -148,7 +148,7 @@ export const sideScroll = (
       scrollObj.targetStrengthX,
       scrollObj.ease,
     );
-    scrollObj.targetStrengthX = Math.abs(scrollObj.currentX - scrollObj.lastX);
+    scrollObj.targetStrengthX = scrollObj.currentX - scrollObj.lastX;
 
     scrollObj.TWEEN_GROUP_SEEK.update(time);
 
