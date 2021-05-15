@@ -1,7 +1,12 @@
 import normalizeWheel from 'normalize-wheel';
 
 import { ScrollObj, ScrollMode } from 'utils/functions/scroll/scroll';
-import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
+import {
+  MOMENTUM_CARRY,
+  MOUSE_MULTIPLIER,
+  SCROLL_DIVIDER,
+  TOUCH_MULTIPLIER,
+} from '../constants';
 import { applyScroll } from './applyScroll';
 import { getProgressValues } from './getProgressValues';
 
@@ -30,9 +35,11 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
     const touchY = event.touches ? event.touches[0].clientY : event.clientY;
 
     const deltaX =
-      (touchX - scrollObj.lastTouchX) * (event.touches ? 1 : MOUSE_MULTIPLIER);
+      (touchX - scrollObj.lastTouchX) *
+      (event.touches ? TOUCH_MULTIPLIER : MOUSE_MULTIPLIER);
     const deltaY =
-      (touchY - scrollObj.lastTouchY) * (event.touches ? 1 : MOUSE_MULTIPLIER);
+      (touchY - scrollObj.lastTouchY) *
+      (event.touches ? TOUCH_MULTIPLIER : MOUSE_MULTIPLIER);
 
     scrollObj.lastTouchX = touchX;
     scrollObj.lastTouchY = touchY;
@@ -68,8 +75,8 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
     const { pixelY } = normalizeWheel(event);
 
     applyScroll({
-      horizontalAmountPx: -pixelY,
-      verticalAmountPx: -pixelY,
+      horizontalAmountPx: -pixelY / SCROLL_DIVIDER,
+      verticalAmountPx: -pixelY / SCROLL_DIVIDER,
       scrollObj,
     });
   };

@@ -55,7 +55,7 @@ export const scroll = (
   viewportSizes: Sizes,
 ): ScrollReturn => {
   const scrollObj: ScrollObj = {
-    ease: 0.08,
+    ease: 0.06,
     currentX: 0,
     targetX: 0,
     lastX: 0,

@@ -59,7 +59,7 @@ export const sideScroll = (
   viewportSizes: Sizes,
 ): SideScrollReturn => {
   const scrollObj: ScrollObj = {
-    ease: 0.08,
+    ease: 0.06,
     currentX: 0,
     targetX: 0,
     lastX: 0,
@@ -160,11 +160,11 @@ export const sideScroll = (
     }
 
     if (scrollObj.touchMomentum >= 0.01 || scrollObj.touchMomentum <= -0.01) {
-      applyScroll({
-        verticalAmountPx: scrollObj.touchMomentum,
-        horizontalAmountPx: scrollObj.touchMomentum,
-        scrollObj,
-      });
+      // applyScroll({
+      //   verticalAmountPx: scrollObj.touchMomentum,
+      //   horizontalAmountPx: scrollObj.touchMomentum,
+      //   scrollObj,
+      // });
     }
   };
 
