@@ -17,7 +17,6 @@ import { FinalWrapper } from './styled/FinalWrapper';
 import { FinalContainer } from './styled/FinalContainer';
 import { HeaderWrapper } from './styled/Header/HeaderWrapper';
 import { HeaderTitle } from './styled/Header/HeaderTitle';
-import { HeaderTitleSpan } from './styled/Header/HeaderTitleSpan';
 import { SliderWrapper } from './styled/Slider/SliderWrapper';
 import { SliderItem } from './styled/Slider/SliderItem';
 import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
