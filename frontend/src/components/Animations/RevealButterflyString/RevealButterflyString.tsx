@@ -34,7 +34,7 @@ export const RevealButterflyString = memo<RevealButterflyStringProps>(props => {
               opacity: !shouldAnimate ? 0 : 1,
             }}
             transition={{
-              staggerChildren: !shouldAnimate ? 0 : 0.02,
+              staggerChildren: !shouldAnimate ? 0 : 0.035,
             }}
           >
             {wordsArray.map((word, key) => (

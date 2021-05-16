@@ -89,7 +89,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
                 <WordsWrapper width100>
                   <RevealButterflyString
                     shouldAnimate={(isReady && isHovered) || isDown}
-                    text={'Swipe it'}
+                    text={'Swipe'}
                   />
                 </WordsWrapper>
               </HeaderTitle>

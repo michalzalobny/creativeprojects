@@ -122,7 +122,7 @@ export const app = (appProps: App) => {
 
     appObj.renderer.shadowMap.enabled = true;
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
-    appObj.renderer.setClearColor(new THREE.Color('#EDE6DD'));
+    appObj.renderer.setClearColor(new THREE.Color('#E1DAD3'));
     appObj.renderer.physicallyCorrectLights = true;
   };
 

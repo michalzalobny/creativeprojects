@@ -134,8 +134,10 @@ export const mediaSlide = (
     const strength = currentStrengthX / appObj.viewportSizes.height;
     mesh.material.uniforms.uStrength.value = strength * -20;
 
-    isBefore = mesh.position.x + mesh.scale.x / 2 < -parentEl.clientWidth / 2;
-    isAfter = mesh.position.x - mesh.scale.x / 2 > parentEl.clientWidth / 2;
+    isBefore =
+      mesh.position.x + mesh.scale.x / 2 < -appObj.viewportSizes.width / 2;
+    isAfter =
+      mesh.position.x - mesh.scale.x / 2 > appObj.viewportSizes.width / 2;
 
     if (appObj.sideScroll.scrollObj.direction === 'down' && isBefore) {
       extra -= parentEl.clientWidth; //add/remove whole slider container width

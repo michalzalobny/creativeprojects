@@ -10,8 +10,8 @@ export const SliderItem = styled(motion.div)<Props>`
   width: 55vw;
 
   ${media.tablet} {
-    width: 20vw;
-    margin-right: 2vw;
+    width: 19vw;
+    margin-right: 1vw;
   }
   &:before {
     content: '';
@@ -22,24 +22,24 @@ export const SliderItem = styled(motion.div)<Props>`
 
   &:nth-child(2n + 1) {
     &:before {
-      padding-bottom: 82%;
+      padding-bottom: 125%;
     }
   }
 
   &:nth-child(2n + 2) {
     &:before {
-      padding-bottom: 125%;
+      padding-bottom: 82%;
     }
   }
   &:nth-child(2n + 4) {
     &:before {
-      padding-bottom: 72%;
+      padding-bottom: 110%;
     }
   }
 
   &:nth-child(2n + 5) {
     &:before {
-      padding-bottom: 110%;
+      padding-bottom: 72%;
     }
   }
 
