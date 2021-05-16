@@ -135,9 +135,11 @@ export const mediaSlide = (
     mesh.material.uniforms.uStrength.value = strength * -20;
 
     isBefore =
-      mesh.position.x + mesh.scale.x / 2 < -appObj.viewportSizes.width / 2;
+      mesh.position.x + mesh.scale.x / 2 <
+      (-appObj.viewportSizes.width * 1.3) / 2; //*1.3 to prevent from too quick photo disappearing
     isAfter =
-      mesh.position.x - mesh.scale.x / 2 > appObj.viewportSizes.width / 2;
+      mesh.position.x - mesh.scale.x / 2 >
+      (appObj.viewportSizes.width * 1.3) / 2; //*1.3 to prevent from too quick photo disappearing
 
     if (appObj.sideScroll.scrollObj.direction === 'down' && isBefore) {
       extra -= parentEl.clientWidth; //add/remove whole slider container width
