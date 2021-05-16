@@ -69,8 +69,10 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
           </SliderWrapper>
         </HeaderWrapper>
         <ContentWrapper>
-          <InfoColumn ref={el => updateStickyRef(el)}>
-            <Description>{asideDescription}</Description>
+          <InfoColumn>
+            <Description ref={el => updateStickyRef(el)}>
+              {asideDescription}
+            </Description>
           </InfoColumn>
           <ImagesColumn>
             {flowItems.map((flowItem, _key) => {

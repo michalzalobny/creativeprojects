@@ -227,21 +227,22 @@ export const app = (appProps: App) => {
       item.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
     });
 
-    const stickyOffset =
-      appObj.viewportSizes.height - appObj.stickyBorderRect.height;
+    let stickyOffset =
+      appObj.viewportSizes.height -
+      appProps.stickyRef.parentElement.getBoundingClientRect().top -
+      appProps.stickyRef.parentElement.getBoundingClientRect().height;
 
     if (
       -appObj.scroll.scrollObj.currentY >
       appObj.stickyBorderRect.top - appObj.viewportSizes.height
     ) {
-      appProps.stickyRef.style.transform = `translate3d(0,${
-        appObj.stickyBorderRect.top +
-        appObj.scroll.scrollObj.currentY -
-        appObj.stickyBorderRect.height
-      }px,0)`;
-    } else {
-      appProps.stickyRef.style.transform = `translate3d(0,${stickyOffset}px,0)`;
+      stickyOffset =
+        appObj.scroll.scrollObj.currentY +
+        appObj.stickyBorderRect.top -
+        appProps.stickyRef.parentElement.getBoundingClientRect().top -
+        appProps.stickyRef.parentElement.getBoundingClientRect().height;
     }
+    appProps.stickyRef.style.transform = `translate3d(0,${stickyOffset}px,0)`;
   };
 
   const init = () => {
