@@ -12,7 +12,7 @@ export const WordsWrapper = styled(motion.div)<Props>`
   width: 90%;
 
   ${media.tablet} {
-    width: 70%;
+    width: 53%;
   }
 
   ${props =>

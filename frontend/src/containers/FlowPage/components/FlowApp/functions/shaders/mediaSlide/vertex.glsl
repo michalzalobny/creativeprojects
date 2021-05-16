@@ -13,7 +13,7 @@ void main() {
 
 
   vec4 newPosition = modelViewMatrix * vec4(position, 1.0);
-  newPosition.y += sin(newPosition.x / uViewportSizes.x * PI + PI / 2.0) * -uStrength * 180.;
+  newPosition.y += sin(newPosition.x / uViewportSizes.x * PI + PI / 2.0) * -uStrength * 120.;
 
   vec3 newPos = position;
   // newPosition.z += sin(newPos.x  * PI + PI / 2.0) * -uStrength;
