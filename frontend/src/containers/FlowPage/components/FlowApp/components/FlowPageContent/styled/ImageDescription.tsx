@@ -7,10 +7,16 @@ import { sharedValues } from 'utils/sharedValues';
 interface Props {}
 
 export const ImageDescription = styled(RichParagraph)<Props>`
+  text-align: justify;
   padding-top: ${(15 / 350) * 100}vw;
   padding-bottom: ${(50 / 350) * 100}vw;
 
+  padding-left: ${(15 / 350) * 100}vw;
+  padding-right: ${(15 / 350) * 100}vw;
+
   ${media.tablet} {
+    padding-left: 0;
+    padding-right: 0;
     padding-top: ${computeValue({
       pixelValue: 15,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
