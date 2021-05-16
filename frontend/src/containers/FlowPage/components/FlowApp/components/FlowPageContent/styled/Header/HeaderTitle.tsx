@@ -1,13 +1,13 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { media } from 'utils/responsive';
 
-interface Props {}
+interface Props {
+  absolute?: boolean;
+}
 
 export const HeaderTitle = styled(motion.h2)<Props>`
-  /* font-style: italic;
-  font-weight: 800; */
   font-family: 'Playfair';
   color: white;
   font-weight: 400;

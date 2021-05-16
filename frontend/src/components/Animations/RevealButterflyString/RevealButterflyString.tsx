@@ -10,10 +10,11 @@ import { WordWrapper } from './styled/WordWrapper';
 
 interface RevealButterflyStringProps {
   text: string;
+  shouldAnimate: boolean;
 }
 
 export const RevealButterflyString = memo<RevealButterflyStringProps>(props => {
-  const { text } = props;
+  const { shouldAnimate, text } = props;
 
   const myExp = XRegExp(
     '((([\\p{L}\\p{Nd}\\p{P}]\\s)+[\\p{L}\\p{Nd}\\p{P}]+)|([\\p{L}\\p{Nd}\\p{P}]{2,}))',
@@ -25,7 +26,13 @@ export const RevealButterflyString = memo<RevealButterflyStringProps>(props => {
     <>
       <Wrapper>
         <TextWrapper>
-          <LettersContainer aria-label={text}>
+          <LettersContainer
+            animate={shouldAnimate ? 'animate' : 'initial'}
+            aria-label={text}
+            transition={{
+              staggerChildren: !shouldAnimate ? 0 : 0.04,
+            }}
+          >
             {wordsArray.map((word, key) => (
               <WordWrapper key={word + key}>
                 {word.split('').map((char, index) => {

@@ -13,8 +13,4 @@ LettersContainer.defaultProps = {
     initial: {},
     animate: {},
   },
-
-  transition: {
-    staggerChildren: 0.04,
-  },
 };

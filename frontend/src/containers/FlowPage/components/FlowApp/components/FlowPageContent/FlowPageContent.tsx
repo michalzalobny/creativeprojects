@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { PageData } from 'containers/FlowPage/data';
 import { UpdateFlowItemsArray } from 'containers/FlowPage/components/FlowApp/FlowApp';
@@ -23,6 +23,7 @@ import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
 import { UpdateSlideItemsArray } from '../../FlowApp';
 import { TitleWrapper } from './styled/Header/TitleWrapper';
 import { WordsWrapper } from './styled/Header/WordsWrapper';
+import { SwipeWrapper } from './styled/Header/SwipeWrapper';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -44,19 +45,55 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
     ...rest
   } = props;
   const { slideImages, asideDescription, flowItems, name } = pageData;
+
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDown, setIsDown] = useState(false);
+
+  useEffect(() => {
+    const onTouchDown = () => {
+      setIsDown(true);
+    };
+    const onTouchUp = () => {
+      setIsDown(false);
+    };
+    window.addEventListener('mousedown', onTouchDown);
+    window.addEventListener('mouseup', onTouchUp);
+
+    return () => {
+      window.removeEventListener('mousedown', onTouchDown);
+      window.removeEventListener('mouseup', onTouchUp);
+    };
+  }, []);
+
   return (
     <>
       <Wrapper {...rest}>
         <HeaderWrapper>
           <TitleWrapper>
             <HeaderTitle ref={el => updateRefsToOffset(el)}>
-              <WordsWrapper>
+              <WordsWrapper
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
                 <RevealButterflyString
+                  shouldAnimate={!isHovered && !isDown}
                   text={'Any variation that fits your imagination'}
                 />
               </WordsWrapper>
             </HeaderTitle>
+
+            <SwipeWrapper>
+              <HeaderTitle ref={el => updateRefsToOffset(el)}>
+                <WordsWrapper width100>
+                  <RevealButterflyString
+                    shouldAnimate={isHovered || isDown}
+                    text={'Swipe it'}
+                  />
+                </WordsWrapper>
+              </HeaderTitle>
+            </SwipeWrapper>
           </TitleWrapper>
+
           <SliderWrapper>
             <ItemsWrapper>
               {slideImages.map((item, key) => {

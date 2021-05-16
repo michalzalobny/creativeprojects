@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { media } from 'utils/responsive';
 
-interface Props {}
+interface Props {
+  width100?: boolean;
+}
 
 export const WordsWrapper = styled(motion.div)<Props>`
   display: flex;
@@ -12,4 +14,11 @@ export const WordsWrapper = styled(motion.div)<Props>`
   ${media.tablet} {
     width: 70%;
   }
+
+  ${props =>
+    props.width100 &&
+    css`
+      justify-content: center;
+      width: 100%;
+    `}
 `;
