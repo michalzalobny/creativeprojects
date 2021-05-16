@@ -43,7 +43,7 @@ export default function MyApp(props: AppProps) {
         links[i].target = '_blank';
       }
     }
-  }, []);
+  }, [router.route + router.locale]);
 
   return (
     <ExampleContextProvider>
