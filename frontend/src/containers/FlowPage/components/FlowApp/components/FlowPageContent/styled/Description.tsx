@@ -7,5 +7,6 @@ export const Description = styled(motion.p)<Props>`
   font-size: 15px;
   line-height: 25px;
   text-align: justify;
-  background: red;
+  padding: 0 50px;
+  padding-bottom: 50px;
 `;

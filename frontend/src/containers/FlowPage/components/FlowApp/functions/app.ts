@@ -45,6 +45,7 @@ export interface AppObj {
   contentSizes: Sizes;
   viewportSizes: Sizes;
   stickyBorderRect: DomEl;
+  stickyRefParentRect: DomEl;
 }
 
 interface AppManager {
@@ -76,6 +77,7 @@ export const app = (appProps: App) => {
     contentSizes: { height: 0, width: 0 },
     viewportSizes: { height: 0, width: 0 },
     stickyBorderRect: { top: 0, height: 0 },
+    stickyRefParentRect: { height: 0, top: 0 },
   };
 
   const appManager: AppManager = {
@@ -135,6 +137,10 @@ export const app = (appProps: App) => {
     const stickyRefRect = appProps.stickyBorderRef.getBoundingClientRect();
     appObj.stickyBorderRect.top = stickyRefRect.top;
     appObj.stickyBorderRect.height = getElHeight(appProps.stickyRef);
+
+    const stickyRefParentRect = appProps.stickyRef.parentElement.getBoundingClientRect();
+    appObj.stickyRefParentRect.top = stickyRefParentRect.top;
+    appObj.stickyRefParentRect.height = stickyRefParentRect.height;
   };
 
   const onResize = () => {
@@ -236,16 +242,15 @@ export const app = (appProps: App) => {
       stickyOffset =
         appObj.scroll.scrollObj.currentY +
         appObj.stickyBorderRect.top -
-        appProps.stickyRef.parentElement.getBoundingClientRect().top -
-        appProps.stickyRef.parentElement.getBoundingClientRect().height;
+        appObj.stickyRefParentRect.top -
+        appObj.stickyRefParentRect.height;
     } else if (
-      -appObj.scroll.scrollObj.currentY >
-      appProps.stickyRef.parentElement.getBoundingClientRect().height
+      -appObj.scroll.scrollObj.currentY > appObj.stickyRefParentRect.height
     ) {
       stickyOffset =
         appObj.viewportSizes.height -
-        appProps.stickyRef.parentElement.getBoundingClientRect().top -
-        appProps.stickyRef.parentElement.getBoundingClientRect().height;
+        appObj.stickyRefParentRect.top -
+        appObj.stickyRefParentRect.height;
     } else {
       stickyOffset = appObj.scroll.scrollObj.currentY;
     }
