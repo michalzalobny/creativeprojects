@@ -227,10 +227,7 @@ export const app = (appProps: App) => {
       item.style.transform = `translate3d(0,${appObj.scroll.scrollObj.currentY}px,0)`;
     });
 
-    let stickyOffset =
-      appObj.viewportSizes.height -
-      appProps.stickyRef.parentElement.getBoundingClientRect().top -
-      appProps.stickyRef.parentElement.getBoundingClientRect().height;
+    let stickyOffset;
 
     if (
       -appObj.scroll.scrollObj.currentY >
@@ -241,6 +238,16 @@ export const app = (appProps: App) => {
         appObj.stickyBorderRect.top -
         appProps.stickyRef.parentElement.getBoundingClientRect().top -
         appProps.stickyRef.parentElement.getBoundingClientRect().height;
+    } else if (
+      -appObj.scroll.scrollObj.currentY >
+      appProps.stickyRef.parentElement.getBoundingClientRect().height
+    ) {
+      stickyOffset =
+        appObj.viewportSizes.height -
+        appProps.stickyRef.parentElement.getBoundingClientRect().top -
+        appProps.stickyRef.parentElement.getBoundingClientRect().height;
+    } else {
+      stickyOffset = appObj.scroll.scrollObj.currentY;
     }
     appProps.stickyRef.style.transform = `translate3d(0,${stickyOffset}px,0)`;
   };
