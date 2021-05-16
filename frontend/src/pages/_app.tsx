@@ -35,6 +35,16 @@ export default function MyApp(props: AppProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const links = document.links;
+
+    for (let i = 0, linksLength = links.length; i < linksLength; i++) {
+      if (links[i].hostname !== window.location.hostname) {
+        links[i].target = '_blank';
+      }
+    }
+  }, []);
+
   return (
     <ExampleContextProvider>
       <GlobalStyles />

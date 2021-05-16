@@ -1,12 +1,15 @@
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+
+import { RichParagraph } from 'utils/styled/shared/RichParagraph';
 
 interface Props {}
 
-export const Description = styled(motion.p)<Props>`
-  font-size: 15px;
-  line-height: 25px;
+export const Description = styled(RichParagraph)<Props>`
   text-align: justify;
   padding: 0 50px;
   padding-bottom: 50px;
+
+  a {
+    color: currentColor;
+  }
 `;

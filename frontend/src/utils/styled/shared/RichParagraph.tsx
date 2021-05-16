@@ -6,37 +6,43 @@ import { media, computeValue } from 'utils/responsive';
 
 export interface Props {}
 
+const FONT_NORMAL = 15;
+const FONT_BIGGER = 20;
+const LINE_HEIGHT = 25;
+
 export const RichParagraph = styled(RichText)<Props>`
-  font-size: ${(27 / 750) * 100}vw;
-  line-height: ${(48 / 750) * 100}vw;
+  font-family: 'Playfair';
+  color: black;
+  font-size: ${(14 / 350) * 100}vw;
+  line-height: ${(21 / 350) * 100}vw;
 
   // Desktop + tablet used to make the font legible
   ${media.tablet} {
     font-size: ${computeValue({
-      pixelValue: 25,
+      pixelValue: FONT_BIGGER,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
 
     line-height: ${computeValue({
-      pixelValue: (25 / 17) * 48, //Preserve the proper design ratio
+      pixelValue: (FONT_BIGGER / FONT_NORMAL) * LINE_HEIGHT, //Preserve the proper design ratio
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.desktop} {
     font-size: ${computeValue({
-      pixelValue: 17,
+      pixelValue: FONT_NORMAL,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
 
     line-height: ${computeValue({
-      pixelValue: 48,
+      pixelValue: LINE_HEIGHT,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    font-size: 17px;
-    line-height: 48px;
+    font-size: ${FONT_NORMAL}px;
+    line-height: ${LINE_HEIGHT}px;
   }
 `;
