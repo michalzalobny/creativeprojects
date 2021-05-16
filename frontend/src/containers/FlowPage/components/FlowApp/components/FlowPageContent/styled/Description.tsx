@@ -10,11 +10,11 @@ const PADDING = 70;
 
 export const Description = styled(RichParagraph)<Props>`
   text-align: justify;
-  padding-left: ${(PADDING / 350) * 100}vw;
-  padding-right: ${(PADDING / 350) * 100}vw;
-  padding-bottom: ${(PADDING / 350 / 2) * 100}vw;
+  padding: 0;
+  height: 0;
 
   ${media.tablet} {
+    height: initial;
     padding-left: ${computeValue({
       pixelValue: PADDING,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
