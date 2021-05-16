@@ -10,7 +10,7 @@ interface Props {
 export const HeaderTitle = styled(motion.h2)<Props>`
   font-family: 'Playfair';
   color: white;
-  font-weight: 400;
+  font-weight: 800;
   /* text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); */
 
   text-align: center;
