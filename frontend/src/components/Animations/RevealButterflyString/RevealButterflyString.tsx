@@ -29,8 +29,12 @@ export const RevealButterflyString = memo<RevealButterflyStringProps>(props => {
           <LettersContainer
             animate={shouldAnimate ? 'animate' : 'initial'}
             aria-label={text}
+            style={{
+              transition: 'opacity 0.45s',
+              opacity: !shouldAnimate ? 0 : 1,
+            }}
             transition={{
-              staggerChildren: !shouldAnimate ? 0 : 0.04,
+              staggerChildren: !shouldAnimate ? 0 : 0.02,
             }}
           >
             {wordsArray.map((word, key) => (
