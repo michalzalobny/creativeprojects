@@ -288,8 +288,6 @@ export const app = (appProps: App) => {
     appManager.destroyWorld = destroyWorld;
     appManager.initWorld = initWorld;
     appManager.initWorld();
-
-    appProps.setIsReady(true);
   };
 
   return { destroy, init };

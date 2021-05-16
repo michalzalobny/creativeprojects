@@ -32,10 +32,12 @@ export interface FlowPageContentProps {
   updateStickyRef: (el: HTMLDivElement) => void;
   updateStickyBorderRef: (el: HTMLDivElement) => void;
   updateSlideItemsArray: UpdateSlideItemsArray;
+  isReady: boolean;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
   const {
+    isReady,
     updateSlideItemsArray,
     updateStickyBorderRef,
     updateStickyRef,
@@ -76,7 +78,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <RevealButterflyString
-                  shouldAnimate={!isHovered && !isDown}
+                  shouldAnimate={isReady && !isHovered && !isDown}
                   text={'Any variation that fits your imagination'}
                 />
               </WordsWrapper>
@@ -86,7 +88,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
               <HeaderTitle ref={el => updateRefsToOffset(el)}>
                 <WordsWrapper width100>
                   <RevealButterflyString
-                    shouldAnimate={isHovered || isDown}
+                    shouldAnimate={(isReady && isHovered) || isDown}
                     text={'Swipe it'}
                   />
                 </WordsWrapper>

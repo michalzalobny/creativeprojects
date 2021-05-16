@@ -96,6 +96,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
             updateFlowItemsArray={updateFlowItemsArray}
             updateSlideItemsArray={updateSlideItemsArray}
             pageData={props.pageData}
+            isReady={isReady}
           />
         </FlowPageContentWrapper>
 

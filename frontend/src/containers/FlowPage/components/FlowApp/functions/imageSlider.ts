@@ -14,6 +14,8 @@ export const imageSlider = ({ appObj, appProps }: ImageSlider) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
+  let loadedCounter = 0;
+
   let mediaItemsArray: MediaItem[] = [];
 
   let geometry: THREE.PlaneBufferGeometry;
@@ -24,13 +26,20 @@ export const imageSlider = ({ appObj, appProps }: ImageSlider) => {
 
   const generatePlanes = (flowItems: SlideItem[]) => {
     mediaItemsArray = flowItems.map(item => {
-      const mediaObject = mediaSlide(item, geometry, appObj);
+      const mediaObject = mediaSlide(item, geometry, appObj, updateLoadStatus);
       return mediaObject;
     });
 
     mediaItemsArray.forEach(item => {
       container.add(item.mesh);
     });
+  };
+
+  const updateLoadStatus = () => {
+    loadedCounter += 1;
+    if (loadedCounter === mediaItemsArray.length) {
+      appProps.setIsReady(true);
+    }
   };
 
   const update = () => {

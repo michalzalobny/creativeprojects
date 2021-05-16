@@ -21,6 +21,7 @@ export const mediaSlide = (
   imageEl: ImageEl,
   geometry: THREE.PlaneBufferGeometry,
   appObj: AppObj,
+  updateLoadStatus: () => void,
 ): MediaItem => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
@@ -53,6 +54,7 @@ export const mediaSlide = (
         image.naturalWidth,
         image.naturalHeight,
       ];
+      updateLoadStatus();
       animateImage();
     };
 
