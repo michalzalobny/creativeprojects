@@ -6,6 +6,8 @@ import { media } from 'utils/responsive';
 interface Props {}
 
 export const HeaderTitle = styled(motion.h2)<Props>`
+  /* font-style: italic;
+  font-weight: 800; */
   font-family: 'Playfair';
   color: white;
   font-weight: 400;
@@ -13,6 +15,8 @@ export const HeaderTitle = styled(motion.h2)<Props>`
 
   text-align: center;
   font-size: 12vw;
+  display: flex;
+  justify-content: center;
 
   ${media.tablet} {
     font-size: 5vw;

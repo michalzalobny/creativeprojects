@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 
 import { PageData } from 'containers/FlowPage/data';
 import { UpdateFlowItemsArray } from 'containers/FlowPage/components/FlowApp/FlowApp';
+import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
 
 import { Wrapper } from './styled/Wrapper';
 import { ContentWrapper } from './styled/ContentWrapper';
@@ -22,6 +23,7 @@ import { SliderItem } from './styled/Slider/SliderItem';
 import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
 import { UpdateSlideItemsArray } from '../../FlowApp';
 import { TitleWrapper } from './styled/Header/TitleWrapper';
+import { WordsWrapper } from './styled/Header/WordsWrapper';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -49,10 +51,11 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
         <HeaderWrapper>
           <TitleWrapper>
             <HeaderTitle ref={el => updateRefsToOffset(el)}>
-              Any <HeaderTitleSpan>Variation</HeaderTitleSpan>
-              <br></br>
-              that fits your
-              <HeaderTitleSpan> Imagination</HeaderTitleSpan>
+              <WordsWrapper>
+                <RevealButterflyString
+                  text={'Any variation that fits your imagination'}
+                />
+              </WordsWrapper>
             </HeaderTitle>
           </TitleWrapper>
           <SliderWrapper>
