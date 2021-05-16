@@ -30,7 +30,7 @@ export const RevealButterflyString = memo<RevealButterflyStringProps>(props => {
             animate={shouldAnimate ? 'animate' : 'initial'}
             aria-label={text}
             style={{
-              transition: 'opacity 0.45s',
+              transition: 'opacity 0.25s',
               opacity: !shouldAnimate ? 0 : 1,
             }}
             transition={{
