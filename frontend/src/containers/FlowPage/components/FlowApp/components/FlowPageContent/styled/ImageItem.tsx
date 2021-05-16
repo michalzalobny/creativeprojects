@@ -6,8 +6,4 @@ interface Props {}
 export const ImageItem = styled(motion.div)<Props>`
   display: flex;
   flex-direction: column;
-
-  &:not(:last-child) {
-    margin-bottom: 100px;
-  }
 `;

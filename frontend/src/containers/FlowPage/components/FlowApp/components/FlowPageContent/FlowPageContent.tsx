@@ -124,9 +124,9 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
                   >
                     <ImagePlaceholder />
                   </ImageWrapper>
-                  <ImageDescription ref={el => updateRefsToOffset(el)}>
-                    {flowItem.description}
-                  </ImageDescription>
+                  <div ref={el => updateRefsToOffset(el)}>
+                    <ImageDescription text={flowItem.description} />
+                  </div>
                 </ImageItem>
               );
             })}
