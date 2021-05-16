@@ -48,7 +48,6 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
 
   const [isHovered, setIsHovered] = useState(false);
   const [isDown, setIsDown] = useState(false);
-  const sliderRef = React.useRef(null);
 
   useEffect(() => {
     const onTouchDown = () => {
@@ -57,11 +56,11 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
     const onTouchUp = () => {
       setIsDown(false);
     };
-    sliderRef.current.addEventListener('mousedown', onTouchDown);
+    window.addEventListener('mousedown', onTouchDown);
     window.addEventListener('mouseup', onTouchUp);
 
     return () => {
-      sliderRef.current.removeEventListener('mousedown', onTouchDown);
+      window.removeEventListener('mousedown', onTouchDown);
       window.removeEventListener('mouseup', onTouchUp);
     };
   }, []);
@@ -95,12 +94,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
             </SwipeWrapper>
           </TitleWrapper>
 
-          <SliderWrapper
-            ref={el => {
-              sliderRef.current = el;
-              updateRefsToOffset(el);
-            }}
-          >
+          <SliderWrapper>
             <ItemsWrapper>
               {slideImages.map((item, key) => {
                 return (
