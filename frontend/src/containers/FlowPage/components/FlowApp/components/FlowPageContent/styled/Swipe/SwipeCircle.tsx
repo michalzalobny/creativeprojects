@@ -10,7 +10,7 @@ export const SwipeCircle = styled(motion.div)<Props>`
   left: 0;
   bottom: 0;
   width: 25%;
-  border: 1px solid white;
+  border: 2px solid white;
   z-index: 1;
   border-radius: 50%;
   transform: translate(-50%, 50%);

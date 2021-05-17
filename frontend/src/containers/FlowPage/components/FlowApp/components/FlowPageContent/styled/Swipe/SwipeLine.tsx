@@ -9,7 +9,7 @@ export const SwipeLine = styled(motion.div)<Props>`
   position: absolute;
   z-index: 1;
   width: 100%;
-  height: 1px;
+  height: 2px;
   background-color: white;
   left: 50%;
   bottom: 0;
