@@ -21,7 +21,7 @@ SwipeWrapper.defaultProps = {
   },
 
   transition: {
-    delayChildren: 0.4,
+    delayChildren: 0.7,
     staggerChildren: 0.4,
   },
 };

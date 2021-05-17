@@ -6,8 +6,8 @@ import { media, computeValue } from 'utils/responsive';
 
 export interface Props {}
 
-const FONT_NORMAL = 15;
-const FONT_BIGGER = 20;
+const FONT_NORMAL = 16;
+const FONT_BIGGER = 22;
 const LINE_HEIGHT = 25;
 
 export const RichParagraph = styled(RichText)<Props>`
