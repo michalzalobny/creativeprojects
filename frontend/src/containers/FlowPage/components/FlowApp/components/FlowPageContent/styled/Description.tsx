@@ -26,7 +26,7 @@ export const Description = styled(RichParagraph)<Props>`
     })};
 
     padding-bottom: ${computeValue({
-      pixelValue: PADDING / 2,
+      pixelValue: PADDING / 1.5,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
@@ -34,10 +34,14 @@ export const Description = styled(RichParagraph)<Props>`
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
     padding-left: ${PADDING}px;
     padding-right: ${PADDING}px;
-    padding-bottom: ${PADDING / 2}px;
+    padding-bottom: ${PADDING / 1.5}px;
   }
 
   a {
     color: currentColor;
+  }
+
+  p {
+    margin: 0;
   }
 `;
