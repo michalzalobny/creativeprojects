@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import { PageData } from 'containers/FlowPage/data';
 import { UpdateFlowItemsArray } from 'containers/FlowPage/components/FlowApp/FlowApp';
@@ -23,7 +23,6 @@ import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
 import { UpdateSlideItemsArray } from '../../FlowApp';
 import { TitleWrapper } from './styled/Header/TitleWrapper';
 import { WordsWrapper } from './styled/Header/WordsWrapper';
-import { SwipeWrapper } from './styled/Header/SwipeWrapper';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -48,52 +47,19 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
   } = props;
   const { slideImages, asideDescription, flowItems, name } = pageData;
 
-  const [isHovered, setIsHovered] = useState(false);
-  const [isDown, setIsDown] = useState(false);
-
-  useEffect(() => {
-    const onTouchDown = () => {
-      setIsDown(true);
-    };
-    const onTouchUp = () => {
-      setIsDown(false);
-    };
-    window.addEventListener('mousedown', onTouchDown);
-    window.addEventListener('mouseup', onTouchUp);
-
-    return () => {
-      window.removeEventListener('mousedown', onTouchDown);
-      window.removeEventListener('mouseup', onTouchUp);
-    };
-  }, []);
-
   return (
     <>
       <Wrapper {...rest}>
         <HeaderWrapper>
           <TitleWrapper>
             <HeaderTitle ref={el => updateRefsToOffset(el)}>
-              <WordsWrapper
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
+              <WordsWrapper>
                 <RevealButterflyString
-                  shouldAnimate={isReady && !isHovered && !isDown}
+                  shouldAnimate={isReady}
                   text={'Any variation that fits your imagination'}
                 />
               </WordsWrapper>
             </HeaderTitle>
-
-            <SwipeWrapper>
-              <HeaderTitle ref={el => updateRefsToOffset(el)}>
-                <WordsWrapper width100>
-                  <RevealButterflyString
-                    shouldAnimate={(isReady && isHovered) || isDown}
-                    text={'Swipe'}
-                  />
-                </WordsWrapper>
-              </HeaderTitle>
-            </SwipeWrapper>
           </TitleWrapper>
 
           <SliderWrapper>
