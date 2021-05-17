@@ -7,11 +7,12 @@ interface Props {}
 
 export const SwipeText = styled(RichParagraph)<Props>`
   color: white;
-  padding: 0 ${(70 / 375) * 100}vw;
+  padding: 0 ${(50 / 375) * 100}vw;
   padding-bottom: ${(3 / 375) * 100}vw;
+  white-space: nowrap;
 
   ${media.tablet} {
-    padding: 0 90px;
+    padding: 0 60px;
     padding-bottom: 3px;
   }
 `;

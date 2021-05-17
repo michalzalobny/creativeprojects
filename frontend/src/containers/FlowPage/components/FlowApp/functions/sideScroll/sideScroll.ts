@@ -136,7 +136,7 @@ export const sideScroll = (
     );
 
     if (!isStrengthChecked) {
-      if (Math.abs(scrollObj.currentStrengthX) > 15) {
+      if (Math.abs(scrollObj.currentStrengthX) > 10) {
         setShowSlider(false);
         isStrengthChecked = true;
       }

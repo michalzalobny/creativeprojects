@@ -66,7 +66,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
               <SwipeCircle />
               <SwipeLine />
               <RevealItem>
-                <SwipeText text={'Swipe'} />
+                <SwipeText text={'Swipe the photos'} />
               </RevealItem>
             </SwipeWrapper>
           </SwipeContainer>
