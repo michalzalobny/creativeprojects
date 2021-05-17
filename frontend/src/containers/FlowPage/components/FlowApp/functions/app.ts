@@ -14,6 +14,7 @@ export interface App {
   canvasWrapperRefEl: HTMLDivElement;
   scrollWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSlider: React.Dispatch<React.SetStateAction<boolean>>;
   flowItemsArray: FlowItem[];
   slideItemsArray: SlideItem[];
   refsToOffset: HTMLDivElement[];
@@ -270,7 +271,11 @@ export const app = (appProps: App) => {
     appObj.scroll = scroll(appObj.contentSizes, appObj.viewportSizes);
     appObj.scroll.init();
 
-    appObj.sideScroll = sideScroll(appObj.contentSizes, appObj.viewportSizes);
+    appObj.sideScroll = sideScroll(
+      appObj.contentSizes,
+      appObj.viewportSizes,
+      appProps.setShowSlider,
+    );
     appObj.sideScroll.init();
 
     const {

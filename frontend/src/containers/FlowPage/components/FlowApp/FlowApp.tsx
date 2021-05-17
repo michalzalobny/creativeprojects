@@ -61,6 +61,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
   };
 
   const [isReady, setIsReady] = useState(false);
+  const [showSlider, setShowSlider] = useState(true);
 
   useEffect(() => {
     const { app } = require('./functions/app');
@@ -69,6 +70,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
       canvasWrapperRefEl: canvasWrapperRef.current,
       scrollWrapperRefEl: scrollWrapper.current,
       setIsReady,
+      setShowSlider,
       flowItemsArray: flowItemsArray.current,
       slideItemsArray: slideItemsArray.current,
       refsToOffset: refsToOffset.current,
@@ -97,6 +99,7 @@ export const FlowApp = memo<FlowAppProps>(props => {
             updateSlideItemsArray={updateSlideItemsArray}
             pageData={props.pageData}
             isReady={isReady}
+            showSlider={showSlider}
           />
         </FlowPageContentWrapper>
 

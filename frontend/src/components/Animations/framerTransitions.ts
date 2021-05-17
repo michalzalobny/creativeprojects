@@ -10,8 +10,8 @@ export const springSlow = {
   stiffness: 350,
   damping: 80,
   mass: 5,
-  restDelta: 0.01,
-  restSpeed: 0.01,
+  restDelta: 0.001,
+  restSpeed: 0.001,
 };
 
 export const springMedium = {

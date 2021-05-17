@@ -1,8 +1,9 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 
 import { PageData } from 'containers/FlowPage/data';
 import { UpdateFlowItemsArray } from 'containers/FlowPage/components/FlowApp/FlowApp';
 import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
+import { RevealItem } from 'components/Animations/RevealItem/RevealItem';
 
 import { Wrapper } from './styled/Wrapper';
 import { ContentWrapper } from './styled/ContentWrapper';
@@ -23,6 +24,11 @@ import { ItemsWrapper } from './styled/Slider/ItemsWrapper';
 import { UpdateSlideItemsArray } from '../../FlowApp';
 import { TitleWrapper } from './styled/Header/TitleWrapper';
 import { WordsWrapper } from './styled/Header/WordsWrapper';
+import { SwipeWrapper } from './styled/Swipe/SwipeWrapper';
+import { SwipeContainer } from './styled/Swipe/SwipeContainer';
+import { SwipeLine } from './styled/Swipe/SwipeLine';
+import { SwipeText } from './styled/Swipe/SwipeText';
+import { SwipeCircle } from './styled/Swipe/SwipeCircle';
 
 export interface FlowPageContentProps {
   pageData: PageData;
@@ -32,10 +38,12 @@ export interface FlowPageContentProps {
   updateStickyBorderRef: (el: HTMLDivElement) => void;
   updateSlideItemsArray: UpdateSlideItemsArray;
   isReady: boolean;
+  showSlider: boolean;
 }
 
 export const FlowPageContent = memo<FlowPageContentProps>(props => {
   const {
+    showSlider,
     isReady,
     updateSlideItemsArray,
     updateStickyBorderRef,
@@ -51,6 +59,18 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
     <>
       <Wrapper {...rest}>
         <HeaderWrapper>
+          <SwipeContainer
+            animate={isReady && showSlider ? 'animate' : 'initial'}
+          >
+            <SwipeWrapper ref={el => updateRefsToOffset(el)}>
+              <SwipeCircle />
+              <SwipeLine />
+              <RevealItem>
+                <SwipeText text={'Swipe'} />
+              </RevealItem>
+            </SwipeWrapper>
+          </SwipeContainer>
+
           <TitleWrapper>
             <HeaderTitle ref={el => updateRefsToOffset(el)}>
               <WordsWrapper>

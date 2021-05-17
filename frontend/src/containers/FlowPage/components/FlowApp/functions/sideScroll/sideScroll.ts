@@ -57,6 +57,7 @@ interface Sizes {
 export const sideScroll = (
   contentSizes: Sizes,
   viewportSizes: Sizes,
+  setShowSlider: React.Dispatch<React.SetStateAction<boolean>>,
 ): SideScrollReturn => {
   const scrollObj: ScrollObj = {
     ease: 0.06,
@@ -85,6 +86,8 @@ export const sideScroll = (
     progressRatio: 0,
     isTouching: false,
   };
+
+  let isStrengthChecked = false;
 
   const {
     destroy: destroyHandleEvents,
@@ -131,6 +134,13 @@ export const sideScroll = (
       scrollObj.targetY,
       scrollObj.ease,
     );
+
+    if (!isStrengthChecked) {
+      if (Math.abs(scrollObj.currentStrengthX) > 15) {
+        setShowSlider(false);
+        isStrengthChecked = true;
+      }
+    }
 
     //Update strengthY
     scrollObj.lastStrengthY = scrollObj.currentStrengthY;
