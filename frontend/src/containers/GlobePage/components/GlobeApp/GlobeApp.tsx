@@ -4,7 +4,6 @@ import { Wrapper } from './styled/Wrapper';
 import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
 import { ContentWrapper } from './styled/ContentWrapper';
-import { App } from './functions/app';
 
 interface GlobeAppProps {}
 
