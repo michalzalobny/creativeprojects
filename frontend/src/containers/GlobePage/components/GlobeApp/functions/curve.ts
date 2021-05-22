@@ -55,7 +55,7 @@ export const curve = (): CurveReturn => {
 
     const path = new THREE.CatmullRomCurve3(points);
 
-    const geometry = new THREE.TubeGeometry(path, TUBE_SEG, 0.005, 8, false);
+    const geometry = new THREE.TubeGeometry(path, TUBE_SEG, 0.003, 8, false);
     mesh = new THREE.Mesh(geometry, shaderMaterial);
     container.add(mesh);
 
