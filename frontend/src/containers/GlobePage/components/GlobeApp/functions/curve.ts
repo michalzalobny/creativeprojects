@@ -18,6 +18,7 @@ export interface CurveReturn {
 }
 
 const CURVE_MULTIPLIER = 0.08;
+const TUBE_SEG = 10;
 
 export const curve = (): CurveReturn => {
   const container = new THREE.Object3D();
@@ -29,6 +30,7 @@ export const curve = (): CurveReturn => {
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     transparent: true,
+    side: THREE.DoubleSide,
     uniforms: {
       uDistance: { value: 0 },
       uTime: { value: 0 },
@@ -42,18 +44,18 @@ export const curve = (): CurveReturn => {
 
     const distance = v1.distanceTo(v2);
 
-    for (let i = 0; i <= 20; i++) {
-      const p = new THREE.Vector3().lerpVectors(v1, v2, i / 20);
+    for (let i = 0; i <= TUBE_SEG; i++) {
+      const p = new THREE.Vector3().lerpVectors(v1, v2, i / TUBE_SEG);
       p.normalize();
       p.multiplyScalar(
-        1 + Math.sin((Math.PI * i) / 20) * CURVE_MULTIPLIER * distance,
+        1 + Math.sin((Math.PI * i) / TUBE_SEG) * CURVE_MULTIPLIER * distance,
       );
       points = points.concat(p);
     }
 
     const path = new THREE.CatmullRomCurve3(points);
 
-    const geometry = new THREE.TubeGeometry(path, 20, 0.01, 8, false);
+    const geometry = new THREE.TubeGeometry(path, TUBE_SEG, 0.005, 8, false);
     mesh = new THREE.Mesh(geometry, shaderMaterial);
     container.add(mesh);
 
