@@ -4,7 +4,7 @@ type BulletMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 
 interface BulletReturn {
   mesh: BulletMesh;
-  positionBullet: (coords: Coords) => void;
+  positionBullet: (coords: Coords) => PositionBulletReturn;
 }
 
 interface Coords {
@@ -12,7 +12,7 @@ interface Coords {
   longitude: number;
 }
 
-interface PositionBulletReturn {
+export interface PositionBulletReturn {
   x: number;
   y: number;
   z: number;
@@ -35,11 +35,11 @@ export const bullet = (): BulletReturn => {
 
   const geometry = new THREE.SphereBufferGeometry(0.02, 30, 30);
 
-  const globeMaterial = new THREE.MeshBasicMaterial({
+  const material = new THREE.MeshBasicMaterial({
     color: new THREE.Color('red'),
   });
 
-  const mesh = new THREE.Mesh(geometry, globeMaterial);
+  const mesh = new THREE.Mesh(geometry, material);
 
   const positionBullet = ({
     latitude,
