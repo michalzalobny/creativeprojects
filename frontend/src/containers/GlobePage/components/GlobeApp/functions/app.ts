@@ -114,7 +114,7 @@ export const app = (appProps: App) => {
 
     appObj.renderer.shadowMap.enabled = true;
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
-    appObj.renderer.setClearColor(new THREE.Color('#E1DAD3'));
+    appObj.renderer.setClearColor(new THREE.Color('#320078'));
     appObj.renderer.physicallyCorrectLights = true;
 
     appObj.controls = new OrbitControls(
