@@ -27,11 +27,12 @@ export const globe = () => {
 
   const init = () => {
     generateGlobe();
-    generateBullet();
+    generateBullets();
   };
 
-  const generateBullet = () => {
-    const { mesh } = bullet();
+  const generateBullets = () => {
+    const { mesh, positionBullet } = bullet();
+    positionBullet({ latitude: 54.9783, longitude: 1.6178 });
     container.add(mesh);
   };
 

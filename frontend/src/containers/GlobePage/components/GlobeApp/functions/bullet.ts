@@ -4,6 +4,12 @@ type BulletMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 
 interface BulletReturn {
   mesh: BulletMesh;
+  positionBullet: (coords: Coords) => void;
+}
+
+interface Coords {
+  latitude: number;
+  longitude: number;
 }
 
 const calcPosFromLatLonRad = (lat, lon) => {
@@ -22,28 +28,23 @@ export const bullet = (): BulletReturn => {
   container.matrixAutoUpdate = false;
 
   const geometry = new THREE.SphereBufferGeometry(0.02, 30, 30);
-  let mesh: BulletMesh;
+
   const globeMaterial = new THREE.MeshBasicMaterial({
     color: new THREE.Color('red'),
   });
 
-  const generateBullet = (latitude: number, longitude: number) => {
-    const { x, y, z } = calcPosFromLatLonRad(latitude, longitude);
+  const mesh = new THREE.Mesh(geometry, globeMaterial);
 
-    mesh = new THREE.Mesh(geometry, globeMaterial);
+  const positionBullet = ({ latitude, longitude }: Coords) => {
+    const { x, y, z } = calcPosFromLatLonRad(latitude, longitude);
     mesh.position.set(x, y, z);
   };
-
-  const init = () => {
-    generateBullet(54.9783, 1.6178);
-  };
-
-  init();
 
   //update
   //onresize
 
   return {
     mesh,
+    positionBullet,
   };
 };
