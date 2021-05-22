@@ -15,7 +15,7 @@ interface CurveReturn {
   generateCurve: (points: CurvePoints) => void;
 }
 
-const CURVE_MULTIPLIER = 0.05;
+const CURVE_MULTIPLIER = 0.08;
 
 export const curve = (): CurveReturn => {
   const container = new THREE.Object3D();
@@ -24,6 +24,10 @@ export const curve = (): CurveReturn => {
   const shaderMaterial = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
+    transparent: true,
+    uniforms: {
+      uDistance: { value: 0 },
+    },
   });
 
   const generateCurve = ({ p1, p2 }: CurvePoints) => {
@@ -47,6 +51,8 @@ export const curve = (): CurveReturn => {
     const geometry = new THREE.TubeGeometry(path, 20, 0.01, 8, false);
     const mesh = new THREE.Mesh(geometry, shaderMaterial);
     container.add(mesh);
+
+    mesh.material.uniforms.uDistance.value = distance;
   };
 
   return {
