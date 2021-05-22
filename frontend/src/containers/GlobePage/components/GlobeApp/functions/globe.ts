@@ -30,19 +30,60 @@ export const globe = () => {
     generateBullets();
   };
 
-  const points = [
-    [50, 30],
-    [53.9, 1.5],
-    [23.54, 102.55],
-    [-23, 102],
+  const routes = [
+    {
+      name: 'op1',
+      pointStart: [50, 30],
+      pointFinish: [53.9, 1.5],
+    },
+    {
+      name: 'op2',
+      pointStart: [23.54, 102.55],
+      pointFinish: [-23, 102],
+    },
   ];
 
   const generateBullets = () => {
-    points.forEach(point => {
-      const { mesh, positionBullet } = bullet();
-      positionBullet({ latitude: point[0], longitude: point[1] });
-      container.add(mesh);
+    routes.forEach(route => {
+      const bullet1 = bullet();
+      const bullet2 = bullet();
+
+      const b1 = bullet1.positionBullet({
+        latitude: route.pointStart[0],
+        longitude: route.pointStart[1],
+      });
+      const b2 = bullet2.positionBullet({
+        latitude: route.pointFinish[0],
+        longitude: route.pointFinish[1],
+      });
+
+      container.add(bullet1.mesh);
+      container.add(bullet2.mesh);
+
+      generateCurve(b1, b2);
     });
+
+    // generateCurve(points[0], points[1]);
+    // generateCurve(points[2], points[3]);
+  };
+
+  const generateCurve = (p1, p2) => {
+    const v1 = new THREE.Vector3(p1.x, p1.y, p1.z);
+    const v2 = new THREE.Vector3(p2.x, p2.y, p2.z);
+    let points = [];
+
+    for (let i = 0; i <= 20; i++) {
+      const p = new THREE.Vector3().lerpVectors(v1, v2, i / 20);
+      p.normalize();
+      points = points.concat(p);
+    }
+
+    const path = new THREE.CatmullRomCurve3(points);
+
+    const geometry = new THREE.TubeGeometry(path, 20, 0.01, 8, false);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const mesh = new THREE.Mesh(geometry, material);
+    container.add(mesh);
   };
 
   return {

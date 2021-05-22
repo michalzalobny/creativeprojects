@@ -12,6 +12,12 @@ interface Coords {
   longitude: number;
 }
 
+interface PositionBulletReturn {
+  x: number;
+  y: number;
+  z: number;
+}
+
 const calcPosFromLatLonRad = (lat, lon) => {
   //https://en.wikipedia.org/wiki/Spherical_coordinate_system
   const phi = (90 - lat) * (Math.PI / 180);
@@ -35,9 +41,13 @@ export const bullet = (): BulletReturn => {
 
   const mesh = new THREE.Mesh(geometry, globeMaterial);
 
-  const positionBullet = ({ latitude, longitude }: Coords) => {
+  const positionBullet = ({
+    latitude,
+    longitude,
+  }: Coords): PositionBulletReturn => {
     const { x, y, z } = calcPosFromLatLonRad(latitude, longitude);
     mesh.position.set(x, y, z);
+    return { x, y, z };
   };
 
   //update
