@@ -5,7 +5,7 @@ import { bullet } from './bullet';
 import vertexShader from './shaders/globe/vertex.glsl';
 import fragmentShader from './shaders/globe/fragment.glsl';
 
-const CURVE_MULTIPLIER = 0.05;
+const CURVE_MULTIPLIER = 0.5;
 
 export const globe = () => {
   const container = new THREE.Object3D();
@@ -74,10 +74,14 @@ export const globe = () => {
     const v2 = new THREE.Vector3(p2.x, p2.y, p2.z);
     let points = [];
 
+    const distance = v1.distanceTo(v2);
+
     for (let i = 0; i <= 20; i++) {
       const p = new THREE.Vector3().lerpVectors(v1, v2, i / 20);
       p.normalize();
-      p.multiplyScalar(1 + Math.sin((Math.PI * i) / 20) * CURVE_MULTIPLIER);
+      p.multiplyScalar(
+        1 + Math.sin((Math.PI * i) / 20) * CURVE_MULTIPLIER * distance,
+      );
       points = points.concat(p);
     }
 
