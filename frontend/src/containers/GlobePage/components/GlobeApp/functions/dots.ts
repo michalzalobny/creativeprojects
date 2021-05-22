@@ -13,7 +13,7 @@ interface Dots {
   appObj: AppObj;
 }
 
-const DOT_COUNT = 6000;
+const DOT_COUNT = 30000;
 
 export const dots = ({ appObj }: Dots): DotsReturn => {
   const container = new THREE.Object3D();
@@ -50,7 +50,7 @@ export const dots = ({ appObj }: Dots): DotsReturn => {
       fragmentShader: fragmentShader,
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
-        uSize: { value: 30 },
+        uSize: { value: 6 },
         uTime: { value: 0 },
       },
     });
