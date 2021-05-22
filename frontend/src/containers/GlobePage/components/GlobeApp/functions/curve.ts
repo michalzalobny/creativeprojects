@@ -37,9 +37,7 @@ export const curve = (): CurveReturn => {
       const p = new THREE.Vector3().lerpVectors(v1, v2, i / 20);
       p.normalize();
       p.multiplyScalar(
-        1 +
-          (Math.sin((Math.PI * i) / 20) * CURVE_MULTIPLIER * distance) /
-            distance,
+        1 + Math.sin((Math.PI * i) / 20) * CURVE_MULTIPLIER * distance,
       );
       points = points.concat(p);
     }
