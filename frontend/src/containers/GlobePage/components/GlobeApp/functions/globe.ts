@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+import { bullet } from './bullet';
 import vertexShader from './shaders/globe/vertex.glsl';
 import fragmentShader from './shaders/globe/fragment.glsl';
 
@@ -21,6 +22,12 @@ export const globe = () => {
 
   const init = () => {
     generateGlobe();
+    generateBullet();
+  };
+
+  const generateBullet = () => {
+    const { mesh } = bullet();
+    container.add(mesh);
   };
 
   return {
