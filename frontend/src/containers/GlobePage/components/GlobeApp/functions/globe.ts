@@ -30,10 +30,19 @@ export const globe = () => {
     generateBullets();
   };
 
+  const points = [
+    [50, 30],
+    [53.9, 1.5],
+    [23.54, 102.55],
+    [-23, 102],
+  ];
+
   const generateBullets = () => {
-    const { mesh, positionBullet } = bullet();
-    positionBullet({ latitude: 54.9783, longitude: 1.6178 });
-    container.add(mesh);
+    points.forEach(point => {
+      const { mesh, positionBullet } = bullet();
+      positionBullet({ latitude: point[0], longitude: point[1] });
+      container.add(mesh);
+    });
   };
 
   return {
