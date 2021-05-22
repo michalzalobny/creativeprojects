@@ -93,7 +93,7 @@ export const application = (appProps: ApplicationProps) => {
 
     appObj.renderer = new THREE.WebGLRenderer({
       canvas: appProps.canvasRefEl,
-      antialias: true,
+      antialias: false,
       alpha: true,
     });
 
