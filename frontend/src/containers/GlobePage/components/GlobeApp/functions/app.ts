@@ -8,6 +8,12 @@ import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 import { world } from './world';
 import { scroll, ScrollReturn } from 'utils/functions/scroll/scroll';
 
+export interface UpdateInfo {
+  slowDownFactor: number;
+  delta: number;
+  time: number;
+}
+
 export interface App {
   canvasRefEl: HTMLCanvasElement;
   canvasWrapperRefEl: HTMLDivElement;
@@ -37,7 +43,7 @@ export interface AppObj {
 }
 
 interface AppManager {
-  updateWorld: () => void;
+  updateWorld: (updateInfo: UpdateInfo) => void;
   destroyWorld: () => void;
   initWorld: () => void;
 }
@@ -197,7 +203,7 @@ export const app = (appProps: App) => {
     }
     appObj.lastFrameTime = time;
     //Update the app
-    appManager.updateWorld();
+    appManager.updateWorld({ slowDownFactor, delta, time });
     // updateCSS();
     appObj.controls.update();
 

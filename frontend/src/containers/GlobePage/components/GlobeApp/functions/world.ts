@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { lights } from './lights';
-import { App, AppObj } from './app';
+import { App, AppObj, UpdateInfo } from './app';
 import { globe } from './globe';
 
 interface World {
@@ -12,6 +12,7 @@ interface World {
 interface WorldManager {
   initLights: () => void;
   initGlobe: () => void;
+  updateGlobe: (updateInfo: UpdateInfo) => void;
 }
 
 export const world = ({ appObj, appProps }: World) => {
@@ -21,6 +22,7 @@ export const world = ({ appObj, appProps }: World) => {
   const worldManager: WorldManager = {
     initLights: null,
     initGlobe: null,
+    updateGlobe: null,
   };
 
   const init = () => {
@@ -30,10 +32,15 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initLights = initLights;
     worldManager.initLights();
 
-    const { container: containerGlobe, init: initGlobe } = globe();
+    const {
+      container: containerGlobe,
+      init: initGlobe,
+      update: updateGlobe,
+    } = globe();
 
     container.add(containerGlobe);
     worldManager.initGlobe = initGlobe;
+    worldManager.updateGlobe = updateGlobe;
     worldManager.initGlobe();
 
     container.add(new THREE.AxesHelper());
@@ -41,7 +48,9 @@ export const world = ({ appObj, appProps }: World) => {
 
   const destroy = () => {};
 
-  const update = () => {};
+  const update = (updateInfo: UpdateInfo) => {
+    worldManager.updateGlobe(updateInfo);
+  };
 
   return {
     init,

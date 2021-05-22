@@ -4,15 +4,17 @@ import { PositionBulletReturn } from './bullet';
 
 import vertexShader from './shaders/curve/vertex.glsl';
 import fragmentShader from './shaders/curve/fragment.glsl';
+import { UpdateInfo } from './app';
 
 interface CurvePoints {
   p1: PositionBulletReturn;
   p2: PositionBulletReturn;
 }
 
-interface CurveReturn {
+export interface CurveReturn {
   container: THREE.Object3D;
   generateCurve: (points: CurvePoints) => void;
+  update: (updateInfo: UpdateInfo) => void;
 }
 
 const CURVE_MULTIPLIER = 0.08;
@@ -21,12 +23,15 @@ export const curve = (): CurveReturn => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
+  let mesh;
+
   const shaderMaterial = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     transparent: true,
     uniforms: {
       uDistance: { value: 0 },
+      uTime: { value: 0 },
     },
   });
 
@@ -49,14 +54,19 @@ export const curve = (): CurveReturn => {
     const path = new THREE.CatmullRomCurve3(points);
 
     const geometry = new THREE.TubeGeometry(path, 20, 0.01, 8, false);
-    const mesh = new THREE.Mesh(geometry, shaderMaterial);
+    mesh = new THREE.Mesh(geometry, shaderMaterial);
     container.add(mesh);
 
     mesh.material.uniforms.uDistance.value = distance;
   };
 
+  const update = (updateInfo: UpdateInfo) => {
+    mesh.material.uniforms.uTime.value = updateInfo.time / 1000;
+  };
+
   return {
     container,
     generateCurve,
+    update,
   };
 };

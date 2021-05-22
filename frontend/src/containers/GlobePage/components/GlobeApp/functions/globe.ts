@@ -2,9 +2,10 @@ import * as THREE from 'three';
 
 import earthSrc from './images/earth.jpg';
 import { bullet } from './bullet';
-import { curve } from './curve';
+import { curve, CurveReturn } from './curve';
 import vertexShader from './shaders/globe/vertex.glsl';
 import fragmentShader from './shaders/globe/fragment.glsl';
+import { UpdateInfo } from './app';
 
 export const globe = () => {
   const container = new THREE.Object3D();
@@ -21,6 +22,8 @@ export const globe = () => {
     mesh = new THREE.Mesh(geometry, material);
     container.add(mesh);
   };
+
+  const curvesArray: CurveReturn[] = [];
 
   const init = () => {
     generateGlobe();
@@ -57,14 +60,22 @@ export const globe = () => {
       container.add(bullet1.mesh);
       container.add(bullet2.mesh);
 
-      const { generateCurve, container: containerCurve } = curve();
-      generateCurve({ p1: b1, p2: b2 });
-      container.add(containerCurve);
+      const curve12 = curve();
+      curve12.generateCurve({ p1: b1, p2: b2 });
+      curvesArray.push(curve12);
+      container.add(curve12.container);
+    });
+  };
+
+  const update = (updateInfo: UpdateInfo) => {
+    curvesArray.forEach(curveItem => {
+      curveItem.update(updateInfo);
     });
   };
 
   return {
     container,
     init,
+    update,
   };
 };
