@@ -86,10 +86,10 @@ export const app = (appProps: App) => {
     appObj.camera.aspect = aspectRatio;
 
     //Set to match pixel size of the elements in three with pixel size of DOM elements
-    appObj.camera.fov =
-      2 *
-      Math.atan(appObj.viewportSizes.height / 2 / appObj.camera.position.z) *
-      (180 / Math.PI);
+    // appObj.camera.fov =
+    //   2 *
+    //   Math.atan(appObj.viewportSizes.height / 2 / appObj.camera.position.z) *
+    //   (180 / Math.PI);
 
     appObj.camera.updateProjectionMatrix();
   };
@@ -190,7 +190,7 @@ export const app = (appProps: App) => {
     appObj.lastFrameTime = time;
     //Update the app
     appManager.updateWorld();
-    updateCSS();
+    // updateCSS();
 
     TWEEN.update(time);
     appObj.scroll.update(time);
