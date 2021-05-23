@@ -49,6 +49,17 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
         <RendererWrapper ref={canvasWrapperRef}>
           <canvas ref={canvasRef} />
         </RendererWrapper>
+
+        {/* canvas used to get points for point map */}
+        <canvas
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            visibility: 'hidden',
+          }}
+          id="canvas"
+        />
       </Wrapper>
     </>
   );

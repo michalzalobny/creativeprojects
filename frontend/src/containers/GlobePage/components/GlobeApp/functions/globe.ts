@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import earthSrc from './images/earth.jpg';
+import earthSrc from './images/mymap.png';
 import { bullet } from './bullet';
 import { curve, CurveReturn } from './curve';
 import vertexShader from './shaders/globe/vertex.glsl';
@@ -20,7 +20,7 @@ export const globe = () => {
 
   const generateGlobe = () => {
     mesh = new THREE.Mesh(geometry, material);
-    container.add(mesh);
+    // container.add(mesh);
   };
 
   const curvesArray: CurveReturn[] = [];

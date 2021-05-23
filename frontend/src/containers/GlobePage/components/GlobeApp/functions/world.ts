@@ -46,7 +46,10 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.updateGlobe = updateGlobe;
     worldManager.initGlobe();
 
-    const { container: containerDots, update: updateDots } = dots({ appObj });
+    const { container: containerDots, update: updateDots } = dots({
+      appObj,
+      appProps,
+    });
     container.add(containerDots);
     worldManager.updateDots = updateDots;
 
