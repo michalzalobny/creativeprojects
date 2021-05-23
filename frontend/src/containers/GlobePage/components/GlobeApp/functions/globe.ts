@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import earthSrc from './images/mymap.png';
+import earthSrc from './images/earth.jpg';
 import { bullet } from './bullet';
 import { curve, CurveReturn } from './curve';
 import vertexShader from './shaders/globe/vertex.glsl';
@@ -33,13 +33,13 @@ export const globe = () => {
   const routes = [
     {
       name: 'op1',
-      pointStart: [50, 30],
-      pointFinish: [53.9, 1.5],
+      pointStart: [-32.834179, 22.67],
+      pointFinish: [52.01, -3.67],
     },
     {
       name: 'op2',
-      pointStart: [23.54, 102.55],
-      pointFinish: [-23, 102],
+      pointStart: [-27.537817, 142],
+      pointFinish: [35, -119],
     },
   ];
 

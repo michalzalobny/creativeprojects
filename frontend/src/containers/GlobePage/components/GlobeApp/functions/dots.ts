@@ -18,6 +18,17 @@ interface Dots {
 
 let DOT_COUNT;
 
+const calcPosFromLatLonRad = (lat, lon) => {
+  //https://en.wikipedia.org/wiki/Spherical_coordinate_system
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+  const x = -Math.cos(theta) * Math.sin(phi);
+  const z = Math.sin(phi) * Math.sin(theta);
+  const y = Math.cos(phi);
+
+  return { x, y, z };
+};
+
 export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
@@ -44,7 +55,7 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
       );
 
       DOT_COUNT = imageData.width * imageData.height;
-      const positions = new Float32Array(DOT_COUNT * 3);
+
       const pixels = new Float32Array(DOT_COUNT * 4);
 
       for (let i = 0; i <= pixels.length; i++) {
@@ -63,22 +74,17 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
         const u = 0.5 + Math.atan2(vector.x, vector.z) / (2 * Math.PI);
         const v = 0.5 - Math.asin(vector.y) / Math.PI;
 
-        const finalPos =
-          Math.floor(
-            (1 - v) * imageData.width * imageData.height + u * imageData.width,
-          ) * 4;
-
         // if (pixels[finalPos + 3] !== 0) {
-        const i3 = i * 3;
-        positions[i3] = vector.x;
-        positions[i3 + 1] = vector.y;
-        positions[i3 + 2] = vector.z;
+        //   const i3 = lat * 3;
+        //   positions[i3] = vector.x;
+        //   positions[i3 + 1] = vector.y;
+        //   positions[i3 + 2] = vector.z;
         // }
 
-        geometry.setAttribute(
-          'position',
-          new THREE.BufferAttribute(positions, 3),
-        );
+        // geometry.setAttribute(
+        //   'position',
+        //   new THREE.BufferAttribute(positions, 3),
+        // );
       }
     };
 
@@ -90,13 +96,54 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
       fragmentShader: fragmentShader,
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
-        uSize: { value: 8 },
+        uSize: { value: 5 },
         uTime: { value: 0 },
       },
     });
 
     const points = new THREE.Points(geometry, material);
     container.add(points);
+
+    const posArr = [];
+
+    const rows = 100;
+    const DEG2RAD = Math.PI / 180;
+    const GLOBE_RADIUS = 1;
+    const dotDensity = 30; //30
+
+    let dotsAmount = 0;
+
+    for (let lat = -90; lat <= 90; lat += 180 / rows) {
+      const radius = Math.cos(Math.abs(lat) * DEG2RAD) * GLOBE_RADIUS;
+      const circumference = radius * Math.PI * 2;
+
+      const dotsForLat = circumference * dotDensity;
+
+      // console.log(dotsForLat);
+      for (let x = 0; x < dotsForLat; x++) {
+        const long = -180 + (x * 360) / dotsForLat; //167
+
+        const { x: latX, y, z } = calcPosFromLatLonRad(lat, long);
+        dotsAmount += 1;
+
+        posArr.push(latX, y, z);
+
+        // if (!this.visibilityForCoordinate(long, lat)) continue;
+
+        // Setup and save circle matrix data
+      }
+    }
+
+    const positions = new Float32Array(dotsAmount * 3);
+
+    for (let i = 0; i <= posArr.length; i++) {
+      const i3 = i * 3;
+      positions[i3] = posArr[i3];
+      positions[i3 + 1] = posArr[i3 + 1];
+      positions[i3 + 2] = posArr[i3 + 2];
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   };
 
   generateGalaxy();
