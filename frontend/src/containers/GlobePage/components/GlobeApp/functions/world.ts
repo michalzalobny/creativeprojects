@@ -4,7 +4,6 @@ import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
 import { globe } from './globe';
 import { dots } from './dots';
-import { WordsWrapper } from 'containers/FlowPage/components/FlowApp/components/FlowPageContent/styled/Header/WordsWrapper';
 
 interface World {
   appProps: App;
