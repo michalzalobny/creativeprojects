@@ -57,8 +57,8 @@ export const dots = ({ pivot, appObj, appProps }: Dots): DotsReturn => {
     dotsElevationTween = new TWEEN.Tween({
       progress: material.uniforms.uElevation.value,
     })
-      .to({ progress: destination }, 800)
-      .easing(TWEEN.Easing.Quadratic.Out)
+      .to({ progress: destination }, 400)
+      .easing(TWEEN.Easing.Quadratic.In)
       .onUpdate(obj => {
         material.uniforms.uElevation.value = obj.progress;
       });
@@ -86,7 +86,7 @@ export const dots = ({ pivot, appObj, appProps }: Dots): DotsReturn => {
     const points = new THREE.Points(geometry, material);
     const positionsArr = [];
 
-    const rows = 180;
+    const rows = 150;
     const DEG2RAD = Math.PI / 180;
     const GLOBE_RADIUS = 1;
     const dotDensity = rows / 3.5;

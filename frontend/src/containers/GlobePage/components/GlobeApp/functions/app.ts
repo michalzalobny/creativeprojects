@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 
@@ -39,7 +38,6 @@ export interface AppObj {
   lastFrameTime: number;
   contentSizes: Sizes;
   viewportSizes: Sizes;
-  // controls: OrbitControls;
 }
 
 interface AppManager {
@@ -52,7 +50,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 3;
+export const CAMERA_POS = 3.5;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
@@ -69,7 +67,6 @@ export const app = (appProps: App) => {
     lastFrameTime: null,
     contentSizes: { height: 0, width: 0 },
     viewportSizes: { height: 0, width: 0 },
-    // controls: null,
   };
 
   const appManager: AppManager = {
@@ -116,11 +113,6 @@ export const app = (appProps: App) => {
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
     appObj.renderer.setClearColor(new THREE.Color('#040D21'));
     appObj.renderer.physicallyCorrectLights = true;
-
-    // appObj.controls = new OrbitControls(
-    //   appObj.camera,
-    //   appObj.renderer.domElement,
-    // );
   };
 
   const setSizes = () => {
@@ -205,7 +197,6 @@ export const app = (appProps: App) => {
     //Update the app
     appManager.updateWorld({ slowDownFactor, delta, time });
     // updateCSS();
-    // appObj.controls.update();
 
     TWEEN.update(time);
     appObj.scroll.update(time);
