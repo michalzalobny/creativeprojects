@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import { calcPosFromLatLonRad } from './utils/calcPosFromLatLonRad';
+
 type BulletMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 
 interface BulletReturn {
@@ -17,17 +19,6 @@ export interface PositionBulletReturn {
   y: number;
   z: number;
 }
-
-const calcPosFromLatLonRad = (lat, lon) => {
-  //https://en.wikipedia.org/wiki/Spherical_coordinate_system
-  const phi = (90 - lat) * (Math.PI / 180);
-  const theta = (lon + 180) * (Math.PI / 180);
-  const x = -Math.cos(theta) * Math.sin(phi);
-  const z = Math.sin(phi) * Math.sin(theta);
-  const y = Math.cos(phi);
-
-  return { x, y, z };
-};
 
 export const bullet = (): BulletReturn => {
   const container = new THREE.Object3D();
