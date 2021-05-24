@@ -94,8 +94,15 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
     }
 
     const positions = new Float32Array(positionsArr);
-
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    //Generates random value for each point on the map
+    const randoms = new Float32Array(positionsArr.length / 3);
+    for (let i = 0; i < randoms.length; i++) {
+      randoms[i] = Math.random();
+    }
+    geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+
     container.add(points);
   };
 
@@ -110,7 +117,7 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
   init();
 
   const update = (updateInfo: UpdateInfo) => {
-    // material.uniforms.uTime.value = updateInfo.time / 1000;
+    material.uniforms.uTime.value = updateInfo.time / 1000;
   };
 
   return {
