@@ -1,12 +1,12 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 
 import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 
 import { world } from './world';
-import { scroll, ScrollReturn } from 'utils/functions/scroll/scroll';
+import { scroll, ScrollReturn } from './scroll/scroll';
 
 export interface UpdateInfo {
   slowDownFactor: number;
@@ -39,7 +39,7 @@ export interface AppObj {
   lastFrameTime: number;
   contentSizes: Sizes;
   viewportSizes: Sizes;
-  controls: OrbitControls;
+  // controls: OrbitControls;
 }
 
 interface AppManager {
@@ -69,7 +69,7 @@ export const app = (appProps: App) => {
     lastFrameTime: null,
     contentSizes: { height: 0, width: 0 },
     viewportSizes: { height: 0, width: 0 },
-    controls: null,
+    // controls: null,
   };
 
   const appManager: AppManager = {
@@ -86,7 +86,7 @@ export const app = (appProps: App) => {
 
     updateCameraSettings();
 
-    appObj.camera.position.set(0, 0, CAMERA_POS);
+    // appObj.camera.position.set(CAMERA_POS, 3, CAMERA_POS);
   };
 
   const updateCameraSettings = () => {
@@ -117,10 +117,10 @@ export const app = (appProps: App) => {
     appObj.renderer.setClearColor(new THREE.Color('#040D21'));
     appObj.renderer.physicallyCorrectLights = true;
 
-    appObj.controls = new OrbitControls(
-      appObj.camera,
-      appObj.renderer.domElement,
-    );
+    // appObj.controls = new OrbitControls(
+    //   appObj.camera,
+    //   appObj.renderer.domElement,
+    // );
   };
 
   const setSizes = () => {
@@ -205,8 +205,8 @@ export const app = (appProps: App) => {
     //Update the app
     appManager.updateWorld({ slowDownFactor, delta, time });
     // updateCSS();
-    appObj.controls.update();
-
+    // appObj.controls.update();
+    updateScrollCamera();
     TWEEN.update(time);
     appObj.scroll.update(time);
     appObj.renderer.render(appObj.scene, appObj.camera);
@@ -214,6 +214,15 @@ export const app = (appProps: App) => {
 
   const stopAppFrame = () => {
     window.cancelAnimationFrame(appObj.rafId);
+  };
+
+  const updateScrollCamera = () => {
+    const rotSpeed = appObj.scroll.scrollObj.currentY * 0.005;
+
+    appObj.camera.position.x = 2 * (Math.cos(rotSpeed) - Math.sin(rotSpeed));
+    appObj.camera.position.z = 2 * (Math.cos(rotSpeed) + Math.sin(rotSpeed));
+
+    appObj.camera.lookAt(appObj.scene.position);
   };
 
   const updateCSS = () => {
