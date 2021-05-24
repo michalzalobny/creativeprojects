@@ -68,7 +68,6 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
     const GLOBE_RADIUS = 1;
     const dotDensity = rows / 3.5;
 
-    let dotsAmount = 0;
     for (let lat = -90; lat <= 90; lat += 180 / rows) {
       const radius = Math.cos(Math.abs(lat) * DEG2RAD) * GLOBE_RADIUS;
       const circumference = radius * Math.PI * 2;
@@ -90,18 +89,12 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
         if (shouldRender) {
           const { x, y, z } = calcPosFromLatLonRad(lat, long);
           positionsArr.push(x, y, z);
-          dotsAmount += 1;
         }
       }
     }
 
-    const positions = new Float32Array(dotsAmount * 3);
-    for (let i = 0; i <= positionsArr.length; i++) {
-      const i3 = i * 3;
-      positions[i3] = positionsArr[i3];
-      positions[i3 + 1] = positionsArr[i3 + 1];
-      positions[i3 + 2] = positionsArr[i3 + 2];
-    }
+    const positions = new Float32Array(positionsArr);
+
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     container.add(points);
   };
