@@ -4,6 +4,7 @@ import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
 import { globe } from './globe';
 import { dots } from './dots';
+import { WordsWrapper } from 'containers/FlowPage/components/FlowApp/components/FlowPageContent/styled/Header/WordsWrapper';
 
 interface World {
   appProps: App;
@@ -15,6 +16,7 @@ interface WorldManager {
   initGlobe: () => void;
   updateGlobe: (updateInfo: UpdateInfo) => void;
   updateDots: (updateInfo: UpdateInfo) => void;
+  destroyDots: () => void;
 }
 
 export const world = ({ appObj, appProps }: World) => {
@@ -26,6 +28,7 @@ export const world = ({ appObj, appProps }: World) => {
     initGlobe: null,
     updateGlobe: null,
     updateDots: null,
+    destroyDots: null,
   };
 
   const init = () => {
@@ -46,17 +49,24 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.updateGlobe = updateGlobe;
     worldManager.initGlobe();
 
-    const { container: containerDots, update: updateDots } = dots({
+    const {
+      container: containerDots,
+      update: updateDots,
+      destroy: destroyDots,
+    } = dots({
       appObj,
       appProps,
     });
     container.add(containerDots);
     worldManager.updateDots = updateDots;
+    worldManager.destroyDots = destroyDots;
 
     // container.add(new THREE.AxesHelper());
   };
 
-  const destroy = () => {};
+  const destroy = () => {
+    worldManager.destroyDots();
+  };
 
   const update = (updateInfo: UpdateInfo) => {
     worldManager.updateGlobe(updateInfo);

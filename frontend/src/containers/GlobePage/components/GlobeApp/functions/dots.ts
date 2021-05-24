@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import TWEEN from '@tweenjs/tween.js';
 
 import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
@@ -11,6 +12,7 @@ import { isPointVisible } from './utils/isPointVisible';
 export interface DotsReturn {
   container: THREE.Object3D;
   update: (updateInfo: UpdateInfo) => void;
+  destroy: () => void;
 }
 
 interface Dots {
@@ -32,6 +34,7 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
       uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
       uSize: { value: 8 },
       uTime: { value: 0 },
+      uElevation: { value: 0 },
     },
   });
   const geometry = new THREE.BufferGeometry();
@@ -42,6 +45,25 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
   const canvasImg = new Image();
 
   let pixels;
+
+  let dotsElevationTween;
+
+  const animateDotsElevation = destination => {
+    if (dotsElevationTween) {
+      dotsElevationTween.stop();
+    }
+
+    dotsElevationTween = new TWEEN.Tween({
+      progress: material.uniforms.uElevation.value,
+    })
+      .to({ progress: destination }, 800)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(obj => {
+        material.uniforms.uElevation.value = obj.progress;
+      });
+
+    dotsElevationTween.start();
+  };
 
   const updatePointsMapping = () => {
     ctx.drawImage(canvasImg, 0, 0);
@@ -111,17 +133,47 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
     canvasImg.onload = () => {
       updatePointsMapping();
       generatePoints();
+      setListeners();
     };
   };
 
   init();
 
+  const onTouchDown = () => {
+    animateDotsElevation(1);
+  };
+
+  const onTouchUp = () => {
+    animateDotsElevation(0);
+  };
+
+  const setListeners = () => {
+    window.addEventListener('mousedown', onTouchDown);
+    window.addEventListener('mouseup', onTouchUp);
+
+    window.addEventListener('touchstart', onTouchDown);
+    window.addEventListener('touchend', onTouchUp);
+  };
+
+  const destroyListeners = () => {
+    window.removeEventListener('mousedown', onTouchDown);
+    window.removeEventListener('mouseup', onTouchUp);
+
+    window.removeEventListener('touchstart', onTouchDown);
+    window.removeEventListener('touchend', onTouchUp);
+  };
+
   const update = (updateInfo: UpdateInfo) => {
     material.uniforms.uTime.value = updateInfo.time / 1000;
+  };
+
+  const destroy = () => {
+    destroyListeners();
   };
 
   return {
     container,
     update,
+    destroy,
   };
 };
