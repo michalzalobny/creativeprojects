@@ -22,6 +22,9 @@ export const world = ({ appObj, appProps }: World) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
+  const pivot = new THREE.Group();
+  container.add(pivot);
+
   const worldManager: WorldManager = {
     initLights: null,
     initGlobe: null,
@@ -41,7 +44,9 @@ export const world = ({ appObj, appProps }: World) => {
       container: containerGlobe,
       init: initGlobe,
       update: updateGlobe,
-    } = globe();
+    } = globe({
+      pivot,
+    });
 
     container.add(containerGlobe);
     worldManager.initGlobe = initGlobe;
@@ -55,6 +60,7 @@ export const world = ({ appObj, appProps }: World) => {
     } = dots({
       appObj,
       appProps,
+      pivot,
     });
     container.add(containerDots);
     worldManager.updateDots = updateDots;
@@ -68,6 +74,7 @@ export const world = ({ appObj, appProps }: World) => {
   };
 
   const update = (updateInfo: UpdateInfo) => {
+    pivot.rotation.y += 0.02;
     worldManager.updateGlobe(updateInfo);
     worldManager.updateDots(updateInfo);
   };

@@ -7,8 +7,13 @@ import vertexShader from './shaders/globe/vertex.glsl';
 import fragmentShader from './shaders/globe/fragment.glsl';
 import { UpdateInfo } from './app';
 
-export const globe = () => {
+interface Globe {
+  pivot: THREE.Group;
+}
+
+export const globe = ({ pivot }: Globe) => {
   const container = new THREE.Object3D();
+
   container.matrixAutoUpdate = false;
 
   const geometry = new THREE.SphereBufferGeometry(0.999, 30, 30);
@@ -58,13 +63,14 @@ export const globe = () => {
         longitude: route.pointFinish[1],
       });
 
-      container.add(bullet1.mesh);
-      container.add(bullet2.mesh);
+      container.add(bullet1.mesh, bullet2.mesh);
+      pivot.add(bullet1.mesh, bullet2.mesh);
 
       const curve12 = curve();
       curve12.generateCurve({ p1: b1, p2: b2 });
       curvesArray.push(curve12);
       container.add(curve12.container);
+      pivot.add(curve12.container);
     });
   };
 
