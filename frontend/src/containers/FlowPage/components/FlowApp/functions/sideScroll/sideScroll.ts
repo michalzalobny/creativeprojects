@@ -11,7 +11,7 @@ export enum ScrollMode {
   HORIZONTAL = 'HORIZONTAL',
 }
 
-const SCROLL_SPEED = 1.3;
+const SCROLL_SPEED = 1.2;
 
 export interface ScrollObj {
   ease: number;
@@ -106,12 +106,6 @@ export const sideScroll = (
 
   const update = (time: number) => {
     scrollObj.targetX += scrollObj.speed;
-    const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
-    const deltaX = Math.abs(scrollObj.currentX - scrollObj.targetX);
-
-    if ((deltaY < 0.01 && deltaY > 0) || (deltaX < 0.01 && deltaX > 0)) {
-      return;
-    }
 
     if (scrollObj.currentX > scrollObj.lastX) {
       scrollObj.direction = 'down';
@@ -164,18 +158,6 @@ export const sideScroll = (
 
     const timeFactor = Math.min(Math.max(time / (1000 / time), 1), 4);
     scrollObj.touchMomentum *= Math.pow(MOMENTUM_DAMPING, timeFactor);
-
-    if (!scrollObj.useMomentum) {
-      return;
-    }
-
-    if (scrollObj.touchMomentum >= 0.01 || scrollObj.touchMomentum <= -0.01) {
-      // applyScroll({
-      //   verticalAmountPx: scrollObj.touchMomentum,
-      //   horizontalAmountPx: scrollObj.touchMomentum,
-      //   scrollObj,
-      // });
-    }
   };
 
   return {

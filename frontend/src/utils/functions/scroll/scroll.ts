@@ -96,12 +96,12 @@ export const scroll = (
   };
 
   const update = (time: number) => {
-    const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
-    const deltaX = Math.abs(scrollObj.currentX - scrollObj.targetX);
+    // const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
+    // const deltaX = Math.abs(scrollObj.currentX - scrollObj.targetX);
 
-    if ((deltaY < 0.01 && deltaY > 0) || (deltaX < 0.01 && deltaX > 0)) {
-      return;
-    }
+    // if ((deltaY < 0.01 && deltaY > 0) || (deltaX < 0.01 && deltaX > 0)) {
+    //   return;
+    // }
 
     scrollObj.lastX = scrollObj.currentX;
     scrollObj.currentX = lerp(

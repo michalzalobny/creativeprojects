@@ -74,9 +74,14 @@ export const world = ({ appObj, appProps }: World) => {
   };
 
   const update = (updateInfo: UpdateInfo) => {
-    pivot.rotation.y += 0.02;
     worldManager.updateGlobe(updateInfo);
     worldManager.updateDots(updateInfo);
+    updatePivot();
+  };
+
+  const updatePivot = () => {
+    pivot.rotation.x = appObj.scroll.scrollObj.currentY;
+    pivot.rotation.y = appObj.scroll.scrollObj.currentX;
   };
 
   return {

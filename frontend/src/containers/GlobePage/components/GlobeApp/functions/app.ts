@@ -52,7 +52,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 5;
+export const CAMERA_POS = 3;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
@@ -86,7 +86,7 @@ export const app = (appProps: App) => {
 
     updateCameraSettings();
 
-    // appObj.camera.position.set(CAMERA_POS, 3, CAMERA_POS);
+    appObj.camera.position.set(0, 0, CAMERA_POS);
   };
 
   const updateCameraSettings = () => {
@@ -206,7 +206,7 @@ export const app = (appProps: App) => {
     appManager.updateWorld({ slowDownFactor, delta, time });
     // updateCSS();
     // appObj.controls.update();
-    updateScrollCamera();
+
     TWEEN.update(time);
     appObj.scroll.update(time);
     appObj.renderer.render(appObj.scene, appObj.camera);
@@ -214,15 +214,6 @@ export const app = (appProps: App) => {
 
   const stopAppFrame = () => {
     window.cancelAnimationFrame(appObj.rafId);
-  };
-
-  const updateScrollCamera = () => {
-    const rotSpeed = appObj.scroll.scrollObj.currentY * 0.005;
-
-    appObj.camera.position.x = 2 * (Math.cos(rotSpeed) - Math.sin(rotSpeed));
-    appObj.camera.position.z = 2 * (Math.cos(rotSpeed) + Math.sin(rotSpeed));
-
-    appObj.camera.lookAt(appObj.scene.position);
   };
 
   const updateCSS = () => {

@@ -11,6 +11,8 @@ export enum ScrollMode {
   HORIZONTAL = 'HORIZONTAL',
 }
 
+const SCROLL_SPEED = 0.004;
+
 export interface ScrollObj {
   ease: number;
   currentX: number;
@@ -26,7 +28,8 @@ export interface ScrollObj {
   targetStrengthX: number;
   lastStrengthX: number;
   useMomentum: boolean;
-  touchMomentum: number;
+  touchMomentumX: number;
+  touchMomentumY: number;
   lastTouchX: number;
   lastTouchY: number;
   scrollMode: ScrollMode;
@@ -35,6 +38,8 @@ export interface ScrollObj {
   contentSizes: Sizes;
   progressRatio: number;
   isTouching: boolean;
+  speed: number;
+  direction: 'up' | 'down';
 }
 
 export interface ScrollReturn {
@@ -69,7 +74,8 @@ export const scroll = (
     targetStrengthX: 0,
     lastStrengthX: 0,
     useMomentum: false,
-    touchMomentum: 0,
+    touchMomentumX: 0,
+    touchMomentumY: 0,
     lastTouchX: 0,
     lastTouchY: 0,
     scrollMode: ScrollMode.VERTICAL,
@@ -78,6 +84,8 @@ export const scroll = (
     contentSizes: contentSizes,
     progressRatio: 0,
     isTouching: false,
+    speed: SCROLL_SPEED,
+    direction: 'up',
   };
 
   const {
@@ -96,11 +104,14 @@ export const scroll = (
   };
 
   const update = (time: number) => {
-    const deltaY = Math.abs(scrollObj.currentY - scrollObj.targetY);
-    const deltaX = Math.abs(scrollObj.currentX - scrollObj.targetX);
+    scrollObj.targetX += scrollObj.speed;
 
-    if ((deltaY < 0.01 && deltaY > 0) || (deltaX < 0.01 && deltaX > 0)) {
-      return;
+    if (scrollObj.currentX > scrollObj.lastX) {
+      scrollObj.direction = 'down';
+      scrollObj.speed = SCROLL_SPEED;
+    } else if (scrollObj.currentX < scrollObj.lastX) {
+      scrollObj.direction = 'up';
+      scrollObj.speed = -SCROLL_SPEED;
     }
 
     scrollObj.lastX = scrollObj.currentX;
@@ -138,16 +149,25 @@ export const scroll = (
     scrollObj.TWEEN_GROUP_SEEK.update(time);
 
     const timeFactor = Math.min(Math.max(time / (1000 / time), 1), 4);
-    scrollObj.touchMomentum *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    scrollObj.touchMomentumX *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    scrollObj.touchMomentumY *= Math.pow(MOMENTUM_DAMPING, timeFactor);
 
     if (!scrollObj.useMomentum) {
       return;
     }
 
-    if (scrollObj.touchMomentum >= 0.01 || scrollObj.touchMomentum <= -0.01) {
+    if (Math.abs(scrollObj.touchMomentumX) >= 0.01) {
       applyScroll({
-        verticalAmountPx: scrollObj.touchMomentum,
-        horizontalAmountPx: scrollObj.touchMomentum,
+        verticalAmountPx: 0,
+        horizontalAmountPx: scrollObj.touchMomentumX,
+        scrollObj,
+      });
+    }
+
+    if (Math.abs(scrollObj.touchMomentumY) >= 0.01) {
+      applyScroll({
+        verticalAmountPx: scrollObj.touchMomentumY,
+        horizontalAmountPx: 0,
         scrollObj,
       });
     }
