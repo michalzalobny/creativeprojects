@@ -4,6 +4,9 @@ import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import { UpdateInfo, AppObj, App } from './app';
 import mapImage from './images/siurmap.png';
+import { getRandBetween } from './utils/getRandBetween';
+import { calcPosFromLatLonRad } from './utils/calcPosFromLatLonRad';
+import { isPointVisible } from './utils/isPointVisible';
 
 export interface DotsReturn {
   container: THREE.Object3D;
@@ -14,26 +17,6 @@ interface Dots {
   appObj: AppObj;
   appProps: App;
 }
-
-const getRanBetween = (start, finish) => {
-  return Math.floor(Math.random() * finish) + start;
-};
-
-const calcPosFromLatLonRad = (lat, lon) => {
-  const phi = (90 - lat) * (Math.PI / 180);
-  const theta = (lon + 180) * (Math.PI / 180);
-  const x = -Math.cos(theta) * Math.sin(phi);
-  const z = Math.sin(phi) * Math.sin(theta);
-  const y = Math.cos(phi);
-  return { x, y, z };
-};
-
-const isVisible = (lat, lon, width, height, pixels) => {
-  const x = Math.floor(((lon + 180) / 360) * width);
-  const y = Math.floor(((lat + 90) / 180) * height);
-  const pos = width * y + x;
-  return pixels[pos] >= 255;
-};
 
 export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
   const container = new THREE.Object3D();
@@ -80,18 +63,18 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
         const circumference = radius * Math.PI * 2;
 
         const dotsForLat =
-          Math.floor(circumference * dotDensity) + getRanBetween(1, 2); //Used Math.floor to evenly divide spaces between dots
+          Math.floor(circumference * dotDensity) + getRandBetween(1, 2); //Used Math.floor to evenly divide spaces between dots
 
         for (let x = 0; x < dotsForLat; x++) {
           const long = -180 + (x * 360) / dotsForLat; //167
 
-          const shouldRender = isVisible(
+          const shouldRender = isPointVisible({
             lat,
-            long,
-            imageData.width,
-            imageData.height,
-            pixels,
-          );
+            lon: long,
+            mapHeight: imageData.height,
+            mapWidth: imageData.width,
+            imageDataAlphaArray: pixels,
+          });
 
           if (shouldRender) {
             const { x: latX, y, z } = calcPosFromLatLonRad(lat, long);
