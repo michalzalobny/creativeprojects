@@ -4,7 +4,6 @@ import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import { UpdateInfo, AppObj, App } from './app';
 import mapImage from './images/siurmap.png';
-import myMap from './images/mymap.png';
 
 export interface DotsReturn {
   container: THREE.Object3D;
@@ -21,22 +20,18 @@ const getRanBetween = (start, finish) => {
 };
 
 const calcPosFromLatLonRad = (lat, lon) => {
-  //https://en.wikipedia.org/wiki/Spherical_coordinate_system
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
   const x = -Math.cos(theta) * Math.sin(phi);
   const z = Math.sin(phi) * Math.sin(theta);
   const y = Math.cos(phi);
-
   return { x, y, z };
 };
 
 const isVisible = (lat, lon, width, height, pixels) => {
   const x = Math.floor(((lon + 180) / 360) * width);
   const y = Math.floor(((lat + 90) / 180) * height);
-
   const pos = width * y + x;
-
   return pixels[pos] >= 255;
 };
 
@@ -45,7 +40,6 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
   container.matrixAutoUpdate = false;
 
   let material;
-  // const dotGeometry = new THREE.CircleGeometry(2, 5);
   const geometry = new THREE.BufferGeometry();
 
   const generateGalaxy = () => {
@@ -68,14 +62,6 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
       for (let i = 0; i <= pixels.length; i++) {
         pixels[i] = imageData.data[i * 4 + 3];
       }
-
-      // for (let i = 0; i <= pixels.length; i++) {
-      //   const i4 = i * 4;
-      //   pixels[i4] = imageData.data[i4];
-      //   pixels[i4 + 1] = imageData.data[i4 + 1];
-      //   pixels[i4 + 2] = imageData.data[i4 + 2];
-      //   pixels[i4 + 3] = imageData.data[i4 + 3];
-      // }
 
       const points = new THREE.Points(geometry, material);
       container.add(points);
