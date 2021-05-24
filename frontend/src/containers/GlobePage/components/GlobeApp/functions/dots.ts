@@ -91,13 +91,11 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
         const radius = Math.cos(Math.abs(lat) * DEG2RAD) * GLOBE_RADIUS;
         const circumference = radius * Math.PI * 2;
 
-        const dotsForLat = circumference * dotDensity;
+        const dotsForLat = Math.floor(circumference * dotDensity); //Used Math.floor to evenly divide spaces between dots
 
-        // console.log(dotsForLat);
         for (let x = 0; x < dotsForLat; x++) {
           const long = -180 + (x * 360) / dotsForLat; //167
 
-          //lat, lon, width, height, pixels
           const shouldRender = isVisible(
             lat,
             long,
@@ -141,7 +139,7 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
       fragmentShader: fragmentShader,
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
-        uSize: { value: 12 },
+        uSize: { value: 8 },
         uTime: { value: 0 },
       },
     });
