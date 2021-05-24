@@ -22,102 +22,99 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  let material;
+  const material = new THREE.ShaderMaterial({
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexColors: true,
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+    uniforms: {
+      uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
+      uSize: { value: 8 },
+      uTime: { value: 0 },
+    },
+  });
   const geometry = new THREE.BufferGeometry();
 
-  const generateGalaxy = () => {
-    let imageData: ImageData;
-    const canvas = document.getElementById('canvas');
-    const ctx = (canvas as HTMLCanvasElement).getContext('2d');
-    const canvasImg = new Image();
-    canvasImg.src = mapImage.src;
-    canvasImg.onload = () => {
-      ctx.drawImage(canvasImg, 0, 0);
-      imageData = ctx.getImageData(
-        0,
-        0,
-        canvasImg.naturalWidth,
-        canvasImg.naturalHeight,
-      );
+  let imageData: ImageData;
+  const canvas = document.getElementById('canvas');
+  const ctx = (canvas as HTMLCanvasElement).getContext('2d');
+  const canvasImg = new Image();
 
-      const pixels = new Float32Array(imageData.data.length);
+  let pixels;
 
-      for (let i = 0; i <= pixels.length; i++) {
-        pixels[i] = imageData.data[i * 4 + 3];
-      }
+  const updatePointsMapping = () => {
+    ctx.drawImage(canvasImg, 0, 0);
+    imageData = ctx.getImageData(
+      0,
+      0,
+      canvasImg.naturalWidth,
+      canvasImg.naturalHeight,
+    );
 
-      const points = new THREE.Points(geometry, material);
-      container.add(points);
+    pixels = new Float32Array(imageData.data.length);
 
-      const posArr = [];
-
-      const rows = 180;
-      const DEG2RAD = Math.PI / 180;
-      const GLOBE_RADIUS = 1;
-      const dotDensity = rows / 3.5;
-
-      let dotsAmount = 0;
-
-      for (let lat = -90; lat <= 90; lat += 180 / rows) {
-        const radius = Math.cos(Math.abs(lat) * DEG2RAD) * GLOBE_RADIUS;
-        const circumference = radius * Math.PI * 2;
-
-        const dotsForLat =
-          Math.floor(circumference * dotDensity) + getRandBetween(1, 2); //Used Math.floor to evenly divide spaces between dots
-
-        for (let x = 0; x < dotsForLat; x++) {
-          const long = -180 + (x * 360) / dotsForLat; //167
-
-          const shouldRender = isPointVisible({
-            lat,
-            lon: long,
-            mapHeight: imageData.height,
-            mapWidth: imageData.width,
-            imageDataAlphaArray: pixels,
-          });
-
-          if (shouldRender) {
-            const { x: latX, y, z } = calcPosFromLatLonRad(lat, long);
-            posArr.push(latX, y, z);
-            dotsAmount += 1;
-          }
-
-          // if (!this.visibilityForCoordinate(long, lat)) continue;
-
-          // Setup and save circle matrix data
-        }
-      }
-
-      const positions = new Float32Array(dotsAmount * 3);
-
-      for (let i = 0; i <= posArr.length; i++) {
-        const i3 = i * 3;
-        positions[i3] = posArr[i3];
-        positions[i3 + 1] = posArr[i3 + 1];
-        positions[i3 + 2] = posArr[i3 + 2];
-      }
-
-      geometry.setAttribute(
-        'position',
-        new THREE.BufferAttribute(positions, 3),
-      );
-    };
-
-    material = new THREE.ShaderMaterial({
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      vertexColors: true,
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-      uniforms: {
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
-        uSize: { value: 8 },
-        uTime: { value: 0 },
-      },
-    });
+    for (let i = 0; i <= pixels.length; i++) {
+      pixels[i] = imageData.data[i * 4 + 3];
+    }
   };
 
-  generateGalaxy();
+  const generatePoints = () => {
+    const points = new THREE.Points(geometry, material);
+    const positionsArr = [];
+
+    const rows = 180;
+    const DEG2RAD = Math.PI / 180;
+    const GLOBE_RADIUS = 1;
+    const dotDensity = rows / 3.5;
+
+    let dotsAmount = 0;
+    for (let lat = -90; lat <= 90; lat += 180 / rows) {
+      const radius = Math.cos(Math.abs(lat) * DEG2RAD) * GLOBE_RADIUS;
+      const circumference = radius * Math.PI * 2;
+
+      const dotsForLat =
+        Math.floor(circumference * dotDensity) + getRandBetween(1, 2); //Used Math.floor to evenly divide spaces between dots
+
+      for (let x = 0; x < dotsForLat; x++) {
+        const long = -180 + (x * 360) / dotsForLat;
+
+        const shouldRender = isPointVisible({
+          lat,
+          lon: long,
+          mapHeight: imageData.height,
+          mapWidth: imageData.width,
+          imageDataAlphaArray: pixels,
+        });
+
+        if (shouldRender) {
+          const { x, y, z } = calcPosFromLatLonRad(lat, long);
+          positionsArr.push(x, y, z);
+          dotsAmount += 1;
+        }
+      }
+    }
+
+    const positions = new Float32Array(dotsAmount * 3);
+    for (let i = 0; i <= positionsArr.length; i++) {
+      const i3 = i * 3;
+      positions[i3] = positionsArr[i3];
+      positions[i3 + 1] = positionsArr[i3 + 1];
+      positions[i3 + 2] = positionsArr[i3 + 2];
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    container.add(points);
+  };
+
+  const init = () => {
+    canvasImg.src = mapImage.src;
+    canvasImg.onload = () => {
+      updatePointsMapping();
+      generatePoints();
+    };
+  };
+
+  init();
 
   const update = (updateInfo: UpdateInfo) => {
     // material.uniforms.uTime.value = updateInfo.time / 1000;
