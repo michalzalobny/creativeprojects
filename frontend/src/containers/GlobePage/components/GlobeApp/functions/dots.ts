@@ -99,7 +99,7 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
     //Generates random value for each point on the map
     const randoms = new Float32Array(positionsArr.length / 3);
     for (let i = 0; i < randoms.length; i++) {
-      randoms[i] = Math.random();
+      randoms[i] = getRandBetween(1, 50);
     }
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
 
