@@ -11,7 +11,7 @@ export const globe = () => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const geometry = new THREE.SphereBufferGeometry(0.6, 30, 30);
+  const geometry = new THREE.SphereBufferGeometry(0.999, 30, 30);
   let mesh;
 
   const material = new THREE.MeshBasicMaterial({
@@ -21,7 +21,7 @@ export const globe = () => {
 
   const generateGlobe = () => {
     mesh = new THREE.Mesh(geometry, material);
-    // container.add(mesh);
+    container.add(mesh);
   };
 
   const curvesArray: CurveReturn[] = [];

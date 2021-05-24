@@ -16,7 +16,9 @@ interface Dots {
   appProps: App;
 }
 
-let DOT_COUNT;
+const getRanBetween = (start, finish) => {
+  return Math.floor(Math.random() * finish) + start;
+};
 
 const calcPosFromLatLonRad = (lat, lon) => {
   //https://en.wikipedia.org/wiki/Spherical_coordinate_system
@@ -91,7 +93,8 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
         const radius = Math.cos(Math.abs(lat) * DEG2RAD) * GLOBE_RADIUS;
         const circumference = radius * Math.PI * 2;
 
-        const dotsForLat = Math.floor(circumference * dotDensity); //Used Math.floor to evenly divide spaces between dots
+        const dotsForLat =
+          Math.floor(circumference * dotDensity) + getRanBetween(1, 2); //Used Math.floor to evenly divide spaces between dots
 
         for (let x = 0; x < dotsForLat; x++) {
           const long = -180 + (x * 360) / dotsForLat; //167
