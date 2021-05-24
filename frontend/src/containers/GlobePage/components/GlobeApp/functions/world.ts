@@ -53,7 +53,7 @@ export const world = ({ appObj, appProps }: World) => {
     container.add(containerDots);
     worldManager.updateDots = updateDots;
 
-    container.add(new THREE.AxesHelper());
+    // container.add(new THREE.AxesHelper());
   };
 
   const destroy = () => {};

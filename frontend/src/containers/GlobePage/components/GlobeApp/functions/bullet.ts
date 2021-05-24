@@ -36,7 +36,7 @@ export const bullet = (): BulletReturn => {
   const geometry = new THREE.SphereBufferGeometry(0.02, 30, 30);
 
   const material = new THREE.MeshBasicMaterial({
-    color: new THREE.Color('red'),
+    color: new THREE.Color('white'),
   });
 
   const mesh = new THREE.Mesh(geometry, material);

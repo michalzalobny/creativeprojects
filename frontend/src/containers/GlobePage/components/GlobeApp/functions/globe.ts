@@ -11,11 +11,12 @@ export const globe = () => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const geometry = new THREE.SphereBufferGeometry(1, 30, 30);
+  const geometry = new THREE.SphereBufferGeometry(0.6, 30, 30);
   let mesh;
 
   const material = new THREE.MeshBasicMaterial({
-    map: new THREE.TextureLoader().load(earthSrc.src),
+    // map: new THREE.TextureLoader().load(earthSrc.src),
+    color: new THREE.Color('#1544AD'),
   });
 
   const generateGlobe = () => {

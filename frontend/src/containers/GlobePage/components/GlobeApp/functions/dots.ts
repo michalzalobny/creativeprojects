@@ -80,10 +80,10 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
 
       const posArr = [];
 
-      const rows = 1000;
+      const rows = 180;
       const DEG2RAD = Math.PI / 180;
       const GLOBE_RADIUS = 1;
-      const dotDensity = 80; //30
+      const dotDensity = rows / 3.5;
 
       let dotsAmount = 0;
 
@@ -141,7 +141,7 @@ export const dots = ({ appObj, appProps }: Dots): DotsReturn => {
       fragmentShader: fragmentShader,
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
-        uSize: { value: 4 },
+        uSize: { value: 12 },
         uTime: { value: 0 },
       },
     });
