@@ -4,7 +4,7 @@ import TWEEN from '@tweenjs/tween.js';
 import { AppObj } from './app';
 import fragmentShader from './shaders/media/fragment.glsl';
 import vertexShader from './shaders/media/vertex.glsl';
-import { ScrollMode } from 'utils/functions/scroll/scroll';
+import { ScrollMode } from './scroll/scroll';
 import { ImageMediaProps } from 'utils/types/Media';
 
 export interface MediaItem {

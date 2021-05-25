@@ -6,7 +6,7 @@ import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 
 import { world } from './world';
 import { FlowItem, SlideItem } from '../FlowApp';
-import { scroll, ScrollReturn } from 'utils/functions/scroll/scroll';
+import { scroll, ScrollReturn } from './scroll/scroll';
 import { sideScroll, SideScrollReturn } from './sideScroll/sideScroll';
 
 export interface App {
