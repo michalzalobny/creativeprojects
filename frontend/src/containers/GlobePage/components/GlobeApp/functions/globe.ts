@@ -27,6 +27,7 @@ export const globe = ({ pivot }: Globe) => {
   const generateGlobe = () => {
     mesh = new THREE.Mesh(geometry, material);
     container.add(mesh);
+    pivot.add(mesh);
   };
 
   const curvesArray: CurveReturn[] = [];

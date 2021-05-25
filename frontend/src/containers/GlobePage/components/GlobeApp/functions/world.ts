@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import TWEEN from '@tweenjs/tween.js';
 
 import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
@@ -67,6 +68,11 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.destroyDots = destroyDots;
 
     // container.add(new THREE.AxesHelper());
+
+    setTimeout(() => {
+      scrollMode = true;
+      animateRotationParameter(0);
+    }, 1500);
   };
 
   const destroy = () => {
@@ -79,9 +85,55 @@ export const world = ({ appObj, appProps }: World) => {
     updatePivot();
   };
 
+  const SHIFT = 2; //2
+  const MULTIPLIER = 0.4; //0.4
+  const FINAL_SHIFT = 0.6; //0.6
+
+  let scrollMode = false;
+  let rotationXParameter = 1;
+  let rotationTween;
+
+  const animateRotationParameter = destination => {
+    if (rotationTween) {
+      rotationTween.stop();
+    }
+
+    rotationTween = new TWEEN.Tween({
+      progress: rotationXParameter,
+    })
+      .to({ progress: destination }, 2000)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onUpdate(obj => {
+        rotationXParameter = obj.progress;
+      });
+
+    rotationTween.start();
+  };
+
   const updatePivot = () => {
     pivot.rotation.x = appObj.scroll.scrollObj.currentY;
     pivot.rotation.y = appObj.scroll.scrollObj.currentX;
+
+    if (scrollMode) {
+      pivot.position.z =
+        (1 - rotationXParameter) *
+        ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
+          FINAL_SHIFT);
+
+      pivot.rotation.x =
+        appObj.scroll.scrollObj.currentY * rotationXParameter +
+        Math.sin(appObj.scroll.scrollObj.currentX) *
+          -0.4 *
+          (1 - rotationXParameter);
+    }
+
+    // pivot.position.x =
+    //   Math.cos(appObj.scroll.scrollObj.currentX) -
+    //   Math.sin(appObj.scroll.scrollObj.currentX);
+
+    // pivot.position.y =
+    //   Math.cos(appObj.scroll.scrollObj.currentX) -
+    //   Math.sin(appObj.scroll.scrollObj.currentX);
   };
 
   return {
