@@ -17,7 +17,7 @@ export const SwipeCircle = styled(motion.div)<Props>`
   transform: translate(-50%, 50%);
 
   ${media.tablet} {
-    border: 2px solid white;
+    border: 1px solid white;
   }
 
   &:before {

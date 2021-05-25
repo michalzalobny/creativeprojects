@@ -18,7 +18,7 @@ export const SwipeLine = styled(motion.div)<Props>`
   transform-origin: left;
 
   ${media.tablet} {
-    height: 2px;
+    height: 1px;
   }
 `;
 
