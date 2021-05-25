@@ -1,6 +1,6 @@
 import normalizeWheel from 'normalize-wheel';
 
-import { ScrollObj, ScrollMode } from 'utils/functions/scroll/scroll';
+import { ScrollObj, ScrollMode } from '../sideScroll';
 import {
   MOMENTUM_CARRY,
   MOUSE_MULTIPLIER,
