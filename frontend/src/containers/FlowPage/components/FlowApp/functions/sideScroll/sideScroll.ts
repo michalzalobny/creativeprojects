@@ -87,7 +87,7 @@ export const sideScroll = (
     isTouching: false,
   };
 
-  let isStrengthChecked = false;
+  const isStrengthChecked = false;
 
   const {
     destroy: destroyHandleEvents,
@@ -129,12 +129,12 @@ export const sideScroll = (
       scrollObj.ease,
     );
 
-    if (!isStrengthChecked) {
-      if (Math.abs(scrollObj.currentStrengthX) > 11) {
-        setShowSlider(false);
-        isStrengthChecked = true;
-      }
-    }
+    // if (!isStrengthChecked) {
+    //   if (Math.abs(scrollObj.currentStrengthX) > 11) {
+    //     setShowSlider(false);
+    //     isStrengthChecked = true;
+    //   }
+    // }
 
     //Update strengthY
     scrollObj.lastStrengthY = scrollObj.currentStrengthY;

@@ -11,7 +11,6 @@ export const applyScroll = (props: ApplyScroll) => {
   const { scrollObj, horizontalAmountPx, verticalAmountPx } = props;
   scrollObj.TWEEN_GROUP_SEEK.removeAll();
   applyScrollHorizontal(horizontalAmountPx, scrollObj);
-  // applyScrollHorizontal(verticalAmountPx, scrollObj);
 };
 
 //TODO : ADD BOUNDARIES AS FOR VERTICAL

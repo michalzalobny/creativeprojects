@@ -76,7 +76,7 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
 
     applyScroll({
       horizontalAmountPx: -pixelY / SCROLL_DIVIDER,
-      verticalAmountPx: -pixelY / SCROLL_DIVIDER,
+      verticalAmountPx: 0,
       scrollObj,
     });
   };
