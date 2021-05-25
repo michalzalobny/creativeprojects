@@ -1,4 +1,4 @@
-import { ScrollObj, ScrollMode } from 'utils/functions/scroll/scroll';
+import { ScrollObj, ScrollMode } from '../scroll';
 import { getProgressValues } from './getProgressValues';
 
 export type ApplyScroll = {

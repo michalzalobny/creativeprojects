@@ -1,6 +1,6 @@
 import TWEEN from '@tweenjs/tween.js';
 
-import { ScrollObj, ScrollMode } from 'utils/functions/scroll/scroll';
+import { ScrollObj, ScrollMode } from '../scroll';
 import { getProgressValues } from './getProgressValues';
 
 export type SeekTo = {
