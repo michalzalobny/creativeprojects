@@ -3,7 +3,8 @@ import { handleEvents } from './functions/handleEvents';
 import { MOMENTUM_DAMPING } from './constants';
 import { applyScroll } from './functions/applyScroll';
 
-const SCROLL_SPEED = 0.004;
+const SCROLL_SPEED_X = 0.004;
+const SCROLL_SPEED_Y = 0;
 export interface ScrollObj {
   ease: number;
   currentX: number;
@@ -26,7 +27,8 @@ export interface ScrollObj {
   viewportSizes: Sizes;
   contentSizes: Sizes;
   isTouching: boolean;
-  speed: number;
+  speedX: number;
+  speedY: number;
   directionX: -1 | 1;
   directionY: -1 | 1;
 }
@@ -69,7 +71,8 @@ export const scroll = (
     viewportSizes: viewportSizes,
     contentSizes: contentSizes,
     isTouching: false,
-    speed: SCROLL_SPEED,
+    speedX: SCROLL_SPEED_X,
+    speedY: SCROLL_SPEED_Y,
     directionX: 1,
     directionY: 1,
   };
@@ -88,22 +91,22 @@ export const scroll = (
   };
 
   const update = (time: number) => {
-    scrollObj.targetX += scrollObj.speed;
+    scrollObj.targetX += scrollObj.speedX;
 
     if (scrollObj.currentX > scrollObj.lastX) {
       scrollObj.directionX = 1;
-      scrollObj.speed = SCROLL_SPEED;
+      scrollObj.speedX = SCROLL_SPEED_X;
     } else if (scrollObj.currentX < scrollObj.lastX) {
       scrollObj.directionX = -1;
-      scrollObj.speed = -SCROLL_SPEED;
+      scrollObj.speedX = -SCROLL_SPEED_X;
     }
 
     if (scrollObj.currentY > scrollObj.lastY) {
       scrollObj.directionY = 1;
-      scrollObj.speed = SCROLL_SPEED;
+      scrollObj.speedY = SCROLL_SPEED_Y;
     } else if (scrollObj.currentY < scrollObj.lastY) {
       scrollObj.directionY = -1;
-      scrollObj.speed = -SCROLL_SPEED;
+      scrollObj.speedY = -SCROLL_SPEED_Y;
     }
 
     scrollObj.lastX = scrollObj.currentX;
