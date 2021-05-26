@@ -93,18 +93,18 @@ export const scroll = (
   const update = (time: number) => {
     scrollObj.targetX += scrollObj.speedX;
 
-    if (scrollObj.currentX > scrollObj.lastX) {
+    if (scrollObj.currentX >= scrollObj.lastX) {
       scrollObj.directionX = 1;
       scrollObj.speedX = SCROLL_SPEED_X;
-    } else if (scrollObj.currentX < scrollObj.lastX) {
+    } else {
       scrollObj.directionX = -1;
       scrollObj.speedX = -SCROLL_SPEED_X;
     }
 
-    if (scrollObj.currentY > scrollObj.lastY) {
+    if (scrollObj.currentY >= scrollObj.lastY) {
       scrollObj.directionY = 1;
       scrollObj.speedY = SCROLL_SPEED_Y;
-    } else if (scrollObj.currentY < scrollObj.lastY) {
+    } else {
       scrollObj.directionY = -1;
       scrollObj.speedY = -SCROLL_SPEED_Y;
     }
