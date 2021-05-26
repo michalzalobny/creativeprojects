@@ -58,7 +58,7 @@ export default function MyApp(props: AppProps) {
           <Component router={router} {...pageProps} />
         </PageWrapper>
       </AnimatePresence>
-      <FPSStats />
+      {/* <FPSStats /> */}
     </ExampleContextProvider>
   );
 }
