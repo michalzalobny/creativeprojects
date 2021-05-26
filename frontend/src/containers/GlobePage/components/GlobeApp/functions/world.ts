@@ -70,8 +70,8 @@ export const world = ({ appObj, appProps }: World) => {
     // container.add(new THREE.AxesHelper());
 
     setTimeout(() => {
-      scrollMode = true;
-      animateRotationParameter(0);
+      // scrollMode = true;
+      // animateRotationParameter(0);
     }, 1500);
   };
 
@@ -89,7 +89,7 @@ export const world = ({ appObj, appProps }: World) => {
   const MULTIPLIER = 0.4; //0.4
   const FINAL_SHIFT = 0.6; //0.6
 
-  let scrollMode = false;
+  const scrollMode = false;
   let rotationXParameter = 1;
   let rotationTween;
 

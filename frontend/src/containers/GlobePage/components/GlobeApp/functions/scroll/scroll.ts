@@ -1,18 +1,9 @@
-import TWEEN, { Group } from '@tweenjs/tween.js';
-
 import { lerp } from './utils/lerp';
 import { handleEvents } from './functions/handleEvents';
 import { MOMENTUM_DAMPING } from './constants';
 import { applyScroll } from './functions/applyScroll';
-import { initSeekTo, SeekTo } from './functions/seekTo';
-
-export enum ScrollMode {
-  VERTICAL = 'VERTICAL',
-  HORIZONTAL = 'HORIZONTAL',
-}
 
 const SCROLL_SPEED = 0.004;
-
 export interface ScrollObj {
   ease: number;
   currentX: number;
@@ -32,14 +23,12 @@ export interface ScrollObj {
   touchMomentumY: number;
   lastTouchX: number;
   lastTouchY: number;
-  scrollMode: ScrollMode;
-  TWEEN_GROUP_SEEK: Group;
   viewportSizes: Sizes;
   contentSizes: Sizes;
-  progressRatio: number;
   isTouching: boolean;
   speed: number;
-  direction: 'up' | 'down';
+  directionX: -1 | 1;
+  directionY: -1 | 1;
 }
 
 export interface ScrollReturn {
@@ -47,7 +36,6 @@ export interface ScrollReturn {
   destroy: () => void;
   init: () => void;
   scrollObj: ScrollObj;
-  seekTo: (props: SeekTo) => void;
 }
 
 interface Sizes {
@@ -78,22 +66,18 @@ export const scroll = (
     touchMomentumY: 0,
     lastTouchX: 0,
     lastTouchY: 0,
-    scrollMode: ScrollMode.VERTICAL,
-    TWEEN_GROUP_SEEK: new TWEEN.Group(),
     viewportSizes: viewportSizes,
     contentSizes: contentSizes,
-    progressRatio: 0,
     isTouching: false,
     speed: SCROLL_SPEED,
-    direction: 'up',
+    directionX: 1,
+    directionY: 1,
   };
 
   const {
     destroy: destroyHandleEvents,
     init: initHandleEvents,
   } = handleEvents({ scrollObj });
-
-  const { seekTo } = initSeekTo(scrollObj);
 
   const init = () => {
     initHandleEvents();
@@ -107,10 +91,18 @@ export const scroll = (
     scrollObj.targetX += scrollObj.speed;
 
     if (scrollObj.currentX > scrollObj.lastX) {
-      scrollObj.direction = 'down';
+      scrollObj.directionX = 1;
       scrollObj.speed = SCROLL_SPEED;
     } else if (scrollObj.currentX < scrollObj.lastX) {
-      scrollObj.direction = 'up';
+      scrollObj.directionX = -1;
+      scrollObj.speed = -SCROLL_SPEED;
+    }
+
+    if (scrollObj.currentY > scrollObj.lastY) {
+      scrollObj.directionY = 1;
+      scrollObj.speed = SCROLL_SPEED;
+    } else if (scrollObj.currentY < scrollObj.lastY) {
+      scrollObj.directionY = -1;
       scrollObj.speed = -SCROLL_SPEED;
     }
 
@@ -146,8 +138,6 @@ export const scroll = (
     );
     scrollObj.targetStrengthX = Math.abs(scrollObj.currentX - scrollObj.lastX);
 
-    scrollObj.TWEEN_GROUP_SEEK.update(time);
-
     const timeFactor = Math.min(Math.max(time / (1000 / time), 1), 4);
     scrollObj.touchMomentumX *= Math.pow(MOMENTUM_DAMPING, timeFactor);
     scrollObj.touchMomentumY *= Math.pow(MOMENTUM_DAMPING, timeFactor);
@@ -158,16 +148,16 @@ export const scroll = (
 
     if (Math.abs(scrollObj.touchMomentumX) >= 0.01) {
       applyScroll({
-        verticalAmountPx: 0,
-        horizontalAmountPx: scrollObj.touchMomentumX,
+        y: 0,
+        x: scrollObj.touchMomentumX,
         scrollObj,
       });
     }
 
     if (Math.abs(scrollObj.touchMomentumY) >= 0.01) {
       applyScroll({
-        verticalAmountPx: scrollObj.touchMomentumY,
-        horizontalAmountPx: 0,
+        y: scrollObj.touchMomentumY,
+        x: 0,
         scrollObj,
       });
     }
@@ -178,6 +168,5 @@ export const scroll = (
     init,
     destroy,
     scrollObj,
-    seekTo,
   };
 };

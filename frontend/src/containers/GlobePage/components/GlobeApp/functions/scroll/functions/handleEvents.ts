@@ -1,9 +1,8 @@
 import normalizeWheel from 'normalize-wheel';
 
-import { ScrollObj, ScrollMode } from '../scroll';
+import { ScrollObj } from '../scroll';
 import { MOMENTUM_CARRY, MOUSE_MULTIPLIER } from '../constants';
 import { applyScroll } from './applyScroll';
-import { getProgressValues } from './getProgressValues';
 
 interface HandleEvents {
   scrollObj: ScrollObj;
@@ -44,8 +43,8 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
     scrollObj.touchMomentumX += deltaX;
 
     applyScroll({
-      horizontalAmountPx: deltaX,
-      verticalAmountPx: deltaY,
+      x: deltaX,
+      y: deltaY,
       scrollObj,
     });
   };
@@ -61,42 +60,14 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
     const { pixelY } = normalizeWheel(event);
 
     applyScroll({
-      horizontalAmountPx: -pixelY / 2,
-      verticalAmountPx: 0,
+      x: -pixelY / 2,
+      y: 0,
       scrollObj,
     });
   };
 
   const onResize = () => {
-    scrollObj.TWEEN_GROUP_SEEK && scrollObj.TWEEN_GROUP_SEEK.removeAll();
     scrollObj.useMomentum = false;
-
-    const currentOffset = getProgressValues(scrollObj).currentOffset;
-
-    switch (scrollObj.scrollMode) {
-      case ScrollMode.VERTICAL:
-        scrollObj.lastX = 0;
-        scrollObj.currentX = 0;
-        scrollObj.targetX = 0;
-
-        scrollObj.lastY = currentOffset;
-        scrollObj.currentY = currentOffset;
-        scrollObj.targetY = currentOffset;
-
-        break;
-      case ScrollMode.HORIZONTAL:
-        scrollObj.lastY = 0;
-        scrollObj.currentY = 0;
-        scrollObj.targetY = 0;
-
-        scrollObj.lastX = currentOffset;
-        scrollObj.currentX = currentOffset;
-        scrollObj.targetX = currentOffset;
-
-        break;
-      default:
-        throw new Error('Invalid timeline mode');
-    }
   };
 
   const init = () => {

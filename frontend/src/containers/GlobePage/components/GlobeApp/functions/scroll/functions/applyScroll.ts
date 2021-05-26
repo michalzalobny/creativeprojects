@@ -1,27 +1,24 @@
-import { ScrollObj, ScrollMode } from '../scroll';
-import { getProgressValues } from './getProgressValues';
+import { ScrollObj } from '../scroll';
 
 export type ApplyScroll = {
-  horizontalAmountPx: number;
-  verticalAmountPx: number;
+  x: number;
+  y: number;
   scrollObj: ScrollObj;
 };
 
 export const applyScroll = (props: ApplyScroll) => {
-  const { scrollObj, horizontalAmountPx, verticalAmountPx } = props;
-  scrollObj.TWEEN_GROUP_SEEK.removeAll();
-  applyScrollVertical(verticalAmountPx, scrollObj);
-  applyScrollHorizontal(horizontalAmountPx, scrollObj);
+  const { scrollObj, x, y } = props;
+  applyScrollY(y, scrollObj);
+  applyScrollX(x, scrollObj);
 };
 
-const applyScrollHorizontal = (amountPx: number, scrollObj: ScrollObj) => {
+const applyScrollX = (amountPx: number, scrollObj: ScrollObj) => {
   const newOffsetX = scrollObj.targetX + amountPx / 200;
 
   scrollObj.targetX = newOffsetX;
-  scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
 };
 
-const applyScrollVertical = (amountPx: number, scrollObj: ScrollObj) => {
+const applyScrollY = (amountPx: number, scrollObj: ScrollObj) => {
   const newOffsetY = scrollObj.targetY + amountPx / 200;
 
   if (Math.abs(newOffsetY) >= Math.PI / 2) {
@@ -29,5 +26,4 @@ const applyScrollVertical = (amountPx: number, scrollObj: ScrollObj) => {
   }
 
   scrollObj.targetY = newOffsetY;
-  scrollObj.progressRatio = getProgressValues(scrollObj).calculatedProgress;
 };
