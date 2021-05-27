@@ -8,6 +8,7 @@ import mapImage from './images/siurmap.png';
 import { getRandBetween } from './utils/getRandBetween';
 import { calcPosFromLatLonRad } from './utils/calcPosFromLatLonRad';
 import { isPointVisible } from './utils/isPointVisible';
+import { ZOOM_IN_THRESHOLD } from '../constants';
 
 export interface DotsReturn {
   container: THREE.Object3D;
@@ -57,8 +58,8 @@ export const dots = ({ pivot, appObj, appProps }: Dots): DotsReturn => {
     dotsElevationTween = new TWEEN.Tween({
       progress: material.uniforms.uElevation.value,
     })
-      .to({ progress: destination }, 400)
-      .easing(TWEEN.Easing.Quadratic.In)
+      .to({ progress: destination }, 500)
+      .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         material.uniforms.uElevation.value = obj.progress;
       });

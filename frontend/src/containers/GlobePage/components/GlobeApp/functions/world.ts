@@ -145,7 +145,7 @@ export const world = ({ appObj, appProps }: World) => {
     rotationTween = new TWEEN.Tween({
       progress: rotationXParameter,
     })
-      .to({ progress: destination }, 1000)
+      .to({ progress: destination }, 800)
       .easing(TWEEN.Easing.Quadratic.InOut)
       .onUpdate(obj => {
         rotationXParameter = obj.progress;
