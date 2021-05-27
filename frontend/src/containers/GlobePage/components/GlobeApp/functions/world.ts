@@ -127,9 +127,9 @@ export const world = ({ appObj, appProps }: World) => {
     }
   };
 
-  const SHIFT = 2; //2
-  const MULTIPLIER = 0.4; //0.4
-  const FINAL_SHIFT = 0.6; //0.6
+  const SHIFT = 1.5; //2
+  const MULTIPLIER = 0.45; //0.4
+  const FINAL_SHIFT = 0.4; //0.6
 
   let rotationXParameter = 1;
   let rotationTween;
