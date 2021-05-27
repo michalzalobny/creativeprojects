@@ -16,3 +16,14 @@ export const ZoomWrapper = styled(motion.div)<Props>`
     top: 10%;
   }
 `;
+
+ZoomWrapper.defaultProps = {
+  variants: {
+    initial: {
+      cursor: 'initial',
+    },
+    animate: {
+      cursor: 'pointer',
+    },
+  },
+};

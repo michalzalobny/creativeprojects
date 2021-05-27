@@ -59,7 +59,7 @@ export const dots = ({ pivot, appObj, appProps }: Dots): DotsReturn => {
       progress: material.uniforms.uElevation.value,
     })
       .to({ progress: destination }, 500)
-      .easing(TWEEN.Easing.Linear.None)
+      .easing(TWEEN.Easing.Quadratic.InOut)
       .onUpdate(obj => {
         material.uniforms.uElevation.value = obj.progress;
       });

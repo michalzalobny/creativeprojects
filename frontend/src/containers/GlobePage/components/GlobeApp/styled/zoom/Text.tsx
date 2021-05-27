@@ -27,6 +27,6 @@ Text.defaultProps = {
 
   transition: {
     type: 'tween',
-    duration: ZOOM_IN_THRESHOLD / 1000 / 2,
+    duration: ZOOM_IN_THRESHOLD / 1000,
   },
 };

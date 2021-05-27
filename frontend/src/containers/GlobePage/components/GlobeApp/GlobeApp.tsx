@@ -26,9 +26,11 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
 
   const [isReady, setIsReady] = useState(false);
 
+  const initZoomOutRef = useRef(null);
+
   useEffect(() => {
     const { app } = require('./functions/app');
-    const { destroy, init } = app({
+    const { initZoomOut, destroy, init } = app({
       canvasRefEl: canvasRef.current,
       canvasWrapperRefEl: canvasWrapperRef.current,
       scrollWrapperRefEl: scrollWrapper.current,
@@ -37,7 +39,10 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
       refsToOffset: refsToOffset.current,
     });
 
+    console.log(initZoomOut);
+
     init();
+    initZoomOutRef.current = initZoomOut;
 
     return () => {
       destroy();
@@ -48,7 +53,7 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
   const [animateCircleIn, setAnimateCircleIn] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const icon = {
+  const pathVariants = {
     initial: {
       opacity: 0,
       pathLength: 0,
@@ -88,13 +93,24 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
       <Wrapper>
         <Cover animate={isReady ? 'animate' : 'initial'} />
         <ContentWrapper ref={scrollWrapper}>
-          <ZoomWrapper>
+          <ZoomWrapper
+            animate={isZoomed ? 'animate' : 'initial'}
+            onPointerDown={() => {
+              if (!isZoomed) {
+                return;
+              }
+              setAnimateCircleIn(false);
+              setIsZoomed(false);
+              initZoomOutRef.current();
+            }}
+          >
             <RingWrapper>
               <Text
                 animate={animateCircleIn && !isZoomed ? 'animate' : 'initial'}
               >
                 zoom in
               </Text>
+              <Text animate={isZoomed ? 'animate' : 'initial'}>quit zoom</Text>
               <RingSvg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 87 87"
@@ -105,7 +121,7 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
                     d="M86.5 43.5a43 43 0 11-43-43 43 43 0 0143 43z"
                     fill="none"
                     stroke="#fff"
-                    variants={icon}
+                    variants={pathVariants}
                     transition={{
                       pathLength: {
                         type: 'tween',
@@ -113,11 +129,11 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
                       },
                       opacity: {
                         type: 'tween',
-                        duration: ZOOM_IN_THRESHOLD / 1000 / 2,
+                        duration: ZOOM_IN_THRESHOLD / 1000,
                       },
                     }}
                     animate={
-                      animateCircleIn && !isZoomed ? 'animate' : 'initial'
+                      animateCircleIn || isZoomed ? 'animate' : 'initial'
                     }
                   />
                 </g>

@@ -71,16 +71,14 @@ export const world = ({ appObj, appProps }: World) => {
     setListeners();
 
     // container.add(new THREE.AxesHelper());
-
-    setTimeout(() => {
-      // scrollMode = true;
-      // animateRotationParameter(0);
-    }, 1500);
   };
 
   const initZoomIn = () => {
-    scrollMode = true;
     animateRotationParameter(0);
+  };
+
+  const initZoomOut = () => {
+    animateRotationParameter(1);
   };
 
   let zoomStartTime;
@@ -133,7 +131,6 @@ export const world = ({ appObj, appProps }: World) => {
   const MULTIPLIER = 0.4; //0.4
   const FINAL_SHIFT = 0.6; //0.6
 
-  let scrollMode = false;
   let rotationXParameter = 1;
   let rotationTween;
 
@@ -158,18 +155,16 @@ export const world = ({ appObj, appProps }: World) => {
     pivot.rotation.x = appObj.scroll.scrollObj.currentY;
     pivot.rotation.y = appObj.scroll.scrollObj.currentX;
 
-    if (scrollMode) {
-      pivot.position.z =
-        (1 - rotationXParameter) *
-        ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
-          FINAL_SHIFT);
+    pivot.position.z =
+      (1 - rotationXParameter) *
+      ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
+        FINAL_SHIFT);
 
-      pivot.rotation.x =
-        appObj.scroll.scrollObj.currentY * rotationXParameter +
-        Math.sin(appObj.scroll.scrollObj.currentX) *
-          -0.4 *
-          (1 - rotationXParameter);
-    }
+    pivot.rotation.x =
+      appObj.scroll.scrollObj.currentY * rotationXParameter +
+      Math.sin(appObj.scroll.scrollObj.currentX) *
+        -0.4 *
+        (1 - rotationXParameter);
 
     // pivot.position.x =
     //   Math.cos(appObj.scroll.scrollObj.currentX) -
@@ -185,5 +180,6 @@ export const world = ({ appObj, appProps }: World) => {
     container,
     destroy,
     update,
+    initZoomOut,
   };
 };

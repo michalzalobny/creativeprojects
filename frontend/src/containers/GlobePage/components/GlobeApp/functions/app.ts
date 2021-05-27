@@ -45,6 +45,7 @@ interface AppManager {
   updateWorld: (updateInfo: UpdateInfo) => void;
   destroyWorld: () => void;
   initWorld: () => void;
+  initZoomOut: () => void;
 }
 
 interface Config {
@@ -74,6 +75,7 @@ export const app = (appProps: App) => {
     destroyWorld: null,
     updateWorld: null,
     initWorld: null,
+    initZoomOut: null,
   };
 
   const setCamera = () => {
@@ -232,6 +234,7 @@ export const app = (appProps: App) => {
       update: updateWorld,
       destroy: destroyWorld,
       container: containerWorld,
+      initZoomOut,
     } = world({
       appProps,
       appObj,
@@ -241,10 +244,15 @@ export const app = (appProps: App) => {
     appManager.updateWorld = updateWorld;
     appManager.destroyWorld = destroyWorld;
     appManager.initWorld = initWorld;
+    appManager.initZoomOut = initZoomOut;
     appManager.initWorld();
 
     appProps.setIsReady(true);
   };
 
-  return { destroy, init };
+  const initZoomOut = () => {
+    appManager.initZoomOut();
+  };
+
+  return { destroy, init, initZoomOut };
 };
