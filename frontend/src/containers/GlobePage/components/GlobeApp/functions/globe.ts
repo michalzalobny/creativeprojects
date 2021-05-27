@@ -16,7 +16,7 @@ export const globe = ({ pivot }: Globe) => {
 
   container.matrixAutoUpdate = false;
 
-  const geometry = new THREE.SphereBufferGeometry(0.8, 30, 30);
+  const geometry = new THREE.SphereBufferGeometry(0.9, 50, 50);
   let mesh;
 
   const material = new THREE.MeshStandardMaterial({
