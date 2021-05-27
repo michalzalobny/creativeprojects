@@ -137,6 +137,12 @@ export const app = (appProps: App) => {
       Math.min(Math.max(window.devicePixelRatio, 1.5), 2),
     );
 
+    if (window.innerWidth < 768) {
+      appObj.scene.scale.set(0.8, 0.8, 0.8);
+    } else {
+      appObj.scene.scale.set(1, 1, 1);
+    }
+
     updateCameraSettings();
   };
 

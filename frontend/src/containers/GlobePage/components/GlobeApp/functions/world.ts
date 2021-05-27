@@ -156,9 +156,11 @@ export const world = ({ appObj, appProps }: World) => {
     pivot.rotation.y = appObj.scroll.scrollObj.currentX;
 
     pivot.position.z =
+      (1 - rotationXParameter) * 1.4 +
       (1 - rotationXParameter) *
-      ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
-        FINAL_SHIFT);
+        ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
+          FINAL_SHIFT) *
+        0.2;
 
     pivot.rotation.x =
       appObj.scroll.scrollObj.currentY * rotationXParameter +
