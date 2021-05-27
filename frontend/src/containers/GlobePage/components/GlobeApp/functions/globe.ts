@@ -19,9 +19,9 @@ export const globe = ({ pivot }: Globe) => {
   const geometry = new THREE.SphereBufferGeometry(0.8, 30, 30);
   let mesh;
 
-  const material = new THREE.MeshBasicMaterial({
+  const material = new THREE.MeshStandardMaterial({
     // map: new THREE.TextureLoader().load(earthSrc.src),
-    color: new THREE.Color('#1544AD'),
+    color: new THREE.Color('#A7A9F5'),
   });
 
   const generateGlobe = () => {
