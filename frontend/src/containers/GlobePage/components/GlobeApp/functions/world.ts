@@ -5,6 +5,7 @@ import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
 import { globe } from './globe';
 import { dots } from './dots';
+import { ZOOM_IN_THRESHOLD } from '../constants';
 
 interface World {
   appProps: App;
@@ -67,6 +68,8 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.updateDots = updateDots;
     worldManager.destroyDots = destroyDots;
 
+    setListeners();
+
     // container.add(new THREE.AxesHelper());
 
     setTimeout(() => {
@@ -75,7 +78,40 @@ export const world = ({ appObj, appProps }: World) => {
     }, 1500);
   };
 
+  const initZoomIn = () => {
+    scrollMode = true;
+    animateRotationParameter(0);
+  };
+
+  let zoomStartTime;
+  let checkForZoom;
+  const onTouchDown = () => {
+    checkForZoom = true;
+    zoomStartTime = window.performance.now();
+  };
+
+  const onTouchUp = () => {
+    checkForZoom = false;
+  };
+
+  const setListeners = () => {
+    window.addEventListener('mousedown', onTouchDown);
+    window.addEventListener('mouseup', onTouchUp);
+
+    window.addEventListener('touchstart', onTouchDown);
+    window.addEventListener('touchend', onTouchUp);
+  };
+
+  const destroyListeners = () => {
+    window.removeEventListener('mousedown', onTouchDown);
+    window.removeEventListener('mouseup', onTouchUp);
+
+    window.removeEventListener('touchstart', onTouchDown);
+    window.removeEventListener('touchend', onTouchUp);
+  };
+
   const destroy = () => {
+    destroyListeners();
     worldManager.destroyDots();
   };
 
@@ -83,13 +119,21 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.updateGlobe(updateInfo);
     worldManager.updateDots(updateInfo);
     updatePivot();
+    if (
+      window.performance.now() - zoomStartTime > ZOOM_IN_THRESHOLD &&
+      checkForZoom
+    ) {
+      appProps.setIsZoomed(true);
+      initZoomIn();
+      checkForZoom = false;
+    }
   };
 
   const SHIFT = 2; //2
   const MULTIPLIER = 0.4; //0.4
   const FINAL_SHIFT = 0.6; //0.6
 
-  const scrollMode = false;
+  let scrollMode = false;
   let rotationXParameter = 1;
   let rotationTween;
 
@@ -101,8 +145,8 @@ export const world = ({ appObj, appProps }: World) => {
     rotationTween = new TWEEN.Tween({
       progress: rotationXParameter,
     })
-      .to({ progress: destination }, 2000)
-      .easing(TWEEN.Easing.Exponential.InOut)
+      .to({ progress: destination }, 1000)
+      .easing(TWEEN.Easing.Quadratic.InOut)
       .onUpdate(obj => {
         rotationXParameter = obj.progress;
       });

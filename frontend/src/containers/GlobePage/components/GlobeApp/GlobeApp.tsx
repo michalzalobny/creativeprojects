@@ -8,6 +8,8 @@ import { ContentWrapper } from './styled/ContentWrapper';
 import { ZoomWrapper } from './styled/zoom/ZoomWrapper';
 import { RingSvg } from './styled/zoom/RingSvg';
 import { RingWrapper } from './styled/zoom/RingWrapper';
+import { ZOOM_IN_THRESHOLD } from './constants';
+import { Text } from './styled/zoom/Text';
 
 interface GlobeAppProps {}
 
@@ -31,11 +33,11 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
       canvasWrapperRefEl: canvasWrapperRef.current,
       scrollWrapperRefEl: scrollWrapper.current,
       setIsReady,
+      setIsZoomed,
       refsToOffset: refsToOffset.current,
     });
 
     init();
-    setAnimateCircle(true);
 
     return () => {
       destroy();
@@ -43,7 +45,8 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [animateCircle, setAnimateCircle] = useState(false);
+  const [animateCircleIn, setAnimateCircleIn] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const icon = {
     initial: {
@@ -56,6 +59,30 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
     },
   };
 
+  useEffect(() => {
+    const onTouchDown = () => {
+      setAnimateCircleIn(true);
+    };
+
+    const onTouchUp = () => {
+      setAnimateCircleIn(false);
+    };
+
+    window.addEventListener('mousedown', onTouchDown);
+    window.addEventListener('mouseup', onTouchUp);
+
+    window.addEventListener('touchstart', onTouchDown);
+    window.addEventListener('touchend', onTouchUp);
+
+    return () => {
+      window.removeEventListener('mousedown', onTouchDown);
+      window.removeEventListener('mouseup', onTouchUp);
+
+      window.removeEventListener('touchstart', onTouchDown);
+      window.removeEventListener('touchend', onTouchUp);
+    };
+  }, []);
+
   return (
     <>
       <Wrapper>
@@ -63,6 +90,11 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
         <ContentWrapper ref={scrollWrapper}>
           <ZoomWrapper>
             <RingWrapper>
+              <Text
+                animate={animateCircleIn && !isZoomed ? 'animate' : 'initial'}
+              >
+                zoom in
+              </Text>
               <RingSvg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 87 87"
@@ -74,8 +106,19 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
                     fill="none"
                     stroke="#fff"
                     variants={icon}
-                    transition={{ type: 'tween', duration: 2 }}
-                    animate={animateCircle ? 'animate' : 'initial'}
+                    transition={{
+                      pathLength: {
+                        type: 'tween',
+                        duration: ZOOM_IN_THRESHOLD / 1000,
+                      },
+                      opacity: {
+                        type: 'tween',
+                        duration: ZOOM_IN_THRESHOLD / 1000 / 2,
+                      },
+                    }}
+                    animate={
+                      animateCircleIn && !isZoomed ? 'animate' : 'initial'
+                    }
                   />
                 </g>
               </RingSvg>

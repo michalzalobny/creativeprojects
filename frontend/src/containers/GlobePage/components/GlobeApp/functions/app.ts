@@ -18,6 +18,7 @@ export interface App {
   canvasWrapperRefEl: HTMLDivElement;
   scrollWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsZoomed: React.Dispatch<React.SetStateAction<boolean>>;
   refsToOffset: HTMLDivElement[];
 }
 
