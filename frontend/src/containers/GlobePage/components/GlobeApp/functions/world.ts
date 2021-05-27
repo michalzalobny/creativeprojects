@@ -165,14 +165,6 @@ export const world = ({ appObj, appProps }: World) => {
       Math.sin(appObj.scroll.scrollObj.currentX) *
         -0.4 *
         (1 - rotationXParameter);
-
-    // pivot.position.x =
-    //   Math.cos(appObj.scroll.scrollObj.currentX) -
-    //   Math.sin(appObj.scroll.scrollObj.currentX);
-
-    // pivot.position.y =
-    //   Math.cos(appObj.scroll.scrollObj.currentX) -
-    //   Math.sin(appObj.scroll.scrollObj.currentX);
   };
 
   return {
