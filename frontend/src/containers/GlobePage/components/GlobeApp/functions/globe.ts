@@ -48,7 +48,7 @@ export const globe = ({ pivot }: Globe) => {
     mesh.position.z = 1;
     // container.add(mesh);
 
-    const geometryHalo = new THREE.CircleGeometry(1.34, 50);
+    const geometryHalo = new THREE.CircleGeometry(1.32, 50);
     const materialHalo = new THREE.ShaderMaterial({
       depthWrite: false,
       transparent: true,
