@@ -34,9 +34,9 @@ export const globe = ({ pivot }: Globe) => {
   };
 
   const generateGlow = () => {
-    const geometry = new THREE.CircleGeometry(0.98, 50);
+    const geometry = new THREE.SphereBufferGeometry(1.02, 50, 50);
     const material = new THREE.ShaderMaterial({
-      depthWrite: true,
+      depthWrite: false,
       transparent: true,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -45,8 +45,10 @@ export const globe = ({ pivot }: Globe) => {
       },
     });
     mesh = new THREE.Mesh(geometry, material);
-    mesh.position.z = 1;
-    // container.add(mesh);
+    // mesh.renderOrder = 2;
+    // mesh.position.z = 1;
+    mesh.rotation.z = 135;
+    container.add(mesh);
 
     const geometryHalo = new THREE.CircleGeometry(1.32, 50);
     const materialHalo = new THREE.ShaderMaterial({
