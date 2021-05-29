@@ -11,9 +11,10 @@ import { UpdateInfo } from './app';
 
 interface Globe {
   pivot: THREE.Group;
+  scaleGroup: THREE.Group;
 }
 
-export const globe = ({ pivot }: Globe) => {
+export const globe = ({ scaleGroup, pivot }: Globe) => {
   const container = new THREE.Object3D();
 
   container.matrixAutoUpdate = false;
@@ -30,7 +31,7 @@ export const globe = ({ pivot }: Globe) => {
   const generateGlobe = () => {
     mesh = new THREE.Mesh(geometry, material);
     container.add(mesh);
-    pivot.add(mesh);
+    scaleGroup.add(mesh);
   };
 
   const generateGlow = () => {
@@ -45,10 +46,9 @@ export const globe = ({ pivot }: Globe) => {
       },
     });
     mesh = new THREE.Mesh(geometry, material);
-    // mesh.renderOrder = 2;
-    // mesh.position.z = 1;
     mesh.rotation.z = 135;
     container.add(mesh);
+    scaleGroup.add(mesh);
 
     const geometryHalo = new THREE.CircleGeometry(1.32, 50);
     const materialHalo = new THREE.ShaderMaterial({
@@ -62,6 +62,7 @@ export const globe = ({ pivot }: Globe) => {
     });
     meshHalo = new THREE.Mesh(geometryHalo, materialHalo);
     container.add(meshHalo);
+    scaleGroup.add(meshHalo);
     // pivot.add(mesh);
   };
 

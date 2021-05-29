@@ -25,7 +25,9 @@ export const world = ({ appObj, appProps }: World) => {
   container.matrixAutoUpdate = false;
 
   const pivot = new THREE.Group();
+  const scaleGroup = new THREE.Group();
   container.add(pivot);
+  container.add(scaleGroup);
 
   const worldManager: WorldManager = {
     initLights: null,
@@ -48,6 +50,7 @@ export const world = ({ appObj, appProps }: World) => {
       update: updateGlobe,
     } = globe({
       pivot,
+      scaleGroup,
     });
 
     container.add(containerGlobe);
@@ -116,7 +119,8 @@ export const world = ({ appObj, appProps }: World) => {
   const update = (updateInfo: UpdateInfo) => {
     worldManager.updateGlobe(updateInfo);
     worldManager.updateDots(updateInfo);
-    updatePivot();
+    updatePivotGroup();
+    updateScaleGroup();
     if (
       window.performance.now() - zoomStartTime > ZOOM_IN_THRESHOLD &&
       checkForZoom
@@ -151,7 +155,7 @@ export const world = ({ appObj, appProps }: World) => {
     rotationTween.start();
   };
 
-  const updatePivot = () => {
+  const updatePivotGroup = () => {
     pivot.rotation.x = appObj.scroll.scrollObj.currentY;
     pivot.rotation.y = appObj.scroll.scrollObj.currentX;
 
@@ -167,6 +171,15 @@ export const world = ({ appObj, appProps }: World) => {
       Math.sin(appObj.scroll.scrollObj.currentX) *
         -0.4 *
         (1 - rotationXParameter);
+  };
+
+  const updateScaleGroup = () => {
+    scaleGroup.position.z =
+      (1 - rotationXParameter) * 1.4 +
+      (1 - rotationXParameter) *
+        ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
+          FINAL_SHIFT) *
+        0.2;
   };
 
   return {
