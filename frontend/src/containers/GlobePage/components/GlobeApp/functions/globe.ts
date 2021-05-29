@@ -30,10 +30,32 @@ export const globe = ({ pivot }: Globe) => {
     pivot.add(mesh);
   };
 
+  const generateGlow = () => {
+    const geometry = new THREE.CircleGeometry(1.1, 50);
+    const material = new THREE.ShaderMaterial({
+      // depthWrite: false,
+      // blending: THREE.AdditiveBlending,
+      // vertexColors: true,
+      transparent: true,
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      uniforms: {
+        // uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
+        // uSize: { value: 8 },
+        // uTime: { value: 0 },
+        // uElevation: { value: 0 },
+      },
+    });
+    mesh = new THREE.Mesh(geometry, material);
+    container.add(mesh);
+    // pivot.add(mesh);
+  };
+
   const curvesArray: CurveReturn[] = [];
 
   const init = () => {
-    generateGlobe();
+    // generateGlobe();
+    generateGlow();
     generateBullets();
   };
 
