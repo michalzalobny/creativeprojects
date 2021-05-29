@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-import earthSrc from './images/earth.jpg';
 import { bullet } from './bullet';
 import { curve, CurveReturn } from './curve';
 import vertexShader from './shaders/globe/vertex.glsl';
@@ -10,11 +9,11 @@ import fragmentShaderHalo from './shaders/halo/fragment.glsl';
 import { UpdateInfo } from './app';
 
 interface Globe {
-  pivot: THREE.Group;
+  pivotGroup: THREE.Group;
   scaleGroup: THREE.Group;
 }
 
-export const globe = ({ scaleGroup, pivot }: Globe) => {
+export const globe = ({ scaleGroup, pivotGroup }: Globe) => {
   const container = new THREE.Object3D();
 
   container.matrixAutoUpdate = false;
@@ -24,7 +23,6 @@ export const globe = ({ scaleGroup, pivot }: Globe) => {
   let meshHalo;
 
   const material = new THREE.MeshStandardMaterial({
-    // map: new THREE.TextureLoader().load(earthSrc.src),
     color: new THREE.Color('#A7A9F5'),
   });
 
@@ -63,7 +61,6 @@ export const globe = ({ scaleGroup, pivot }: Globe) => {
     meshHalo = new THREE.Mesh(geometryHalo, materialHalo);
     container.add(meshHalo);
     scaleGroup.add(meshHalo);
-    // pivot.add(mesh);
   };
 
   const curvesArray: CurveReturn[] = [];
@@ -102,13 +99,13 @@ export const globe = ({ scaleGroup, pivot }: Globe) => {
       });
 
       container.add(bullet1.mesh, bullet2.mesh);
-      pivot.add(bullet1.mesh, bullet2.mesh);
+      pivotGroup.add(bullet1.mesh, bullet2.mesh);
 
       const curve12 = curve();
       curve12.generateCurve({ p1: b1, p2: b2 });
       curvesArray.push(curve12);
       container.add(curve12.container);
-      pivot.add(curve12.container);
+      pivotGroup.add(curve12.container);
     });
   };
 

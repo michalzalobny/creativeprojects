@@ -19,10 +19,10 @@ export interface DotsReturn {
 interface Dots {
   appObj: AppObj;
   appProps: App;
-  pivot: THREE.Group;
+  pivotGroup: THREE.Group;
 }
 
-export const dots = ({ pivot, appObj, appProps }: Dots): DotsReturn => {
+export const dots = ({ pivotGroup, appObj, appProps }: Dots): DotsReturn => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -128,7 +128,7 @@ export const dots = ({ pivot, appObj, appProps }: Dots): DotsReturn => {
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
 
     container.add(points);
-    pivot.add(container);
+    pivotGroup.add(container);
   };
 
   const init = () => {

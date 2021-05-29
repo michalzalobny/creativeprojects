@@ -24,9 +24,9 @@ export const world = ({ appObj, appProps }: World) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const pivot = new THREE.Group();
+  const pivotGroup = new THREE.Group();
   const scaleGroup = new THREE.Group();
-  container.add(pivot);
+  container.add(pivotGroup);
   container.add(scaleGroup);
 
   const worldManager: WorldManager = {
@@ -49,7 +49,7 @@ export const world = ({ appObj, appProps }: World) => {
       init: initGlobe,
       update: updateGlobe,
     } = globe({
-      pivot,
+      pivotGroup,
       scaleGroup,
     });
 
@@ -65,34 +65,13 @@ export const world = ({ appObj, appProps }: World) => {
     } = dots({
       appObj,
       appProps,
-      pivot,
+      pivotGroup,
     });
     container.add(containerDots);
     worldManager.updateDots = updateDots;
     worldManager.destroyDots = destroyDots;
 
     setListeners();
-
-    // container.add(new THREE.AxesHelper());
-  };
-
-  const initZoomIn = () => {
-    animateRotationParameter(0);
-  };
-
-  const initZoomOut = () => {
-    animateRotationParameter(1);
-  };
-
-  let zoomStartTime;
-  let checkForZoom;
-  const onTouchDown = () => {
-    checkForZoom = true;
-    zoomStartTime = window.performance.now();
-  };
-
-  const onTouchUp = () => {
-    checkForZoom = false;
   };
 
   const setListeners = () => {
@@ -111,9 +90,22 @@ export const world = ({ appObj, appProps }: World) => {
     window.removeEventListener('touchend', onTouchUp);
   };
 
-  const destroy = () => {
-    destroyListeners();
-    worldManager.destroyDots();
+  const initZoomIn = () => {
+    animateRotationParameter(0);
+  };
+
+  const initZoomOut = () => {
+    animateRotationParameter(1);
+  };
+
+  let zoomStartTime;
+  let checkForZoom;
+  const onTouchDown = () => {
+    checkForZoom = true;
+    zoomStartTime = window.performance.now();
+  };
+  const onTouchUp = () => {
+    checkForZoom = false;
   };
 
   const update = (updateInfo: UpdateInfo) => {
@@ -129,6 +121,11 @@ export const world = ({ appObj, appProps }: World) => {
       initZoomIn();
       checkForZoom = false;
     }
+  };
+
+  const destroy = () => {
+    destroyListeners();
+    worldManager.destroyDots();
   };
 
   const SHIFT = 1.5; //2
@@ -156,17 +153,17 @@ export const world = ({ appObj, appProps }: World) => {
   };
 
   const updatePivotGroup = () => {
-    pivot.rotation.x = appObj.scroll.scrollObj.currentY;
-    pivot.rotation.y = appObj.scroll.scrollObj.currentX;
+    pivotGroup.rotation.x = appObj.scroll.scrollObj.currentY;
+    pivotGroup.rotation.y = appObj.scroll.scrollObj.currentX;
 
-    pivot.position.z =
+    pivotGroup.position.z =
       (1 - rotationXParameter) * 1.4 +
       (1 - rotationXParameter) *
         ((Math.sin(appObj.scroll.scrollObj.currentX) + SHIFT) * MULTIPLIER +
           FINAL_SHIFT) *
         0.2;
 
-    pivot.rotation.x =
+    pivotGroup.rotation.x =
       appObj.scroll.scrollObj.currentY * rotationXParameter +
       Math.sin(appObj.scroll.scrollObj.currentX) *
         -0.4 *
