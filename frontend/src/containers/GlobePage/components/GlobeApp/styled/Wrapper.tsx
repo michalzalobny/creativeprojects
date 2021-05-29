@@ -9,6 +9,7 @@ export const Wrapper = styled(motion.div)<Props>`
   height: 100%;
   overflow: hidden;
   user-select: none;
-  background: rgb(0, 57, 158);
-  background: linear-gradient(-344deg, #001b4b 0%, #060b1d 50%, #56037c 100%);
+  background: rgb(0, 0, 0);
+  /* background: linear-gradient(344deg, #000000 30%, #ed29ff); */
+  /* background: #09001f; */
 `;

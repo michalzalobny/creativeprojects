@@ -5,6 +5,8 @@ import { bullet } from './bullet';
 import { curve, CurveReturn } from './curve';
 import vertexShader from './shaders/globe/vertex.glsl';
 import fragmentShader from './shaders/globe/fragment.glsl';
+import vertexShaderHalo from './shaders/halo/vertex.glsl';
+import fragmentShaderHalo from './shaders/halo/fragment.glsl';
 import { UpdateInfo } from './app';
 
 interface Globe {
@@ -16,8 +18,9 @@ export const globe = ({ pivot }: Globe) => {
 
   container.matrixAutoUpdate = false;
 
-  const geometry = new THREE.SphereBufferGeometry(0.9, 50, 50);
+  const geometry = new THREE.SphereBufferGeometry(1, 50, 50);
   let mesh;
+  let meshHalo;
 
   const material = new THREE.MeshStandardMaterial({
     // map: new THREE.TextureLoader().load(earthSrc.src),
@@ -31,30 +34,39 @@ export const globe = ({ pivot }: Globe) => {
   };
 
   const generateGlow = () => {
-    const geometry = new THREE.CircleGeometry(1.1, 50);
+    const geometry = new THREE.CircleGeometry(0.98, 50);
     const material = new THREE.ShaderMaterial({
-      // depthWrite: false,
-      // blending: THREE.AdditiveBlending,
-      // vertexColors: true,
+      depthWrite: true,
       transparent: true,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
       uniforms: {
-        // uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
-        // uSize: { value: 8 },
-        // uTime: { value: 0 },
-        // uElevation: { value: 0 },
+        uTime: { value: 0 },
       },
     });
     mesh = new THREE.Mesh(geometry, material);
-    container.add(mesh);
+    mesh.position.z = 1;
+    // container.add(mesh);
+
+    const geometryHalo = new THREE.CircleGeometry(1.34, 50);
+    const materialHalo = new THREE.ShaderMaterial({
+      depthWrite: false,
+      transparent: true,
+      vertexShader: vertexShaderHalo,
+      fragmentShader: fragmentShaderHalo,
+      uniforms: {
+        uTime: { value: 0 },
+      },
+    });
+    meshHalo = new THREE.Mesh(geometryHalo, materialHalo);
+    container.add(meshHalo);
     // pivot.add(mesh);
   };
 
   const curvesArray: CurveReturn[] = [];
 
   const init = () => {
-    // generateGlobe();
+    generateGlobe();
     generateGlow();
     generateBullets();
   };
