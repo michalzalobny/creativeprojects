@@ -17,8 +17,8 @@ export interface CurveReturn {
   update: (updateInfo: UpdateInfo) => void;
 }
 
-const CURVE_MULTIPLIER = 0.08;
-const TUBE_SEG = 10;
+const CURVE_MULTIPLIER = 0.1;
+const TUBE_SEG = 50;
 
 export const curve = (): CurveReturn => {
   const container = new THREE.Object3D();
