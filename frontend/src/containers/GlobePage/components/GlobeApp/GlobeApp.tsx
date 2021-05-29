@@ -39,8 +39,6 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
       refsToOffset: refsToOffset.current,
     });
 
-    console.log(initZoomOut);
-
     init();
     initZoomOutRef.current = initZoomOut;
 

@@ -94,12 +94,6 @@ export const app = (appProps: App) => {
       appObj.viewportSizes.width / appObj.viewportSizes.height;
     appObj.camera.aspect = aspectRatio;
 
-    //Set to match pixel size of the elements in three with pixel size of DOM elements
-    // appObj.camera.fov =
-    //   2 *
-    //   Math.atan(appObj.viewportSizes.height / 2 / appObj.camera.position.z) *
-    //   (180 / Math.PI);
-
     appObj.camera.updateProjectionMatrix();
   };
 
@@ -114,7 +108,6 @@ export const app = (appProps: App) => {
 
     appObj.renderer.shadowMap.enabled = true;
     appObj.renderer.outputEncoding = THREE.sRGBEncoding;
-    // appObj.renderer.setClearColor(new THREE.Color('#040D21'));
     appObj.renderer.physicallyCorrectLights = true;
   };
 
