@@ -16,18 +16,18 @@ export const Wrapper = styled(motion.div)<Props>`
 
   ${media.tablet} {
     padding-top: ${computeValue({
-      pixelValue: 40,
+      pixelValue: 30,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
 
     padding-bottom: ${computeValue({
-      pixelValue: 40,
+      pixelValue: 30,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    padding: 40px 0;
+    padding: 30px 0;
   }
 `;
 
