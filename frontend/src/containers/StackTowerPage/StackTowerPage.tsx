@@ -6,6 +6,7 @@ import { Head } from 'utils/seo/Head';
 import { Wrapper } from './styled/Wrapper';
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { PageProps } from './data';
+import { Layout } from 'components/Layout/Layout';
 
 const StackTower = dynamic(
   () =>
@@ -19,6 +20,7 @@ export default function StackTowerPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
+      <Layout allProjects={props.allProjectsData} />
       <Wrapper>
         <CanvasWrapper>
           <StackTower />

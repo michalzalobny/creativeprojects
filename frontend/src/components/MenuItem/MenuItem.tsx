@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 export type MenuItem = {
   label: string;
   href: string;
+  imageSrc: string;
 };
 
 export interface MenuItemProps {
@@ -73,9 +74,7 @@ export const MenuItem = memo<MenuItemProps>(props => {
             <ImageWrapper>
               <Image
                 animate={isHovered ? 'animate' : 'initial'}
-                src={
-                  'https://images.unsplash.com/photo-1496096265110-f83ad7f96608?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
-                }
+                src={itemContent.imageSrc}
               />
             </ImageWrapper>
           </Parallax>

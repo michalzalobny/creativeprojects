@@ -5,14 +5,17 @@ import { ISR_TIMEOUT } from 'utils/functions/getIsrTimeout';
 import { getLocalizedText } from 'utils/i18n';
 import { ProjectData } from 'utils/types/strapi/ProjectData';
 import { getProjectData } from 'utils/functions/strapi/getProjectData';
+import { getAllProjectsData } from 'utils/functions/strapi/getAllProjectsData';
 
 export interface PageProps {
   head: HeadProps;
   projectData: ProjectData;
+  allProjectsData: ProjectData[];
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const projectData = (await getProjectData('stack-tower')) as ProjectData;
+  const allProjectsData = await getAllProjectsData();
   const projectHead = projectData.localizedHead;
 
   const head = {
@@ -24,6 +27,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: {
+      allProjectsData,
       projectData,
       head,
     },

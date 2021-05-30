@@ -9,6 +9,7 @@ import { ProjectData } from 'utils/types/strapi/ProjectData';
 import { getProjectData } from 'utils/functions/strapi/getProjectData';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { ImageMediaProps } from 'utils/types/Media';
+import { getAllProjectsData } from 'utils/functions/strapi/getAllProjectsData';
 
 export interface PageData {
   name: string;
@@ -20,6 +21,7 @@ export interface PageData {
 export interface PageProps {
   head: HeadProps;
   projectData: ProjectData;
+  allProjectsData: ProjectData[];
   pageData: PageData;
 }
 
@@ -52,6 +54,7 @@ async function getPageData(locale: string) {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const projectData = (await getProjectData('flow')) as ProjectData;
+  const allProjectsData = await getAllProjectsData();
   const projectHead = projectData.localizedHead;
   const pageData = await getPageData(locale);
 
@@ -64,6 +67,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: {
+      allProjectsData,
       projectData,
       head,
       pageData,

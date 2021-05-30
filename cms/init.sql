@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 141 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 144 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -638,7 +638,11 @@ VALUES
 INSERT INTO
   `components_page_localized_long_texts` (`id`, `language`, `text`)
 VALUES
-  (3, 1, 'Interactive 3D Globe created with THREE.js');
+  (
+    3,
+    1,
+    'Interactive 3D Globe created with THREE.js and GLSL shaders.'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -668,11 +672,11 @@ VALUES
 INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
-  (5, 'Interactive 3D Globe', 1);
+  (5, 'Point Cloud Globe', 1);
 INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
-  (6, 'Interactive 3D Globe', 1);
+  (6, 'Point Cloud Globe', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -1423,7 +1427,7 @@ VALUES
     1,
     1,
     '2021-05-04 17:59:07',
-    '2021-05-04 17:59:08'
+    '2021-05-30 12:32:51'
   );
 INSERT INTO
   `projects` (
@@ -1441,7 +1445,7 @@ VALUES
     1,
     1,
     '2021-05-18 21:09:50',
-    '2021-05-18 21:09:50'
+    '2021-05-30 12:30:36'
   );
 
 # ------------------------------------------------------------
@@ -1581,7 +1585,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$xIlUaX5rm7SEswoQ0cfc1OEzgefBLYuBn4vo3ILijOwV3ImzrhpM2',
+    '$2b$10$WpchQGWSAD6O/5rIxRNf3.LMKw/.Fd3oQtuSu/4Tu9LWo7MWQoBgO',
     NULL,
     NULL,
     1,
@@ -3804,6 +3808,94 @@ VALUES
     '2021-05-15 10:39:55',
     '2021-05-15 10:39:55'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    13,
+    'maglo.JPG',
+    '',
+    '',
+    1210,
+    659,
+    '{\"thumbnail\":{\"name\":\"thumbnail_maglo.JPG\",\"hash\":\"thumbnail_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":133,\"size\":2.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377738/thumbnail_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_maglo_460db704e4\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_maglo.JPG\",\"hash\":\"large_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":545,\"size\":31.87,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377739/large_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"large_maglo_460db704e4\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_maglo.JPG\",\"hash\":\"medium_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":408,\"size\":18.39,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377740/medium_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"medium_maglo_460db704e4\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_maglo.JPG\",\"hash\":\"small_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":272,\"size\":7.96,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377741/small_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"small_maglo_460db704e4\",\"resource_type\":\"image\"}}}',
+    'maglo_460db704e4',
+    '.JPG',
+    'image/jpeg',
+    45.17,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377738/maglo_460db704e4.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"maglo_460db704e4\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-30 12:29:01',
+    '2021-05-30 12:29:01'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    14,
+    'floow.JPG',
+    '',
+    '',
+    1891,
+    883,
+    '{\"thumbnail\":{\"name\":\"thumbnail_floow.JPG\",\"hash\":\"thumbnail_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":114,\"size\":5.57,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377965/thumbnail_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_floow.JPG\",\"hash\":\"large_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":467,\"size\":47.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377966/large_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"large_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_floow.JPG\",\"hash\":\"medium_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":350,\"size\":30.17,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377967/medium_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"medium_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_floow.JPG\",\"hash\":\"small_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":233,\"size\":16.11,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377968/small_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"small_floow_968d7d9eaa\",\"resource_type\":\"image\"}}}',
+    'floow_968d7d9eaa',
+    '.JPG',
+    'image/jpeg',
+    126.82,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377965/floow_968d7d9eaa.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"floow_968d7d9eaa\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-05-30 12:32:48',
+    '2021-05-30 12:32:48'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -3890,24 +3982,6 @@ VALUES
     3,
     'components_creative_component_creative_items',
     'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    6,
-    3,
-    2,
-    'components_page_localized_heads',
-    'ogImage',
     1
   );
 INSERT INTO
@@ -4052,9 +4126,27 @@ INSERT INTO
   )
 VALUES
   (
-    140,
-    2,
+    142,
+    13,
     3,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    143,
+    14,
+    2,
     'components_page_localized_heads',
     'ogImage',
     1
