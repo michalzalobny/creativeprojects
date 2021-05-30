@@ -14,6 +14,7 @@ export const LinkItem = styled(motion.a)<Props>`
   font-size: 6vw;
   width: 100%;
   display: block;
+  position: relative;
 
   ${media.tablet} {
     font-size: ${computeValue({

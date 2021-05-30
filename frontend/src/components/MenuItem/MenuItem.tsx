@@ -8,6 +8,7 @@ import { ImageContainer } from './styled/ImageContainer';
 import { Parallax } from 'components/Animations/Parallax/Parallax';
 import { ImageWrapper } from './styled/ImageWrapper';
 import { Image } from './styled/Image';
+import { Underline } from './styled/Underline';
 
 export type MenuItem = {
   label: string;
@@ -34,7 +35,10 @@ export const MenuItem = memo<MenuItemProps>(props => {
       >
         <LinkWrapper animate={isHovered ? 'animate' : 'initial'}>
           <Link href={itemContent.href} passHref>
-            <LinkItem>{itemContent.label}</LinkItem>
+            <LinkItem>
+              {itemContent.label}
+              <Underline />
+            </LinkItem>
           </Link>
         </LinkWrapper>
 
