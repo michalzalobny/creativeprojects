@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 144 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 147 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1409,7 +1409,7 @@ VALUES
     1,
     1,
     '2021-05-03 21:11:03',
-    '2021-05-03 21:11:03'
+    '2021-05-30 21:40:24'
   );
 INSERT INTO
   `projects` (
@@ -1427,7 +1427,7 @@ VALUES
     1,
     1,
     '2021-05-04 17:59:07',
-    '2021-05-30 12:32:51'
+    '2021-05-30 21:40:49'
   );
 INSERT INTO
   `projects` (
@@ -1445,7 +1445,7 @@ VALUES
     1,
     1,
     '2021-05-18 21:09:50',
-    '2021-05-30 12:30:36'
+    '2021-05-30 21:41:14'
   );
 
 # ------------------------------------------------------------
@@ -1585,7 +1585,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$WpchQGWSAD6O/5rIxRNf3.LMKw/.Fd3oQtuSu/4Tu9LWo7MWQoBgO',
+    '$2b$10$RHqILhgHRkmrPM95zf/PSe7ymsIxSsNydsG00Uwi/4vXk54krvSfO',
     NULL,
     NULL,
     1,
@@ -3308,21 +3308,21 @@ VALUES
     '333-100.jpg',
     '',
     '',
-    1200,
-    627,
-    '{\"thumbnail\":{\"name\":\"thumbnail_333-100.jpg\",\"hash\":\"thumbnail_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":128,\"size\":1.64,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620076229/thumbnail_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_333_100_8f6561e04c\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_333-100.jpg\",\"hash\":\"large_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":523,\"size\":11.31,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620076230/large_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"large_333_100_8f6561e04c\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_333-100.jpg\",\"hash\":\"medium_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":392,\"size\":7.6,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620076231/medium_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"medium_333_100_8f6561e04c\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_333-100.jpg\",\"hash\":\"small_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":261,\"size\":4.39,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1620076232/small_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"small_333_100_8f6561e04c\",\"resource_type\":\"image\"}}}',
+    1920,
+    1080,
+    '{\"thumbnail\":{\"name\":\"thumbnail_333-100.jpg\",\"hash\":\"thumbnail_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":5.41,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410817/thumbnail_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_333_100_8f6561e04c\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_333-100.jpg\",\"hash\":\"large_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":29,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410818/large_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"large_333_100_8f6561e04c\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_333-100.jpg\",\"hash\":\"medium_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":20.37,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410819/medium_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"medium_333_100_8f6561e04c\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_333-100.jpg\",\"hash\":\"small_333_100_8f6561e04c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":12.56,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410819/small_333_100_8f6561e04c.jpg\",\"provider_metadata\":{\"public_id\":\"small_333_100_8f6561e04c\",\"resource_type\":\"image\"}}}',
     '333_100_8f6561e04c',
     '.jpg',
     'image/jpeg',
-    14.54,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1620076228/333_100_8f6561e04c.jpg',
+    64.53,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410816/333_100_8f6561e04c.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"333_100_8f6561e04c\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-03 21:10:33',
-    '2021-05-03 21:10:33'
+    '2021-05-30 21:40:19'
   );
 INSERT INTO
   `upload_file` (
@@ -3836,21 +3836,21 @@ VALUES
     'maglo.JPG',
     '',
     '',
-    1210,
-    659,
-    '{\"thumbnail\":{\"name\":\"thumbnail_maglo.JPG\",\"hash\":\"thumbnail_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":133,\"size\":2.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377738/thumbnail_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_maglo_460db704e4\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_maglo.JPG\",\"hash\":\"large_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":545,\"size\":31.87,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377739/large_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"large_maglo_460db704e4\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_maglo.JPG\",\"hash\":\"medium_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":408,\"size\":18.39,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377740/medium_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"medium_maglo_460db704e4\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_maglo.JPG\",\"hash\":\"small_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":272,\"size\":7.96,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377741/small_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"small_maglo_460db704e4\",\"resource_type\":\"image\"}}}',
+    1920,
+    1080,
+    '{\"thumbnail\":{\"name\":\"thumbnail_maglo.JPG\",\"hash\":\"thumbnail_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":4.07,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410866/thumbnail_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_maglo_460db704e4\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_maglo.JPG\",\"hash\":\"large_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":69.55,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410867/large_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"large_maglo_460db704e4\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_maglo.JPG\",\"hash\":\"medium_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":39.59,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410869/medium_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"medium_maglo_460db704e4\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_maglo.JPG\",\"hash\":\"small_maglo_460db704e4\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":17.5,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410870/small_maglo_460db704e4.jpg\",\"provider_metadata\":{\"public_id\":\"small_maglo_460db704e4\",\"resource_type\":\"image\"}}}',
     'maglo_460db704e4',
     '.JPG',
     'image/jpeg',
-    45.17,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377738/maglo_460db704e4.jpg',
+    174.26,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410866/maglo_460db704e4.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"maglo_460db704e4\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-30 12:29:01',
-    '2021-05-30 12:29:01'
+    '2021-05-30 21:41:09'
   );
 INSERT INTO
   `upload_file` (
@@ -3880,45 +3880,27 @@ VALUES
     'floow.JPG',
     '',
     '',
-    1891,
-    883,
-    '{\"thumbnail\":{\"name\":\"thumbnail_floow.JPG\",\"hash\":\"thumbnail_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":114,\"size\":5.57,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377965/thumbnail_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_floow.JPG\",\"hash\":\"large_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":467,\"size\":47.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377966/large_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"large_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_floow.JPG\",\"hash\":\"medium_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":350,\"size\":30.17,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377967/medium_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"medium_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_floow.JPG\",\"hash\":\"small_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":233,\"size\":16.11,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377968/small_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"small_floow_968d7d9eaa\",\"resource_type\":\"image\"}}}',
+    1920,
+    1080,
+    '{\"thumbnail\":{\"name\":\"thumbnail_floow.JPG\",\"hash\":\"thumbnail_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":6.19,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410843/thumbnail_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_floow.JPG\",\"hash\":\"large_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":52.56,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410844/large_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"large_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_floow.JPG\",\"hash\":\"medium_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":33.37,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410844/medium_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"medium_floow_968d7d9eaa\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_floow.JPG\",\"hash\":\"small_floow_968d7d9eaa\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":17.88,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410845/small_floow_968d7d9eaa.jpg\",\"provider_metadata\":{\"public_id\":\"small_floow_968d7d9eaa\",\"resource_type\":\"image\"}}}',
     'floow_968d7d9eaa',
     '.JPG',
     'image/jpeg',
-    126.82,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622377965/floow_968d7d9eaa.jpg',
+    144.07,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1622410842/floow_968d7d9eaa.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"floow_968d7d9eaa\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-30 12:32:48',
-    '2021-05-30 12:32:48'
+    '2021-05-30 21:40:44'
   );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
 # ------------------------------------------------------------
 
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1,
-    1,
-    1,
-    'components_page_localized_heads',
-    'ogImage',
-    1
-  );
 INSERT INTO
   `upload_file_morph` (
     `id`,
@@ -4126,9 +4108,9 @@ INSERT INTO
   )
 VALUES
   (
-    142,
-    13,
-    3,
+    144,
+    1,
+    1,
     'components_page_localized_heads',
     'ogImage',
     1
@@ -4144,9 +4126,27 @@ INSERT INTO
   )
 VALUES
   (
-    143,
+    145,
     14,
     2,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    146,
+    13,
+    3,
     'components_page_localized_heads',
     'ogImage',
     1
