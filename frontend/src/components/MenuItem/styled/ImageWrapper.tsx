@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 interface Props {}
 
 export const ImageWrapper = styled(motion.div)<Props>`
-  width: 90%;
+  width: 80%;
   position: absolute;
   top: 50%;
   left: 50%;

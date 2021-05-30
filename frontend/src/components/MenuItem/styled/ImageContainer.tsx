@@ -23,7 +23,7 @@ ImageContainer.defaultProps = {
       y: '-50%',
     },
     animate: {
-      opacity: 0.8,
+      opacity: 1,
       scale: 1,
       x: '-50%',
       y: '-50%',
