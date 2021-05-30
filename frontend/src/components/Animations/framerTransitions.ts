@@ -1,6 +1,28 @@
+export const stagger = {
+  backgroundStripes: 0.2,
+  normal: 0.15,
+  scenePlayers: 0.1,
+  menuItems: 0.1,
+  defaultButton: 0.18,
+};
+
+export const sceneLoaderAnimation = {
+  type: 'tween',
+  duration: 0.8,
+};
+
 export const tween = {
   type: 'tween',
   duration: 0.4,
+  restDelta: 0.01,
+  restSpeed: 0.01,
+};
+
+export const springVerySlow = {
+  type: 'spring',
+  stiffness: 300,
+  damping: 70,
+  mass: 2,
   restDelta: 0.01,
   restSpeed: 0.01,
 };
@@ -10,8 +32,8 @@ export const springSlow = {
   stiffness: 350,
   damping: 80,
   mass: 5,
-  restDelta: 0.001,
-  restSpeed: 0.001,
+  restDelta: 0.01,
+  restSpeed: 0.01,
 };
 
 export const springMedium = {
@@ -49,8 +71,7 @@ export const springElastic = {
 
 export const sliderSpring = {
   type: 'spring',
-  stiffness: 100,
-  damping: 25,
-  restDelta: 0.01, //Fixes "snapping" bug
-  restSpeed: 0.01, //Fixes "snapping" bug
+  stiffness: 330,
+  damping: 80,
+  restDelta: 0.008,
 };

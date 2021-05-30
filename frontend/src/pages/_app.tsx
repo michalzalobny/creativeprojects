@@ -21,7 +21,7 @@ export default function MyApp(props: AppProps) {
     setIsInit(true);
   }, [isInit]);
 
-  React.useLayoutEffect(() => {
+  useEffect(() => {
     //https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
     const updateVh = () => {
       // We execute the same script as before

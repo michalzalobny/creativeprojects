@@ -1,5 +1,3 @@
-import { css } from 'styled-components';
-
 // :lang(en-US) {
 //   background: red;
 // }
@@ -8,23 +6,41 @@ import { css } from 'styled-components';
 // }
 
 export const sharedValues = {
-  text: {
-    normal: css`
-      font-size: 1.5rem;
-      line-height: 2.5rem;
+  skew: {
+    normal: 10,
+  },
+
+  boxShadow: {
+    normal: '0px 0px 50px rgba(9, 16, 31, 0.25)',
+  },
+
+  fontPresets: {
+    bold: `
+      font-weight: 700;
     `,
-    small: css`
-      font-size: 1.2rem;
-      line-height: 1.6rem;
+    boldItalic: `
+      font-style: italic;
+      font-weight: 700;
     `,
+    normal: `
+      font-weight: 500;
+    `,
+    normalItalic: `
+      font-style: italic;
+      font-weight: 500;
+    `,
+  },
+  colors: {
+    primary: '#bf4860',
+    black: '#131313',
+    white: '#f5f5f5',
+    gray: '#bababa',
+    trueWhite: '#FFFFFF',
+    trueBlack: '#000000',
   },
   transitionTimes: {
     normal: '0.45s',
     blobButton: '0.8s',
-  },
-
-  boxShadow: {
-    normal: '0 0 20px rgba(0, 0, 0, 0.2)',
   },
   borderRadius: {
     round: '15rem',
@@ -32,19 +48,12 @@ export const sharedValues = {
   },
   containers: {
     normal: {
-      maxWidth: 1420,
-      referenceWidth: 1620,
+      maxWidth: 1920,
+      referenceWidth: 1920,
       mobilePadding: 0,
       get breakpoint() {
         return this.referenceWidth;
       },
-    },
-  },
-  modals: {
-    small: {
-      maxWidth: 450,
-      padding: 40,
-      margin: 15,
     },
   },
 };
