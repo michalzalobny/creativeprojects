@@ -9,20 +9,21 @@ interface Props {}
 export const LinkItem = styled(motion.a)<Props>`
   font-family: 'Playfair';
   color: ${sharedValues.colors.trueWhite};
-  ${sharedValues.fontPresets.normalItalic};
+  ${sharedValues.fontPresets.normal};
   text-transform: uppercase;
-  text-align: center;
   white-space: nowrap;
   font-size: 6vw;
+  width: 100%;
+  display: block;
 
   ${media.tablet} {
     font-size: ${computeValue({
-      pixelValue: 30,
+      pixelValue: 40,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    font-size: 30px;
+    font-size: 40px;
   }
 `;

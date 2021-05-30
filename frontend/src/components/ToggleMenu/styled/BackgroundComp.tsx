@@ -26,7 +26,7 @@ BackgroundComp.defaultProps = {
       scale: 1,
     },
     animate: {
-      scale: 35,
+      scale: 55,
     },
   },
 
