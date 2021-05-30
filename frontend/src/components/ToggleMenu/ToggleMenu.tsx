@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react';
 
 import { MenuItem } from 'components/MenuItem/MenuItem';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { springSlow } from 'components/Animations/framerTransitions';
 
 import { Wrapper } from './styled/Wrapper';
 import { ButtonWrapper } from './styled/ButtonWrapper';
@@ -62,6 +63,10 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
             variants={{
               initial: {
                 scale: 1,
+                transition: {
+                  delay: 0.5,
+                  ...springSlow,
+                },
               },
               animate: {
                 scale: (windowHeight / MENU_SIZE) * 2.3,

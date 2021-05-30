@@ -25,6 +25,8 @@ LinksWrapper.defaultProps = {
     initial: {
       transition: {
         delayChildren: stagger.menuItems,
+        staggerChildren: stagger.menuItems,
+        staggerDirection: -1,
       },
     },
     animate: {},
