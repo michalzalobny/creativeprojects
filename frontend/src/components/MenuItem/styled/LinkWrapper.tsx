@@ -13,9 +13,11 @@ LinkWrapper.defaultProps = {
   variants: {
     initial: {
       x: '0',
+      opacity: 0.6,
     },
     animate: {
       x: '-30px',
+      opacity: 1,
     },
   },
 
