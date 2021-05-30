@@ -64,7 +64,7 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
               initial: {
                 scale: 1,
                 transition: {
-                  delay: 0.5,
+                  delay: links.length * 0.13,
                   ...springSlow,
                 },
               },
