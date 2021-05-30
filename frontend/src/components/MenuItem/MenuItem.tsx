@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import { LinkItem } from './styled/LinkItem';
@@ -9,6 +9,7 @@ import { Parallax } from 'components/Animations/Parallax/Parallax';
 import { ImageWrapper } from './styled/ImageWrapper';
 import { Image } from './styled/Image';
 import { Underline } from './styled/Underline';
+import { useRouter } from 'next/router';
 
 export type MenuItem = {
   label: string;
@@ -23,8 +24,33 @@ export interface MenuItemProps {
 export const MenuItem = memo<MenuItemProps>(props => {
   const { setShowMenu, itemContent, ...rest } = props;
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const refEl = wrapperRef.current;
+
+    const onTouch = () => {
+      router.push(itemContent.href);
+      setShowMenu(false);
+      setIsHovered(false);
+    };
+
+    const onClick = () => {
+      router.push(itemContent.href);
+      setShowMenu(false);
+      setIsHovered(false);
+    };
+
+    refEl.addEventListener('touchend', onTouch);
+    refEl.addEventListener('click', onClick);
+
+    return () => {
+      refEl.removeEventListener('touchend', onTouch);
+      refEl.removeEventListener('click', onClick);
+    };
+  });
 
   return (
     <>
@@ -35,19 +61,11 @@ export const MenuItem = memo<MenuItemProps>(props => {
         onMouseLeave={() => setIsHovered(false)}
         {...rest}
       >
-        <LinkWrapper
-          onClick={() => {
-            setShowMenu(false);
-            setIsHovered(false);
-          }}
-          animate={isHovered ? 'animate' : 'initial'}
-        >
-          <Link href={itemContent.href} passHref>
-            <LinkItem>
-              {itemContent.label}
-              <Underline />
-            </LinkItem>
-          </Link>
+        <LinkWrapper animate={isHovered ? 'animate' : 'initial'}>
+          <LinkItem>
+            {itemContent.label}
+            <Underline />
+          </LinkItem>
         </LinkWrapper>
 
         <ImageContainer animate={isHovered ? 'animate' : 'initial'}>
