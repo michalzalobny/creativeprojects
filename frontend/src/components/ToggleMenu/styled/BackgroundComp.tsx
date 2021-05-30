@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { sharedValues } from 'utils/sharedValues';
-import { springVerySlow } from 'components/Animations/framerTransitions';
+import { springSlow } from 'components/Animations/framerTransitions';
 
 interface Props {
   size: number;
@@ -21,16 +21,7 @@ export const BackgroundComp = styled(motion.div)<Props>`
 `;
 
 BackgroundComp.defaultProps = {
-  variants: {
-    initial: {
-      scale: 1,
-    },
-    animate: {
-      scale: 55,
-    },
-  },
-
   transition: {
-    ...springVerySlow,
+    ...springSlow,
   },
 };

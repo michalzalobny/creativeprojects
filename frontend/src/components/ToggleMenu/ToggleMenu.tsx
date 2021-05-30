@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 
 import { MenuItem } from 'components/MenuItem/MenuItem';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 import { Wrapper } from './styled/Wrapper';
 import { ButtonWrapper } from './styled/ButtonWrapper';
@@ -19,6 +20,7 @@ const MENU_POS = 20;
 
 export const ToggleMenu = memo<ToggleMenuProps>(props => {
   const { barColor, links, ...rest } = props;
+  const { windowHeight, windowWidth } = useWindowSize();
 
   const [showMenu, setShowMenu] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -51,6 +53,14 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
             size={MENU_SIZE}
             pos={MENU_POS}
             animate={showMenu ? 'animate' : 'initial'}
+            variants={{
+              initial: {
+                scale: 1,
+              },
+              animate: {
+                scale: (windowHeight / MENU_SIZE) * 2.3,
+              },
+            }}
           />
         </LinksWrapper>
       </Wrapper>
