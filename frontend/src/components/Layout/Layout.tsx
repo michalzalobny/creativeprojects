@@ -10,8 +10,9 @@ export const Layout = memo<LayoutProps>(props => {
       <ToggleMenuComp
         barColor="#fff"
         links={[
-          { label: 'test', href: '/' },
-          { label: 'test2', href: '/' },
+          { label: 'Stack Tower Game', href: '/stack-tower' },
+          { label: 'Point Cloud Globe', href: '/globe' },
+          { label: 'Flow Page', href: '/flow' },
         ]}
       />
     </>

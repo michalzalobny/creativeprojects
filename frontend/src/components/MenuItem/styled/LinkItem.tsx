@@ -10,7 +10,6 @@ export const LinkItem = styled(motion.a)<Props>`
   font-family: 'Playfair';
   color: ${sharedValues.colors.trueWhite};
   ${sharedValues.fontPresets.normal};
-  text-transform: uppercase;
   white-space: nowrap;
   font-size: 6vw;
   width: 100%;

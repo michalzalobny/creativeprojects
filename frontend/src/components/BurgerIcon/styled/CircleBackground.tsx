@@ -14,5 +14,5 @@ export const CircleBackground = styled(motion.div)<Props>`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: ${sharedValues.colors.trueBlack};
+  background-color: ${sharedValues.colors.black};
 `;

@@ -14,7 +14,7 @@ export const BackgroundComp = styled(motion.div)<Props>`
   position: absolute;
   width: ${props => props.size}px;
   height: ${props => props.size}px;
-  background-color: ${sharedValues.colors.trueBlack};
+  background-color: ${sharedValues.colors.black};
   top: ${props => props.pos}px;
   left: ${props => props.pos}px;
   border-radius: 50%;
