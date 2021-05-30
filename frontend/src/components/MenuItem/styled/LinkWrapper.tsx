@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import { springElastic } from 'components/Animations/framerTransitions';
+import { springMedium } from 'components/Animations/framerTransitions';
 
 interface Props {}
 
@@ -15,11 +15,11 @@ LinkWrapper.defaultProps = {
       x: '0',
     },
     animate: {
-      x: '-20px',
+      x: '-30px',
     },
   },
 
   transition: {
-    ...springElastic,
+    ...springMedium,
   },
 };

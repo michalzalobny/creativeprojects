@@ -10,22 +10,24 @@ interface Props {}
 
 export const Wrapper = styled(motion.div)<Props>`
   min-width: 25vw;
+  cursor: pointer;
 
-  margin-bottom: 8vw;
+  padding: 8vw 0;
 
   ${media.tablet} {
-    &:not(:last-child) {
-      margin-bottom: ${computeValue({
-        pixelValue: 80,
-        referenceWidth: sharedValues.containers.normal.referenceWidth,
-      })};
-    }
+    padding-top: ${computeValue({
+      pixelValue: 80,
+      referenceWidth: sharedValues.containers.normal.referenceWidth,
+    })};
+
+    padding-bottom: ${computeValue({
+      pixelValue: 80,
+      referenceWidth: sharedValues.containers.normal.referenceWidth,
+    })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    &:not(:last-child) {
-      margin-bottom: 80px;
-    }
+    padding: 80px 0;
   }
 `;
 
