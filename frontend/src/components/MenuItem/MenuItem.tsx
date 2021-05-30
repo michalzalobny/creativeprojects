@@ -29,6 +29,7 @@ export const MenuItem = memo<MenuItemProps>(props => {
   return (
     <>
       <Wrapper
+        style={{ zIndex: isHovered ? 2 : 1 }}
         ref={wrapperRef}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

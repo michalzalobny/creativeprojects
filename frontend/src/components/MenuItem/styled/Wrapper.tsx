@@ -11,6 +11,7 @@ interface Props {}
 export const Wrapper = styled(motion.div)<Props>`
   min-width: 25vw;
   cursor: pointer;
+  position: relative;
 
   padding: 8vw 0;
 
