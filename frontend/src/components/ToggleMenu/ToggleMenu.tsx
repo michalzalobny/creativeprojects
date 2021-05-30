@@ -1,17 +1,13 @@
 import React, { memo, useState } from 'react';
-import Link from 'next/link';
+
+import { MenuItem } from 'components/MenuItem/MenuItem';
 
 import { Wrapper } from './styled/Wrapper';
 import { ButtonWrapper } from './styled/ButtonWrapper';
 import { LinksWrapper } from './styled/LinksWrapper';
-import { LinkItem } from './styled/LinkItem';
 import { BurgerIconComp } from './styled/BurgerIconComp';
 import { BackgroundComp } from './styled/BackgroundComp';
-
-type MenuItem = {
-  label: string;
-  href: string;
-};
+import { MenuItemComp } from './styled/MenuItemComp';
 
 export interface ToggleMenuProps {
   links: MenuItem[];
@@ -49,11 +45,7 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
           animate={showMenu ? 'animate' : 'initial'}
         >
           {links.map((link, key) => {
-            return (
-              <Link href={link.href} passHref key={link.label}>
-                <LinkItem>{link.label}</LinkItem>
-              </Link>
-            );
+            return <MenuItemComp key={link.label} itemContent={link} />;
           })}
           <BackgroundComp
             size={MENU_SIZE}
