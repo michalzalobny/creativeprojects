@@ -22,7 +22,11 @@ export const LinksWrapper = styled(motion.div)<Props>`
 
 LinksWrapper.defaultProps = {
   variants: {
-    initial: {},
+    initial: {
+      transition: {
+        delayChildren: stagger.menuItems,
+      },
+    },
     animate: {},
   },
 
