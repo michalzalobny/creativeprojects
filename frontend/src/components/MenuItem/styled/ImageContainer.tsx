@@ -12,6 +12,7 @@ export const ImageContainer = styled(motion.div)<Props>`
   transform: translate(-50%, -50%);
   width: 100%;
   z-index: -1;
+  pointer-events: none;
 `;
 
 ImageContainer.defaultProps = {
