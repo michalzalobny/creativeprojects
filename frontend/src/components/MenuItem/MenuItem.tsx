@@ -17,10 +17,11 @@ export type MenuItem = {
 
 export interface MenuItemProps {
   itemContent: MenuItem;
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const MenuItem = memo<MenuItemProps>(props => {
-  const { itemContent, ...rest } = props;
+  const { setShowMenu, itemContent, ...rest } = props;
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [isHovered, setIsHovered] = useState(false);
@@ -33,7 +34,13 @@ export const MenuItem = memo<MenuItemProps>(props => {
         onMouseLeave={() => setIsHovered(false)}
         {...rest}
       >
-        <LinkWrapper animate={isHovered ? 'animate' : 'initial'}>
+        <LinkWrapper
+          onClick={() => {
+            setShowMenu(false);
+            setIsHovered(false);
+          }}
+          animate={isHovered ? 'animate' : 'initial'}
+        >
           <Link href={itemContent.href} passHref>
             <LinkItem>
               {itemContent.label}

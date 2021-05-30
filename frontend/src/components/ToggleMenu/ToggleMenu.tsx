@@ -47,7 +47,13 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
           animate={showMenu ? 'animate' : 'initial'}
         >
           {links.map((link, key) => {
-            return <MenuItemComp key={link.label} itemContent={link} />;
+            return (
+              <MenuItemComp
+                setShowMenu={setShowMenu}
+                key={link.label}
+                itemContent={link}
+              />
+            );
           })}
           <BackgroundComp
             size={MENU_SIZE}

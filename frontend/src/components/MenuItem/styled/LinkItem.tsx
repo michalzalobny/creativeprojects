@@ -12,7 +12,6 @@ export const LinkItem = styled(motion.a)<Props>`
   ${sharedValues.fontPresets.normal};
   white-space: nowrap;
   font-size: 6vw;
-  width: 100%;
   display: block;
   position: relative;
 
