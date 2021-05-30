@@ -14,19 +14,9 @@ export const LinkItem = styled(motion.a)<Props>`
   text-align: center;
   white-space: nowrap;
   font-size: 6vw;
-  padding: 4vw 20vw;
+  padding: 4vw 0;
 
   ${media.tablet} {
-    padding-left: ${computeValue({
-      pixelValue: 190,
-      referenceWidth: sharedValues.containers.normal.referenceWidth,
-    })};
-
-    padding-right: ${computeValue({
-      pixelValue: 190,
-      referenceWidth: sharedValues.containers.normal.referenceWidth,
-    })};
-
     padding-top: ${computeValue({
       pixelValue: 30,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
@@ -38,14 +28,14 @@ export const LinkItem = styled(motion.a)<Props>`
     })};
 
     font-size: ${computeValue({
-      pixelValue: 50,
+      pixelValue: 30,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    padding: 30px 190px;
-    font-size: 50px;
+    padding: 30px 0;
+    font-size: 30px;
   }
 `;
 

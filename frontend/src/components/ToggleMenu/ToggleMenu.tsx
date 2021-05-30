@@ -44,7 +44,10 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
             isOpen={showMenu}
           />
         </ButtonWrapper>
-        <LinksWrapper animate={showMenu ? 'animate' : 'initial'}>
+        <LinksWrapper
+          offsetPadding={MENU_POS + MENU_SIZE}
+          animate={showMenu ? 'animate' : 'initial'}
+        >
           {links.map((link, key) => {
             return (
               <Link href={link.href} passHref key={link.label}>
