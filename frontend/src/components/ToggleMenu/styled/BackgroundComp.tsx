@@ -4,16 +4,19 @@ import { motion } from 'framer-motion';
 import { sharedValues } from 'utils/sharedValues';
 import { springVerySlow } from 'components/Animations/framerTransitions';
 
-interface Props {}
+interface Props {
+  size: number;
+  pos: number;
+}
 
 export const BackgroundComp = styled(motion.div)<Props>`
   z-index: -1;
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
   background-color: ${sharedValues.colors.trueBlack};
-  top: 20px;
-  right: 20px;
+  top: ${props => props.pos}px;
+  right: ${props => props.pos}px;
   border-radius: 50%;
 `;
 

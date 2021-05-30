@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 interface Props {}
 
 export const BarsWrapper = styled(motion.div)<Props>`
-  width: 50%;
-  height: 18%;
+  width: 40%;
+  height: 15%;
   position: absolute;
   top: 50%;
   left: 50%;

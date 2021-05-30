@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-interface Props {}
+interface Props {
+  size: number;
+}
 
 export const ContentWrapper = styled(motion.div)<Props>`
-  width: 60px;
-  height: 60px;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
   position: relative;
 `;

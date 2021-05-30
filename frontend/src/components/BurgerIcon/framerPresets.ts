@@ -1,4 +1,4 @@
-const ELEVATION = 4.8;
+const ELEVATION = 3.5;
 
 export const topVariants = {
   initial: {

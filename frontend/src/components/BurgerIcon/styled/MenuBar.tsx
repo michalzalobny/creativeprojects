@@ -18,7 +18,7 @@ export const MenuBar = styled(motion.span)<Props>`
   background-color: ${props => props.barColor};
   transform-origin: center;
   transition: background-color 0.5s;
-
+  
   ${props =>
     props.top &&
     css`

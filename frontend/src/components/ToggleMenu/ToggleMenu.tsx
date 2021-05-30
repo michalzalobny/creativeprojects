@@ -3,7 +3,6 @@ import Link from 'next/link';
 
 import { Wrapper } from './styled/Wrapper';
 import { ButtonWrapper } from './styled/ButtonWrapper';
-import { ButtonContent } from './styled/ButtonContent';
 import { LinksWrapper } from './styled/LinksWrapper';
 import { LinkItem } from './styled/LinkItem';
 import { BurgerIconComp } from './styled/BurgerIconComp';
@@ -18,6 +17,9 @@ export interface ToggleMenuProps {
   links: MenuItem[];
   barColor: string;
 }
+
+const MENU_SIZE = 55;
+const MENU_POS = 20;
 
 export const ToggleMenu = memo<ToggleMenuProps>(props => {
   const { barColor, links, ...rest } = props;
@@ -35,9 +37,12 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
           onBlur={() => setIsHovered(false)}
           onClick={() => setShowMenu(prev => !prev)}
         >
-          <ButtonContent>
-            <BurgerIconComp barColor={barColor} isOpen={showMenu} />
-          </ButtonContent>
+          <BurgerIconComp
+            size={MENU_SIZE}
+            pos={MENU_POS}
+            barColor={barColor}
+            isOpen={showMenu}
+          />
         </ButtonWrapper>
         <LinksWrapper animate={showMenu ? 'animate' : 'initial'}>
           {links.map((link, key) => {
@@ -47,7 +52,11 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
               </Link>
             );
           })}
-          <BackgroundComp animate={showMenu ? 'animate' : 'initial'} />
+          <BackgroundComp
+            size={MENU_SIZE}
+            pos={MENU_POS}
+            animate={showMenu ? 'animate' : 'initial'}
+          />
         </LinksWrapper>
       </Wrapper>
     </>

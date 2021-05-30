@@ -10,14 +10,16 @@ import { BarsWrapper } from './styled/BarsWrapper';
 export interface BurgerIconProps {
   isOpen: boolean;
   barColor: string;
+  size: number;
+  pos: number;
 }
 
 export const BurgerIcon = memo<BurgerIconProps>(props => {
-  const { barColor, isOpen: isMenuOpen, ...rest } = props;
+  const { pos, size, barColor, isOpen: isMenuOpen, ...rest } = props;
   return (
     <>
       <Wrapper {...rest}>
-        <ContentWrapper>
+        <ContentWrapper size={size}>
           <BarsWrapper>
             <MenuBar
               barColor={barColor}
