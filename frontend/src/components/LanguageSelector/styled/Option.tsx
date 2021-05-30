@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const Option = styled(motion.button)<Props>`
-  ${sharedValues.text.normal};
   cursor: pointer;
 
   padding: 0.5rem 1.5rem;
