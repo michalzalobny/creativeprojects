@@ -1691,7 +1691,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$ARWHSD/auH7ood18hlDMb.BLT88cnvQiO1fd84W9ZMJKsM4Fo4DS6',
+    '$2b$10$siZbcpbeCRvEbuWJhDi1revmsNWqE5yYVYjl1xIj1RY.SxFn5NGbW',
     NULL,
     NULL,
     1,
