@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 147 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -501,6 +501,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (3, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (4, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -614,6 +618,42 @@ VALUES
     3,
     3
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    7,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    7,
+    4
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    8,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    4,
+    4
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -643,6 +683,10 @@ VALUES
     1,
     'Interactive 3D Globe created with THREE.js and GLSL shaders.'
   );
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (4, 1, 'Particle models built with THREE.js');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -677,6 +721,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (6, 'Point Cloud Globe', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (7, 'Particles', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (8, 'Particles', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -1447,6 +1499,24 @@ VALUES
     '2021-05-18 21:09:50',
     '2021-05-30 21:41:14'
   );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    4,
+    'particles',
+    1,
+    1,
+    '2021-06-02 22:36:47',
+    '2021-06-02 22:36:47'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: projects_components
@@ -1560,6 +1630,42 @@ VALUES
     6,
     3
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    7,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    4,
+    4
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    8,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    8,
+    4
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -1585,7 +1691,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$RHqILhgHRkmrPM95zf/PSe7ymsIxSsNydsG00Uwi/4vXk54krvSfO',
+    '$2b$10$ARWHSD/auH7ood18hlDMb.BLT88cnvQiO1fd84W9ZMJKsM4Fo4DS6',
     NULL,
     NULL,
     1,
@@ -4147,6 +4253,24 @@ VALUES
     146,
     13,
     3,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    147,
+    7,
+    4,
     'components_page_localized_heads',
     'ogImage',
     1
