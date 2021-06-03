@@ -20,6 +20,8 @@ export const model = ({ loader, modelSrc }: Model) => {
   const particlesMaterial = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
+    transparent: true,
+    depthWrite: false,
     uniforms: {
       uSize: { value: 3 },
       uTime: { value: 0 },
