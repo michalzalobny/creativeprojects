@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { CustomContainer } from 'components/CustomContainer/CustomContainer';
 import { sharedValues } from 'utils/sharedValues';
@@ -30,7 +31,9 @@ export default function IndexPage(props: IndexPageProps) {
               <ThemeSelector />
             </Parallax>
           </SelectorWrapper>
-          <h1>{pageData.name}</h1>
+          <Link href="/globe">
+            <h1>globe</h1>
+          </Link>
         </CustomContainer>
       </Wrapper>
     </>
