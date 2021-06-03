@@ -7,6 +7,7 @@ import { App, AppObj, UpdateInfo } from './app';
 import { model } from './model';
 import horseSrc from './models/horse.glb';
 import skullSrc from './models/skull.glb';
+import { WordsWrapper } from 'containers/FlowPage/components/FlowApp/components/FlowPageContent/styled/Header/WordsWrapper';
 // import dracoSrc from './libs/draco'
 
 interface World {
@@ -16,6 +17,8 @@ interface World {
 
 interface WorldManager {
   initLights: () => void;
+  updateModelSkull: (updateInfo: UpdateInfo) => void;
+  updateModelHorse: (updateInfo: UpdateInfo) => void;
 }
 
 export const world = ({ appObj, appProps }: World) => {
@@ -27,6 +30,8 @@ export const world = ({ appObj, appProps }: World) => {
 
   const worldManager: WorldManager = {
     initLights: null,
+    updateModelHorse: null,
+    updateModelSkull: null,
   };
 
   const init = () => {
@@ -45,20 +50,25 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initLights = initLights;
     worldManager.initLights();
 
-    const { container: containerModelSkull } = model({
+    const { update: updateModelSkull, container: containerModelSkull } = model({
       modelSrc: skullSrc,
       loader,
     });
     container.add(containerModelSkull);
+    worldManager.updateModelSkull = updateModelSkull;
 
-    const { container: containerModelHorse } = model({
+    const { update: updateModelHorse, container: containerModelHorse } = model({
       modelSrc: horseSrc,
       loader,
     });
+    worldManager.updateModelHorse = updateModelHorse;
     container.add(containerModelHorse);
   };
 
-  const update = (updateInfo: UpdateInfo) => {};
+  const update = (updateInfo: UpdateInfo) => {
+    worldManager.updateModelHorse(updateInfo);
+    worldManager.updateModelSkull(updateInfo);
+  };
 
   const destroy = () => {};
 

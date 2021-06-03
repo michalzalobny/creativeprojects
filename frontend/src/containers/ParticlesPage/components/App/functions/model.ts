@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler';
+
+import { UpdateInfo } from './app';
 import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 
@@ -18,6 +20,10 @@ export const model = ({ loader, modelSrc }: Model) => {
   const particlesMaterial = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
+    uniforms: {
+      uSize: { value: 3 },
+      uTime: { value: 0 },
+    },
   });
   let particles;
 
@@ -36,7 +42,7 @@ export const model = ({ loader, modelSrc }: Model) => {
     particlesGeometry = new THREE.BufferGeometry();
 
     const positionArray = new Float32Array(count * 3);
-    const scaleArray = new Float32Array(count);
+    const randomArray = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
       const newPosition = new THREE.Vector3();
@@ -45,12 +51,17 @@ export const model = ({ loader, modelSrc }: Model) => {
       positionArray[i * 3 + 0] = newPosition.x;
       positionArray[i * 3 + 1] = newPosition.y;
       positionArray[i * 3 + 2] = newPosition.z;
-      scaleArray[i] = Math.random();
+      randomArray[i] = Math.random();
     }
 
     particlesGeometry.setAttribute(
       'position',
       new THREE.BufferAttribute(positionArray, 3),
+    );
+
+    particlesGeometry.setAttribute(
+      'aRandom',
+      new THREE.BufferAttribute(randomArray, 1),
     );
   };
 
@@ -67,7 +78,12 @@ export const model = ({ loader, modelSrc }: Model) => {
     container.remove(particles);
   };
 
+  const update = (updateInfo: UpdateInfo) => {
+    particlesMaterial.uniforms.uTime.value = updateInfo.time / 1000;
+  };
+
   return {
     container,
+    update,
   };
 };

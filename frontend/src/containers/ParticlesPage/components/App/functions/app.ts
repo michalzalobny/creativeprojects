@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 
@@ -38,6 +40,7 @@ export interface AppObj {
   lastFrameTime: number;
   contentSizes: Sizes;
   viewportSizes: Sizes;
+  controls: OrbitControls;
 }
 
 interface AppManager {
@@ -67,6 +70,7 @@ export const app = (appProps: App) => {
     lastFrameTime: null,
     contentSizes: { height: 0, width: 0 },
     viewportSizes: { height: 0, width: 0 },
+    controls: null,
   };
 
   const appManager: AppManager = {
@@ -81,6 +85,7 @@ export const app = (appProps: App) => {
     appObj.camera.near = 0.1;
     appObj.camera.far = 100;
 
+    appObj.controls = new OrbitControls(appObj.camera, appProps.canvasRefEl);
     updateCameraSettings();
 
     appObj.camera.position.set(0, 0, CAMERA_POS);
@@ -92,6 +97,7 @@ export const app = (appProps: App) => {
     appObj.camera.aspect = aspectRatio;
 
     appObj.camera.updateProjectionMatrix();
+    appObj.controls.update();
   };
 
   const setRenderer = () => {
@@ -123,9 +129,7 @@ export const app = (appProps: App) => {
       appObj.viewportSizes.width,
       appObj.viewportSizes.height,
     );
-    appObj.renderer.setPixelRatio(
-      Math.min(Math.max(window.devicePixelRatio, 1.5), 2),
-    );
+    appObj.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     if (window.innerWidth < 768) {
       appObj.scene.scale.set(0.8, 0.8, 0.8);
