@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler';
 
-import { UpdateInfo } from './app';
+import { UpdateInfo, AppObj } from './app';
 import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
@@ -10,9 +10,10 @@ import { getRandBetween } from './utils/getRandBetween';
 interface Model {
   modelSrc: string;
   loader: GLTFLoader;
+  appObj: AppObj;
 }
 
-export const model = ({ loader, modelSrc }: Model) => {
+export const model = ({ appObj, loader, modelSrc }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -70,17 +71,24 @@ export const model = ({ loader, modelSrc }: Model) => {
     );
   };
 
+  const mouse = new THREE.Vector2();
+  const handleMouseMove = event => {
+    mouse.x = (event.clientX / appObj.viewportSizes.width) * 2 - 1;
+    mouse.y = -(event.clientY / appObj.viewportSizes.height) * 2 + 1;
+  };
+
+  const setListeners = () => {
+    window.addEventListener('mousemove', handleMouseMove);
+  };
+
   const init = () => {
     generateModel();
+    setListeners();
   };
   init();
 
   const add = () => {
     container.add(particles);
-  };
-
-  const remove = () => {
-    container.remove(particles);
   };
 
   const update = (updateInfo: UpdateInfo) => {

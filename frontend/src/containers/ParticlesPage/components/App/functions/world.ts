@@ -46,6 +46,7 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initLights();
 
     const { update: updateModelSkull, container: containerModelSkull } = model({
+      appObj,
       modelSrc: skullSrc,
       loader,
     });
