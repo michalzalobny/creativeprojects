@@ -10,7 +10,9 @@ void main(){
     vec4 viewPosition = viewMatrix * modelPosition;
 
     vec4 newPosition = viewPosition;
-    // newPosition.z +=  (sin(uTime + aRandom )+ 1.0) / 2.0    * .5;
+    newPosition.x += cos(uTime+ aRandom) * 0.01;
+    newPosition.y += sin(uTime+ aRandom) * 0.01;
+    newPosition.z += cos(uTime + aRandom) * 0.02;
 
     vec4 projectedPosition = projectionMatrix * newPosition;
     gl_Position = projectedPosition;

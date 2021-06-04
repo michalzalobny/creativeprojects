@@ -5,6 +5,7 @@ import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler';
 import { UpdateInfo } from './app';
 import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
+import { getRandBetween } from './utils/getRandBetween';
 
 interface Model {
   modelSrc: string;
@@ -55,7 +56,7 @@ export const model = ({ loader, modelSrc }: Model) => {
       positionArray[i * 3 + 0] = newPosition.x;
       positionArray[i * 3 + 1] = newPosition.y;
       positionArray[i * 3 + 2] = newPosition.z;
-      randomArray[i] = Math.random();
+      randomArray[i] = getRandBetween(0, 10);
     }
 
     particlesGeometry.setAttribute(
