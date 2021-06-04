@@ -5,10 +5,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
 import { model } from './model';
-import horseSrc from './models/horse.glb';
 import skullSrc from './models/skull.glb';
-import { WordsWrapper } from 'containers/FlowPage/components/FlowApp/components/FlowPageContent/styled/Header/WordsWrapper';
-// import dracoSrc from './libs/draco'
 
 interface World {
   appProps: App;
@@ -18,7 +15,6 @@ interface World {
 interface WorldManager {
   initLights: () => void;
   updateModelSkull: (updateInfo: UpdateInfo) => void;
-  updateModelHorse: (updateInfo: UpdateInfo) => void;
 }
 
 export const world = ({ appObj, appProps }: World) => {
@@ -30,7 +26,6 @@ export const world = ({ appObj, appProps }: World) => {
 
   const worldManager: WorldManager = {
     initLights: null,
-    updateModelHorse: null,
     updateModelSkull: null,
   };
 
@@ -56,17 +51,9 @@ export const world = ({ appObj, appProps }: World) => {
     });
     container.add(containerModelSkull);
     worldManager.updateModelSkull = updateModelSkull;
-
-    const { update: updateModelHorse, container: containerModelHorse } = model({
-      modelSrc: horseSrc,
-      loader,
-    });
-    worldManager.updateModelHorse = updateModelHorse;
-    container.add(containerModelHorse);
   };
 
   const update = (updateInfo: UpdateInfo) => {
-    worldManager.updateModelHorse(updateInfo);
     worldManager.updateModelSkull(updateInfo);
   };
 
