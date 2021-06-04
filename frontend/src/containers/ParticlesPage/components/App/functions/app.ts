@@ -66,7 +66,7 @@ export const app = (appProps: App) => {
     config: { showDebugGui: false },
     debugGUI: null,
     rafId: null,
-    isResumed: false,
+    isResumed: true,
     lastFrameTime: null,
     contentSizes: { height: 0, width: 0 },
     viewportSizes: { height: 0, width: 0 },
