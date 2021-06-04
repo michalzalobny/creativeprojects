@@ -5,7 +5,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
 import { model } from './model';
-import skullSrc from './models/skull.glb';
+import skullSrc from './models/horse.glb';
 
 interface World {
   appProps: App;

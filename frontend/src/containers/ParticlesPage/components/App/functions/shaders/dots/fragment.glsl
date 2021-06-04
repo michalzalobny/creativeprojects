@@ -11,7 +11,7 @@ void main(){
     vec3 color2 = vec3(245./255., 54./255., 229./255.);
     vec3 color = mix(color1,color2,depth);
 
-    strength -= depth;
+ 
     
-    gl_FragColor = vec4(color, strength);
+    gl_FragColor = vec4(1.,1.,0., strength);
   }

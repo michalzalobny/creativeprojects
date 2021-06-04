@@ -18,6 +18,7 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
   container.matrixAutoUpdate = false;
 
   let mesh;
+  let meshCopy;
   let particlesGeometry;
   const particlesMaterial = new THREE.ShaderMaterial({
     vertexShader,
@@ -37,6 +38,14 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
   const generateModel = () => {
     loader.load(modelSrc, res => {
       mesh = res.scene.children[0];
+      meshCopy = Object.create(res.scene.children[0]);
+      meshCopy.in = 'in';
+      const mat = new THREE.MeshBasicMaterial({
+        transparent: true,
+        opacity: 0,
+      });
+      meshCopy.material = mat;
+      appObj.scene.add(meshCopy);
       updateParticlesGeometry();
       particles = new THREE.Points(particlesGeometry, particlesMaterial);
       add();
@@ -45,7 +54,7 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
 
   const updateParticlesGeometry = () => {
     const sampler = new MeshSurfaceSampler(mesh).build();
-    const count = 10000;
+    const count = 3000;
     particlesGeometry = new THREE.BufferGeometry();
 
     const positionArray = new Float32Array(count * 3);
@@ -92,7 +101,18 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
 
     raycaster.setFromCamera(mouse, appObj.camera);
 
-    particlesMaterial.uniforms.uMouse3D.value = raycaster.ray.direction;
+    const intersects = raycaster.intersectObjects(appObj.scene.children);
+
+    for (let i = 0; i < intersects.length; i++) {
+      // console.log(intersects.length);
+      if (intersects[i].object['in'] === 'in') {
+        particlesMaterial.uniforms.uMouse3D.value = intersects[i].point;
+      }
+
+      // intersects[i].object.material.color.set(0xff0000);
+    }
+
+    // particlesMaterial.uniforms.uMouse3D.value = raycaster.ray.direction;
   };
 
   const init = () => {

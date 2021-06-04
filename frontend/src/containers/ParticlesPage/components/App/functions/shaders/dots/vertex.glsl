@@ -11,15 +11,15 @@ void main(){
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 newPosition = viewPosition;
 
-    float distanceFromMouse = distance(uMouse3D.xy, position.xy );
+    float distanceFromMouse = distance(uMouse3D, position);
     float final = (1. - step(0.1, distanceFromMouse));
     
     // newPosition.x +=distanceToCenter;
     // newPosition.y +=distanceToCenter;
     // newPosition.z +=distanceToCenter;
-    newPosition.x += cos(uTime+ aRandom) * 0.05 *final;
-    newPosition.y += sin(uTime+ aRandom) * 0.05 *final;
-    newPosition.z += cos(uTime + aRandom) * 0.05 *final;
+    newPosition.x += cos(uTime + aRandom) * 0.2 * final;
+    newPosition.y += sin(uTime - aRandom) * 0.2 * final;
+    newPosition.z += cos(uTime + aRandom) * 0.2 * final;
 
     vec4 projectedPosition = projectionMatrix * newPosition;
 
