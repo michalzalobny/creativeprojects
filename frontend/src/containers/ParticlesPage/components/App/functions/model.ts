@@ -27,8 +27,9 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
     depthTest: false,
     blending: THREE.AdditiveBlending,
     uniforms: {
-      uSize: { value: 3 },
+      uSize: { value: 6 },
       uTime: { value: 0 },
+      uMouse3D: { value: new THREE.Vector3(0) },
     },
   });
   let particles;
@@ -71,7 +72,12 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
     );
   };
 
+  const add = () => {
+    container.add(particles);
+  };
+
   const mouse = new THREE.Vector2();
+  const raycaster = new THREE.Raycaster();
   const handleMouseMove = event => {
     mouse.x = (event.clientX / appObj.viewportSizes.width) * 2 - 1;
     mouse.y = -(event.clientY / appObj.viewportSizes.height) * 2 + 1;
@@ -81,19 +87,19 @@ export const model = ({ appObj, loader, modelSrc }: Model) => {
     window.addEventListener('mousemove', handleMouseMove);
   };
 
+  const update = (updateInfo: UpdateInfo) => {
+    particlesMaterial.uniforms.uTime.value = updateInfo.time / 1000;
+
+    raycaster.setFromCamera(mouse, appObj.camera);
+
+    particlesMaterial.uniforms.uMouse3D.value = raycaster.ray.direction;
+  };
+
   const init = () => {
     generateModel();
     setListeners();
   };
   init();
-
-  const add = () => {
-    container.add(particles);
-  };
-
-  const update = (updateInfo: UpdateInfo) => {
-    particlesMaterial.uniforms.uTime.value = updateInfo.time / 1000;
-  };
 
   return {
     container,
