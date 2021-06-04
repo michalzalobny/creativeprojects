@@ -5,10 +5,13 @@ void main(){
     float strength = 0.05 / distanceToCenter - 0.1;
     strength = step(0.01, strength);
 
+    float depth = vPosition.z *0.5 + 0.5;
 
     vec3 color1 = vec3(54./255., 203./255., 245./255.);
     vec3 color2 = vec3(245./255., 54./255., 229./255.);
-    vec3 color = mix(color1,color2,vPosition.z + 0.3);
+    vec3 color = mix(color1,color2,depth);
 
+    strength -= depth;
+    
     gl_FragColor = vec4(color, strength);
   }

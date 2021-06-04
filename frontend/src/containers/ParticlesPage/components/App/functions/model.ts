@@ -22,6 +22,8 @@ export const model = ({ loader, modelSrc }: Model) => {
     fragmentShader,
     transparent: true,
     depthWrite: false,
+    depthTest: false,
+    blending: THREE.AdditiveBlending,
     uniforms: {
       uSize: { value: 3 },
       uTime: { value: 0 },
