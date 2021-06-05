@@ -18,7 +18,7 @@ export const model = ({ appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const amount = 180;
+  const amount = 512;
 
   const textureLoader = new THREE.TextureLoader();
   const textures = [
@@ -62,6 +62,8 @@ export const model = ({ appObj }: Model) => {
 
     const particlePositions = new Float32Array(count * 3);
     const randomArray = new Float32Array(count);
+    const pressArray = new Float32Array(count);
+    const directionArray = new Float32Array(count);
     const coordinates = new Float32Array(count * 3);
     const speedArray = new Float32Array(count);
     const offsetArray = new Float32Array(count);
@@ -77,8 +79,10 @@ export const model = ({ appObj }: Model) => {
         coordinates[num * 3 + 1] = j;
         coordinates[num * 3 + 2] = 0;
 
+        directionArray[num] = Math.random() > 0.5 ? 1 : -1;
         offsetArray[num] = getRandBetween(-1000, 1000);
         speedArray[num] = getRandBetween(-100, 100);
+        pressArray[num] = 2;
 
         num++;
       }
@@ -97,6 +101,16 @@ export const model = ({ appObj }: Model) => {
     particlesGeometry.setAttribute(
       'aRandom',
       new THREE.BufferAttribute(randomArray, 1),
+    );
+
+    particlesGeometry.setAttribute(
+      'aDirection',
+      new THREE.BufferAttribute(directionArray, 1),
+    );
+
+    particlesGeometry.setAttribute(
+      'aPress',
+      new THREE.BufferAttribute(pressArray, 1),
     );
 
     particlesGeometry.setAttribute(
