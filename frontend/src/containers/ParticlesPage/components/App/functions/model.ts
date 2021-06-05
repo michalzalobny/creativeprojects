@@ -5,7 +5,7 @@ import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
 
-import mask from './images/mask.png';
+import mask from './images/mask.jpg';
 import t1 from './images/t1.jpg';
 import t2 from './images/t2.jpg';
 
@@ -17,10 +17,14 @@ export const model = ({ appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const amount = 512;
+  const amount = 128;
 
   const textureLoader = new THREE.TextureLoader();
-  const textures = [textureLoader.load(t1.src), textureLoader.load(t2.src)];
+  const textures = [
+    textureLoader.load(t1.src),
+    textureLoader.load(t2.src),
+    textureLoader.load(mask.src),
+  ];
 
   let particlesGeometry;
   const particlesMaterial = new THREE.ShaderMaterial({
@@ -31,10 +35,11 @@ export const model = ({ appObj }: Model) => {
     depthTest: false,
     blending: THREE.AdditiveBlending,
     uniforms: {
-      uSize: { value: 500 },
+      uSize: { value: 800 },
       uTime: { value: 0 },
       t1: { value: textures[0] },
       t2: { value: textures[1] },
+      mask: { value: textures[2] },
       uAmount: { value: amount },
       uMouse3D: { value: new THREE.Vector3(0) },
     },

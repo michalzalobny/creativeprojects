@@ -2,6 +2,7 @@ uniform float uSize;
 uniform float uTime;
 uniform vec3 uMouse3D;
 
+
 attribute float aRandom;
 attribute vec3 aCoordinates;
 
