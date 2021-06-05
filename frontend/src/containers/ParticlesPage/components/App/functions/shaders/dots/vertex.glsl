@@ -14,18 +14,17 @@ varying vec3 vPos;
 
 
 void main(){
-    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+    vec3 newPosition = position;
+    newPosition.z += (mod(( aSpeed + aOffset + uScrollY ) , 1000.) - 500.) * uTransitionProgress; 
+    vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
-    vec4 newPosition = viewPosition;
-
-    newPosition.z += (mod(( aSpeed + aOffset + uScrollY ) , 2000.) - 1000.) * uTransitionProgress; 
-
-    vec4 projectedPosition = projectionMatrix * newPosition;
+    
+    vec4 projectedPosition = projectionMatrix * viewPosition;
 
     gl_Position = projectedPosition;
     gl_PointSize = uSize;
     gl_PointSize *= (1.0/ - viewPosition.z);
 
     vCoordinates = aCoordinates.xy;    
-    vPos = newPosition.xyz;
+    vPos = newPosition;
 }

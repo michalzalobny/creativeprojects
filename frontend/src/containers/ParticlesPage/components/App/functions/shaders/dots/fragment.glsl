@@ -14,8 +14,8 @@ void main(){
     vec2 myUv = vec2(vCoordinates.x/uAmount, vCoordinates.y/uAmount);
     vec4 image = texture2D(t1, myUv);
 
-    float alpha = 1. - clamp(0.,1.,abs(vPos.z / 900.));
+    float alpha = 1. - clamp(abs(vPos.z / 100.),0., 1.) + 0.5;
 
     gl_FragColor = image;
-    gl_FragColor.a *=  alpha;
+    gl_FragColor.a *= (1.-maskTexture.r) * alpha;
   }

@@ -18,7 +18,7 @@ export const model = ({ appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const amount = 512;
+  const amount = 180;
 
   const textureLoader = new THREE.TextureLoader();
   const textures = [
