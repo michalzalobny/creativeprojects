@@ -5,6 +5,10 @@ import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
 
+import mask from './images/mask.png';
+import t1 from './images/t1.jpg';
+import t2 from './images/t2.jpg';
+
 interface Model {
   appObj: AppObj;
 }
@@ -12,6 +16,11 @@ interface Model {
 export const model = ({ appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
+
+  const amount = 512;
+
+  const textureLoader = new THREE.TextureLoader();
+  const textures = [textureLoader.load(t1.src), textureLoader.load(t2.src)];
 
   let particlesGeometry;
   const particlesMaterial = new THREE.ShaderMaterial({
@@ -24,6 +33,9 @@ export const model = ({ appObj }: Model) => {
     uniforms: {
       uSize: { value: 500 },
       uTime: { value: 0 },
+      t1: { value: textures[0] },
+      t2: { value: textures[1] },
+      uAmount: { value: amount },
       uMouse3D: { value: new THREE.Vector3(0) },
     },
   });
@@ -37,18 +49,23 @@ export const model = ({ appObj }: Model) => {
 
   const updateParticlesGeometry = () => {
     particlesGeometry = new THREE.BufferGeometry();
-    const c = 512;
-    const count = c * c;
+    const count = amount * amount;
 
     const particlePositions = new Float32Array(count * 3);
     const randomArray = new Float32Array(count);
+    const coordinates = new Float32Array(count * 3);
 
     let num = 0;
-    for (let i = 0; i < c; i++) {
-      for (let j = 0; j < c; j++) {
-        particlePositions[num * 3 + 0] = i - c / 2; // c/2 used to center
-        particlePositions[num * 3 + 1] = j - c / 2;
+    for (let i = 0; i < amount; i++) {
+      for (let j = 0; j < amount; j++) {
+        particlePositions[num * 3 + 0] = i - amount / 2; // c/2 used to center
+        particlePositions[num * 3 + 1] = j - amount / 2;
         particlePositions[num * 3 + 2] = 0;
+
+        coordinates[num * 3 + 0] = i;
+        coordinates[num * 3 + 1] = j;
+        coordinates[num * 3 + 2] = 0;
+
         num++;
       }
     }
@@ -56,6 +73,11 @@ export const model = ({ appObj }: Model) => {
     particlesGeometry.setAttribute(
       'position',
       new THREE.BufferAttribute(particlePositions, 3),
+    );
+
+    particlesGeometry.setAttribute(
+      'aCoordinates',
+      new THREE.BufferAttribute(coordinates, 3),
     );
 
     particlesGeometry.setAttribute(

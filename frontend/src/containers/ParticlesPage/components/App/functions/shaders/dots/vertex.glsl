@@ -3,8 +3,9 @@ uniform float uTime;
 uniform vec3 uMouse3D;
 
 attribute float aRandom;
+attribute vec3 aCoordinates;
 
-varying vec3 vPosition;
+varying vec2 vCoordinates;
 
 void main(){
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
@@ -17,5 +18,5 @@ void main(){
     gl_PointSize = uSize;
     gl_PointSize *= (1.0/ - viewPosition.z);
 
-    vPosition = modelPosition.rgb;
+    vCoordinates = aCoordinates.xy;    
 }

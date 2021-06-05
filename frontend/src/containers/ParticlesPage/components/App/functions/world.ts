@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
 import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
@@ -19,9 +17,6 @@ interface WorldManager {
 export const world = ({ appObj, appProps }: World) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
-
-  let loader: GLTFLoader;
-  let dracoLoader;
 
   const worldManager: WorldManager = {
     initLights: null,
