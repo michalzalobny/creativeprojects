@@ -53,7 +53,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 3.5;
+export const CAMERA_POS = 600;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
@@ -82,8 +82,8 @@ export const app = (appProps: App) => {
   const setCamera = () => {
     appObj.camera = new THREE.PerspectiveCamera();
 
-    appObj.camera.near = 0.1;
-    appObj.camera.far = 100;
+    appObj.camera.near = 1;
+    appObj.camera.far = 1000;
 
     appObj.controls = new OrbitControls(appObj.camera, appProps.canvasRefEl);
     updateCameraSettings();
