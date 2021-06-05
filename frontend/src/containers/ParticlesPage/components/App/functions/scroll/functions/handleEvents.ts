@@ -60,8 +60,8 @@ export const handleEvents = ({ scrollObj }: HandleEvents) => {
     const { pixelY } = normalizeWheel(event);
 
     applyScroll({
-      x: -pixelY / 2,
-      y: 0,
+      x: 0,
+      y: -pixelY,
       scrollObj,
     });
   };

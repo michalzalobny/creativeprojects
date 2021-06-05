@@ -82,10 +82,11 @@ export const app = (appProps: App) => {
   const setCamera = () => {
     appObj.camera = new THREE.PerspectiveCamera();
 
-    appObj.camera.near = 1;
-    appObj.camera.far = 1000;
+    appObj.camera.near = 0.1;
+    appObj.camera.far = 10000;
 
     appObj.controls = new OrbitControls(appObj.camera, appProps.canvasRefEl);
+    appObj.controls.enabled = false;
     updateCameraSettings();
 
     appObj.camera.position.set(0, 0, CAMERA_POS);

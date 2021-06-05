@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import TWEEN from '@tweenjs/tween.js';
 
 import { UpdateInfo, AppObj } from './app';
 import vertexShader from './shaders/dots/vertex.glsl';
@@ -17,7 +18,7 @@ export const model = ({ appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const amount = 128;
+  const amount = 512;
 
   const textureLoader = new THREE.TextureLoader();
   const textures = [
@@ -42,6 +43,8 @@ export const model = ({ appObj }: Model) => {
       mask: { value: textures[2] },
       uAmount: { value: amount },
       uMouse3D: { value: new THREE.Vector3(0) },
+      uTransitionProgress: { value: 0 },
+      uScrollY: { value: appObj.scroll.scrollObj.currentY },
     },
   });
   let particles;
@@ -49,7 +52,7 @@ export const model = ({ appObj }: Model) => {
   const generateModel = () => {
     updateParticlesGeometry();
     particles = new THREE.Points(particlesGeometry, particlesMaterial);
-    container.add(particles);
+    appObj.scene.add(particles);
   };
 
   const updateParticlesGeometry = () => {
@@ -59,6 +62,8 @@ export const model = ({ appObj }: Model) => {
     const particlePositions = new Float32Array(count * 3);
     const randomArray = new Float32Array(count);
     const coordinates = new Float32Array(count * 3);
+    const speedArray = new Float32Array(count);
+    const offsetArray = new Float32Array(count);
 
     let num = 0;
     for (let i = 0; i < amount; i++) {
@@ -70,6 +75,9 @@ export const model = ({ appObj }: Model) => {
         coordinates[num * 3 + 0] = i;
         coordinates[num * 3 + 1] = j;
         coordinates[num * 3 + 2] = 0;
+
+        offsetArray[num] = getRandBetween(-1000, 1000);
+        speedArray[num] = getRandBetween(1, 10);
 
         num++;
       }
@@ -89,6 +97,35 @@ export const model = ({ appObj }: Model) => {
       'aRandom',
       new THREE.BufferAttribute(randomArray, 1),
     );
+
+    particlesGeometry.setAttribute(
+      'aSpeed',
+      new THREE.BufferAttribute(speedArray, 1),
+    );
+
+    particlesGeometry.setAttribute(
+      'aOffset',
+      new THREE.BufferAttribute(offsetArray, 1),
+    );
+  };
+
+  let tweenTP;
+
+  const animateTP = (destination: number) => {
+    if (tweenTP) {
+      tweenTP.stop();
+    }
+
+    tweenTP = new TWEEN.Tween({
+      progress: particlesMaterial.uniforms.uTransitionProgress.value,
+    })
+      .to({ progress: destination }, 800)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(obj => {
+        particlesMaterial.uniforms.uTransitionProgress.value = obj.progress;
+      });
+
+    tweenTP.start();
   };
 
   const mouse = new THREE.Vector2();
@@ -98,21 +135,26 @@ export const model = ({ appObj }: Model) => {
     mouse.y = -(event.clientY / appObj.viewportSizes.height) * 2 + 1;
   };
 
+  let tp = 0;
   const setListeners = () => {
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('pointerdown', () => {
+      animateTP(tp === 0 ? 1 : 0);
+      tp === 0 ? (tp = 1) : (tp = 0);
+    });
   };
 
   const update = (updateInfo: UpdateInfo) => {
     particlesMaterial.uniforms.uTime.value = updateInfo.time / 1000;
+    particlesMaterial.uniforms.uScrollY.value =
+      appObj.scroll.scrollObj.currentY;
 
     raycaster.setFromCamera(mouse, appObj.camera);
 
     const intersects = raycaster.intersectObjects(appObj.scene.children);
 
     for (let i = 0; i < intersects.length; i++) {
-      if (intersects[i].object['in'] === 'in') {
-        particlesMaterial.uniforms.uMouse3D.value = intersects[i].point;
-      }
+      particlesMaterial.uniforms.uMouse3D.value = intersects[i].point;
     }
   };
 
