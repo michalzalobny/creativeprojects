@@ -10,13 +10,15 @@ attribute float aSpeed;
 attribute float aOffset;
 
 varying vec2 vCoordinates;
+varying vec3 vPos;
+
 
 void main(){
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 newPosition = viewPosition;
 
-    newPosition.z += (viewPosition.z * aSpeed + aOffset + uScrollY * 1000.) * uTransitionProgress;
+    newPosition.z += (mod(( aSpeed + aOffset + uScrollY ) , 2000.) - 1000.) * uTransitionProgress; 
 
     vec4 projectedPosition = projectionMatrix * newPosition;
 
@@ -25,4 +27,5 @@ void main(){
     gl_PointSize *= (1.0/ - viewPosition.z);
 
     vCoordinates = aCoordinates.xy;    
+    vPos = newPosition.xyz;
 }

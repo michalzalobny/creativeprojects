@@ -36,7 +36,7 @@ export const model = ({ appObj }: Model) => {
     depthTest: false,
     blending: THREE.AdditiveBlending,
     uniforms: {
-      uSize: { value: 800 },
+      uSize: { value: 1000 },
       uTime: { value: 0 },
       t1: { value: textures[0] },
       t2: { value: textures[1] },
@@ -77,7 +77,7 @@ export const model = ({ appObj }: Model) => {
         coordinates[num * 3 + 2] = 0;
 
         offsetArray[num] = getRandBetween(-1000, 1000);
-        speedArray[num] = getRandBetween(1, 10);
+        speedArray[num] = getRandBetween(-100, 100);
 
         num++;
       }

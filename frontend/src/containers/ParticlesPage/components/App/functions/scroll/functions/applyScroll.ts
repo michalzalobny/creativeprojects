@@ -13,17 +13,13 @@ export const applyScroll = (props: ApplyScroll) => {
 };
 
 const applyScrollX = (amountPx: number, scrollObj: ScrollObj) => {
-  const newOffsetX = scrollObj.targetX + amountPx / 200;
+  const newOffsetX = scrollObj.targetX + amountPx;
 
   scrollObj.targetX = newOffsetX;
 };
 
 const applyScrollY = (amountPx: number, scrollObj: ScrollObj) => {
-  const newOffsetY = scrollObj.targetY + amountPx / 200;
-
-  if (Math.abs(newOffsetY) >= Math.PI / 2) {
-    return;
-  }
+  const newOffsetY = scrollObj.targetY + amountPx;
 
   scrollObj.targetY = newOffsetY;
 };
