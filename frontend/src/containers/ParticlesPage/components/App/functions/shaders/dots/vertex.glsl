@@ -3,6 +3,7 @@ uniform float uTime;
 uniform vec3 uMouse3D;
 uniform float uTransitionProgress;
 uniform float uScrollY;
+uniform float uCameraZ;
 
 attribute float aRandom;
 attribute vec3 aCoordinates;
@@ -14,8 +15,9 @@ varying vec3 vPos;
 
 
 void main(){
+    float depthMultiplier = 1.2;
     vec3 newPosition = position;
-    newPosition.z += (mod(( aSpeed + aOffset + uScrollY ) , 1000.) - 500.) * uTransitionProgress; 
+    newPosition.z += (mod(( aSpeed + aOffset + uScrollY ) , uCameraZ * 2. * depthMultiplier ) - uCameraZ * depthMultiplier ) * uTransitionProgress;
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     

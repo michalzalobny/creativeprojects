@@ -7,7 +7,7 @@ import fragmentShader from './shaders/dots/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
 
 import mask from './images/mask.jpg';
-import t1 from './images/t1.jpg';
+import t1 from './images/space.jpg';
 import t2 from './images/t2.jpg';
 
 interface Model {
@@ -45,6 +45,7 @@ export const model = ({ appObj }: Model) => {
       uMouse3D: { value: new THREE.Vector3(0) },
       uTransitionProgress: { value: 0 },
       uScrollY: { value: appObj.scroll.scrollObj.currentY },
+      uCameraZ: { value: appObj.camera.position.z },
     },
   });
   let particles;

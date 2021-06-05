@@ -53,7 +53,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 200;
+export const CAMERA_POS = 300;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 

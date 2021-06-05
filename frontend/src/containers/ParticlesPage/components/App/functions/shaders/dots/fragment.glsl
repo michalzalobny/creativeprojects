@@ -5,6 +5,7 @@ uniform float uAmount;
 uniform sampler2D t1;
 uniform sampler2D t2;
 uniform sampler2D mask;
+uniform float uCameraZ;
 
 void main(){
     // float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
@@ -14,7 +15,7 @@ void main(){
     vec2 myUv = vec2(vCoordinates.x/uAmount, vCoordinates.y/uAmount);
     vec4 image = texture2D(t1, myUv);
 
-    float alpha = 1. - clamp(abs(vPos.z / 100.),0., 1.) + 0.5;
+    float alpha = 1. - clamp(abs(vPos.z / uCameraZ),0., 1.) + 0.5;
 
     gl_FragColor = image;
     gl_FragColor.a *= (1.-maskTexture.r) * alpha;

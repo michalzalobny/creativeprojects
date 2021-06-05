@@ -9,5 +9,5 @@ export const Wrapper = styled(motion.div)<Props>`
   height: 100%;
   overflow: hidden;
   user-select: none;
-  background: rgb(22, 22, 22);
+  background: rgb(0, 0, 0);
 `;
