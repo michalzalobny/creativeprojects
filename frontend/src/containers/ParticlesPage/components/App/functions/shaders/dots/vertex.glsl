@@ -18,6 +18,14 @@ void main(){
     float depthMultiplier = 1.2;
     vec3 newPosition = position;
     newPosition.z += (mod(( aSpeed + aOffset + uScrollY ) , uCameraZ * 2. * depthMultiplier ) - uCameraZ * depthMultiplier ) * uTransitionProgress;
+    newPosition.x += sin(uScrollY*aSpeed * 0.0003) * 5. * uTransitionProgress;
+
+    vec3 stablePosition = position;
+
+    newPosition.x += uMouse3D.x;
+    newPosition.y += uMouse3D.y;
+  
+ 
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     

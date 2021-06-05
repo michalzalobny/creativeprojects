@@ -150,13 +150,14 @@ export const model = ({ appObj }: Model) => {
     particlesMaterial.uniforms.uScrollY.value =
       appObj.scroll.scrollObj.currentY;
 
+    //Set mouse raycaster
     raycaster.setFromCamera(mouse, appObj.camera);
-
-    const intersects = raycaster.intersectObjects(appObj.scene.children);
-
-    for (let i = 0; i < intersects.length; i++) {
-      particlesMaterial.uniforms.uMouse3D.value = intersects[i].point;
-    }
+    const test = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(2000, 2000),
+      new THREE.MeshBasicMaterial(),
+    );
+    const intersects = raycaster.intersectObjects([test]);
+    particlesMaterial.uniforms.uMouse3D.value = intersects[0].point;
   };
 
   const init = () => {
