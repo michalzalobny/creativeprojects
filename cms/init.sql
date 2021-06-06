@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 83 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 86 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_role
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 148 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 151 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -458,6 +458,18 @@ VALUES
     'Fire',
     'Num vitae sapien pellentesque habitant morbi tristique senectus. Diam vulputate ut pharetra sit amet aliquam id diam. Risus.'
   );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (
+    7,
+    'Lamborghini Aventador',
+    'Lamborghini Aventador white'
+  );
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (8, 'Chevy Corvette', 'Chevy Corvette chrome');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -1174,7 +1186,7 @@ VALUES
   (
     40,
     'model_def_application::project.project',
-    '{\"uid\":\"application::project.project\",\"collectionName\":\"projects\",\"kind\":\"collectionType\",\"info\":{\"name\":\"project\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"localizedHead\":{\"type\":\"component\",\"repeatable\":false,\"component\":\"page.localized-head\"},\"localizedName\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"page.localized-short-text\"},\"urlSlug\":{\"type\":\"uid\"},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
+    '{\"uid\":\"application::project.project\",\"collectionName\":\"projects\",\"kind\":\"collectionType\",\"info\":{\"name\":\"project\",\"description\":\"\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"localizedHead\":{\"type\":\"component\",\"repeatable\":false,\"component\":\"page.localized-head\"},\"localizedName\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"page.localized-short-text\"},\"urlSlug\":{\"type\":\"uid\"},\"creativeItems\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"creative-component.creative-item\"},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
     'object',
     NULL,
     NULL
@@ -1185,7 +1197,7 @@ VALUES
   (
     41,
     'plugin_content_manager_configuration_content_types::application::project.project',
-    '{\"uid\":\"application::project.project\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"id\",\"defaultSortBy\":\"id\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"localizedHead\":{\"edit\":{\"label\":\"LocalizedHead\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedHead\",\"searchable\":false,\"sortable\":false}},\"localizedName\":{\"edit\":{\"label\":\"LocalizedName\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedName\",\"searchable\":false,\"sortable\":false}},\"urlSlug\":{\"edit\":{\"label\":\"UrlSlug\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"UrlSlug\",\"searchable\":true,\"sortable\":true}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"urlSlug\",\"created_at\",\"updated_at\"],\"editRelations\":[],\"edit\":[[{\"name\":\"localizedHead\",\"size\":12}],[{\"name\":\"localizedName\",\"size\":12}],[{\"name\":\"urlSlug\",\"size\":6}]]}}',
+    '{\"uid\":\"application::project.project\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"id\",\"defaultSortBy\":\"id\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"localizedHead\":{\"edit\":{\"label\":\"LocalizedHead\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedHead\",\"searchable\":false,\"sortable\":false}},\"localizedName\":{\"edit\":{\"label\":\"LocalizedName\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedName\",\"searchable\":false,\"sortable\":false}},\"urlSlug\":{\"edit\":{\"label\":\"UrlSlug\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"UrlSlug\",\"searchable\":true,\"sortable\":true}},\"creativeItems\":{\"edit\":{\"label\":\"CreativeItems\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"CreativeItems\",\"searchable\":false,\"sortable\":false}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"urlSlug\",\"created_at\",\"updated_at\"],\"edit\":[[{\"name\":\"localizedHead\",\"size\":12}],[{\"name\":\"localizedName\",\"size\":12}],[{\"name\":\"urlSlug\",\"size\":6}],[{\"name\":\"creativeItems\",\"size\":12}]],\"editRelations\":[]}}',
     'object',
     '',
     ''
@@ -1515,7 +1527,7 @@ VALUES
     1,
     1,
     '2021-06-02 22:36:47',
-    '2021-06-02 22:36:47'
+    '2021-06-06 21:24:58'
   );
 
 # ------------------------------------------------------------
@@ -1666,6 +1678,42 @@ VALUES
     8,
     4
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    9,
+    'creativeItems',
+    1,
+    'components_creative_component_creative_items',
+    7,
+    4
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    10,
+    'creativeItems',
+    2,
+    'components_creative_component_creative_items',
+    8,
+    4
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -1691,7 +1739,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$siZbcpbeCRvEbuWJhDi1revmsNWqE5yYVYjl1xIj1RY.SxFn5NGbW',
+    '$2b$10$1xEWMbQqjxJY1Ooyho4ywOmCz53pxH.unjEO9696X2E7gG6sSXEr6',
     NULL,
     NULL,
     1,
@@ -3145,72 +3193,6 @@ INSERT INTO
   )
 VALUES
   (
-    66,
-    'plugins::content-manager.explorer.create',
-    'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\"]',
-    '[]',
-    1,
-    '2021-05-03 21:02:17',
-    '2021-05-03 21:02:17'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
-    67,
-    'plugins::content-manager.explorer.read',
-    'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\"]',
-    '[]',
-    1,
-    '2021-05-03 21:02:17',
-    '2021-05-03 21:02:17'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
-    68,
-    'plugins::content-manager.explorer.update',
-    'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\"]',
-    '[]',
-    1,
-    '2021-05-03 21:02:17',
-    '2021-05-03 21:02:17'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
     69,
     'plugins::content-manager.explorer.delete',
     'application::project.project',
@@ -3307,6 +3289,72 @@ VALUES
     1,
     '2021-05-15 10:38:55',
     '2021-05-15 10:38:55'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    83,
+    'plugins::content-manager.explorer.create',
+    'application::project.project',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\"]',
+    '[]',
+    1,
+    '2021-06-06 21:15:46',
+    '2021-06-06 21:15:47'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    84,
+    'plugins::content-manager.explorer.read',
+    'application::project.project',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\"]',
+    '[]',
+    1,
+    '2021-06-06 21:15:46',
+    '2021-06-06 21:15:47'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    85,
+    'plugins::content-manager.explorer.update',
+    'application::project.project',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\"]',
+    '[]',
+    1,
+    '2021-06-06 21:15:46',
+    '2021-06-06 21:15:47'
   );
 
 # ------------------------------------------------------------
@@ -3898,21 +3946,21 @@ VALUES
     '9.jpg',
     '',
     '',
-    634,
-    951,
-    '{\"thumbnail\":{\"name\":\"thumbnail_9.jpg\",\"hash\":\"thumbnail_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.12,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075192/thumbnail_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_9_112f9470bc\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_9.jpg\",\"hash\":\"medium_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":44.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075193/medium_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"medium_9_112f9470bc\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_9.jpg\",\"hash\":\"small_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":22.02,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075193/small_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"small_9_112f9470bc\",\"resource_type\":\"image\"}}}',
+    534,
+    533,
+    '{\"thumbnail\":{\"name\":\"thumbnail_9.jpg\",\"hash\":\"thumbnail_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":156,\"height\":156,\"size\":3.37,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623014557/thumbnail_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_9_112f9470bc\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_9.jpg\",\"hash\":\"small_9_112f9470bc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":499,\"size\":22.73,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623014558/small_9_112f9470bc.jpg\",\"provider_metadata\":{\"public_id\":\"small_9_112f9470bc\",\"resource_type\":\"image\"}}}',
     '9_112f9470bc',
     '.jpg',
     'image/jpeg',
-    64.63,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1621075191/9_112f9470bc.jpg',
+    25.48,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1623014556/9_112f9470bc.jpg',
     NULL,
     'cloudinary',
     '{\"public_id\":\"9_112f9470bc\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-05-15 10:39:55',
-    '2021-05-15 10:39:55'
+    '2021-06-06 21:22:38'
   );
 INSERT INTO
   `upload_file` (
@@ -4001,6 +4049,50 @@ VALUES
     1,
     '2021-05-30 12:32:48',
     '2021-05-30 21:40:44'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    15,
+    '3.jpg',
+    '',
+    '',
+    714,
+    713,
+    '{\"thumbnail\":{\"name\":\"thumbnail_3.jpg\",\"hash\":\"thumbnail_3_fa78bdce48\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":156,\"height\":156,\"size\":5.03,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623014566/thumbnail_3_fa78bdce48.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_3_fa78bdce48\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_3.jpg\",\"hash\":\"small_3_fa78bdce48\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":499,\"size\":25.25,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623014567/small_3_fa78bdce48.jpg\",\"provider_metadata\":{\"public_id\":\"small_3_fa78bdce48\",\"resource_type\":\"image\"}}}',
+    '3_fa78bdce48',
+    '.jpg',
+    'image/jpeg',
+    42.19,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1623014565/3_fa78bdce48.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"3_fa78bdce48\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-06-06 21:22:47',
+    '2021-06-06 21:22:47'
   );
 
 # ------------------------------------------------------------
@@ -4268,11 +4360,47 @@ INSERT INTO
   )
 VALUES
   (
-    147,
+    148,
     7,
     4,
     'components_page_localized_heads',
     'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    149,
+    15,
+    7,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    150,
+    12,
+    8,
+    'components_creative_component_creative_items',
+    'image',
     1
   );
 

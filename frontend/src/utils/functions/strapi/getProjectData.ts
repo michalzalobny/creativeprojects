@@ -33,7 +33,15 @@ export async function getProjectData(urlSlug: string) {
               }
               text
             },
-          }
+          },
+          creativeItems{
+            name,
+            image{
+              formats,
+              url
+            },
+            description
+          },
         }
       }
     `,

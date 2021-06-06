@@ -1,20 +1,19 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 
-import { UpdateInfo, AppObj } from './app';
+import { UpdateInfo, AppObj, App } from './app';
 import vertexShader from './shaders/dots/vertex.glsl';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
 
 import mask from './images/mask.jpg';
-import t1 from './images/space.jpg';
-import t2 from './images/t2.jpg';
 
 interface Model {
   appObj: AppObj;
+  appProps: App;
 }
 
-export const model = ({ appObj }: Model) => {
+export const model = ({ appProps, appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -22,8 +21,8 @@ export const model = ({ appObj }: Model) => {
 
   const textureLoader = new THREE.TextureLoader();
   const textures = [
-    textureLoader.load(t1.src),
-    textureLoader.load(t2.src),
+    textureLoader.load(appProps.creativeItems[0].image.url),
+    textureLoader.load(appProps.creativeItems[1].image.url),
     textureLoader.load(mask.src),
   ];
 

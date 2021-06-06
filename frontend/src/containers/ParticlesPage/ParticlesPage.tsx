@@ -13,7 +13,7 @@ export default function ParticlesPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
-        <App />
+        <App creativeItems={props.projectData.creativeItems} />
       </Wrapper>
     </>
   );

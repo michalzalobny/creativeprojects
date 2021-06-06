@@ -4,8 +4,11 @@ import { Wrapper } from './styled/Wrapper';
 import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
 import { ContentWrapper } from './styled/ContentWrapper';
+import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
-interface AppProps {}
+interface AppProps {
+  creativeItems: CreativeItem[];
+}
 
 export const App = memo<AppProps>(props => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,6 +31,7 @@ export const App = memo<AppProps>(props => {
       scrollWrapperRefEl: scrollWrapper.current,
       setIsReady,
       refsToOffset: refsToOffset.current,
+      creativeItems: props.creativeItems,
     });
 
     init();

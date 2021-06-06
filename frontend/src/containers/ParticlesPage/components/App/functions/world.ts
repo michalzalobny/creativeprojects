@@ -11,7 +11,7 @@ interface World {
 
 interface WorldManager {
   initLights: () => void;
-  updateModelSkull: (updateInfo: UpdateInfo) => void;
+  updateModel: (updateInfo: UpdateInfo) => void;
 }
 
 export const world = ({ appObj, appProps }: World) => {
@@ -20,7 +20,7 @@ export const world = ({ appObj, appProps }: World) => {
 
   const worldManager: WorldManager = {
     initLights: null,
-    updateModelSkull: null,
+    updateModel: null,
   };
 
   const init = () => {
@@ -30,15 +30,16 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initLights = initLights;
     worldManager.initLights();
 
-    const { update: updateModelSkull, container: containerModelSkull } = model({
+    const { update: updateModel, container: containerModel } = model({
       appObj,
+      appProps,
     });
-    container.add(containerModelSkull);
-    worldManager.updateModelSkull = updateModelSkull;
+    container.add(containerModel);
+    worldManager.updateModel = updateModel;
   };
 
   const update = (updateInfo: UpdateInfo) => {
-    worldManager.updateModelSkull(updateInfo);
+    worldManager.updateModel(updateInfo);
   };
 
   const destroy = () => {};

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
 import * as dat from 'dat.gui';
 import TWEEN from '@tweenjs/tween.js';
 
+import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 
 import { world } from './world';
@@ -21,6 +21,7 @@ export interface App {
   scrollWrapperRefEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   refsToOffset: HTMLDivElement[];
+  creativeItems: CreativeItem[];
 }
 
 interface Sizes {
@@ -53,7 +54,7 @@ interface Config {
   showDebugGui?: boolean;
 }
 
-export const CAMERA_POS = 500;
+export const CAMERA_POS = 600;
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
