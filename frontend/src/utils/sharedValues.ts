@@ -48,7 +48,7 @@ export const sharedValues = {
   },
   containers: {
     normal: {
-      maxWidth: 1920,
+      maxWidth: 1420,
       referenceWidth: 1920,
       mobilePadding: 0,
       get breakpoint() {
