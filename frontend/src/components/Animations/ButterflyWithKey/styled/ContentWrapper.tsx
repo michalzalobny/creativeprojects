@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 
 interface Props {}
 
-export const Text = styled(motion.div)<Props>`
-  font-family: 'Playfair';
-  font-size: 60px;
+export const ContentWrapper = styled(motion.div)<Props>`
+  transition: all 3s;
 `;

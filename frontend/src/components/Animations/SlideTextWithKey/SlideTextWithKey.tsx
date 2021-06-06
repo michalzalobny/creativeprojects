@@ -28,7 +28,7 @@ export const SlideTextWithKey = memo<SlideTextWithKeyProps>(props => {
 
   const myExp = XRegExp(
     '((([\\p{L}\\p{Nd}\\p{P}]\\s)+[\\p{L}\\p{Nd}\\p{P}]+)|([\\p{L}\\p{Nd}\\p{P}]{2,}))',
-    'gu'
+    'gu',
   );
   const wordsArray = XRegExp.match(text, myExp) as string[];
 

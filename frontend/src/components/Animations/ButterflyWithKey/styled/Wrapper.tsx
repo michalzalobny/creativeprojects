@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 
 interface Props {}
 
-export const Text = styled(motion.div)<Props>`
-  font-family: 'Playfair';
-  font-size: 60px;
+export const Wrapper = styled(motion.div)<Props>`
+  position: relative;
+
+  width: 100%;
 `;
