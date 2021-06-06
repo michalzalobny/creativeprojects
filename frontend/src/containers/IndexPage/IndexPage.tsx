@@ -16,11 +16,11 @@ import { Text } from './styled/Text';
 export default function IndexPage(props: IndexPageProps) {
   const { pageData } = props;
 
-  const [bText, setBText] = useState('tes as as sdsad as testts 22 saz');
+  const [bText, setBText] = useState('tes as addddddasdddddddddtts 22 saz');
 
   useEffect(() => {
     setTimeout(() => {
-      setBText('szw 21 sadd asd as sdsad as test ststst st st st stss');
+      setBText('tes as addddddddddddddddsad as testts 22 saz1');
     }, 2000);
   }, []);
 

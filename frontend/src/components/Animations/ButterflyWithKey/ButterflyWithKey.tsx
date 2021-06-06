@@ -4,7 +4,6 @@ import { reveal } from './framerPresets';
 import { LetterWrapper } from './styled/LetterWrapper';
 import { LettersContainer } from './styled/LettersContainer';
 import { TextWrapper } from './styled/TextWrapper';
-import { BlueprintContainer } from './styled/BlueprintContainer';
 import { Wrapper } from './styled/Wrapper';
 import { AnimatePresence } from 'framer-motion';
 import { MeasureWrapper } from './styled/MeasureWrapper';
@@ -21,8 +20,6 @@ interface Sizes {
 
 export const ButterflyWithKey = memo<ButterflyWithKeyProps>(props => {
   const { text } = props;
-
-  const STAGGER_HOVERED = 0.025;
 
   const contentWrapperRef = useRef<HTMLDivElement>(null);
   const [sizes, setSizes] = useState<Sizes>({
@@ -59,12 +56,7 @@ export const ButterflyWithKey = memo<ButterflyWithKeyProps>(props => {
         <ContentWrapper style={{ width: sizes.width, height: sizes.height }}>
           <MeasureWrapper key={text} ref={contentWrapperRef}>
             <TextWrapper>
-              <LettersContainer
-                transition={{
-                  staggerChildren: STAGGER_HOVERED,
-                }}
-                aria-label={text}
-              >
+              <LettersContainer aria-label={text}>
                 {text.split('').map((char, index) => {
                   return (
                     <LetterWrapper
@@ -82,12 +74,7 @@ export const ButterflyWithKey = memo<ButterflyWithKeyProps>(props => {
           </MeasureWrapper>
           <AnimatePresence>
             <TextWrapper absolute key={text}>
-              <LettersContainer
-                transition={{
-                  staggerChildren: STAGGER_HOVERED,
-                }}
-                aria-label={text}
-              >
+              <LettersContainer aria-label={text}>
                 {text.split('').map((char, index) => {
                   return (
                     <LetterWrapper

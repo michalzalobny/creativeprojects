@@ -7,12 +7,25 @@ export const LettersContainer = styled(motion.span)<Props>`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  /* overflow: hidden; */
 `;
 
 LettersContainer.defaultProps = {
   variants: {
-    initial: {},
-    animate: {},
+    initial: {
+      transition: {
+        staggerChildren: 0.04,
+      },
+    },
+    animate: {
+      transition: {
+        delayChildren: 0.04,
+        staggerChildren: 0.04,
+      },
+    },
+    exit: {
+      transition: {
+        staggerChildren: 0.04,
+      },
+    },
   },
 };

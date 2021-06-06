@@ -1,6 +1,6 @@
 const revealTransition = {
   type: 'tween',
-  duration: 0.7,
+  duration: 0.4,
   ease: [0.445, 0.05, 0.55, 0.95],
 };
 
@@ -23,15 +23,12 @@ export const reveal = {
       transform: `rotate3d(${rotate3d.x},-${rotate3d.y},${rotate3d.z},0deg)`,
       transition: {
         ...revealTransition,
-        duration: revealTransition.duration * 1.35,
       },
     },
     exit: {
       transform: `rotate3d(${rotate3d.x},${rotate3d.y},${rotate3d.z},-${rotate3d.deg}deg)`,
-
       transition: {
         ...revealTransition,
-        duration: revealTransition.duration * 1.35,
       },
     },
   },
