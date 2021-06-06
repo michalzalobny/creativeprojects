@@ -4,6 +4,9 @@ uniform vec3 uMouse3D;
 uniform float uTransitionProgress;
 uniform float uScrollY;
 uniform float uCameraZ;
+uniform float uScreenWidth;
+uniform float uScreenHeight;
+uniform float uPixelRatio;
 
 attribute float aRandom;
 attribute vec3 aCoordinates;
@@ -40,7 +43,7 @@ void main(){
     vec4 projectedPosition = projectionMatrix * viewPosition;
 
     gl_Position = projectedPosition;
-    gl_PointSize = uSize;
+    gl_PointSize = uSize * uScreenHeight * uPixelRatio;
     gl_PointSize *= (1.0/ - viewPosition.z);
 
     vCoordinates = aCoordinates.xy;    

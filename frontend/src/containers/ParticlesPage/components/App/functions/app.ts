@@ -133,11 +133,11 @@ export const app = (appProps: App) => {
     );
     appObj.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    if (window.innerWidth < 768) {
-      appObj.scene.scale.set(0.8, 0.8, 0.8);
-    } else {
-      appObj.scene.scale.set(1, 1, 1);
-    }
+    // if (window.innerWidth < 768) {
+    //   appObj.scene.scale.set(0.8, 0.8, 0.8);
+    // } else {
+    //   appObj.scene.scale.set(1, 1, 1);
+    // }
 
     updateCameraSettings();
   };

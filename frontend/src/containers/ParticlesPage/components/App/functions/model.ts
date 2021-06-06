@@ -17,7 +17,7 @@ export const model = ({ appProps, appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  const amount = 512;
+  const amount = 440;
 
   const textureLoader = new THREE.TextureLoader();
   const textures = [
@@ -35,7 +35,7 @@ export const model = ({ appProps, appObj }: Model) => {
     depthTest: false,
     blending: THREE.AdditiveBlending,
     uniforms: {
-      uSize: { value: 1000 },
+      uSize: { value: 0.9 },
       uTime: { value: 0 },
       t1: { value: textures[0] },
       t2: { value: textures[1] },
@@ -45,6 +45,9 @@ export const model = ({ appProps, appObj }: Model) => {
       uTransitionProgress: { value: 0 },
       uScrollY: { value: appObj.scroll.scrollObj.currentY },
       uCameraZ: { value: appObj.camera.position.z },
+      uScreenWidth: { value: appObj.viewportSizes.width },
+      uScreenHeight: { value: appObj.viewportSizes.height },
+      uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
     },
   });
   let particles;
@@ -162,6 +165,11 @@ export const model = ({ appProps, appObj }: Model) => {
     particlesMaterial.uniforms.uTime.value = updateInfo.time / 1000;
     particlesMaterial.uniforms.uScrollY.value =
       appObj.scroll.scrollObj.currentY;
+
+    particlesMaterial.uniforms.uScreenHeight.value =
+      appObj.viewportSizes.height;
+
+    particlesMaterial.uniforms.uScreenWidth.value = appObj.viewportSizes.width;
 
     //Set mouse raycaster
     raycaster.setFromCamera(mouse, appObj.camera);
