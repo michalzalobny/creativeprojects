@@ -68,16 +68,17 @@ export const MenuItem = memo<MenuItemProps>(props => {
             <Underline />
           </LinkItem>
         </LinkWrapper>
-        <Parallax refElement={wrapperRef}>
-          <ImageContainer animate={isHovered ? 'animate' : 'initial'}>
+
+        <ImageContainer animate={isHovered ? 'animate' : 'initial'}>
+          <Parallax refElement={wrapperRef}>
             <ImageWrapper>
               <Image
                 animate={isHovered ? 'animate' : 'initial'}
                 src={itemContent.imageSrc}
               />
             </ImageWrapper>
-          </ImageContainer>
-        </Parallax>
+          </Parallax>
+        </ImageContainer>
       </Wrapper>
     </>
   );
