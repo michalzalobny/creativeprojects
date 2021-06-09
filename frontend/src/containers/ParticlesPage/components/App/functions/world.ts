@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { lights } from './lights';
 import { App, AppObj, UpdateInfo } from './app';
 import { model } from './model';
+import { wrap } from './utils/wrap';
 
 interface World {
   appProps: App;
@@ -11,6 +12,7 @@ interface World {
 
 export interface WorldState {
   currentSlide: number;
+  slideIndex: number;
 }
 
 interface WorldManager {
@@ -31,6 +33,16 @@ export const world = ({ appObj, appProps }: World) => {
 
   const worldState: WorldState = {
     currentSlide: 0,
+    slideIndex: 0,
+  };
+
+  const paginateSlide = (newVal: number) => {
+    worldState.currentSlide += newVal;
+    worldState.slideIndex = wrap(
+      0,
+      appProps.creativeItems.length,
+      worldState.currentSlide,
+    );
   };
 
   const init = () => {
@@ -48,6 +60,7 @@ export const world = ({ appObj, appProps }: World) => {
       appObj,
       appProps,
       worldState,
+      paginateSlide,
     });
     container.add(containerModel);
     worldManager.updateModel = updateModel;

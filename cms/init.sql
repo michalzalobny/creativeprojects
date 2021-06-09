@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 151 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 161 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -470,6 +470,10 @@ INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
   (8, 'Chevy Corvette', 'Chevy Corvette chrome');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (9, 'McLaren P1', NULL);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -1527,7 +1531,7 @@ VALUES
     1,
     1,
     '2021-06-02 22:36:47',
-    '2021-06-06 21:24:58'
+    '2021-06-09 22:28:44'
   );
 
 # ------------------------------------------------------------
@@ -1714,6 +1718,24 @@ VALUES
     8,
     4
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    11,
+    'creativeItems',
+    3,
+    'components_creative_component_creative_items',
+    9,
+    4
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -1739,7 +1761,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$1xEWMbQqjxJY1Ooyho4ywOmCz53pxH.unjEO9696X2E7gG6sSXEr6',
+    '$2b$10$a4H2trG7980je0oGZiZOVOWmCU/43FhGVQCF4bbY09phYZcp2phei',
     NULL,
     NULL,
     1,
@@ -4094,6 +4116,50 @@ VALUES
     '2021-06-06 21:22:47',
     '2021-06-06 21:22:47'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    16,
+    '5.jpg',
+    '',
+    '',
+    2600,
+    1462,
+    '{\"thumbnail\":{\"name\":\"thumbnail_5.jpg\",\"hash\":\"thumbnail_5_d0a384470b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":8.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623277708/thumbnail_5_d0a384470b.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_5_d0a384470b\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_5.jpg\",\"hash\":\"large_5_d0a384470b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":562,\"size\":88.32,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623277708/large_5_d0a384470b.jpg\",\"provider_metadata\":{\"public_id\":\"large_5_d0a384470b\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_5.jpg\",\"hash\":\"medium_5_d0a384470b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":54.98,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623277709/medium_5_d0a384470b.jpg\",\"provider_metadata\":{\"public_id\":\"medium_5_d0a384470b\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_5.jpg\",\"hash\":\"small_5_d0a384470b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":27.35,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623277710/small_5_d0a384470b.jpg\",\"provider_metadata\":{\"public_id\":\"small_5_d0a384470b\",\"resource_type\":\"image\"}}}',
+    '5_d0a384470b',
+    '.jpg',
+    'image/jpeg',
+    496.18,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1623277707/5_d0a384470b.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"5_d0a384470b\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-06-09 22:28:31',
+    '2021-06-09 22:28:31'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -4360,7 +4426,7 @@ INSERT INTO
   )
 VALUES
   (
-    148,
+    157,
     7,
     4,
     'components_page_localized_heads',
@@ -4378,7 +4444,25 @@ INSERT INTO
   )
 VALUES
   (
-    149,
+    158,
+    16,
+    9,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    159,
     15,
     7,
     'components_creative_component_creative_items',
@@ -4396,7 +4480,7 @@ INSERT INTO
   )
 VALUES
   (
-    150,
+    160,
     12,
     8,
     'components_creative_component_creative_items',

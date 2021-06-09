@@ -11,13 +11,19 @@ interface Model {
   appObj: AppObj;
   appProps: App;
   worldState: WorldState;
+  paginateSlide: (newVal: number) => void;
 }
 
 const PLANE_WIDTH = 500;
 const PLANE_HEIGHT = 300;
 const PARTICLE_DENSITY = 0.4;
 
-export const model = ({ worldState, appProps, appObj }: Model) => {
+export const model = ({
+  paginateSlide,
+  worldState,
+  appProps,
+  appObj,
+}: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -62,7 +68,7 @@ export const model = ({ worldState, appProps, appObj }: Model) => {
   };
 
   const updateTexture = () => {
-    const imageEl = appProps.creativeItems[worldState.currentSlide].image;
+    const imageEl = appProps.creativeItems[worldState.slideIndex].image;
     const imageSrc = imageEl.formats
       ? imageEl.formats.large?.url ||
         imageEl.formats.medium?.url ||
@@ -75,13 +81,15 @@ export const model = ({ worldState, appProps, appObj }: Model) => {
     image.src = imageSrc;
     image.crossOrigin = 'anonymous';
 
-    texture.image = image;
-    texture.needsUpdate = true;
-    material.uniforms.tMap.value = texture;
-    material.uniforms.uImageSizes.value = [
-      image.naturalWidth,
-      image.naturalHeight,
-    ];
+    image.onload = () => {
+      texture.image = image;
+      texture.needsUpdate = true;
+      material.uniforms.tMap.value = texture;
+      material.uniforms.uImageSizes.value = [
+        image.naturalWidth,
+        image.naturalHeight,
+      ];
+    };
   };
 
   const updateAttributes = () => {
@@ -102,6 +110,11 @@ export const model = ({ worldState, appProps, appObj }: Model) => {
   };
 
   const setListeners = () => {
+    window.addEventListener('click', () => {
+      appProps.paginate(1);
+      paginateSlide(1);
+      updateTexture();
+    });
     window.addEventListener('mousemove', handleMouseMove);
   };
 

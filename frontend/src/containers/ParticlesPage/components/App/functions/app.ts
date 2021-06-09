@@ -22,7 +22,7 @@ export interface App {
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
   refsToOffset: HTMLDivElement[];
   creativeItems: CreativeItem[];
-  setCurrentSlide: React.Dispatch<React.SetStateAction<number>>;
+  paginate: (newVal: number) => void;
 }
 
 interface Sizes {

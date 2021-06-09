@@ -9,6 +9,7 @@ import { Text } from './styled/Text';
 import { ButterflyWithKey } from 'components/Animations/ButterflyWithKey/ButterflyWithKey';
 import { TextWrapper } from './styled/TextWrapper';
 import { Parallax } from 'components/Animations/Parallax/Parallax';
+import { wrap } from './functions/utils/wrap';
 
 interface AppProps {
   creativeItems: CreativeItem[];
@@ -28,6 +29,10 @@ export const App = memo<AppProps>(props => {
   const [isReady, setIsReady] = useState(false);
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const slideIndex = wrap(0, props.creativeItems.length, currentSlide);
+  const paginate = (newVal: number) => {
+    setCurrentSlide(prev => prev + newVal);
+  };
 
   useEffect(() => {
     const { app } = require('./functions/app');
@@ -38,12 +43,8 @@ export const App = memo<AppProps>(props => {
       setIsReady,
       refsToOffset: refsToOffset.current,
       creativeItems: props.creativeItems,
-      setCurrentSlide,
+      paginate,
     });
-
-    setTimeout(() => {
-      setCurrentSlide(1);
-    }, 1500);
 
     init();
     return () => {
@@ -60,7 +61,7 @@ export const App = memo<AppProps>(props => {
         <TextWrapper>
           <Parallax>
             <Text>
-              <ButterflyWithKey text={props.creativeItems[currentSlide].name} />
+              <ButterflyWithKey text={props.creativeItems[slideIndex].name} />
             </Text>
           </Parallax>
         </TextWrapper>
