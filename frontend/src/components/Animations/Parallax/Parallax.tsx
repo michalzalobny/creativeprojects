@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
-import { useSpring } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { useMotionValue } from 'framer-motion';
 import { useWindowSize } from 'hooks/useWindowSize';
+import sync, { cancelSync } from 'framesync';
+
+import { lerp } from './utils/lerp';
 
 import { Wrapper } from './styled/Wrapper';
 
@@ -14,30 +17,23 @@ export interface ParallaxProps {
   shouldResetPosition?: boolean;
 }
 
+const LERP_EASE = 0.06;
+
 export const Parallax = React.memo<ParallaxProps>(props => {
   const {
     children,
     offsetXMultiplier = 0.2,
     offsetYMultiplier = 0.2,
-    stiffness = 300,
-    damping = 50,
     refElement,
     shouldResetPosition,
   } = props;
 
   const { windowHeight, windowWidth } = useWindowSize();
-  const springX = useSpring(0, {
-    stiffness,
-    damping,
-    restDelta: 0.01,
-    restSpeed: 0.01,
-  });
-  const springY = useSpring(0, {
-    stiffness,
-    damping,
-    restDelta: 0.01,
-    restSpeed: 0.01,
-  });
+  const currentXMv = useMotionValue(0);
+  const currentYMv = useMotionValue(0);
+
+  const targetX = useRef(0);
+  const targetY = useRef(0);
 
   const onMouseMove = (event: MouseEvent) => {
     let referenceElWidth = 0;
@@ -65,16 +61,24 @@ export const Parallax = React.memo<ParallaxProps>(props => {
     const offsetRatioY =
       -(relativeMousePositionY - referenceElHeight / 2) * offsetYMultiplier;
 
-    springX.set(offsetRatioX);
-    springY.set(offsetRatioY);
+    targetX.current = offsetRatioX;
+    targetY.current = offsetRatioY;
   };
 
   const onMouseOut = () => {
     if (shouldResetPosition) {
-      springY.set(0);
-      springX.set(0);
+      targetX.current = 0;
+      targetY.current = 0;
     }
   };
+
+  const mySync = sync.update(() => {
+    const newX = lerp(currentXMv.get(), targetX.current, LERP_EASE);
+    currentXMv.set(newX);
+
+    const newY = lerp(currentYMv.get(), targetY.current, LERP_EASE);
+    currentYMv.set(newY);
+  }, true);
 
   useEffect(() => {
     let refElementCurrent = undefined;
@@ -89,6 +93,7 @@ export const Parallax = React.memo<ParallaxProps>(props => {
     }
 
     return () => {
+      cancelSync.update(mySync);
       if (refElement) {
         refElementCurrent.removeEventListener('mousemove', onMouseMove);
         refElementCurrent.removeEventListener('mouseout', onMouseOut);
@@ -101,7 +106,7 @@ export const Parallax = React.memo<ParallaxProps>(props => {
   }, [windowHeight, windowWidth]);
 
   return (
-    <Wrapper style={{ x: springX, y: springY }}>
+    <Wrapper style={{ x: currentXMv, y: currentYMv }}>
       {React.Children.toArray(children)}
     </Wrapper>
   );

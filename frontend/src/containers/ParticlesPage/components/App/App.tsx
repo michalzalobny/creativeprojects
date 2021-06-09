@@ -5,6 +5,10 @@ import { RendererWrapper } from './styled/RendererWrapper';
 import { Cover } from './styled/Cover';
 import { ContentWrapper } from './styled/ContentWrapper';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
+import { Text } from './styled/Text';
+import { ButterflyWithKey } from 'components/Animations/ButterflyWithKey/ButterflyWithKey';
+import { TextWrapper } from './styled/TextWrapper';
+import { Parallax } from 'components/Animations/Parallax/Parallax';
 
 interface AppProps {
   creativeItems: CreativeItem[];
@@ -23,6 +27,8 @@ export const App = memo<AppProps>(props => {
 
   const [isReady, setIsReady] = useState(false);
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   useEffect(() => {
     const { app } = require('./functions/app');
     const { destroy, init } = app({
@@ -33,6 +39,10 @@ export const App = memo<AppProps>(props => {
       refsToOffset: refsToOffset.current,
       creativeItems: props.creativeItems,
     });
+
+    setTimeout(() => {
+      setCurrentSlide(1);
+    }, 3000);
 
     init();
     return () => {
@@ -46,6 +56,13 @@ export const App = memo<AppProps>(props => {
       <Wrapper>
         <Cover animate={isReady ? 'animate' : 'initial'} />
         <ContentWrapper ref={scrollWrapper}></ContentWrapper>
+        <TextWrapper>
+          <Parallax>
+            <Text>
+              <ButterflyWithKey text={props.creativeItems[currentSlide].name} />
+            </Text>
+          </Parallax>
+        </TextWrapper>
 
         <RendererWrapper ref={canvasWrapperRef}>
           <canvas ref={canvasRef} />
