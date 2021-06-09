@@ -28,7 +28,7 @@ export const Parallax = React.memo<ParallaxProps>(props => {
     shouldResetPosition,
   } = props;
 
-  const { windowHeight, windowWidth } = useWindowSize();
+  const { windowSizeRef } = useWindowSize();
   const currentXMv = useMotionValue(0);
   const currentYMv = useMotionValue(0);
 
@@ -49,8 +49,8 @@ export const Parallax = React.memo<ParallaxProps>(props => {
       relativeMousePositionY =
         event.clientY - refElement.current.getBoundingClientRect().y;
     } else {
-      referenceElWidth = windowWidth;
-      referenceElHeight = windowHeight;
+      referenceElWidth = windowSizeRef.current.width;
+      referenceElHeight = windowSizeRef.current.height;
       relativeMousePositionX = event.clientX;
       relativeMousePositionY = event.clientY;
     }
@@ -103,7 +103,7 @@ export const Parallax = React.memo<ParallaxProps>(props => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [windowHeight, windowWidth]);
+  }, []);
 
   return (
     <Wrapper style={{ x: currentXMv, y: currentYMv }}>

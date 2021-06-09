@@ -20,7 +20,9 @@ interface ParallaxScrollProps {
 export const ParallaxScroll = memo<ParallaxScrollProps>(props => {
   const { scrollValues, children, speed = -0.2 } = props;
 
-  const { windowHeight } = useWindowSize();
+  const { windowSize } = useWindowSize();
+  const { windowHeight } = windowSize;
+
   const topValue = React.useRef(0);
   const myRef = React.useRef(null);
   const parallaxYBlueprint = React.useRef(0);

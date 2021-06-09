@@ -21,7 +21,8 @@ const MENU_POS = 20;
 
 export const ToggleMenu = memo<ToggleMenuProps>(props => {
   const { barColor, links, ...rest } = props;
-  const { windowHeight, windowWidth } = useWindowSize();
+  const { windowSize } = useWindowSize();
+  const { windowHeight, windowWidth } = windowSize;
 
   const [showMenu, setShowMenu] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
