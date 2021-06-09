@@ -5,20 +5,19 @@ import { UpdateInfo, AppObj, App } from './app';
 import vertexShader from './shaders/mediaSlide/vertex.glsl';
 import fragmentShader from './shaders/mediaSlide/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
-import { ImageMediaProps } from 'utils/types/Media';
-
-import mask from './images/mask.jpg';
+import { WorldState } from './world';
 
 interface Model {
   appObj: AppObj;
   appProps: App;
+  worldState: WorldState;
 }
 
 const PLANE_WIDTH = 500;
 const PLANE_HEIGHT = 300;
 const PARTICLE_DENSITY = 0.4;
 
-export const model = ({ appProps, appObj }: Model) => {
+export const model = ({ worldState, appProps, appObj }: Model) => {
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
@@ -57,7 +56,13 @@ export const model = ({ appProps, appObj }: Model) => {
     vertexShader: vertexShader,
   });
 
-  const createMesh = (imageEl: ImageMediaProps) => {
+  const createMesh = () => {
+    mesh = new THREE.Points(geometry, material);
+    container.add(mesh);
+  };
+
+  const updateTexture = () => {
+    const imageEl = appProps.creativeItems[worldState.currentSlide].image;
     const imageSrc = imageEl.formats
       ? imageEl.formats.large?.url ||
         imageEl.formats.medium?.url ||
@@ -69,41 +74,28 @@ export const model = ({ appProps, appObj }: Model) => {
     texture = new THREE.Texture();
     image.src = imageSrc;
     image.crossOrigin = 'anonymous';
-    image.onload = () => {
-      texture.image = image;
-      texture.needsUpdate = true;
-      material.uniforms.tMap.value = texture;
-      material.uniforms.uImageSizes.value = [
-        image.naturalWidth,
-        image.naturalHeight,
-      ];
-    };
 
-    mesh = new THREE.Points(geometry, material);
-    container.add(mesh);
+    texture.image = image;
+    texture.needsUpdate = true;
+    material.uniforms.tMap.value = texture;
+    material.uniforms.uImageSizes.value = [
+      image.naturalWidth,
+      image.naturalHeight,
+    ];
   };
 
-  const createBounds = () => {
-    const { currentY, currentX } = appObj.scroll.scrollObj;
-    updateScale();
-  };
-
-  const updateScale = () => {
+  const updateAttributes = () => {
     const count = geometry.attributes.position.count;
-    // mesh.scale.x = 150;
-    // mesh.scale.y = 150;
-
     const randomArray = new Float32Array(count);
-
     for (let i = 0; i < count; i++) {
       randomArray[i] = getRandBetween(-100, 100);
     }
-
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randomArray, 1));
   };
 
   const mouse = new THREE.Vector2();
   const raycaster = new THREE.Raycaster();
+
   const handleMouseMove = event => {
     mouse.x = (event.clientX / appObj.viewportSizes.width) * 2 - 1;
     mouse.y = -(event.clientY / appObj.viewportSizes.height) * 2 + 1;
@@ -111,6 +103,10 @@ export const model = ({ appProps, appObj }: Model) => {
 
   const setListeners = () => {
     window.addEventListener('mousemove', handleMouseMove);
+  };
+
+  const destroyListeners = () => {
+    window.removeEventListener('mousemove', handleMouseMove);
   };
 
   let position = new THREE.Vector3(0, 0, 0);
@@ -141,15 +137,46 @@ export const model = ({ appProps, appObj }: Model) => {
     material.uniforms.uSpeed.value = speed;
   };
 
-  const init = () => {
-    createMesh(appProps.creativeItems[0].image);
-    setListeners();
-    createBounds();
+  const loadImages = () => {
+    let loadedAmount = 0;
+    appProps.creativeItems.forEach(item => {
+      const imageSrc = item.image.formats
+        ? item.image.formats.large?.url ||
+          item.image.formats.medium?.url ||
+          item.image.formats.small?.url ||
+          item.image.formats.thumbnail.url
+        : item.image.url;
+
+      const image = new Image();
+      texture = new THREE.Texture();
+      image.src = imageSrc;
+      image.crossOrigin = 'anonymous';
+      image.onload = () => {
+        loadedAmount += 1;
+        if (loadedAmount >= appProps.creativeItems.length) {
+          appProps.setIsReady(true);
+          createMesh();
+          updateTexture();
+          updateAttributes();
+          setListeners();
+        }
+      };
+    });
   };
+
+  const init = () => {
+    loadImages();
+  };
+
+  const destroy = () => {
+    destroyListeners();
+  };
+
   init();
 
   return {
     container,
     update,
+    destroy,
   };
 };

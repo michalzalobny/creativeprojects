@@ -38,11 +38,12 @@ export const App = memo<AppProps>(props => {
       setIsReady,
       refsToOffset: refsToOffset.current,
       creativeItems: props.creativeItems,
+      setCurrentSlide,
     });
 
     setTimeout(() => {
       setCurrentSlide(1);
-    }, 3000);
+    }, 1500);
 
     init();
     return () => {

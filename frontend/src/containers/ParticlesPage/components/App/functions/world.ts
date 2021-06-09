@@ -9,9 +9,14 @@ interface World {
   appObj: AppObj;
 }
 
+export interface WorldState {
+  currentSlide: number;
+}
+
 interface WorldManager {
   initLights: () => void;
   updateModel: (updateInfo: UpdateInfo) => void;
+  destroyModel: () => void;
 }
 
 export const world = ({ appObj, appProps }: World) => {
@@ -21,6 +26,11 @@ export const world = ({ appObj, appProps }: World) => {
   const worldManager: WorldManager = {
     initLights: null,
     updateModel: null,
+    destroyModel: null,
+  };
+
+  const worldState: WorldState = {
+    currentSlide: 0,
   };
 
   const init = () => {
@@ -30,19 +40,27 @@ export const world = ({ appObj, appProps }: World) => {
     worldManager.initLights = initLights;
     worldManager.initLights();
 
-    const { update: updateModel, container: containerModel } = model({
+    const {
+      destroy: destroyModel,
+      update: updateModel,
+      container: containerModel,
+    } = model({
       appObj,
       appProps,
+      worldState,
     });
     container.add(containerModel);
     worldManager.updateModel = updateModel;
+    worldManager.destroyModel = destroyModel;
   };
 
   const update = (updateInfo: UpdateInfo) => {
     worldManager.updateModel(updateInfo);
   };
 
-  const destroy = () => {};
+  const destroy = () => {
+    worldManager.destroyModel();
+  };
 
   return {
     init,
