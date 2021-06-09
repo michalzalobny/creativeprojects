@@ -28,7 +28,6 @@ export const model = ({
   container.matrixAutoUpdate = false;
 
   let mesh;
-  let texture;
   const geometry = new THREE.PlaneBufferGeometry(
     PLANE_WIDTH,
     PLANE_HEIGHT,
@@ -42,9 +41,12 @@ export const model = ({
     depthWrite: false,
     side: THREE.DoubleSide,
     uniforms: {
-      tMap: { value: texture },
+      tMap: { value: null },
+      tPrev: { value: null },
+      uProgress: { value: 0 },
       uPlaneSizes: { value: new THREE.Vector2(PLANE_WIDTH, PLANE_HEIGHT) },
       uImageSizes: { value: new THREE.Vector2(0, 0) },
+      uPrevImageSizes: { value: new THREE.Vector2(0, 0) },
       uViewportSizes: {
         value: new THREE.Vector2(
           appObj.viewportSizes.width,
@@ -67,7 +69,21 @@ export const model = ({
     container.add(mesh);
   };
 
+  const loadImage = ({ imageSrc, loadFn }) => {
+    const image = new Image();
+    image.src = imageSrc;
+    image.crossOrigin = 'anonymous';
+
+    image.onload = () => {
+      loadFn(image);
+    };
+  };
+
   const updateTexture = () => {
+    material.uniforms.tPrev.value = material.uniforms.tMap.value;
+    material.uniforms.uPrevImageSizes.value =
+      material.uniforms.uImageSizes.value;
+
     const imageEl = appProps.creativeItems[worldState.slideIndex].image;
     const imageSrc = imageEl.formats
       ? imageEl.formats.large?.url ||
@@ -76,12 +92,8 @@ export const model = ({
         imageEl.formats.thumbnail.url
       : imageEl.url;
 
-    const image = new Image();
-    texture = new THREE.Texture();
-    image.src = imageSrc;
-    image.crossOrigin = 'anonymous';
-
-    image.onload = () => {
+    const onImageElLoad = (image: HTMLImageElement) => {
+      const texture = new THREE.Texture();
       texture.image = image;
       texture.needsUpdate = true;
       material.uniforms.tMap.value = texture;
@@ -89,7 +101,9 @@ export const model = ({
         image.naturalWidth,
         image.naturalHeight,
       ];
+      animateProgress(1);
     };
+    loadImage({ imageSrc, loadFn: onImageElLoad });
   };
 
   const updateAttributes = () => {
@@ -107,6 +121,28 @@ export const model = ({
   const handleMouseMove = event => {
     mouse.x = (event.clientX / appObj.viewportSizes.width) * 2 - 1;
     mouse.y = -(event.clientY / appObj.viewportSizes.height) * 2 + 1;
+  };
+
+  let tweenProgress;
+  const animateProgress = destination => {
+    if (tweenProgress) {
+      tweenProgress.stop();
+    }
+
+    if (material.uniforms.uProgress.value > 0) {
+      material.uniforms.uProgress.value = 0;
+    }
+
+    tweenProgress = new TWEEN.Tween({
+      progress: material.uniforms.uProgress.value,
+    })
+      .to({ progress: destination }, 1800)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(obj => {
+        material.uniforms.uProgress.value = obj.progress;
+      });
+
+    tweenProgress.start();
   };
 
   const setListeners = () => {
@@ -160,11 +196,7 @@ export const model = ({
           item.image.formats.thumbnail.url
         : item.image.url;
 
-      const image = new Image();
-      texture = new THREE.Texture();
-      image.src = imageSrc;
-      image.crossOrigin = 'anonymous';
-      image.onload = () => {
+      const onImageLoad = () => {
         loadedAmount += 1;
         if (loadedAmount >= appProps.creativeItems.length) {
           appProps.setIsReady(true);
@@ -174,6 +206,8 @@ export const model = ({
           setListeners();
         }
       };
+
+      loadImage({ imageSrc, loadFn: onImageLoad });
     });
   };
 
