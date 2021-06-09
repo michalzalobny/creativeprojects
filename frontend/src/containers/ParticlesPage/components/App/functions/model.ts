@@ -49,6 +49,7 @@ export const model = ({ appProps, appObj }: Model) => {
       uTime: { value: 0 },
       uScrollY: { value: 0 },
       uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
+      uSpeed: { value: 0 },
       uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
       uPointSize: { value: 2.4 },
     },
@@ -114,6 +115,7 @@ export const model = ({ appProps, appObj }: Model) => {
 
   let position = new THREE.Vector3(0, 0, 0);
   let nextPosition;
+  let speed = 0;
 
   const update = (updateInfo: UpdateInfo) => {
     material.uniforms.uTime.value = updateInfo.time / 1000;
@@ -131,8 +133,12 @@ export const model = ({ appProps, appObj }: Model) => {
       intersects[0].point,
       0.1,
     );
+
+    speed = position.distanceTo(nextPosition);
+
     position = nextPosition;
     material.uniforms.uMouse3D.value = nextPosition;
+    material.uniforms.uSpeed.value = speed;
   };
 
   const init = () => {
