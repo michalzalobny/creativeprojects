@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 188 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 192 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1527,7 +1527,7 @@ VALUES
     1,
     1,
     '2021-06-02 22:36:47',
-    '2021-06-13 22:04:22'
+    '2021-06-13 22:18:12'
   );
 
 # ------------------------------------------------------------
@@ -4184,21 +4184,21 @@ VALUES
     'particleszz.png',
     '',
     '',
-    1910,
-    930,
-    '{\"thumbnail\":{\"name\":\"thumbnail_particleszz.png\",\"hash\":\"thumbnail_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":119,\"size\":57.69,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623619810/thumbnail_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_particleszz.png\",\"hash\":\"large_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":487,\"size\":760.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623619813/large_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"large_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_particleszz.png\",\"hash\":\"medium_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":365,\"size\":461.83,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623619815/medium_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"medium_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_particleszz.png\",\"hash\":\"small_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":243,\"size\":223.42,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623619816/small_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"small_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}}}',
+    2256,
+    1262,
+    '{\"thumbnail\":{\"name\":\"thumbnail_particleszz.png\",\"hash\":\"thumbnail_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":137,\"size\":76.84,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623622678/thumbnail_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_particleszz.png\",\"hash\":\"large_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":559,\"size\":996.47,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623622681/large_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"large_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_particleszz.png\",\"hash\":\"medium_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":420,\"size\":604.51,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623622683/medium_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"medium_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_particleszz.png\",\"hash\":\"small_particleszz_a9a3a00b91\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":280,\"size\":294.91,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1623622687/small_particleszz_a9a3a00b91.png\",\"provider_metadata\":{\"public_id\":\"small_particleszz_a9a3a00b91\",\"resource_type\":\"image\"}}}',
     'particleszz_a9a3a00b91',
     '.png',
     'image/png',
-    399.96,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1623619809/particleszz_a9a3a00b91.png',
+    599.22,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1623622677/particleszz_a9a3a00b91.png',
     NULL,
     'cloudinary',
     '{\"public_id\":\"particleszz_a9a3a00b91\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-06-13 21:30:17',
-    '2021-06-13 21:30:17'
+    '2021-06-13 22:18:08'
   );
 INSERT INTO
   `upload_file` (
@@ -4510,7 +4510,7 @@ INSERT INTO
   )
 VALUES
   (
-    184,
+    188,
     17,
     4,
     'components_page_localized_heads',
@@ -4528,7 +4528,7 @@ INSERT INTO
   )
 VALUES
   (
-    185,
+    189,
     18,
     8,
     'components_creative_component_creative_items',
@@ -4546,7 +4546,7 @@ INSERT INTO
   )
 VALUES
   (
-    186,
+    190,
     15,
     7,
     'components_creative_component_creative_items',
@@ -4564,7 +4564,7 @@ INSERT INTO
   )
 VALUES
   (
-    187,
+    191,
     16,
     9,
     'components_creative_component_creative_items',
