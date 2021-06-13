@@ -10,4 +10,5 @@ export const Wrapper = styled(motion.div)<Props>`
   overflow: hidden;
   user-select: none;
   background: rgb(0, 0, 0);
+  /* cursor: none; */
 `;
