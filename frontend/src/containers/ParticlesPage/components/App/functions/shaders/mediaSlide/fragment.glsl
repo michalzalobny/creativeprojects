@@ -6,7 +6,9 @@ uniform vec2 uPlaneSizes;
 uniform float uProgress;
 uniform sampler2D tMap;
 uniform sampler2D tPrev;
+uniform float uCameraZ;
 
+varying vec3 vPos;
 varying vec2 vUv;
 
 void main() {
@@ -40,6 +42,10 @@ void main() {
 
   vec4 final = mix(ttSecond ,ttMain, uProgress);
 
+
+  // It makes the particles closer to screen invisible
+  float alpha = 1. - abs(vPos.z / uCameraZ);
+
   gl_FragColor.rgb = final.rgb;
-  gl_FragColor.a = strength;
+  gl_FragColor.a = strength * alpha;
 }

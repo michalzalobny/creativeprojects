@@ -1,6 +1,5 @@
 uniform float uTime;
 uniform vec3 uMouse3D;
-uniform float uScrollY;
 uniform float uPixelRatio;
 uniform vec2 uViewportSizes;
 uniform float uPointSize;
@@ -8,16 +7,23 @@ uniform float uSpeed;
 uniform sampler2D uTouch;
 uniform vec2 uTouchSizes;
 uniform vec2 uPlaneSizes;
+uniform float uScrollAnimation;
+uniform float uCameraZ;
+uniform float uScrollY;
 
 attribute float aRandom;
+attribute float aOffset;
 
 varying vec2 vUv;
+varying vec3 vPos;
 
 
 void main(){
     vec3 stablePosition = position;
 
-    
+    //Scroll animation
+    stablePosition.z += (mod(( aRandom + aOffset + uScrollY ) , uCameraZ * 2.  ) - uCameraZ  ) * uScrollAnimation;
+
     // Dynamic texture animation
     vec2 ratio = vec2(
         min((uPlaneSizes.x / uPlaneSizes.y) / (uTouchSizes.x / uTouchSizes.y), 1.0),
@@ -48,6 +54,8 @@ void main(){
     gl_Position = projectedPosition;
     gl_PointSize = uPointSize * uViewportSizes.y * uPixelRatio;
     gl_PointSize *= (1.0/ - viewPosition.z);
+    gl_PointSize *= (1. - uScrollAnimation + 0.5 * uScrollAnimation);
 
     vUv = uv;
+    vPos = stablePosition;
 }

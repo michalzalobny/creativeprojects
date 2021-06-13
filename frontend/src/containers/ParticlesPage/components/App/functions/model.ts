@@ -65,6 +65,9 @@ export const model = ({
       uSpeed: { value: 0 },
       uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
       uPointSize: { value: 2.4 },
+      uScrollAnimation: { value: 0 },
+      uCameraZ: { value: appObj.camera.position.z },
+      uScroll: { value: 0 },
     },
     fragmentShader: fragmentShader,
     vertexShader: vertexShader,
@@ -115,10 +118,13 @@ export const model = ({
   const updateAttributes = () => {
     const count = geometry.attributes.position.count;
     const randomArray = new Float32Array(count);
+    const offsetArray = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      randomArray[i] = getRandBetween(-100, 100);
+      randomArray[i] = getRandBetween(-120, 120);
+      offsetArray[i] = getRandBetween(-1000, 1000);
     }
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randomArray, 1));
+    geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsetArray, 1));
   };
 
   const mouse = new THREE.Vector2();
@@ -151,10 +157,36 @@ export const model = ({
     tweenProgress.start();
   };
 
+  let scrollProgress;
+  let scrollDestination = 0;
+  const animateScroll = destination => {
+    if (scrollProgress) {
+      scrollProgress.stop();
+    }
+
+    if (scrollDestination === 0) {
+      scrollDestination = 1;
+    } else {
+      scrollDestination = 0;
+    }
+
+    scrollProgress = new TWEEN.Tween({
+      progress: material.uniforms.uScrollAnimation.value,
+    })
+      .to({ progress: destination }, 1800)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(obj => {
+        material.uniforms.uScrollAnimation.value = obj.progress;
+      });
+
+    scrollProgress.start();
+  };
+
   const setListeners = () => {
     window.addEventListener('click', () => {
       appProps.paginate(1);
       paginateSlide(1);
+      animateScroll(scrollDestination === 1 ? 0 : 1);
       updateTexture();
     });
     window.addEventListener('mousemove', handleMouseMove);
@@ -213,6 +245,7 @@ export const model = ({
     position = nextPosition;
     material.uniforms.uMouse3D.value = nextPosition;
     material.uniforms.uSpeed.value = speed;
+    material.uniforms.uScroll.value = appObj.scroll.scrollObj.currentY;
   };
 
   const loadImages = () => {
