@@ -89,7 +89,7 @@ export const touchTexture = ({ sizeX, sizeY }: Size) => {
       );
     }
 
-    intensity *= point.force;
+    // intensity *= point.force;
 
     const radius = Math.abs(sizeX * sizeY * 0.002 * touchRadius * intensity);
     const grd = ctx.createRadialGradient(
