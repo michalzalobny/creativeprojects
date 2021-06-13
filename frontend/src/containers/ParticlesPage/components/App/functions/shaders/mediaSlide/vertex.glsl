@@ -36,7 +36,7 @@ void main(){
     vec4 touchTexture = texture2D(uTouch, uv);
     stablePosition.x += touchTexture.r * aRandom* 0.7  * sin(uTime *  aRandom * 0.00002 * aOffset);
     stablePosition.y += touchTexture.r * aRandom* 0.7  * cos(uTime *  aRandom * 0.00002 * aOffset);
-    stablePosition.z += touchTexture.r * aRandom* 0.7  * cos(uTime *  aRandom * 0.00002 * aOffset);
+    stablePosition.z += touchTexture.r * aRandom* 0.7  * cos(uTime *  aRandom * 0.00002 * aOffset) * (1.- uScrollAnimation);
 
     // Cursor animation
     float dist = distance(position.xy, uMouse3D.xy);
@@ -44,7 +44,7 @@ void main(){
     // stablePosition.x += 30.*sin(uTime *  aRandom * 0.03) * area * (uSpeed * 0.001 * aRandom + 0.6 );
     // stablePosition.y += 30.*cos(uTime *  aRandom * 0.03) * area;
     // stablePosition.z += 40.*cos(uTime *  aRandom * 0.03) * area;
-    stablePosition.z +=dist * 0.5;
+    stablePosition.z +=dist * 0.5 * (1.- uScrollAnimation);
     
     vec4 modelPosition = modelMatrix * vec4(stablePosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;

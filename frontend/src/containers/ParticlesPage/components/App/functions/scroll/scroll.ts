@@ -4,7 +4,7 @@ import { MOMENTUM_DAMPING } from './constants';
 import { applyScroll } from './functions/applyScroll';
 
 const SCROLL_SPEED_X = 0.004;
-const SCROLL_SPEED_Y = 0;
+const SCROLL_SPEED_Y = 2;
 export interface ScrollObj {
   ease: number;
   currentX: number;
@@ -92,6 +92,7 @@ export const scroll = (
 
   const update = (time: number) => {
     scrollObj.targetX += scrollObj.speedX;
+    scrollObj.targetY += scrollObj.speedY;
 
     if (scrollObj.currentX >= scrollObj.lastX) {
       scrollObj.directionX = 1;
