@@ -6,6 +6,7 @@ import vertexShader from './shaders/mediaSlide/vertex.glsl';
 import fragmentShader from './shaders/mediaSlide/fragment.glsl';
 import { getRandBetween } from './utils/getRandBetween';
 import { WorldState } from './world';
+import { touchTexture } from './touchTexture';
 
 interface Model {
   appObj: AppObj;
@@ -28,6 +29,7 @@ export const model = ({
   container.matrixAutoUpdate = false;
 
   let mesh;
+  let myTouchTexture;
   const geometry = new THREE.PlaneBufferGeometry(
     PLANE_WIDTH,
     PLANE_HEIGHT,
@@ -52,6 +54,10 @@ export const model = ({
           appObj.viewportSizes.width,
           appObj.viewportSizes.height,
         ),
+      },
+      uTouch: { value: null },
+      uTouchSizes: {
+        value: new THREE.Vector2(0, 0),
       },
       uTime: { value: 0 },
       uScrollY: { value: 0 },
@@ -162,22 +168,45 @@ export const model = ({
   let nextPosition;
   let speed = 0;
 
+  const touchTexturePlane = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(PLANE_WIDTH, PLANE_HEIGHT),
+    new THREE.MeshBasicMaterial(),
+  );
+
+  const raycasterPlane = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(1000, 1000),
+    new THREE.MeshBasicMaterial(),
+  );
+
   const update = (updateInfo: UpdateInfo) => {
     material.uniforms.uTime.value = updateInfo.time / 1000;
     material.uniforms.uScrollY.value = appObj.scroll.scrollObj.currentY;
     //Set mouse raycaster
     raycaster.setFromCamera(mouse, appObj.camera);
-    const test = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2000, 2000),
-      new THREE.MeshBasicMaterial(),
-    );
-    const intersects = raycaster.intersectObjects([test]);
 
-    nextPosition = new THREE.Vector3().lerpVectors(
-      position,
-      intersects[0].point,
-      0.1,
-    );
+    //Detect touch raycaster (plane is the same size as the image)
+    const intersectsTouchTexture = raycaster.intersectObjects([
+      touchTexturePlane,
+    ]);
+
+    if (intersectsTouchTexture[0]) {
+      if (myTouchTexture) {
+        myTouchTexture.addTouch(intersectsTouchTexture[0].uv);
+      }
+    }
+
+    //Detect mousemove for the whole scene
+    const intersects = raycaster.intersectObjects([raycasterPlane]);
+
+    if (intersects[0]) {
+      nextPosition = new THREE.Vector3().lerpVectors(
+        position,
+        intersects[0].point,
+        0.1,
+      );
+    }
+
+    myTouchTexture.update(updateInfo);
 
     speed = position.distanceTo(nextPosition);
 
@@ -213,6 +242,9 @@ export const model = ({
 
   const init = () => {
     loadImages();
+    myTouchTexture = touchTexture({ sizeX: PLANE_WIDTH, sizeY: PLANE_HEIGHT });
+    // myTouchTexture.initTexture();
+    material.uniforms.uTouch.value = myTouchTexture.texture;
   };
 
   const destroy = () => {
