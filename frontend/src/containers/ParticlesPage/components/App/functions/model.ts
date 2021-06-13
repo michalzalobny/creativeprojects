@@ -148,7 +148,7 @@ export const model = ({
     tweenProgress = new TWEEN.Tween({
       progress: material.uniforms.uProgress.value,
     })
-      .to({ progress: destination }, 1800)
+      .to({ progress: destination }, 800)
       .easing(TWEEN.Easing.Quadratic.Out)
       .onUpdate(obj => {
         material.uniforms.uProgress.value = obj.progress;
@@ -173,7 +173,7 @@ export const model = ({
     scrollProgress = new TWEEN.Tween({
       progress: material.uniforms.uScrollAnimation.value,
     })
-      .to({ progress: destination }, 1800)
+      .to({ progress: destination }, 800)
       .easing(TWEEN.Easing.Quadratic.Out)
       .onUpdate(obj => {
         material.uniforms.uScrollAnimation.value = obj.progress;
@@ -182,12 +182,19 @@ export const model = ({
     scrollProgress.start();
   };
 
+  const changePhoto = (direction: number) => {
+    appProps.paginate(direction);
+    paginateSlide(direction);
+    updateTexture();
+  };
+
   const setListeners = () => {
     window.addEventListener('click', () => {
-      appProps.paginate(1);
-      paginateSlide(1);
+      if (scrollDestination === 1) {
+        changePhoto(1);
+      }
+
       animateScroll(scrollDestination === 1 ? 0 : 1);
-      updateTexture();
     });
     window.addEventListener('mousemove', handleMouseMove);
   };
