@@ -188,18 +188,21 @@ export const model = ({
     updateTexture();
   };
 
-  const setListeners = () => {
-    window.addEventListener('click', () => {
-      if (scrollDestination === 1) {
-        changePhoto(1);
-      }
+  const handleClick = () => {
+    if (scrollDestination === 1) {
+      changePhoto(1);
+    }
 
-      animateScroll(scrollDestination === 1 ? 0 : 1);
-    });
+    animateScroll(scrollDestination === 1 ? 0 : 1);
+  };
+
+  const setListeners = () => {
+    window.addEventListener('click', handleClick);
     window.addEventListener('mousemove', handleMouseMove);
   };
 
   const destroyListeners = () => {
+    window.removeEventListener('click', handleClick);
     window.removeEventListener('mousemove', handleMouseMove);
   };
 
