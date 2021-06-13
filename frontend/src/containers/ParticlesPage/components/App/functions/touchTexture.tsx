@@ -10,7 +10,7 @@ interface Size {
 
 export const touchTexture = ({ sizeX, sizeY }: Size) => {
   const maxAge = 120;
-  const touchRadius = 0.1;
+  const touchRadius = 0.12;
   const trail = [];
 
   let canvas;
@@ -65,7 +65,7 @@ export const touchTexture = ({ sizeX, sizeY }: Size) => {
       const dx = last.x - point.x;
       const dy = last.y - point.y;
       const dd = dx * dx + dy * dy;
-      force = Math.min(dd * 2000, 1);
+      force = Math.min(dd * 8000, 1);
     }
 
     trail.push({ x: point.x, y: point.y, age: 0, force });
@@ -89,7 +89,7 @@ export const touchTexture = ({ sizeX, sizeY }: Size) => {
       );
     }
 
-    // intensity *= point.force;
+    intensity *= point.force;
 
     const radius = Math.abs(sizeX * sizeY * 0.002 * touchRadius * intensity);
     const grd = ctx.createRadialGradient(
