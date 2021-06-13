@@ -58,7 +58,7 @@ void main(){
     gl_Position = projectedPosition;
     gl_PointSize = uPointSize * uViewportSizes.y * uPixelRatio;
     gl_PointSize *= (1.0/ - viewPosition.z);
-    gl_PointSize *= (1. - uScrollAnimation + 0.5 * uScrollAnimation);
+    gl_PointSize *= (1. - uScrollAnimation + 0.55 * uScrollAnimation);
 
     vUv = uv;
     vPos = stablePosition;
