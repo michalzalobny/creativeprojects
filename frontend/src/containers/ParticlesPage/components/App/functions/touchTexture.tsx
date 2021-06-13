@@ -9,7 +9,7 @@ interface Size {
 }
 
 export const touchTexture = ({ sizeX, sizeY }: Size) => {
-  const maxAge = 80;
+  const maxAge = 150;
   const touchRadius = 0.12;
   const trail = [];
 
