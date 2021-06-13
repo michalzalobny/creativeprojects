@@ -34,9 +34,13 @@ void main(){
         uv.y * ratio.y + (1.0 - ratio.y) * 0.5
     );
     vec4 touchTexture = texture2D(uTouch, uv);
-    stablePosition.x += touchTexture.r * aRandom* 0.7  * sin(uTime *  aRandom * 0.00002 * aOffset);
-    stablePosition.y += touchTexture.r * aRandom* 0.7  * cos(uTime *  aRandom * 0.00002 * aOffset);
+    stablePosition.x += touchTexture.r * aRandom* 0.7  * sin(uTime *  aRandom * 0.00002 * aOffset) * (1.- uScrollAnimation);
+    stablePosition.y += touchTexture.r * aRandom* 0.7  * cos(uTime *  aRandom * 0.00002 * aOffset) * (1.- uScrollAnimation);
     stablePosition.z += touchTexture.r * aRandom* 0.7  * cos(uTime *  aRandom * 0.00002 * aOffset) * (1.- uScrollAnimation);
+    
+    //Parallax mouse animation
+    stablePosition.x -= uMouse3D.x * 0.15 * uScrollAnimation;
+    stablePosition.y -= uMouse3D.y * 0.15 * uScrollAnimation;
 
     // Cursor animation
     float dist = distance(position.xy, uMouse3D.xy);
@@ -54,7 +58,7 @@ void main(){
     gl_Position = projectedPosition;
     gl_PointSize = uPointSize * uViewportSizes.y * uPixelRatio;
     gl_PointSize *= (1.0/ - viewPosition.z);
-    gl_PointSize *= (1. - uScrollAnimation + 0.8 * uScrollAnimation);
+    gl_PointSize *= (1. - uScrollAnimation + 0.5 * uScrollAnimation);
 
     vUv = uv;
     vPos = stablePosition;
