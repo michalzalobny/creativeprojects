@@ -8,6 +8,7 @@ import { getElHeight, getElWidth } from 'utils/functions/getElementSize';
 
 import { world } from './world';
 import { scroll, ScrollReturn } from './scroll/scroll';
+import { MouseMoveReturn, mouseMove } from './mouseMove/mouseMove';
 
 export interface UpdateInfo {
   slowDownFactor: number;
@@ -31,6 +32,7 @@ interface Sizes {
 }
 
 export interface AppObj {
+  mouseMove: MouseMoveReturn;
   scroll: ScrollReturn;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
@@ -61,6 +63,7 @@ const DT_FPS = 1000 / DEFALUT_FPS;
 
 export const app = (appProps: App) => {
   const appObj: AppObj = {
+    mouseMove: null,
     scroll: null,
     camera: null,
     scene: null,
@@ -174,6 +177,7 @@ export const app = (appProps: App) => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('visibilitychange', onVisibilityChange);
     appObj.scroll.destroy();
+    appObj.mouseMove.destroy();
   };
 
   const resumeAppFrame = () => {
@@ -206,6 +210,7 @@ export const app = (appProps: App) => {
 
     TWEEN.update(time);
     appObj.scroll.update(time);
+    appObj.mouseMove.update();
     appObj.renderer.render(appObj.scene, appObj.camera);
   };
 
@@ -231,6 +236,9 @@ export const app = (appProps: App) => {
 
     appObj.scroll = scroll(appObj.contentSizes, appObj.viewportSizes);
     appObj.scroll.init();
+
+    appObj.mouseMove = mouseMove({ viewportSizes: appObj.viewportSizes });
+    appObj.mouseMove.init();
 
     const {
       init: initWorld,

@@ -62,7 +62,6 @@ export const model = ({
       uTime: { value: 0 },
       uScrollY: { value: 0 },
       uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
-      uSpeed: { value: 0 },
       uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
       uPointSize: { value: 2.2 },
       uScrollAnimation: { value: 0 },
@@ -127,13 +126,8 @@ export const model = ({
     geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsetArray, 1));
   };
 
-  const mouse = new THREE.Vector2();
   const raycaster = new THREE.Raycaster();
-
-  const handleMouseMove = event => {
-    mouse.x = (event.clientX / appObj.viewportSizes.width) * 2 - 1;
-    mouse.y = -(event.clientY / appObj.viewportSizes.height) * 2 + 1;
-  };
+  const raycasterT = new THREE.Raycaster();
 
   let tweenProgress;
   const animateProgress = destination => {
@@ -198,17 +192,14 @@ export const model = ({
 
   const setListeners = () => {
     window.addEventListener('click', handleClick);
-    window.addEventListener('mousemove', handleMouseMove);
   };
 
   const destroyListeners = () => {
     window.removeEventListener('click', handleClick);
-    window.removeEventListener('mousemove', handleMouseMove);
   };
 
   let position = new THREE.Vector3(0, 0, 0);
   let nextPosition;
-  let speed = 0;
 
   const touchTexturePlane = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(PLANE_WIDTH, PLANE_HEIGHT),
@@ -224,10 +215,18 @@ export const model = ({
     material.uniforms.uTime.value = updateInfo.time / 1000;
     material.uniforms.uScrollY.value = appObj.scroll.scrollObj.currentY;
     //Set mouse raycaster
-    raycaster.setFromCamera(mouse, appObj.camera);
+    raycaster.setFromCamera(
+      appObj.mouseMove.mouseMoveObj.mouse3DLerp,
+      appObj.camera,
+    );
+
+    raycasterT.setFromCamera(
+      appObj.mouseMove.mouseMoveObj.mouse3D,
+      appObj.camera,
+    );
 
     //Detect touch raycaster (plane is the same size as the image)
-    const intersectsTouchTexture = raycaster.intersectObjects([
+    const intersectsTouchTexture = raycasterT.intersectObjects([
       touchTexturePlane,
     ]);
 
@@ -240,21 +239,14 @@ export const model = ({
     //Detect mousemove for the whole scene
     const intersects = raycaster.intersectObjects([raycasterPlane]);
 
-    if (intersects[0]) {
-      nextPosition = new THREE.Vector3().lerpVectors(
-        position,
-        intersects[0].point,
-        0.1,
-      );
-    }
-
     myTouchTexture.update(updateInfo);
 
-    speed = position.distanceTo(nextPosition);
-
     position = nextPosition;
-    material.uniforms.uMouse3D.value = nextPosition;
-    material.uniforms.uSpeed.value = speed;
+
+    if (intersects[0]) {
+      material.uniforms.uMouse3D.value = intersects[0].point;
+    }
+
     material.uniforms.uScroll.value = appObj.scroll.scrollObj.currentY;
   };
 
