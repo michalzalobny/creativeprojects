@@ -15,10 +15,6 @@ interface Model {
   paginateSlide: (newVal: number) => void;
 }
 
-const PLANE_WIDTH = 500;
-const PLANE_HEIGHT = 300;
-const PARTICLE_DENSITY = 0.4;
-
 export const model = ({
   paginateSlide,
   worldState,
@@ -28,53 +24,89 @@ export const model = ({
   const container = new THREE.Object3D();
   container.matrixAutoUpdate = false;
 
-  let mesh;
-  let myTouchTexture;
-  const geometry = new THREE.PlaneBufferGeometry(
-    PLANE_WIDTH,
-    PLANE_HEIGHT,
-    PLANE_WIDTH * PARTICLE_DENSITY,
-    PLANE_HEIGHT * PARTICLE_DENSITY,
-  );
-
-  const material = new THREE.ShaderMaterial({
-    transparent: true,
-    depthTest: false,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-    uniforms: {
-      tMap: { value: null },
-      tPrev: { value: null },
-      uProgress: { value: 0 },
-      uPlaneSizes: { value: new THREE.Vector2(PLANE_WIDTH, PLANE_HEIGHT) },
-      uImageSizes: { value: new THREE.Vector2(0, 0) },
-      uPrevImageSizes: { value: new THREE.Vector2(0, 0) },
-      uViewportSizes: {
-        value: new THREE.Vector2(
-          appObj.viewportSizes.width,
-          appObj.viewportSizes.height,
-        ),
-      },
-      uTouch: { value: null },
-      uTouchSizes: {
-        value: new THREE.Vector2(0, 0),
-      },
-      uTime: { value: 0 },
-      uScrollY: { value: 0 },
-      uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
-      uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-      uPointSize: { value: 2.2 },
-      uScrollAnimation: { value: 0 },
-      uCameraZ: { value: appObj.camera.position.z },
-      uScroll: { value: 0 },
+  const planeSizes = {
+    PLANE_WIDTH: 1,
+    PLANE_HEIGHT: 1,
+    get PARTICLE_DENSITY() {
+      return (this.PLANE_HEIGHT / this.PLANE_HEIGHT) * 0.42;
     },
-    fragmentShader: fragmentShader,
-    vertexShader: vertexShader,
-  });
+  };
+
+  let mesh = null;
+  let myTouchTexture = null;
+  let touchTexturePlane: THREE.Mesh;
+  let geometry: THREE.PlaneBufferGeometry = null;
+  let material = null;
 
   const createMesh = () => {
+    if (mesh) {
+      geometry.dispose();
+      material.dispose();
+      appObj.scene.remove(mesh);
+    }
+
+    material = new THREE.ShaderMaterial({
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      uniforms: {
+        tMap: { value: null },
+        tPrev: { value: null },
+        uProgress: { value: 0 },
+        uPlaneSizes: {
+          value: new THREE.Vector2(
+            planeSizes.PLANE_WIDTH,
+            planeSizes.PLANE_HEIGHT,
+          ),
+        },
+        uImageSizes: { value: new THREE.Vector2(0, 0) },
+        uPrevImageSizes: { value: new THREE.Vector2(0, 0) },
+        uViewportSizes: {
+          value: new THREE.Vector2(
+            appObj.viewportSizes.width,
+            appObj.viewportSizes.height,
+          ),
+        },
+        uTouch: { value: null },
+        uTouchSizes: {
+          value: new THREE.Vector2(0, 0),
+        },
+        uTime: { value: 0 },
+        uScrollY: { value: 0 },
+        uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uPointSize: { value: 2.2 },
+        uScrollAnimation: { value: 0 },
+        uCameraZ: { value: appObj.camera.position.z },
+        uScroll: { value: 0 },
+      },
+      fragmentShader: fragmentShader,
+      vertexShader: vertexShader,
+    });
+
+    geometry = new THREE.PlaneBufferGeometry(
+      planeSizes.PLANE_WIDTH,
+      planeSizes.PLANE_HEIGHT,
+      planeSizes.PLANE_WIDTH * planeSizes.PARTICLE_DENSITY,
+      planeSizes.PLANE_HEIGHT * planeSizes.PARTICLE_DENSITY,
+    );
+
     mesh = new THREE.Points(geometry, material);
-    container.add(mesh);
+
+    touchTexturePlane = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(
+        planeSizes.PLANE_WIDTH,
+        planeSizes.PLANE_HEIGHT,
+      ),
+      new THREE.MeshBasicMaterial(),
+    );
+
+    appObj.scene.add(mesh);
+
+    updateTexture();
+    updateAttributes();
+    setListeners();
   };
 
   const loadImage = ({ imageSrc, loadFn }) => {
@@ -190,21 +222,45 @@ export const model = ({
     animateScroll(scrollDestination === 1 ? 0 : 1);
   };
 
+  const onResize = () => {
+    if (appObj.viewportSizes.width / appObj.viewportSizes.height > 1) {
+      planeSizes.PLANE_WIDTH = 0.27 * appObj.viewportSizes.width;
+      planeSizes.PLANE_HEIGHT = 0.31 * appObj.viewportSizes.height;
+    } else {
+      planeSizes.PLANE_WIDTH = 0.5 * appObj.viewportSizes.width;
+      planeSizes.PLANE_HEIGHT = 0.5 * appObj.viewportSizes.height;
+    }
+
+    createMesh();
+
+    material.uniforms.uPlaneSizes.value = new THREE.Vector2(
+      planeSizes.PLANE_WIDTH,
+      planeSizes.PLANE_HEIGHT,
+    );
+
+    material.uniforms.uViewportSizes.value = new THREE.Vector2(
+      appObj.viewportSizes.width,
+      appObj.viewportSizes.height,
+    );
+
+    myTouchTexture = touchTexture({
+      sizeX: planeSizes.PLANE_WIDTH,
+      sizeY: planeSizes.PLANE_HEIGHT,
+    });
+
+    // myTouchTexture.initTexture();
+    material.uniforms.uTouch.value = myTouchTexture.texture;
+  };
+
   const setListeners = () => {
     window.addEventListener('click', handleClick);
+    window.addEventListener('resize', onResize);
   };
 
   const destroyListeners = () => {
     window.removeEventListener('click', handleClick);
+    window.removeEventListener('resize', onResize);
   };
-
-  let position = new THREE.Vector3(0, 0, 0);
-  let nextPosition;
-
-  const touchTexturePlane = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(PLANE_WIDTH, PLANE_HEIGHT),
-    new THREE.MeshBasicMaterial(),
-  );
 
   const raycasterPlane = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(1000, 1000),
@@ -212,6 +268,10 @@ export const model = ({
   );
 
   const update = (updateInfo: UpdateInfo) => {
+    if (!mesh && !material && !geometry) {
+      return;
+    }
+
     material.uniforms.uTime.value = updateInfo.time / 1000;
     material.uniforms.uScrollY.value = appObj.scroll.scrollObj.currentY;
     //Set mouse raycaster
@@ -226,22 +286,23 @@ export const model = ({
     );
 
     //Detect touch raycaster (plane is the same size as the image)
-    const intersectsTouchTexture = raycasterT.intersectObjects([
-      touchTexturePlane,
-    ]);
+    let intersectsTouchTexture;
+    if (touchTexturePlane) {
+      intersectsTouchTexture = raycasterT.intersectObjects([touchTexturePlane]);
 
-    if (intersectsTouchTexture[0]) {
-      if (myTouchTexture) {
-        myTouchTexture.addTouch(intersectsTouchTexture[0].uv);
+      if (intersectsTouchTexture[0]) {
+        if (myTouchTexture) {
+          myTouchTexture.addTouch(intersectsTouchTexture[0].uv);
+        }
       }
     }
 
     //Detect mousemove for the whole scene
     const intersects = raycaster.intersectObjects([raycasterPlane]);
 
-    myTouchTexture.update(updateInfo);
-
-    position = nextPosition;
+    if (myTouchTexture) {
+      myTouchTexture.update(updateInfo);
+    }
 
     if (intersects[0]) {
       material.uniforms.uMouse3D.value = intersects[0].point;
@@ -264,10 +325,7 @@ export const model = ({
         loadedAmount += 1;
         if (loadedAmount >= appProps.creativeItems.length) {
           appProps.setIsReady(true);
-          createMesh();
-          updateTexture();
-          updateAttributes();
-          setListeners();
+          onResize();
         }
       };
 
@@ -277,9 +335,6 @@ export const model = ({
 
   const init = () => {
     loadImages();
-    myTouchTexture = touchTexture({ sizeX: PLANE_WIDTH, sizeY: PLANE_HEIGHT });
-    // myTouchTexture.initTexture();
-    material.uniforms.uTouch.value = myTouchTexture.texture;
   };
 
   const destroy = () => {
