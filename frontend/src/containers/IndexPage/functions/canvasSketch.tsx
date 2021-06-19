@@ -50,8 +50,8 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
     const radius = Math.random() * 30 + 5;
     let x = Math.random() * (appObj.viewportSizes.width - radius * 2) + radius;
     let y = Math.random() * (appObj.viewportSizes.height - radius * 2) + radius;
-    let dx = Math.random() + 0.2;
-    let dy = Math.random() + 0.2;
+    let dx = Math.random() + 0.2 * (Math.random() - 0.5);
+    let dy = Math.random() + 0.2 * (Math.random() - 0.5);
 
     const draw = () => {
       ctx.beginPath();
