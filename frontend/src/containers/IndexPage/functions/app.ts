@@ -108,6 +108,7 @@ export const app = (appProps: App) => {
     appObj.lastFrameTime = time;
     TWEEN.update(time);
     appObj.mouseMove.update();
+    appObj.canvasSketch.update({ delta, slowDownFactor, time });
   };
 
   const stopAppFrame = () => {
