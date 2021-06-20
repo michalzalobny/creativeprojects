@@ -15,6 +15,7 @@ export interface MouseMoveObj {
   mouse3D: Mouse;
   mouse3DLerp: Mouse;
   isTouching: boolean;
+  isInit: boolean;
   ease: number;
 }
 
@@ -46,6 +47,7 @@ export const mouseMove = ({ viewportSizes }: MouseMove): MouseMoveReturn => {
     mouse3D: { x: 0, y: 0 },
     mouse3DLerp: { x: 0, y: 0 },
     isTouching: false,
+    isInit: false,
     ease: 0.09,
   };
 

@@ -13,6 +13,7 @@ export const handleEvents = ({
   mouseMoveObj,
 }: HandleEvents): HandleEventsReturn => {
   const onTouchDown = (event: TouchEvent & PointerEvent) => {
+    mouseMoveObj.isInit = true;
     mouseMoveObj.isTouching = true;
     mouseMoveObj.mouseLast.x = event.touches
       ? event.touches[0].clientX
@@ -23,6 +24,7 @@ export const handleEvents = ({
   };
 
   const onTouchMove = (event: TouchEvent & PointerEvent) => {
+    mouseMoveObj.isInit = true;
     const touchX = event.touches ? event.touches[0].clientX : event.clientX;
     const touchY = event.touches ? event.touches[0].clientY : event.clientY;
 
