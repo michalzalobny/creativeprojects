@@ -80,6 +80,7 @@ export const app = (appProps: App) => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('visibilitychange', onVisibilityChange);
     appObj.mouseMove.destroy();
+    appObj.canvasSketch.destroy();
   };
 
   const resumeAppFrame = () => {

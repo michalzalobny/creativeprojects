@@ -1,5 +1,3 @@
-import * as THREE from 'three';
-
 import { handleEvents } from './functions/handleEvents';
 import { lerp } from './utils/lerp';
 
@@ -10,16 +8,12 @@ interface Mouse {
   y: number;
 }
 
-interface Strength {
-  current: number;
-  target: number;
-}
-
 export interface MouseMoveObj {
   mouse: Mouse;
+  mouseLerp: Mouse;
   mouseLast: Mouse;
-  mouse3D: THREE.Vector2;
-  mouse3DLerp: THREE.Vector2;
+  mouse3D: Mouse;
+  mouse3DLerp: Mouse;
   isTouching: boolean;
   ease: number;
 }
@@ -47,9 +41,10 @@ interface MouseMove {
 export const mouseMove = ({ viewportSizes }: MouseMove): MouseMoveReturn => {
   const mouseMoveObj: MouseMoveObj = {
     mouse: { x: viewportSizes.width / 2, y: viewportSizes.height / 2 },
+    mouseLerp: { x: viewportSizes.width / 2, y: viewportSizes.height / 2 },
     mouseLast: { x: 0, y: 0 },
-    mouse3D: new THREE.Vector2(0, 0),
-    mouse3DLerp: new THREE.Vector2(0, 0),
+    mouse3D: { x: 0, y: 0 },
+    mouse3DLerp: { x: 0, y: 0 },
     isTouching: false,
     ease: 0.09,
   };
@@ -68,27 +63,27 @@ export const mouseMove = ({ viewportSizes }: MouseMove): MouseMoveReturn => {
   };
 
   const update = () => {
-    mouseMoveObj.mouseLast.x = mouseMoveObj.mouse.x;
-    mouseMoveObj.mouseLast.y = mouseMoveObj.mouse.y;
+    const {
+      ease,
+      mouse,
+      mouse3D,
+      mouse3DLerp,
+      mouseLast,
+      mouseLerp,
+    } = mouseMoveObj;
+
+    mouseLast.x = mouse.x;
+    mouseLast.y = mouse.y;
+
+    mouseLerp.x = lerp(mouseLerp.x, mouse.x, ease);
+    mouseLerp.y = lerp(mouseLerp.y, mouse.y, ease);
 
     //Update mouse3Ds
-    mouseMoveObj.mouse3D.x =
-      (mouseMoveObj.mouse.x / viewportSizes.width) * 2 - 1;
+    mouse3D.x = (mouse.x / viewportSizes.width) * 2 - 1;
+    mouse3D.y = -(mouse.y / viewportSizes.height) * 2 + 1;
 
-    mouseMoveObj.mouse3D.y =
-      -(mouseMoveObj.mouse.y / viewportSizes.height) * 2 + 1;
-
-    mouseMoveObj.mouse3DLerp.x = lerp(
-      mouseMoveObj.mouse3DLerp.x,
-      mouseMoveObj.mouse3D.x,
-      mouseMoveObj.ease,
-    );
-
-    mouseMoveObj.mouse3DLerp.y = lerp(
-      mouseMoveObj.mouse3DLerp.y,
-      mouseMoveObj.mouse3D.y,
-      mouseMoveObj.ease,
-    );
+    mouse3DLerp.x = (mouseLerp.x / viewportSizes.width) * 2 - 1;
+    mouse3DLerp.y = -(mouseLerp.y / viewportSizes.height) * 2 + 1;
   };
 
   return {
