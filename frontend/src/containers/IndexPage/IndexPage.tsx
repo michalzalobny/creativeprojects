@@ -14,6 +14,7 @@ export default function IndexPage(props: IndexPageProps) {
       <Head {...pageData.head} />
       <Wrapper>
         <Link href={'/bubbles'}>Bubbles</Link>
+        <Link href={'/motion-circle'}>Motion circle</Link>
       </Wrapper>
     </>
   );
