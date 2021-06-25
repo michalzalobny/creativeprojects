@@ -10,64 +10,41 @@ export interface CanvasSketchReturn {
   destroy: () => void;
 }
 
-const MAX_RADIUS = 90;
-const MOUSE_THRESHOLD = 100;
-
 export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
-  let circles = [];
-  const colorArray = ['#ffaa33', '#99ffaa', '#4411aa', '#ff1100'];
+  let particles = [];
 
-  const circle = () => {
+  const colors = ['#d448c8', '#E8686A', '#FFC71A'];
+
+  const particle = (x, y, radius, color) => {
     const { ctx } = appObj;
 
-    let radius = getRandBetween(1, 8);
-    const minRadius = radius;
-    let x = Math.random() * (appObj.viewportSizes.width - radius * 2) + radius;
-    let y = Math.random() * (appObj.viewportSizes.height - radius * 2) + radius;
-    let dx = (Math.random() + 0.2) * (Math.random() - 0.5);
-    let dy = (Math.random() + 0.2) * (Math.random() - 0.5);
+    let radians = Math.random() * Math.PI * 2;
+    const velocity = 0.05;
+    let xCopy = x;
+    let yCopy = y;
 
-    const color = colorArray[getRandBetween(0, colorArray.length)];
-
-    const draw = () => {
+    const draw = lastPoint => {
       ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2, false);
-
-      ctx.fillStyle = color;
-      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = radius;
+      ctx.moveTo(lastPoint.x, lastPoint.y);
+      ctx.lineTo(xCopy, yCopy);
+      ctx.stroke();
+      ctx.closePath();
     };
 
+    const randomValue = getRandBetween(50, 120);
+
     const update = () => {
-      draw();
-      if (x + radius >= appObj.viewportSizes.width || x - radius < 0) {
-        dx = -dx;
-      }
+      const lastPoint = { x: xCopy, y: yCopy };
 
-      if (y + radius >= appObj.viewportSizes.height || y - radius < 0) {
-        dy = -dy;
-      }
+      const { x: mouseX, y: mouseY } = appObj.mouseMove.mouseMoveObj.mouseLerp;
 
-      x += 3 * dx;
-      y += 2 * dy;
+      radians += velocity;
+      xCopy = mouseX + Math.cos(radians) * randomValue;
+      yCopy = mouseY + Math.sin(radians) * randomValue;
 
-      //interactivity
-
-      const mouseX = appObj.mouseMove.mouseMoveObj.mouse.x;
-      const mouseY = appObj.mouseMove.mouseMoveObj.mouse.y;
-
-      if (
-        appObj.mouseMove.mouseMoveObj.isInit &&
-        mouseX - x < MOUSE_THRESHOLD &&
-        mouseX - x > -MOUSE_THRESHOLD &&
-        mouseY - y < MOUSE_THRESHOLD &&
-        mouseY - y > -MOUSE_THRESHOLD
-      ) {
-        if (radius < MAX_RADIUS) {
-          radius += 1;
-        }
-      } else if (radius > minRadius) {
-        radius -= 1;
-      }
+      draw(lastPoint);
     };
 
     return {
@@ -77,36 +54,48 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
 
   const update = (updateInfo: UpdateInfo) => {
     clear();
-    circles.forEach(circle => {
-      circle.update();
+    particles.forEach(particle => {
+      particle.update();
     });
   };
 
   const clear = () => {
     const { ctx } = appObj;
-    ctx.clearRect(
-      0,
-      0,
-      appObj.viewportSizes.width,
-      appObj.viewportSizes.height,
-    );
+    // ctx.clearRect(
+    //   0,
+    //   0,
+    //   appObj.viewportSizes.width,
+    //   appObj.viewportSizes.height,
+    // );
+
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    ctx.fillRect(0, 0, appObj.viewportSizes.width, appObj.viewportSizes.height);
   };
 
-  const setCircles = () => {
-    circles = [];
+  const setParticles = () => {
+    particles = [];
 
-    for (let i = 0; i < 800; i++) {
-      circles.push(circle());
+    for (let i = 0; i < 50; i++) {
+      const radius = getRandBetween(1, 3);
+      const randomColor = getRandBetween(0, 2);
+      particles.push(
+        particle(
+          appObj.viewportSizes.width / 2,
+          appObj.viewportSizes.height / 2,
+          radius,
+          colors[randomColor],
+        ),
+      );
     }
   };
 
   const init = () => {
     addEventListeners();
-    setCircles();
+    setParticles();
   };
 
   const onResize = () => {
-    setCircles();
+    setParticles();
   };
 
   const addEventListeners = () => {
