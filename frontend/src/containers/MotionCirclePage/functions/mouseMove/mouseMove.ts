@@ -14,6 +14,7 @@ export interface MouseMoveObj {
   mouseLast: Mouse;
   mouse3D: Mouse;
   mouse3DLerp: Mouse;
+  strengthLerp: number;
   isTouching: boolean;
   isInit: boolean;
   ease: number;
@@ -46,6 +47,7 @@ export const mouseMove = ({ viewportSizes }: MouseMove): MouseMoveReturn => {
     mouseLast: { x: 0, y: 0 },
     mouse3D: { x: 0, y: 0 },
     mouse3DLerp: { x: 0, y: 0 },
+    strengthLerp: 0,
     isTouching: false,
     isInit: false,
     ease: 0.09,
@@ -79,6 +81,11 @@ export const mouseMove = ({ viewportSizes }: MouseMove): MouseMoveReturn => {
 
     mouseLerp.x = lerp(mouseLerp.x, mouse.x, ease);
     mouseLerp.y = lerp(mouseLerp.y, mouse.y, ease);
+
+    const deltaX = mouseLerp.x - mouse.x;
+    const deltaY = mouseLerp.y - mouse.y;
+
+    mouseMoveObj.strengthLerp = deltaX * deltaX + deltaY * deltaY;
 
     //Update mouse3Ds
     mouse3D.x = (mouse.x / viewportSizes.width) * 2 - 1;
