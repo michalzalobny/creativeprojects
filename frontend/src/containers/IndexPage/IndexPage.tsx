@@ -5,6 +5,7 @@ import { Head } from 'utils/seo/Head';
 
 import { IndexPageProps } from './data';
 import { Wrapper } from './styled/Wrapper';
+import { LinkWrapper } from './styled/LinkWrapper';
 
 export default function IndexPage(props: IndexPageProps) {
   const { pageData } = props;
@@ -13,8 +14,15 @@ export default function IndexPage(props: IndexPageProps) {
     <>
       <Head {...pageData.head} />
       <Wrapper>
-        <Link href={'/bubbles'}>Bubbles</Link>
-        <Link href={'/motion-circle'}>Motion circle</Link>
+        <Link passHref href={'/bubbles'}>
+          <LinkWrapper>Bubbles</LinkWrapper>
+        </Link>
+        <Link passHref href={'/motion-circle'}>
+          <LinkWrapper>Motion circle</LinkWrapper>
+        </Link>
+        <Link passHref href={'/star-shower'}>
+          <LinkWrapper>Star shower</LinkWrapper>
+        </Link>
       </Wrapper>
     </>
   );
