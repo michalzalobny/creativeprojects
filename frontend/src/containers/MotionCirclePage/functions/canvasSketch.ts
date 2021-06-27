@@ -1,5 +1,6 @@
 import { AppObj, UpdateInfo } from './app';
 import { getRandBetween } from './utils/getRandBetween';
+import { Particle } from './Particle';
 
 interface CanvasSketch {
   appObj: AppObj;
@@ -11,46 +12,9 @@ export interface CanvasSketchReturn {
 }
 
 export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
-  let particles = [];
+  let particles: Particle[] = [];
 
   const colors = ['#d448c8', '#E8686A', '#FFC71A'];
-
-  const particle = (x, y, radius, color) => {
-    const { ctx } = appObj;
-
-    let radians = Math.random() * Math.PI * 2;
-    const velocity = 0.05;
-    let xCopy = x;
-    let yCopy = y;
-
-    const draw = lastPoint => {
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = radius;
-      ctx.moveTo(lastPoint.x, lastPoint.y);
-      ctx.lineTo(xCopy, yCopy);
-      ctx.stroke();
-      ctx.closePath();
-    };
-
-    const randomValue = getRandBetween(50, 120);
-
-    const update = () => {
-      const lastPoint = { x: xCopy, y: yCopy };
-
-      const { x: mouseX, y: mouseY } = appObj.mouseMove.mouseMoveObj.mouseLerp;
-
-      radians += velocity;
-      xCopy = mouseX + Math.cos(radians) * randomValue;
-      yCopy = mouseY + Math.sin(radians) * randomValue;
-
-      draw(lastPoint);
-    };
-
-    return {
-      update,
-    };
-  };
 
   const update = (updateInfo: UpdateInfo) => {
     clear();
@@ -79,11 +43,12 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
       const radius = getRandBetween(1, 3);
       const randomColor = getRandBetween(0, 2);
       particles.push(
-        particle(
+        new Particle(
           appObj.viewportSizes.width / 2,
           appObj.viewportSizes.height / 2,
           radius,
           colors[randomColor],
+          appObj,
         ),
       );
     }
