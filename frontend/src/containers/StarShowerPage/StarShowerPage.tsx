@@ -2,21 +2,18 @@ import React, { useEffect, useRef } from 'react';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
+import { App } from './classes/App';
 
-export default function StarShowerPage(props) {
+export default function StarShowerPage() {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const { app } = require('./functions/app');
-    const { destroy, init } = app({
-      rendererWrapperEl: rendererWrapperEl,
-    });
+    const myApp = new App(rendererWrapperEl);
+    myApp.init();
 
-    init();
     return () => {
-      destroy();
+      myApp.destroy();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

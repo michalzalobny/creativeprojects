@@ -1,4 +1,4 @@
-import { AppObj, UpdateInfo } from './app';
+import { AppObj, UpdateInfo } from './App';
 import { getRandBetween } from './utils/getRandBetween';
 
 interface CanvasSketch {
