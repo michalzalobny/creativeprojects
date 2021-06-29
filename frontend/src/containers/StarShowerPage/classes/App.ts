@@ -58,17 +58,17 @@ export class App {
     this.appObj.canvas.height = this.appObj.viewportSizes.height;
   }
 
-  onResize() {
+  onResize = () => {
     this.setSizes();
-  }
+  };
 
-  onVisibilityChange() {
+  onVisibilityChange = () => {
     if (document.hidden) {
       this.stopAppFrame();
     } else {
       this.resumeAppFrame();
     }
-  }
+  };
 
   setListeners() {
     window.addEventListener('resize', this.onResize);
@@ -89,16 +89,12 @@ export class App {
   }
 
   resumeAppFrame() {
-    this.appObj.rafId = window.requestAnimationFrame(
-      this.renderOnFrame.bind(this),
-    );
+    this.appObj.rafId = window.requestAnimationFrame(this.renderOnFrame);
     this.appObj.isResumed = true;
   }
 
-  renderOnFrame(time: number) {
-    this.appObj.rafId = window.requestAnimationFrame(
-      this.renderOnFrame.bind(this),
-    );
+  renderOnFrame = (time: number) => {
+    this.appObj.rafId = window.requestAnimationFrame(this.renderOnFrame);
 
     if (this.appObj.isResumed) {
       this.appObj.lastFrameTime = window.performance.now();
@@ -119,7 +115,7 @@ export class App {
     TWEEN.update(time);
     this.appObj.mouseMove.update();
     this.appObj.canvasSketch.update({ delta, slowDownFactor, time });
-  }
+  };
 
   stopAppFrame() {
     window.cancelAnimationFrame(this.appObj.rafId);
