@@ -15,6 +15,7 @@ interface Sizes {
 }
 
 export interface AppObj {
+  rendererWrapperEl: HTMLDivElement | null;
   canvasSketch: CanvasSketchReturn | null;
   mouseMove: MouseMove | null;
   rafId: number | null;
@@ -29,13 +30,11 @@ export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
 export class App {
-  rendererWrapperEl: HTMLDivElement | null;
   appObj: AppObj;
 
   constructor(rendererWrapperEl: HTMLDivElement | null) {
-    this.rendererWrapperEl = rendererWrapperEl;
-
     this.appObj = {
+      rendererWrapperEl: rendererWrapperEl,
       canvasSketch: null,
       mouseMove: null,
       rafId: null,
@@ -48,8 +47,8 @@ export class App {
   }
 
   setSizes() {
-    if (this.rendererWrapperEl && this.appObj.canvas) {
-      const viewportRect = this.rendererWrapperEl.getBoundingClientRect();
+    if (this.appObj.rendererWrapperEl && this.appObj.canvas) {
+      const viewportRect = this.appObj.rendererWrapperEl.getBoundingClientRect();
       this.appObj.viewportSizes.width = viewportRect.width;
       this.appObj.viewportSizes.height = viewportRect.height;
 
@@ -141,8 +140,8 @@ export class App {
 
   createCanvas() {
     this.appObj.canvas = document.createElement('canvas');
-    if (this.rendererWrapperEl) {
-      this.rendererWrapperEl.appendChild(this.appObj.canvas);
+    if (this.appObj.rendererWrapperEl) {
+      this.appObj.rendererWrapperEl.appendChild(this.appObj.canvas);
     }
   }
 
