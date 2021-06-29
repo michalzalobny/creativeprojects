@@ -1,16 +1,12 @@
 import TWEEN from '@tweenjs/tween.js';
 
 import { canvasSketch, CanvasSketchReturn } from './CanvasSketch';
-import { MouseMoveReturn, mouseMove } from './mouseMove/mouseMove';
+import { MouseMove } from './MouseMove/MouseMove';
 
 export interface UpdateInfo {
   slowDownFactor: number;
   delta: number;
   time: number;
-}
-
-export interface App {
-  rendererWrapperEl: React.MutableRefObject<HTMLDivElement>;
 }
 
 interface Sizes {
@@ -19,43 +15,47 @@ interface Sizes {
 }
 
 export interface AppObj {
-  mouseMove: MouseMoveReturn;
-  canvasSketch: CanvasSketchReturn;
-  rafId: number;
+  canvasSketch: CanvasSketchReturn | null;
+  mouseMove: MouseMove | null;
+  rafId: number | null;
   isResumed: boolean;
-  lastFrameTime: number;
+  lastFrameTime: number | null;
   viewportSizes: Sizes;
-  canvas: HTMLCanvasElement;
-  ctx: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement | null;
+  ctx: CanvasRenderingContext2D | null;
 }
 
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
 export class App {
-  rendererWrapperEl: React.MutableRefObject<HTMLDivElement>;
-  appObj: AppObj = {
-    canvasSketch: null,
-    mouseMove: null,
-    rafId: null,
-    isResumed: true,
-    lastFrameTime: null,
-    canvas: null,
-    ctx: null,
-    viewportSizes: { height: 0, width: 0 },
-  };
+  rendererWrapperEl: HTMLDivElement | null;
+  appObj: AppObj;
 
-  constructor(rendererWrapperEl) {
+  constructor(rendererWrapperEl: HTMLDivElement | null) {
     this.rendererWrapperEl = rendererWrapperEl;
+
+    this.appObj = {
+      canvasSketch: null,
+      mouseMove: null,
+      rafId: null,
+      isResumed: true,
+      lastFrameTime: null,
+      canvas: null,
+      ctx: null,
+      viewportSizes: { height: 0, width: 0 },
+    };
   }
 
   setSizes() {
-    const viewportRect = this.rendererWrapperEl.current.getBoundingClientRect();
-    this.appObj.viewportSizes.width = viewportRect.width;
-    this.appObj.viewportSizes.height = viewportRect.height;
+    if (this.rendererWrapperEl && this.appObj.canvas) {
+      const viewportRect = this.rendererWrapperEl.getBoundingClientRect();
+      this.appObj.viewportSizes.width = viewportRect.width;
+      this.appObj.viewportSizes.height = viewportRect.height;
 
-    this.appObj.canvas.width = this.appObj.viewportSizes.width;
-    this.appObj.canvas.height = this.appObj.viewportSizes.height;
+      this.appObj.canvas.width = this.appObj.viewportSizes.width;
+      this.appObj.canvas.height = this.appObj.viewportSizes.height;
+    }
   }
 
   onResize = () => {
@@ -76,16 +76,26 @@ export class App {
   }
 
   setContext() {
-    this.appObj.ctx = this.appObj.canvas.getContext('2d');
+    if (this.appObj.canvas) {
+      this.appObj.ctx = this.appObj.canvas.getContext('2d');
+    }
   }
 
   destroy() {
-    this.appObj.canvas.parentNode.removeChild(this.appObj.canvas);
+    if (this.appObj.canvas && this.appObj.canvas.parentNode) {
+      this.appObj.canvas.parentNode.removeChild(this.appObj.canvas);
+    }
     this.stopAppFrame();
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('visibilitychange', this.onVisibilityChange);
-    this.appObj.mouseMove.destroy();
-    this.appObj.canvasSketch.destroy();
+
+    if (this.appObj.mouseMove) {
+      this.appObj.mouseMove.destroy();
+    }
+
+    if (this.appObj.canvasSketch) {
+      this.appObj.canvasSketch.destroy();
+    }
   }
 
   resumeAppFrame() {
@@ -96,7 +106,7 @@ export class App {
   renderOnFrame = (time: number) => {
     this.appObj.rafId = window.requestAnimationFrame(this.renderOnFrame);
 
-    if (this.appObj.isResumed) {
+    if (this.appObj.isResumed || !this.appObj.lastFrameTime) {
       this.appObj.lastFrameTime = window.performance.now();
       this.appObj.isResumed = false;
       return;
@@ -113,17 +123,27 @@ export class App {
     }
     this.appObj.lastFrameTime = time;
     TWEEN.update(time);
-    this.appObj.mouseMove.update();
-    this.appObj.canvasSketch.update({ delta, slowDownFactor, time });
+
+    if (this.appObj.mouseMove) {
+      this.appObj.mouseMove.update();
+    }
+
+    if (this.appObj.canvasSketch) {
+      this.appObj.canvasSketch.update({ delta, slowDownFactor, time });
+    }
   };
 
   stopAppFrame() {
-    window.cancelAnimationFrame(this.appObj.rafId);
+    if (this.appObj.rafId) {
+      window.cancelAnimationFrame(this.appObj.rafId);
+    }
   }
 
   createCanvas() {
     this.appObj.canvas = document.createElement('canvas');
-    this.rendererWrapperEl.current.appendChild(this.appObj.canvas);
+    if (this.rendererWrapperEl) {
+      this.rendererWrapperEl.appendChild(this.appObj.canvas);
+    }
   }
 
   init() {
@@ -134,9 +154,7 @@ export class App {
     this.setListeners();
     this.resumeAppFrame();
 
-    this.appObj.mouseMove = mouseMove({
-      viewportSizes: this.appObj.viewportSizes,
-    });
+    this.appObj.mouseMove = new MouseMove(this.appObj.viewportSizes);
     this.appObj.mouseMove.init();
 
     this.appObj.canvasSketch = canvasSketch({ appObj: this.appObj });
