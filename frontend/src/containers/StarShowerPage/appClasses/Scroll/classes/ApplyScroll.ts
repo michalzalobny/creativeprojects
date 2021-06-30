@@ -18,12 +18,12 @@ export class ApplyScroll {
   }
 
   applyScrollX(amountPx: number) {
-    const newOffsetX = this.scrollObj.targetX + amountPx;
-    this.scrollObj.targetX = newOffsetX;
+    const newOffsetX = this.scrollObj.target.x + amountPx;
+    this.scrollObj.target.x = newOffsetX;
   }
 
   applyScrollY(amountPx: number) {
-    const newOffsetY = this.scrollObj.targetY + amountPx;
-    this.scrollObj.targetY = newOffsetY;
+    const newOffsetY = this.scrollObj.target.y + amountPx;
+    this.scrollObj.target.y = newOffsetY;
   }
 }

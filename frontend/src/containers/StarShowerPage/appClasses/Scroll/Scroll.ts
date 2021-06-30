@@ -3,35 +3,28 @@ import { MOMENTUM_DAMPING } from './constants';
 import { ApplyScroll } from './classes/ApplyScroll';
 import { HandleEvents } from './classes/HandleEvents';
 
-const SCROLL_SPEED_X = 0.004;
-const SCROLL_SPEED_Y = 2;
+const SCROLL_SPEED_X = 0;
+const SCROLL_SPEED_Y = 0;
+
+interface Values {
+  x: number;
+  y: number;
+}
 
 export interface ScrollObj {
   applyScroll: ApplyScroll | null;
   ease: number;
-  currentX: number;
-  targetX: number;
-  lastX: number;
-  currentY: number;
-  targetY: number;
-  lastY: number;
-  currentStrengthY: number;
-  targetStrengthY: number;
-  lastStrengthY: number;
-  currentStrengthX: number;
-  targetStrengthX: number;
-  lastStrengthX: number;
+  last: Values;
+  current: Values;
+  target: Values;
+  currentStrength: Values;
+  targetStrength: Values;
+  lastTouch: Values;
   useMomentum: boolean;
-  touchMomentumX: number;
-  touchMomentumY: number;
-  lastTouchX: number;
-  lastTouchY: number;
-  viewportSizes: Sizes;
+  touchMomentum: Values;
   isTouching: boolean;
-  speedX: number;
-  speedY: number;
-  directionX: -1 | 1;
-  directionY: -1 | 1;
+  speed: Values;
+  direction: { x: -1 | 1; y: -1 | 1 };
 }
 
 interface Sizes {
@@ -43,33 +36,21 @@ export class Scroll {
   scrollObj: ScrollObj;
   handleEvents: HandleEvents;
 
-  constructor(viewportSizes: Sizes) {
+  constructor() {
     this.scrollObj = {
       applyScroll: null,
       ease: 0.04,
-      currentX: 0,
-      targetX: 0,
-      lastX: 0,
-      currentY: 0,
-      targetY: 0,
-      lastY: 0,
-      currentStrengthY: 0,
-      targetStrengthY: 0,
-      lastStrengthY: 0,
-      currentStrengthX: 0,
-      targetStrengthX: 0,
-      lastStrengthX: 0,
+      last: { x: 0, y: 0 },
+      current: { x: 0, y: 0 },
+      target: { x: 0, y: 0 },
+      currentStrength: { x: 0, y: 0 },
+      targetStrength: { x: 0, y: 0 },
+      lastTouch: { x: 0, y: 0 },
       useMomentum: false,
-      touchMomentumX: 0,
-      touchMomentumY: 0,
-      lastTouchX: 0,
-      lastTouchY: 0,
-      viewportSizes: viewportSizes,
+      touchMomentum: { x: 0, y: 0 },
       isTouching: false,
-      speedX: SCROLL_SPEED_X,
-      speedY: SCROLL_SPEED_Y,
-      directionX: 1,
-      directionY: 1,
+      speed: { x: SCROLL_SPEED_X, y: SCROLL_SPEED_Y },
+      direction: { x: 1, y: 1 },
     };
 
     this.handleEvents = new HandleEvents(this.scrollObj);
@@ -85,66 +66,63 @@ export class Scroll {
   }
 
   update(time: number) {
-    console.log(this.scrollObj.currentY);
-
-    this.scrollObj.targetX += this.scrollObj.speedX;
-    this.scrollObj.targetY += this.scrollObj.speedY;
-
-    if (this.scrollObj.currentX >= this.scrollObj.lastX) {
-      this.scrollObj.directionX = 1;
-      this.scrollObj.speedX = SCROLL_SPEED_X;
+    //Auto scrollingX
+    this.scrollObj.target.x += this.scrollObj.speed.x;
+    if (this.scrollObj.current.x >= this.scrollObj.last.x) {
+      this.scrollObj.direction.x = 1;
+      this.scrollObj.speed.x = SCROLL_SPEED_X;
     } else {
-      this.scrollObj.directionX = -1;
-      this.scrollObj.speedX = -SCROLL_SPEED_X;
+      this.scrollObj.direction.x = -1;
+      this.scrollObj.speed.x = -SCROLL_SPEED_X;
     }
 
-    if (this.scrollObj.currentY >= this.scrollObj.lastY) {
-      this.scrollObj.directionY = 1;
-      this.scrollObj.speedY = SCROLL_SPEED_Y;
+    //Auto scrollingY
+    this.scrollObj.target.y += this.scrollObj.speed.y;
+    if (this.scrollObj.current.y >= this.scrollObj.last.y) {
+      this.scrollObj.direction.y = 1;
+      this.scrollObj.speed.y = SCROLL_SPEED_Y;
     } else {
-      this.scrollObj.directionY = -1;
-      this.scrollObj.speedY = -SCROLL_SPEED_Y;
+      this.scrollObj.direction.y = -1;
+      this.scrollObj.speed.y = -SCROLL_SPEED_Y;
     }
 
-    this.scrollObj.lastX = this.scrollObj.currentX;
-    this.scrollObj.currentX = lerp(
-      this.scrollObj.currentX,
-      this.scrollObj.targetX,
+    this.scrollObj.last.x = this.scrollObj.current.x;
+    this.scrollObj.current.x = lerp(
+      this.scrollObj.current.x,
+      this.scrollObj.target.x,
       this.scrollObj.ease,
     );
 
-    this.scrollObj.lastY = this.scrollObj.currentY;
-    this.scrollObj.currentY = lerp(
-      this.scrollObj.currentY,
-      this.scrollObj.targetY,
+    this.scrollObj.last.y = this.scrollObj.current.y;
+    this.scrollObj.current.y = lerp(
+      this.scrollObj.current.y,
+      this.scrollObj.target.y,
       this.scrollObj.ease,
     );
 
     //Update strengthY
-    this.scrollObj.lastStrengthY = this.scrollObj.currentStrengthY;
-    this.scrollObj.currentStrengthY = lerp(
-      this.scrollObj.currentStrengthY,
-      this.scrollObj.targetStrengthY,
+    this.scrollObj.currentStrength.y = lerp(
+      this.scrollObj.currentStrength.y,
+      this.scrollObj.targetStrength.y,
       this.scrollObj.ease,
     );
-    this.scrollObj.targetStrengthY = Math.abs(
-      this.scrollObj.currentY - this.scrollObj.lastY,
+    this.scrollObj.targetStrength.y = Math.abs(
+      this.scrollObj.current.y - this.scrollObj.last.y,
     );
 
     //Update strengthX
-    this.scrollObj.lastStrengthX = this.scrollObj.currentStrengthX;
-    this.scrollObj.currentStrengthX = lerp(
-      this.scrollObj.currentStrengthX,
-      this.scrollObj.targetStrengthX,
+    this.scrollObj.currentStrength.x = lerp(
+      this.scrollObj.currentStrength.x,
+      this.scrollObj.targetStrength.x,
       this.scrollObj.ease,
     );
-    this.scrollObj.targetStrengthX = Math.abs(
-      this.scrollObj.currentX - this.scrollObj.lastX,
+    this.scrollObj.targetStrength.x = Math.abs(
+      this.scrollObj.current.x - this.scrollObj.last.x,
     );
 
     const timeFactor = Math.min(Math.max(time / (1000 / time), 1), 4);
-    this.scrollObj.touchMomentumX *= Math.pow(MOMENTUM_DAMPING, timeFactor);
-    this.scrollObj.touchMomentumY *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    this.scrollObj.touchMomentum.x *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    this.scrollObj.touchMomentum.y *= Math.pow(MOMENTUM_DAMPING, timeFactor);
 
     if (!this.scrollObj.useMomentum) {
       return;
@@ -154,16 +132,16 @@ export class Scroll {
       return;
     }
 
-    if (Math.abs(this.scrollObj.touchMomentumX) >= 0.01) {
+    if (Math.abs(this.scrollObj.touchMomentum.x) >= 0.01) {
       this.scrollObj.applyScroll.applyScrollXY({
         y: 0,
-        x: this.scrollObj.touchMomentumX,
+        x: this.scrollObj.touchMomentum.x,
       });
     }
 
-    if (Math.abs(this.scrollObj.touchMomentumY) >= 0.01) {
+    if (Math.abs(this.scrollObj.touchMomentum.y) >= 0.01) {
       this.scrollObj.applyScroll.applyScrollXY({
-        y: this.scrollObj.touchMomentumY,
+        y: this.scrollObj.touchMomentum.y,
         x: 0,
       });
     }

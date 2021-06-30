@@ -167,7 +167,7 @@ export class App {
     this.appObj.mouseMove = new MouseMove(this.appObj.viewportSizes);
     this.appObj.mouseMove.init();
 
-    this.appObj.scroll = new Scroll(this.appObj.viewportSizes);
+    this.appObj.scroll = new Scroll();
     this.appObj.scroll.init();
 
     this.appObj.canvasSketch = canvasSketch({ appObj: this.appObj });

@@ -13,9 +13,9 @@ export class HandleEvents {
   onTouchDown = (event: TouchEvent | MouseEvent) => {
     this.scrollObj.isTouching = true;
     this.scrollObj.useMomentum = false;
-    this.scrollObj.lastTouchX =
+    this.scrollObj.lastTouch.x =
       'touches' in event ? event.touches[0].clientX : event.clientX;
-    this.scrollObj.lastTouchY =
+    this.scrollObj.lastTouch.y =
       'touches' in event ? event.touches[0].clientY : event.clientY;
   };
 
@@ -34,20 +34,20 @@ export class HandleEvents {
       'touches' in event ? event.touches[0].clientY : event.clientY;
 
     const deltaX =
-      (touchX - this.scrollObj.lastTouchX) *
+      (touchX - this.scrollObj.lastTouch.x) *
       ('touches' in event ? 1 : MOUSE_MULTIPLIER);
     const deltaY =
-      (touchY - this.scrollObj.lastTouchY) *
+      (touchY - this.scrollObj.lastTouch.y) *
       ('touches' in event ? 1 : MOUSE_MULTIPLIER);
 
-    this.scrollObj.lastTouchX = touchX;
-    this.scrollObj.lastTouchY = touchY;
+    this.scrollObj.lastTouch.x = touchX;
+    this.scrollObj.lastTouch.y = touchY;
 
-    this.scrollObj.touchMomentumX *= MOMENTUM_CARRY;
-    this.scrollObj.touchMomentumY *= MOMENTUM_CARRY;
+    this.scrollObj.touchMomentum.x *= MOMENTUM_CARRY;
+    this.scrollObj.touchMomentum.y *= MOMENTUM_CARRY;
 
-    this.scrollObj.touchMomentumY += deltaY;
-    this.scrollObj.touchMomentumX += deltaX;
+    this.scrollObj.touchMomentum.y += deltaY;
+    this.scrollObj.touchMomentum.x += deltaX;
 
     this.scrollObj.applyScroll.applyScrollXY({ x: deltaX, y: deltaY });
   };
