@@ -2,6 +2,7 @@ import TWEEN from '@tweenjs/tween.js';
 
 import { canvasSketch, CanvasSketchReturn } from './CanvasSketch';
 import { MouseMove } from './MouseMove/MouseMove';
+import { Scroll } from './Scroll/Scroll';
 
 export interface UpdateInfo {
   slowDownFactor: number;
@@ -18,6 +19,7 @@ export interface AppObj {
   rendererWrapperEl: HTMLDivElement | null;
   canvasSketch: CanvasSketchReturn | null;
   mouseMove: MouseMove | null;
+  scroll: Scroll | null;
   rafId: number | null;
   isResumed: boolean;
   lastFrameTime: number | null;
@@ -37,6 +39,7 @@ export class App {
       rendererWrapperEl: rendererWrapperEl,
       canvasSketch: null,
       mouseMove: null,
+      scroll: null,
       rafId: null,
       isResumed: true,
       lastFrameTime: null,
@@ -92,6 +95,10 @@ export class App {
       this.appObj.mouseMove.destroy();
     }
 
+    if (this.appObj.scroll) {
+      this.appObj.scroll.destroy();
+    }
+
     if (this.appObj.canvasSketch) {
       this.appObj.canvasSketch.destroy();
     }
@@ -127,6 +134,10 @@ export class App {
       this.appObj.mouseMove.update();
     }
 
+    if (this.appObj.scroll) {
+      this.appObj.scroll.update(time);
+    }
+
     if (this.appObj.canvasSketch) {
       this.appObj.canvasSketch.update({ delta, slowDownFactor, time });
     }
@@ -155,6 +166,9 @@ export class App {
 
     this.appObj.mouseMove = new MouseMove(this.appObj.viewportSizes);
     this.appObj.mouseMove.init();
+
+    this.appObj.scroll = new Scroll(this.appObj.viewportSizes);
+    this.appObj.scroll.init();
 
     this.appObj.canvasSketch = canvasSketch({ appObj: this.appObj });
   }
