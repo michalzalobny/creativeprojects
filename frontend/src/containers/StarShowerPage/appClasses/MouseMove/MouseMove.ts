@@ -25,6 +25,8 @@ export class MouseMove {
       isTouching: false,
       isInit: false,
       ease: 0.09,
+      strength: 0,
+      strengthLerp: 0,
     };
 
     this.handleEvents = new HandleEvents(this.mouseMoveObj);
@@ -53,6 +55,13 @@ export class MouseMove {
 
     mouseLerp.x = lerp(mouseLerp.x, mouse.x, ease);
     mouseLerp.y = lerp(mouseLerp.y, mouse.y, ease);
+
+    //Update strengthLerp
+    this.mouseMoveObj.strengthLerp = lerp(
+      this.mouseMoveObj.strengthLerp,
+      this.mouseMoveObj.strength,
+      ease,
+    );
 
     //Update mouse3Ds
     mouse3D.x = (mouse.x / this.viewportSizes.width) * 2 - 1;

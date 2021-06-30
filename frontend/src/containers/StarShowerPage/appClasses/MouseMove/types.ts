@@ -17,4 +17,6 @@ export interface MouseMoveObj {
   isTouching: boolean;
   isInit: boolean;
   ease: number;
+  strength: number;
+  strengthLerp: number;
 }

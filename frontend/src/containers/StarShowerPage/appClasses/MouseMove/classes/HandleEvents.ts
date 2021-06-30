@@ -26,6 +26,8 @@ export class HandleEvents {
     const deltaX = touchX - this.mouseMoveObj.mouseLast.x;
     const deltaY = touchY - this.mouseMoveObj.mouseLast.y;
 
+    this.mouseMoveObj.strength = deltaX * deltaX + deltaY * deltaY;
+
     this.mouseMoveObj.mouseLast.x = touchX;
     this.mouseMoveObj.mouseLast.y = touchY;
 
