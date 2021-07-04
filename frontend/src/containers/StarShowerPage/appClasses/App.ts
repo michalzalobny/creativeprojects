@@ -131,7 +131,7 @@ export class App {
     TWEEN.update(time);
 
     if (this.appObj.mouseMove) {
-      this.appObj.mouseMove.update();
+      this.appObj.mouseMove.update({ delta, slowDownFactor, time });
     }
 
     if (this.appObj.scroll) {
@@ -164,8 +164,10 @@ export class App {
     this.setListeners();
     this.resumeAppFrame();
 
-    this.appObj.mouseMove = new MouseMove(this.appObj.viewportSizes);
-    this.appObj.mouseMove.init();
+    this.appObj.mouseMove = new MouseMove();
+    // this.appObj.mouseMove.addEventListener('mousemoved', e => {
+    //   console.log(e);
+    // });
 
     this.appObj.scroll = new Scroll();
     this.appObj.scroll.init();
