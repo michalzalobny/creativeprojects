@@ -1,147 +1,203 @@
+import { EventDispatcher } from 'three';
+import normalizeWheel from 'normalize-wheel';
+
 import { lerp } from './utils/lerp';
-import { MOMENTUM_DAMPING } from './constants';
-import { ApplyScroll } from './classes/ApplyScroll';
-import { HandleEvents } from './classes/HandleEvents';
 
 const SCROLL_SPEED_X = 0;
 const SCROLL_SPEED_Y = 0;
 
-interface Values {
+const MOMENTUM_CARRY = 0.2;
+const MOMENTUM_DAMPING = 0.58;
+const MOUSE_MULTIPLIER = 1;
+
+interface ApplyScrollXY {
   x: number;
   y: number;
 }
 
-export interface ScrollObj {
-  applyScroll: ApplyScroll | null;
-  ease: number;
-  last: Values;
-  current: Values;
-  target: Values;
-  currentStrength: Values;
-  targetStrength: Values;
-  lastTouch: Values;
-  useMomentum: boolean;
-  touchMomentum: Values;
-  isTouching: boolean;
-  speed: Values;
-  direction: { x: -1 | 1; y: -1 | 1 };
-}
-
-interface Sizes {
-  width: number;
-  height: number;
-}
-
-export class Scroll {
-  scrollObj: ScrollObj;
-  handleEvents: HandleEvents;
+export class Scroll extends EventDispatcher {
+  ease = 0.04;
+  last = { x: 0, y: 0 };
+  current = { x: 0, y: 0 };
+  target = { x: 0, y: 0 };
+  currentStrength = { x: 0, y: 0 };
+  targetStrength = { x: 0, y: 0 };
+  lastTouch = { x: 0, y: 0 };
+  useMomentum = false;
+  touchMomentum = { x: 0, y: 0 };
+  isTouching = false;
+  speed = { x: SCROLL_SPEED_X, y: SCROLL_SPEED_Y };
+  direction = { x: 1, y: 1 };
 
   constructor() {
-    this.scrollObj = {
-      applyScroll: null,
-      ease: 0.04,
-      last: { x: 0, y: 0 },
-      current: { x: 0, y: 0 },
-      target: { x: 0, y: 0 },
-      currentStrength: { x: 0, y: 0 },
-      targetStrength: { x: 0, y: 0 },
-      lastTouch: { x: 0, y: 0 },
-      useMomentum: false,
-      touchMomentum: { x: 0, y: 0 },
-      isTouching: false,
-      speed: { x: SCROLL_SPEED_X, y: SCROLL_SPEED_Y },
-      direction: { x: 1, y: 1 },
-    };
-
-    this.handleEvents = new HandleEvents(this.scrollObj);
-    this.scrollObj.applyScroll = new ApplyScroll(this.scrollObj);
+    super();
+    this.addEvents();
   }
 
-  init() {
-    this.handleEvents.init();
+  applyScrollXY({ x, y }: ApplyScrollXY) {
+    this.applyScrollX(x);
+    this.applyScrollY(y);
+    this.dispatchEvent({ type: 'scrolled', context: this.current });
+  }
+
+  applyScrollX(amountPx: number) {
+    const newOffsetX = this.target.x + amountPx;
+    this.target.x = newOffsetX;
+  }
+
+  applyScrollY(amountPx: number) {
+    const newOffsetY = this.target.y + amountPx;
+    this.target.y = newOffsetY;
+  }
+
+  onTouchDown = (event: TouchEvent | MouseEvent) => {
+    this.isTouching = true;
+    this.useMomentum = false;
+    this.lastTouch.x =
+      'touches' in event ? event.touches[0].clientX : event.clientX;
+    this.lastTouch.y =
+      'touches' in event ? event.touches[0].clientY : event.clientY;
+  };
+
+  onTouchMove = (event: TouchEvent | MouseEvent) => {
+    if (!this.isTouching) {
+      return;
+    }
+
+    const touchX =
+      'touches' in event ? event.touches[0].clientX : event.clientX;
+    const touchY =
+      'touches' in event ? event.touches[0].clientY : event.clientY;
+
+    const deltaX =
+      (touchX - this.lastTouch.x) * ('touches' in event ? 1 : MOUSE_MULTIPLIER);
+    const deltaY =
+      (touchY - this.lastTouch.y) * ('touches' in event ? 1 : MOUSE_MULTIPLIER);
+
+    this.lastTouch.x = touchX;
+    this.lastTouch.y = touchY;
+
+    this.touchMomentum.x *= MOMENTUM_CARRY;
+    this.touchMomentum.y *= MOMENTUM_CARRY;
+
+    this.touchMomentum.y += deltaY;
+    this.touchMomentum.x += deltaX;
+
+    this.applyScrollXY({ x: deltaX, y: deltaY });
+  };
+
+  onTouchUp = () => {
+    this.isTouching = false;
+    this.useMomentum = true;
+  };
+
+  onWheel = (event: WheelEvent) => {
+    this.useMomentum = false;
+
+    const { pixelY } = normalizeWheel(event);
+
+    this.applyScrollXY({ x: -pixelY, y: -pixelY });
+  };
+
+  onResize = () => {
+    this.useMomentum = false;
+  };
+
+  addEvents() {
+    window.addEventListener('wheel', this.onWheel);
+
+    window.addEventListener('mousedown', this.onTouchDown);
+    window.addEventListener('mousemove', this.onTouchMove);
+    window.addEventListener('mouseup', this.onTouchUp);
+
+    window.addEventListener('touchstart', this.onTouchDown);
+    window.addEventListener('touchmove', this.onTouchMove);
+    window.addEventListener('touchend', this.onTouchUp);
+
+    window.addEventListener('resize', this.onResize);
+
+    this.onResize();
   }
 
   destroy() {
-    this.handleEvents.destroy();
+    window.removeEventListener('wheel', this.onWheel);
+
+    window.removeEventListener('mousedown', this.onTouchDown);
+    window.removeEventListener('mousemove', this.onTouchMove);
+    window.removeEventListener('mouseup', this.onTouchUp);
+
+    window.removeEventListener('touchstart', this.onTouchDown);
+    window.removeEventListener('touchmove', this.onTouchMove);
+    window.removeEventListener('touchend', this.onTouchUp);
+
+    window.removeEventListener('resize', this.onResize);
   }
 
   update(time: number) {
     //Auto scrollingX
-    this.scrollObj.target.x += this.scrollObj.speed.x;
-    if (this.scrollObj.current.x >= this.scrollObj.last.x) {
-      this.scrollObj.direction.x = 1;
-      this.scrollObj.speed.x = SCROLL_SPEED_X;
+    this.target.x += this.speed.x;
+    if (this.current.x >= this.last.x) {
+      this.direction.x = 1;
+      this.speed.x = SCROLL_SPEED_X;
     } else {
-      this.scrollObj.direction.x = -1;
-      this.scrollObj.speed.x = -SCROLL_SPEED_X;
+      this.direction.x = -1;
+      this.speed.x = -SCROLL_SPEED_X;
     }
 
     //Auto scrollingY
-    this.scrollObj.target.y += this.scrollObj.speed.y;
-    if (this.scrollObj.current.y >= this.scrollObj.last.y) {
-      this.scrollObj.direction.y = 1;
-      this.scrollObj.speed.y = SCROLL_SPEED_Y;
+    this.target.y += this.speed.y;
+    if (this.current.y >= this.last.y) {
+      this.direction.y = 1;
+      this.speed.y = SCROLL_SPEED_Y;
     } else {
-      this.scrollObj.direction.y = -1;
-      this.scrollObj.speed.y = -SCROLL_SPEED_Y;
+      this.direction.y = -1;
+      this.speed.y = -SCROLL_SPEED_Y;
     }
 
-    this.scrollObj.last.x = this.scrollObj.current.x;
-    this.scrollObj.current.x = lerp(
-      this.scrollObj.current.x,
-      this.scrollObj.target.x,
-      this.scrollObj.ease,
-    );
+    this.last.x = this.current.x;
+    this.current.x = lerp(this.current.x, this.target.x, this.ease);
 
-    this.scrollObj.last.y = this.scrollObj.current.y;
-    this.scrollObj.current.y = lerp(
-      this.scrollObj.current.y,
-      this.scrollObj.target.y,
-      this.scrollObj.ease,
-    );
+    this.last.y = this.current.y;
+    this.current.y = lerp(this.current.y, this.target.y, this.ease);
 
     //Update strengthY
-    this.scrollObj.currentStrength.y = lerp(
-      this.scrollObj.currentStrength.y,
-      this.scrollObj.targetStrength.y,
-      this.scrollObj.ease,
+    this.currentStrength.y = lerp(
+      this.currentStrength.y,
+      this.targetStrength.y,
+      this.ease,
     );
-    this.scrollObj.targetStrength.y = Math.abs(
-      this.scrollObj.current.y - this.scrollObj.last.y,
-    );
+    this.targetStrength.y = Math.abs(this.current.y - this.last.y);
 
     //Update strengthX
-    this.scrollObj.currentStrength.x = lerp(
-      this.scrollObj.currentStrength.x,
-      this.scrollObj.targetStrength.x,
-      this.scrollObj.ease,
+    this.currentStrength.x = lerp(
+      this.currentStrength.x,
+      this.targetStrength.x,
+      this.ease,
     );
-    this.scrollObj.targetStrength.x = Math.abs(
-      this.scrollObj.current.x - this.scrollObj.last.x,
-    );
+    this.targetStrength.x = Math.abs(this.current.x - this.last.x);
 
     const timeFactor = Math.min(Math.max(time / (1000 / time), 1), 4);
-    this.scrollObj.touchMomentum.x *= Math.pow(MOMENTUM_DAMPING, timeFactor);
-    this.scrollObj.touchMomentum.y *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    this.touchMomentum.x *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    this.touchMomentum.y *= Math.pow(MOMENTUM_DAMPING, timeFactor);
 
-    if (!this.scrollObj.useMomentum) {
+    if (!this.useMomentum) {
       return;
     }
 
-    if (!this.scrollObj.applyScroll) {
+    if (!this) {
       return;
     }
 
-    if (Math.abs(this.scrollObj.touchMomentum.x) >= 0.01) {
-      this.scrollObj.applyScroll.applyScrollXY({
+    if (Math.abs(this.touchMomentum.x) >= 0.01) {
+      this.applyScrollXY({
         y: 0,
-        x: this.scrollObj.touchMomentum.x,
+        x: this.touchMomentum.x,
       });
     }
 
-    if (Math.abs(this.scrollObj.touchMomentum.y) >= 0.01) {
-      this.scrollObj.applyScroll.applyScrollXY({
-        y: this.scrollObj.touchMomentum.y,
+    if (Math.abs(this.touchMomentum.y) >= 0.01) {
+      this.applyScrollXY({
+        y: this.touchMomentum.y,
         x: 0,
       });
     }

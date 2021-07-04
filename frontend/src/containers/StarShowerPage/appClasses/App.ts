@@ -170,7 +170,9 @@ export class App {
     // });
 
     this.appObj.scroll = new Scroll();
-    this.appObj.scroll.init();
+    this.appObj.scroll.addEventListener('scrolled', e => {
+      console.log(e.context);
+    });
 
     this.appObj.canvasSketch = canvasSketch({ appObj: this.appObj });
   }
