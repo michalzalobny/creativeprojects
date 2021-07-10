@@ -164,10 +164,7 @@ export class App {
     this.setListeners();
     this.resumeAppFrame();
 
-    this.appObj.mouseMove = new MouseMove();
-    // this.appObj.mouseMove.addEventListener('mousemoved', e => {
-    //   console.log(e);
-    // });
+    this.appObj.mouseMove = MouseMove.getInstance();
 
     this.appObj.scroll = new Scroll();
     this.appObj.scroll.addEventListener('scrolled', e => {

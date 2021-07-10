@@ -18,9 +18,29 @@ export class MouseMove extends EventDispatcher {
   strength = 0;
   strengthLerp = 0;
 
+  static _instance: MouseMove;
+  static _canCreate = false;
+
+  static getInstance() {
+    if (!MouseMove._instance) {
+      MouseMove._canCreate = true;
+      MouseMove._instance = new MouseMove();
+      MouseMove._canCreate = false;
+    }
+
+    return MouseMove._instance;
+  }
+
   constructor() {
     super();
+
+    if (MouseMove._instance || !MouseMove._canCreate) {
+      throw new Error('Use MouseMove.getInstance()');
+    }
+
     this.addEvents();
+
+    MouseMove._instance = this;
   }
 
   onTouchDown = (event: TouchEvent | MouseEvent) => {
