@@ -1,3 +1,4 @@
+import { MouseMove } from './MouseMove/MouseMove';
 import { AppObj, UpdateInfo } from './App';
 import { getRandBetween } from './utils/getRandBetween';
 
@@ -14,6 +15,15 @@ const MAX_RADIUS = 90;
 const MOUSE_THRESHOLD = 100;
 
 export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
+  const mouseMove = MouseMove.getInstance();
+
+  let _x = 0;
+  let _y = 0;
+
+  mouseMove.addEventListener('mousemoved', e => {
+    _x = e.target.mouseLerp.x;
+    _y = e.target.mouseLerp.y;
+  });
   let circles = [];
   const colorArray = ['#ffaa33', '#99ffaa', '#4411aa', '#ff1100'];
 
@@ -52,8 +62,8 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
 
       //interactivity
 
-      const mouseX = appObj.mouseMove.mouseLerp.x;
-      const mouseY = appObj.mouseMove.mouseLerp.y;
+      const mouseX = _x;
+      const mouseY = _y;
 
       if (
         appObj.mouseMove.isInit &&

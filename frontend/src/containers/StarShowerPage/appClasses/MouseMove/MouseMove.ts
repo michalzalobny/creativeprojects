@@ -73,8 +73,6 @@ export class MouseMove extends EventDispatcher {
 
     this.mouse.x += deltaX;
     this.mouse.y += deltaY;
-
-    this.dispatchEvent({ type: 'mousemoved', context: this });
   };
 
   onTouchUp = () => {
@@ -108,6 +106,7 @@ export class MouseMove extends EventDispatcher {
   }
 
   update(updateInfo: UpdateInfo) {
+    this.dispatchEvent({ type: 'mousemoved' });
     const { ease, mouse, mouseLast, mouseLerp } = this;
 
     mouseLast.x = mouse.x;
