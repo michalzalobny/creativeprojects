@@ -1,4 +1,5 @@
 import { MouseMove } from './MouseMove/MouseMove';
+import { Event } from 'three';
 import { AppObj, UpdateInfo } from './App';
 import { getRandBetween } from './utils/getRandBetween';
 
@@ -20,10 +21,11 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
   let _x = 0;
   let _y = 0;
 
-  mouseMove.addEventListener('mousemoved', e => {
+  mouseMove.addEventListener('mousemoved', (e: { target: MouseMove }) => {
     _x = e.target.mouseLerp.x;
     _y = e.target.mouseLerp.y;
   });
+
   let circles = [];
   const colorArray = ['#ffaa33', '#99ffaa', '#4411aa', '#ff1100'];
 
