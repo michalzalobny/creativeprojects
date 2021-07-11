@@ -178,7 +178,7 @@ export class App {
 
     this.appObj.mouseMove = MouseMove.getInstance();
 
-    this.appObj.scroll = new Scroll();
+    this.appObj.scroll = Scroll.getInstance();
     this.appObj.scroll.addEventListener('scrolled', e => {
       // console.log(e.target);
     });

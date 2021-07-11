@@ -30,9 +30,29 @@ export class Scroll extends EventDispatcher {
   current = { x: 0, y: 0 };
   currentStrength = { x: 0, y: 0 };
 
+  static _instance: Scroll;
+  static _canCreate = false;
+
+  static getInstance() {
+    if (!Scroll._instance) {
+      Scroll._canCreate = true;
+      Scroll._instance = new Scroll();
+      Scroll._canCreate = false;
+    }
+
+    return Scroll._instance;
+  }
+
   constructor() {
     super();
+
+    if (Scroll._instance || !Scroll._canCreate) {
+      throw new Error('Use Scroll.getInstance()');
+    }
+
     this.addEvents();
+
+    Scroll._instance = this;
   }
 
   applyScrollXY({ x, y }: ApplyScrollXY) {
