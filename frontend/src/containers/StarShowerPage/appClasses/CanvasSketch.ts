@@ -20,6 +20,7 @@ export class CanvasSketch {
 
   update(updateInfo: UpdateInfo) {
     this.clear();
+    this._mouseMove.update(updateInfo);
   }
 
   clear() {
@@ -53,5 +54,6 @@ export class CanvasSketch {
 
   destroy() {
     this.removeEventListeners();
+    this._mouseMove.destroy();
   }
 }
