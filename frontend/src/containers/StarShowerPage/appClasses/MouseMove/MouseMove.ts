@@ -9,14 +9,13 @@ interface Mouse {
 }
 
 export class MouseMove extends EventDispatcher {
-  mouseLast: Mouse = { x: 0, y: 0 };
+  _mouseLast: Mouse = { x: 0, y: 0 };
   mouse: Mouse = { x: 0, y: 0 };
   mouseLerp: Mouse = { x: 0, y: 0 };
-  isTouching = false;
-  isInit = false;
-  ease = 0.09;
   strength = 0;
   strengthLerp = 0;
+  _isTouching = false;
+  _ease = 0.09;
 
   static _instance: MouseMove;
   static _canCreate = false;
@@ -44,39 +43,38 @@ export class MouseMove extends EventDispatcher {
   }
 
   onTouchDown = (event: TouchEvent | MouseEvent) => {
-    this.isInit = true;
-    this.isTouching = true;
-    this.mouseLast.x =
+    this._isTouching = true;
+    this._mouseLast.x =
       'touches' in event ? event.touches[0].clientX : event.clientX;
-    this.mouseLast.y =
+    this._mouseLast.y =
       'touches' in event ? event.touches[0].clientY : event.clientY;
   };
 
   onTouchMove = (event: TouchEvent | MouseEvent) => {
     // Uncomment if should draw only when pressed
-    // if (!this.isTouching) {
+    // if (!this._isTouching) {
     //   return;
     // }
-    this.isInit = true;
+
     const touchX =
       'touches' in event ? event.touches[0].clientX : event.clientX;
     const touchY =
       'touches' in event ? event.touches[0].clientY : event.clientY;
 
-    const deltaX = touchX - this.mouseLast.x;
-    const deltaY = touchY - this.mouseLast.y;
+    const deltaX = touchX - this._mouseLast.x;
+    const deltaY = touchY - this._mouseLast.y;
 
     this.strength = deltaX * deltaX + deltaY * deltaY;
 
-    this.mouseLast.x = touchX;
-    this.mouseLast.y = touchY;
+    this._mouseLast.x = touchX;
+    this._mouseLast.y = touchY;
 
     this.mouse.x += deltaX;
     this.mouse.y += deltaY;
   };
 
   onTouchUp = () => {
-    this.isTouching = false;
+    this._isTouching = false;
   };
 
   onMouseLeave = () => {};
@@ -107,19 +105,19 @@ export class MouseMove extends EventDispatcher {
 
   update(updateInfo: UpdateInfo) {
     this.dispatchEvent({ type: 'mousemoved' });
-    const { ease, mouse, mouseLast, mouseLerp } = this;
+    const { _ease, mouse, _mouseLast, mouseLerp } = this;
 
-    mouseLast.x = mouse.x;
-    mouseLast.y = mouse.y;
+    _mouseLast.x = mouse.x;
+    _mouseLast.y = mouse.y;
 
-    mouseLerp.x = lerp(mouseLerp.x, mouse.x, ease * updateInfo.slowDownFactor);
-    mouseLerp.y = lerp(mouseLerp.y, mouse.y, ease * updateInfo.slowDownFactor);
+    mouseLerp.x = lerp(mouseLerp.x, mouse.x, _ease * updateInfo.slowDownFactor);
+    mouseLerp.y = lerp(mouseLerp.y, mouse.y, _ease * updateInfo.slowDownFactor);
 
     //Update strengthLerp
     this.strengthLerp = lerp(
       this.strengthLerp,
       this.strength,
-      ease * updateInfo.slowDownFactor,
+      _ease * updateInfo.slowDownFactor,
     );
   }
 }

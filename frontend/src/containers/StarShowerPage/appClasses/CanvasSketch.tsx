@@ -68,7 +68,6 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
       const mouseY = _y;
 
       if (
-        appObj.mouseMove.isInit &&
         mouseX - x < MOUSE_THRESHOLD &&
         mouseX - x > -MOUSE_THRESHOLD &&
         mouseY - y < MOUSE_THRESHOLD &&
