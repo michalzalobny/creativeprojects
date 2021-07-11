@@ -50,27 +50,27 @@ export class Scroll extends EventDispatcher {
       throw new Error('Use Scroll.getInstance()');
     }
 
-    this.addEvents();
+    this._addEvents();
 
     Scroll._instance = this;
   }
 
-  applyScrollXY({ x, y }: ApplyScrollXY) {
-    this.applyScrollX(x);
-    this.applyScrollY(y);
+  _applyScrollXY({ x, y }: ApplyScrollXY) {
+    this._applyScrollX(x);
+    this._applyScrollY(y);
   }
 
-  applyScrollX(amountPx: number) {
+  _applyScrollX(amountPx: number) {
     const newOffsetX = this._target.x + amountPx;
     this._target.x = newOffsetX;
   }
 
-  applyScrollY(amountPx: number) {
+  _applyScrollY(amountPx: number) {
     const newOffsetY = this._target.y + amountPx;
     this._target.y = newOffsetY;
   }
 
-  onTouchDown = (event: TouchEvent | MouseEvent) => {
+  _onTouchDown = (event: TouchEvent | MouseEvent) => {
     this._isTouching = true;
     this._useMomentum = false;
     this._lastTouch.x =
@@ -79,7 +79,7 @@ export class Scroll extends EventDispatcher {
       'touches' in event ? event.touches[0].clientY : event.clientY;
   };
 
-  onTouchMove = (event: TouchEvent | MouseEvent) => {
+  _onTouchMove = (event: TouchEvent | MouseEvent) => {
     if (!this._isTouching) {
       return;
     }
@@ -105,54 +105,54 @@ export class Scroll extends EventDispatcher {
     this._touchMomentum.y += deltaY;
     this._touchMomentum.x += deltaX;
 
-    this.applyScrollXY({ x: deltaX, y: deltaY });
+    this._applyScrollXY({ x: deltaX, y: deltaY });
   };
 
-  onTouchUp = () => {
+  _onTouchUp = () => {
     this._isTouching = false;
     this._useMomentum = true;
   };
 
-  onWheel = (event: WheelEvent) => {
+  _onWheel = (event: WheelEvent) => {
     this._useMomentum = false;
 
     const { pixelY } = normalizeWheel(event);
 
-    this.applyScrollXY({ x: -pixelY, y: -pixelY });
+    this._applyScrollXY({ x: -pixelY, y: -pixelY });
   };
 
-  onResize = () => {
+  _onResize = () => {
     this._useMomentum = false;
   };
 
-  addEvents() {
-    window.addEventListener('wheel', this.onWheel);
+  _addEvents() {
+    window.addEventListener('wheel', this._onWheel);
 
-    window.addEventListener('mousedown', this.onTouchDown);
-    window.addEventListener('mousemove', this.onTouchMove);
-    window.addEventListener('mouseup', this.onTouchUp);
+    window.addEventListener('mousedown', this._onTouchDown);
+    window.addEventListener('mousemove', this._onTouchMove);
+    window.addEventListener('mouseup', this._onTouchUp);
 
-    window.addEventListener('touchstart', this.onTouchDown);
-    window.addEventListener('touchmove', this.onTouchMove);
-    window.addEventListener('touchend', this.onTouchUp);
+    window.addEventListener('touchstart', this._onTouchDown);
+    window.addEventListener('touchmove', this._onTouchMove);
+    window.addEventListener('touchend', this._onTouchUp);
 
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener('resize', this._onResize);
 
-    this.onResize();
+    this._onResize();
   }
 
   destroy() {
-    window.removeEventListener('wheel', this.onWheel);
+    window.removeEventListener('wheel', this._onWheel);
 
-    window.removeEventListener('mousedown', this.onTouchDown);
-    window.removeEventListener('mousemove', this.onTouchMove);
-    window.removeEventListener('mouseup', this.onTouchUp);
+    window.removeEventListener('mousedown', this._onTouchDown);
+    window.removeEventListener('mousemove', this._onTouchMove);
+    window.removeEventListener('mouseup', this._onTouchUp);
 
-    window.removeEventListener('touchstart', this.onTouchDown);
-    window.removeEventListener('touchmove', this.onTouchMove);
-    window.removeEventListener('touchend', this.onTouchUp);
+    window.removeEventListener('touchstart', this._onTouchDown);
+    window.removeEventListener('touchmove', this._onTouchMove);
+    window.removeEventListener('touchend', this._onTouchUp);
 
-    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('resize', this._onResize);
   }
 
   update(updateInfo: UpdateInfo) {
@@ -220,14 +220,14 @@ export class Scroll extends EventDispatcher {
     }
 
     if (Math.abs(this._touchMomentum.x) >= 0.01) {
-      this.applyScrollXY({
+      this._applyScrollXY({
         y: 0,
         x: this._touchMomentum.x,
       });
     }
 
     if (Math.abs(this._touchMomentum.y) >= 0.01) {
-      this.applyScrollXY({
+      this._applyScrollXY({
         y: this._touchMomentum.y,
         x: 0,
       });
