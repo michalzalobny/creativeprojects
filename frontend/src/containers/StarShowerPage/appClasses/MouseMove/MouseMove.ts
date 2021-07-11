@@ -17,7 +17,7 @@ export class MouseMove extends EventDispatcher {
   strength = 0;
   strengthLerp = 0;
 
-  static _instance: MouseMove;
+  static _instance: MouseMove | null;
   static _canCreate = false;
 
   static getInstance() {
@@ -92,6 +92,7 @@ export class MouseMove extends EventDispatcher {
   }
 
   destroy() {
+    MouseMove._instance = null;
     window.removeEventListener('mousedown', this._onTouchDown);
     window.removeEventListener('mousemove', this._onTouchMove);
     window.removeEventListener('mouseup', this._onTouchUp);

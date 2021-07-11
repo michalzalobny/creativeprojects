@@ -25,6 +25,7 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._ctx = this._canvas.getContext('2d');
+    this._init();
   }
 
   _setSizes() {
@@ -106,15 +107,15 @@ export class App {
   }
 
   _init() {
-    this._setSizes();
-    this._onResize();
-    this._setListeners();
-    this._resumeAppFrame();
-
     if (this._ctx) {
       this._canvasSketch = new CanvasSketch(this._ctx);
     } else {
       throw new Error('ctx context could not be created');
     }
+
+    this._setSizes();
+    this._onResize();
+    this._setListeners();
+    this._resumeAppFrame();
   }
 }

@@ -20,6 +20,7 @@ export class CanvasSketch {
 
   update(updateInfo: UpdateInfo) {
     this._clear();
+    this._ctx.fillText('HTML CANVAS', this._mouseX, this._mouseY);
     this._mouseMove.update(updateInfo);
   }
 
@@ -36,16 +37,18 @@ export class CanvasSketch {
 
   _onResize = () => {};
 
+  _onMouseMove = (e: Event) => {
+    this._mouseX = (e.target as MouseMove).mouseLerp.x;
+    this._mouseY = (e.target as MouseMove).mouseLerp.y;
+  };
+
   _addEventListeners() {
     window.addEventListener('resize', this._onResize);
-
-    this._mouseMove.addEventListener('mousemoved', (e: Event) => {
-      this._mouseX = (e.target as MouseMove).mouseLerp.x;
-      this._mouseY = (e.target as MouseMove).mouseLerp.y;
-    });
+    this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
   }
   _removeEventListeners() {
     window.removeEventListener('resize', this._onResize);
+    this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
   }
 
   destroy() {
