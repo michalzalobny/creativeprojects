@@ -37,12 +37,12 @@ export class MouseMove extends EventDispatcher {
       throw new Error('Use MouseMove.getInstance()');
     }
 
-    this.addEvents();
+    this._addEvents();
 
     MouseMove._instance = this;
   }
 
-  onTouchDown = (event: TouchEvent | MouseEvent) => {
+  _onTouchDown = (event: TouchEvent | MouseEvent) => {
     this._isTouching = true;
     this._mouseLast.x =
       'touches' in event ? event.touches[0].clientX : event.clientX;
@@ -50,7 +50,7 @@ export class MouseMove extends EventDispatcher {
       'touches' in event ? event.touches[0].clientY : event.clientY;
   };
 
-  onTouchMove = (event: TouchEvent | MouseEvent) => {
+  _onTouchMove = (event: TouchEvent | MouseEvent) => {
     // Uncomment if should draw only when pressed
     // if (!this._isTouching) {
     //   return;
@@ -73,34 +73,34 @@ export class MouseMove extends EventDispatcher {
     this.mouse.y += deltaY;
   };
 
-  onTouchUp = () => {
+  _onTouchUp = () => {
     this._isTouching = false;
   };
 
-  onMouseLeave = () => {};
+  _onMouseLeave = () => {};
 
-  addEvents() {
-    window.addEventListener('mousedown', this.onTouchDown);
-    window.addEventListener('mousemove', this.onTouchMove);
-    window.addEventListener('mouseup', this.onTouchUp);
+  _addEvents() {
+    window.addEventListener('mousedown', this._onTouchDown);
+    window.addEventListener('mousemove', this._onTouchMove);
+    window.addEventListener('mouseup', this._onTouchUp);
 
-    window.addEventListener('touchstart', this.onTouchDown);
-    window.addEventListener('touchmove', this.onTouchMove);
-    window.addEventListener('touchend', this.onTouchUp);
+    window.addEventListener('touchstart', this._onTouchDown);
+    window.addEventListener('touchmove', this._onTouchMove);
+    window.addEventListener('touchend', this._onTouchUp);
 
-    window.addEventListener('mouseleave', this.onMouseLeave);
+    window.addEventListener('mouseleave', this._onMouseLeave);
   }
 
   destroy() {
-    window.removeEventListener('mousedown', this.onTouchDown);
-    window.removeEventListener('mousemove', this.onTouchMove);
-    window.removeEventListener('mouseup', this.onTouchUp);
+    window.removeEventListener('mousedown', this._onTouchDown);
+    window.removeEventListener('mousemove', this._onTouchMove);
+    window.removeEventListener('mouseup', this._onTouchUp);
 
-    window.removeEventListener('touchstart', this.onTouchDown);
-    window.removeEventListener('touchmove', this.onTouchMove);
-    window.removeEventListener('touchend', this.onTouchUp);
+    window.removeEventListener('touchstart', this._onTouchDown);
+    window.removeEventListener('touchmove', this._onTouchMove);
+    window.removeEventListener('touchend', this._onTouchUp);
 
-    window.removeEventListener('mouseleave', this.onMouseLeave);
+    window.removeEventListener('mouseleave', this._onMouseLeave);
   }
 
   update(updateInfo: UpdateInfo) {
