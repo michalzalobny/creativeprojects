@@ -1,6 +1,7 @@
 import { EventDispatcher } from 'three';
 import normalizeWheel from 'normalize-wheel';
 
+import { UpdateInfo } from '../App';
 import { lerp } from './utils/lerp';
 
 const SCROLL_SPEED_X = 0;
@@ -37,7 +38,6 @@ export class Scroll extends EventDispatcher {
   applyScrollXY({ x, y }: ApplyScrollXY) {
     this.applyScrollX(x);
     this.applyScrollY(y);
-    this.dispatchEvent({ type: 'scrolled', context: this.current });
   }
 
   applyScrollX(amountPx: number) {
@@ -133,7 +133,8 @@ export class Scroll extends EventDispatcher {
     window.removeEventListener('resize', this.onResize);
   }
 
-  update(time: number) {
+  update(updateInfo: UpdateInfo) {
+    this.dispatchEvent({ type: 'scrolled' });
     //Auto scrollingX
     this.target.x += this.speed.x;
     if (this.current.x >= this.last.x) {
@@ -155,16 +156,24 @@ export class Scroll extends EventDispatcher {
     }
 
     this.last.x = this.current.x;
-    this.current.x = lerp(this.current.x, this.target.x, this.ease);
+    this.current.x = lerp(
+      this.current.x,
+      this.target.x,
+      this.ease * updateInfo.slowDownFactor,
+    );
 
     this.last.y = this.current.y;
-    this.current.y = lerp(this.current.y, this.target.y, this.ease);
+    this.current.y = lerp(
+      this.current.y,
+      this.target.y,
+      this.ease * updateInfo.slowDownFactor,
+    );
 
     //Update strengthY
     this.currentStrength.y = lerp(
       this.currentStrength.y,
       this.targetStrength.y,
-      this.ease,
+      this.ease * updateInfo.slowDownFactor,
     );
     this.targetStrength.y = Math.abs(this.current.y - this.last.y);
 
@@ -172,19 +181,18 @@ export class Scroll extends EventDispatcher {
     this.currentStrength.x = lerp(
       this.currentStrength.x,
       this.targetStrength.x,
-      this.ease,
+      this.ease * updateInfo.slowDownFactor,
     );
     this.targetStrength.x = Math.abs(this.current.x - this.last.x);
 
-    const timeFactor = Math.min(Math.max(time / (1000 / time), 1), 4);
+    const timeFactor = Math.min(
+      Math.max(updateInfo.time / (1000 / updateInfo.time), 1),
+      4,
+    );
     this.touchMomentum.x *= Math.pow(MOMENTUM_DAMPING, timeFactor);
     this.touchMomentum.y *= Math.pow(MOMENTUM_DAMPING, timeFactor);
 
     if (!this.useMomentum) {
-      return;
-    }
-
-    if (!this) {
       return;
     }
 
