@@ -21,9 +21,9 @@ export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
   let _x = 0;
   let _y = 0;
 
-  mouseMove.addEventListener('mousemoved', (e: { target: MouseMove }) => {
-    _x = e.target.mouseLerp.x;
-    _y = e.target.mouseLerp.y;
+  mouseMove.addEventListener('mousemoved', (e: Event) => {
+    _x = (e.target as MouseMove).mouseLerp.x;
+    _y = (e.target as MouseMove).mouseLerp.y;
   });
 
   let circles = [];
