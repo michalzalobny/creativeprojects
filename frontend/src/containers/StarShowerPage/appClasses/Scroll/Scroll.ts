@@ -17,18 +17,18 @@ interface ApplyScrollXY {
 }
 
 export class Scroll extends EventDispatcher {
-  ease = 0.04;
-  last = { x: 0, y: 0 };
+  _ease = 0.09;
+  _last = { x: 0, y: 0 };
+  _lastTouch = { x: 0, y: 0 };
+  _useMomentum = false;
+  _touchMomentum = { x: 0, y: 0 };
+  _isTouching = false;
+  _speed = { x: SCROLL_SPEED_X, y: SCROLL_SPEED_Y };
+  _direction = { x: 1, y: 1 };
+  _target = { x: 0, y: 0 };
+  _targetStrength = { x: 0, y: 0 };
   current = { x: 0, y: 0 };
-  target = { x: 0, y: 0 };
   currentStrength = { x: 0, y: 0 };
-  targetStrength = { x: 0, y: 0 };
-  lastTouch = { x: 0, y: 0 };
-  useMomentum = false;
-  touchMomentum = { x: 0, y: 0 };
-  isTouching = false;
-  speed = { x: SCROLL_SPEED_X, y: SCROLL_SPEED_Y };
-  direction = { x: 1, y: 1 };
 
   constructor() {
     super();
@@ -41,26 +41,26 @@ export class Scroll extends EventDispatcher {
   }
 
   applyScrollX(amountPx: number) {
-    const newOffsetX = this.target.x + amountPx;
-    this.target.x = newOffsetX;
+    const newOffsetX = this._target.x + amountPx;
+    this._target.x = newOffsetX;
   }
 
   applyScrollY(amountPx: number) {
-    const newOffsetY = this.target.y + amountPx;
-    this.target.y = newOffsetY;
+    const newOffsetY = this._target.y + amountPx;
+    this._target.y = newOffsetY;
   }
 
   onTouchDown = (event: TouchEvent | MouseEvent) => {
-    this.isTouching = true;
-    this.useMomentum = false;
-    this.lastTouch.x =
+    this._isTouching = true;
+    this._useMomentum = false;
+    this._lastTouch.x =
       'touches' in event ? event.touches[0].clientX : event.clientX;
-    this.lastTouch.y =
+    this._lastTouch.y =
       'touches' in event ? event.touches[0].clientY : event.clientY;
   };
 
   onTouchMove = (event: TouchEvent | MouseEvent) => {
-    if (!this.isTouching) {
+    if (!this._isTouching) {
       return;
     }
 
@@ -70,29 +70,31 @@ export class Scroll extends EventDispatcher {
       'touches' in event ? event.touches[0].clientY : event.clientY;
 
     const deltaX =
-      (touchX - this.lastTouch.x) * ('touches' in event ? 1 : MOUSE_MULTIPLIER);
+      (touchX - this._lastTouch.x) *
+      ('touches' in event ? 1 : MOUSE_MULTIPLIER);
     const deltaY =
-      (touchY - this.lastTouch.y) * ('touches' in event ? 1 : MOUSE_MULTIPLIER);
+      (touchY - this._lastTouch.y) *
+      ('touches' in event ? 1 : MOUSE_MULTIPLIER);
 
-    this.lastTouch.x = touchX;
-    this.lastTouch.y = touchY;
+    this._lastTouch.x = touchX;
+    this._lastTouch.y = touchY;
 
-    this.touchMomentum.x *= MOMENTUM_CARRY;
-    this.touchMomentum.y *= MOMENTUM_CARRY;
+    this._touchMomentum.x *= MOMENTUM_CARRY;
+    this._touchMomentum.y *= MOMENTUM_CARRY;
 
-    this.touchMomentum.y += deltaY;
-    this.touchMomentum.x += deltaX;
+    this._touchMomentum.y += deltaY;
+    this._touchMomentum.x += deltaX;
 
     this.applyScrollXY({ x: deltaX, y: deltaY });
   };
 
   onTouchUp = () => {
-    this.isTouching = false;
-    this.useMomentum = true;
+    this._isTouching = false;
+    this._useMomentum = true;
   };
 
   onWheel = (event: WheelEvent) => {
-    this.useMomentum = false;
+    this._useMomentum = false;
 
     const { pixelY } = normalizeWheel(event);
 
@@ -100,7 +102,7 @@ export class Scroll extends EventDispatcher {
   };
 
   onResize = () => {
-    this.useMomentum = false;
+    this._useMomentum = false;
   };
 
   addEvents() {
@@ -135,77 +137,78 @@ export class Scroll extends EventDispatcher {
 
   update(updateInfo: UpdateInfo) {
     this.dispatchEvent({ type: 'scrolled' });
+
     //Auto scrollingX
-    this.target.x += this.speed.x;
-    if (this.current.x >= this.last.x) {
-      this.direction.x = 1;
-      this.speed.x = SCROLL_SPEED_X;
+    this._target.x += this._speed.x;
+    if (this.current.x >= this._last.x) {
+      this._direction.x = 1;
+      this._speed.x = SCROLL_SPEED_X;
     } else {
-      this.direction.x = -1;
-      this.speed.x = -SCROLL_SPEED_X;
+      this._direction.x = -1;
+      this._speed.x = -SCROLL_SPEED_X;
     }
 
     //Auto scrollingY
-    this.target.y += this.speed.y;
-    if (this.current.y >= this.last.y) {
-      this.direction.y = 1;
-      this.speed.y = SCROLL_SPEED_Y;
+    this._target.y += this._speed.y;
+    if (this.current.y >= this._last.y) {
+      this._direction.y = 1;
+      this._speed.y = SCROLL_SPEED_Y;
     } else {
-      this.direction.y = -1;
-      this.speed.y = -SCROLL_SPEED_Y;
+      this._direction.y = -1;
+      this._speed.y = -SCROLL_SPEED_Y;
     }
 
-    this.last.x = this.current.x;
+    this._last.x = this.current.x;
     this.current.x = lerp(
       this.current.x,
-      this.target.x,
-      this.ease * updateInfo.slowDownFactor,
+      this._target.x,
+      this._ease * updateInfo.slowDownFactor,
     );
 
-    this.last.y = this.current.y;
+    this._last.y = this.current.y;
     this.current.y = lerp(
       this.current.y,
-      this.target.y,
-      this.ease * updateInfo.slowDownFactor,
+      this._target.y,
+      this._ease * updateInfo.slowDownFactor,
     );
 
     //Update strengthY
     this.currentStrength.y = lerp(
       this.currentStrength.y,
-      this.targetStrength.y,
-      this.ease * updateInfo.slowDownFactor,
+      this._targetStrength.y,
+      this._ease * updateInfo.slowDownFactor,
     );
-    this.targetStrength.y = Math.abs(this.current.y - this.last.y);
+    this._targetStrength.y = Math.abs(this.current.y - this._last.y);
 
     //Update strengthX
     this.currentStrength.x = lerp(
       this.currentStrength.x,
-      this.targetStrength.x,
-      this.ease * updateInfo.slowDownFactor,
+      this._targetStrength.x,
+      this._ease * updateInfo.slowDownFactor,
     );
-    this.targetStrength.x = Math.abs(this.current.x - this.last.x);
+    this._targetStrength.x = Math.abs(this.current.x - this._last.x);
 
     const timeFactor = Math.min(
       Math.max(updateInfo.time / (1000 / updateInfo.time), 1),
       4,
     );
-    this.touchMomentum.x *= Math.pow(MOMENTUM_DAMPING, timeFactor);
-    this.touchMomentum.y *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    this._touchMomentum.x *= Math.pow(MOMENTUM_DAMPING, timeFactor);
+    this._touchMomentum.y *= Math.pow(MOMENTUM_DAMPING, timeFactor);
 
-    if (!this.useMomentum) {
+    if (!this._useMomentum) {
       return;
     }
 
-    if (Math.abs(this.touchMomentum.x) >= 0.01) {
+    if (Math.abs(this._touchMomentum.x) >= 0.01) {
       this.applyScrollXY({
         y: 0,
-        x: this.touchMomentum.x,
+        x: this._touchMomentum.x,
       });
     }
 
-    if (Math.abs(this.touchMomentum.y) >= 0.01) {
+    if (Math.abs(this._touchMomentum.y) >= 0.01) {
       this.applyScrollXY({
-        y: this.touchMomentum.y,
+        y: this._touchMomentum.y,
         x: 0,
       });
     }

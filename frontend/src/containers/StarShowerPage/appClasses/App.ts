@@ -17,6 +17,7 @@ interface Sizes {
 
 export interface AppObj {
   rendererWrapperEl: HTMLDivElement | null;
+  squareRef: HTMLDivElement | null;
   canvasSketch: CanvasSketchReturn | null;
   mouseMove: MouseMove | null;
   scroll: Scroll | null;
@@ -34,9 +35,13 @@ const DT_FPS = 1000 / DEFALUT_FPS;
 export class App {
   appObj: AppObj;
 
-  constructor(rendererWrapperEl: HTMLDivElement | null) {
+  constructor(
+    rendererWrapperEl: HTMLDivElement | null,
+    squareRef: HTMLDivElement | null,
+  ) {
     this.appObj = {
       rendererWrapperEl: rendererWrapperEl,
+      squareRef: squareRef,
       canvasSketch: null,
       mouseMove: null,
       scroll: null,
@@ -141,6 +146,13 @@ export class App {
     if (this.appObj.canvasSketch) {
       this.appObj.canvasSketch.update({ delta, slowDownFactor, time });
     }
+
+    if (this.appObj.squareRef) {
+      // this.appObj.squareRef.style.transform = `translate3d(${this.appObj.scroll?.current.x}px,0,0)`;
+      this.appObj.squareRef.style.transform = `translate3d(${
+        this.appObj.scroll?.current.x
+      }px,${this.appObj.scroll?.currentStrength.y * 10}px,0)`;
+    }
   };
 
   stopAppFrame() {
@@ -168,7 +180,7 @@ export class App {
 
     this.appObj.scroll = new Scroll();
     this.appObj.scroll.addEventListener('scrolled', e => {
-      console.log(e.target);
+      // console.log(e.target);
     });
 
     this.appObj.canvasSketch = canvasSketch({ appObj: this.appObj });

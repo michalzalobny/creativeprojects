@@ -6,6 +6,7 @@ interface Props {}
 export const Wrapper = styled(motion.div)<Props>`
   position: relative;
   min-width: 100%;
+  height: 100%;
 `;
 
 Wrapper.defaultProps = {

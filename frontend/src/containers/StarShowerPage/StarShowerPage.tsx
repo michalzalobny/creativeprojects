@@ -8,7 +8,7 @@ export default function StarShowerPage() {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const myApp = new App(rendererWrapperEl.current);
+    const myApp = new App(rendererWrapperEl.current, squareRef.current);
     myApp.init();
 
     return () => {
@@ -16,9 +16,22 @@ export default function StarShowerPage() {
     };
   }, []);
 
+  const squareRef = useRef(null);
+
   return (
     <>
       <Wrapper>
+        <div
+          ref={squareRef}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            width: 90,
+            height: 90,
+            background: 'red',
+          }}
+        />
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
     </>
