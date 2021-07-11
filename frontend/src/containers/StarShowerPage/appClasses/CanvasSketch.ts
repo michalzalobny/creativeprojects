@@ -11,7 +11,7 @@ export class CanvasSketch {
 
   constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
-    this.init();
+    this._addEventListeners();
   }
 
   set rendererBounds(bounds: DOMRect) {
@@ -19,11 +19,11 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
-    this.clear();
+    this._clear();
     this._mouseMove.update(updateInfo);
   }
 
-  clear() {
+  _clear() {
     if (this._rendererBounds) {
       this._ctx.clearRect(
         0,
@@ -34,26 +34,22 @@ export class CanvasSketch {
     }
   }
 
-  init() {
-    this.addEventListeners();
-  }
+  _onResize = () => {};
 
-  onResize = () => {};
-
-  addEventListeners() {
-    window.addEventListener('resize', this.onResize);
+  _addEventListeners() {
+    window.addEventListener('resize', this._onResize);
 
     this._mouseMove.addEventListener('mousemoved', (e: Event) => {
       this._mouseX = (e.target as MouseMove).mouseLerp.x;
       this._mouseY = (e.target as MouseMove).mouseLerp.y;
     });
   }
-  removeEventListeners() {
-    window.removeEventListener('resize', this.onResize);
+  _removeEventListeners() {
+    window.removeEventListener('resize', this._onResize);
   }
 
   destroy() {
-    this.removeEventListeners();
+    this._removeEventListeners();
     this._mouseMove.destroy();
   }
 }

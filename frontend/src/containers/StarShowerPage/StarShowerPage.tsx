@@ -12,7 +12,6 @@ export default function StarShowerPage() {
       return () => {};
     }
     const myApp = new App(rendererWrapperEl.current);
-    myApp.init();
 
     return () => {
       myApp.destroy();

@@ -12,77 +12,77 @@ export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
 export class App {
-  rendererWrapperEl: HTMLDivElement;
-  canvasSketch: CanvasSketch | null = null;
-  rafId: number | null = null;
-  isResumed = true;
-  lastFrameTime: number | null = null;
-  canvas: HTMLCanvasElement;
-  ctx: CanvasRenderingContext2D | null;
+  _rendererWrapperEl: HTMLDivElement;
+  _canvasSketch: CanvasSketch | null = null;
+  _rafId: number | null = null;
+  _isResumed = true;
+  _lastFrameTime: number | null = null;
+  _canvas: HTMLCanvasElement;
+  _ctx: CanvasRenderingContext2D | null;
 
   constructor(rendererWrapperEl: HTMLDivElement) {
-    this.rendererWrapperEl = rendererWrapperEl;
-    this.canvas = document.createElement('canvas');
-    this.rendererWrapperEl.appendChild(this.canvas);
-    this.ctx = this.canvas.getContext('2d');
+    this._rendererWrapperEl = rendererWrapperEl;
+    this._canvas = document.createElement('canvas');
+    this._rendererWrapperEl.appendChild(this._canvas);
+    this._ctx = this._canvas.getContext('2d');
   }
 
-  setSizes() {
-    if (this.rendererWrapperEl && this.canvas) {
-      const rendererBounds = this.rendererWrapperEl.getBoundingClientRect();
-      if (this.canvasSketch) {
-        this.canvasSketch.rendererBounds = rendererBounds;
+  _setSizes() {
+    if (this._rendererWrapperEl && this._canvas) {
+      const rendererBounds = this._rendererWrapperEl.getBoundingClientRect();
+      if (this._canvasSketch) {
+        this._canvasSketch.rendererBounds = rendererBounds;
       }
-      this.canvas.width = rendererBounds.width;
-      this.canvas.height = rendererBounds.height;
+      this._canvas.width = rendererBounds.width;
+      this._canvas.height = rendererBounds.height;
     }
   }
 
-  onResize = () => {
-    this.setSizes();
+  _onResize = () => {
+    this._setSizes();
   };
 
-  onVisibilityChange = () => {
+  _onVisibilityChange = () => {
     if (document.hidden) {
-      this.stopAppFrame();
+      this._stopAppFrame();
     } else {
-      this.resumeAppFrame();
+      this._resumeAppFrame();
     }
   };
 
-  setListeners() {
-    window.addEventListener('resize', this.onResize);
-    window.addEventListener('visibilitychange', this.onVisibilityChange);
+  _setListeners() {
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('visibilitychange', this._onVisibilityChange);
   }
 
   destroy() {
-    if (this.canvas && this.canvas.parentNode) {
-      this.canvas.parentNode.removeChild(this.canvas);
+    if (this._canvas && this._canvas.parentNode) {
+      this._canvas.parentNode.removeChild(this._canvas);
     }
-    this.stopAppFrame();
-    window.removeEventListener('resize', this.onResize);
-    window.removeEventListener('visibilitychange', this.onVisibilityChange);
+    this._stopAppFrame();
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('visibilitychange', this._onVisibilityChange);
 
-    if (this.canvasSketch) {
-      this.canvasSketch.destroy();
+    if (this._canvasSketch) {
+      this._canvasSketch.destroy();
     }
   }
 
-  resumeAppFrame() {
-    this.rafId = window.requestAnimationFrame(this.renderOnFrame);
-    this.isResumed = true;
+  _resumeAppFrame() {
+    this._rafId = window.requestAnimationFrame(this._renderOnFrame);
+    this._isResumed = true;
   }
 
-  renderOnFrame = (time: number) => {
-    this.rafId = window.requestAnimationFrame(this.renderOnFrame);
+  _renderOnFrame = (time: number) => {
+    this._rafId = window.requestAnimationFrame(this._renderOnFrame);
 
-    if (this.isResumed || !this.lastFrameTime) {
-      this.lastFrameTime = window.performance.now();
-      this.isResumed = false;
+    if (this._isResumed || !this._lastFrameTime) {
+      this._lastFrameTime = window.performance.now();
+      this._isResumed = false;
       return;
     }
 
-    const delta = time - this.lastFrameTime;
+    const delta = time - this._lastFrameTime;
     let slowDownFactor = delta / DT_FPS;
 
     //Rounded slowDown factor to the nearest integer reduces physics lags
@@ -91,28 +91,28 @@ export class App {
     if (slowDownFactorRounded >= 1) {
       slowDownFactor = slowDownFactorRounded;
     }
-    this.lastFrameTime = time;
+    this._lastFrameTime = time;
     TWEEN.update(time);
 
-    if (this.canvasSketch) {
-      this.canvasSketch.update({ delta, slowDownFactor, time });
+    if (this._canvasSketch) {
+      this._canvasSketch.update({ delta, slowDownFactor, time });
     }
   };
 
-  stopAppFrame() {
-    if (this.rafId) {
-      window.cancelAnimationFrame(this.rafId);
+  _stopAppFrame() {
+    if (this._rafId) {
+      window.cancelAnimationFrame(this._rafId);
     }
   }
 
-  init() {
-    this.setSizes();
-    this.onResize();
-    this.setListeners();
-    this.resumeAppFrame();
+  _init() {
+    this._setSizes();
+    this._onResize();
+    this._setListeners();
+    this._resumeAppFrame();
 
-    if (this.ctx) {
-      this.canvasSketch = new CanvasSketch(this.ctx);
+    if (this._ctx) {
+      this._canvasSketch = new CanvasSketch(this._ctx);
     } else {
       throw new Error('ctx context could not be created');
     }
