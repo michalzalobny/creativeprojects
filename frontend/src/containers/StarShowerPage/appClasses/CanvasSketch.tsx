@@ -1,140 +1,57 @@
 import { MouseMove } from './MouseMove/MouseMove';
 import { Event } from 'three';
-import { AppObj, UpdateInfo } from './App';
-import { getRandBetween } from './utils/getRandBetween';
+import { UpdateInfo } from './App';
 
-interface CanvasSketch {
-  appObj: AppObj;
-}
+export class CanvasSketch {
+  _mouseMove = MouseMove.getInstance();
+  _mouseX = 0;
+  _mouseY = 0;
+  _ctx: CanvasRenderingContext2D;
+  _rendererBounds: DOMRect | null = null;
 
-export interface CanvasSketchReturn {
-  update: (updateInfo: UpdateInfo) => void;
-  destroy: () => void;
-}
+  constructor(ctx: CanvasRenderingContext2D) {
+    this._ctx = ctx;
+    this.init();
+  }
 
-const MAX_RADIUS = 90;
-const MOUSE_THRESHOLD = 100;
+  set rendererBounds(bounds: DOMRect) {
+    this._rendererBounds = bounds;
+  }
 
-export const canvasSketch = ({ appObj }: CanvasSketch): CanvasSketchReturn => {
-  const mouseMove = MouseMove.getInstance();
+  update(updateInfo: UpdateInfo) {
+    this.clear();
+  }
 
-  let _x = 0;
-  let _y = 0;
-
-  mouseMove.addEventListener('mousemoved', (e: Event) => {
-    _x = (e.target as MouseMove).mouseLerp.x;
-    _y = (e.target as MouseMove).mouseLerp.y;
-  });
-
-  let circles = [];
-  const colorArray = ['#ffaa33', '#99ffaa', '#4411aa', '#ff1100'];
-
-  const circle = () => {
-    const { ctx } = appObj;
-
-    let radius = getRandBetween(1, 8);
-    const minRadius = radius;
-    let x = Math.random() * (appObj.viewportSizes.width - radius * 2) + radius;
-    let y = Math.random() * (appObj.viewportSizes.height - radius * 2) + radius;
-    let dx = (Math.random() + 0.2) * (Math.random() - 0.5);
-    let dy = (Math.random() + 0.2) * (Math.random() - 0.5);
-
-    const color = colorArray[getRandBetween(0, colorArray.length)];
-
-    const draw = () => {
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2, false);
-
-      ctx.fillStyle = color;
-      ctx.fill();
-    };
-
-    const update = () => {
-      draw();
-      if (x + radius >= appObj.viewportSizes.width || x - radius < 0) {
-        dx = -dx;
-      }
-
-      if (y + radius >= appObj.viewportSizes.height || y - radius < 0) {
-        dy = -dy;
-      }
-
-      x += 3 * dx;
-      y += 2 * dy;
-
-      //interactivity
-
-      const mouseX = _x;
-      const mouseY = _y;
-
-      if (
-        mouseX - x < MOUSE_THRESHOLD &&
-        mouseX - x > -MOUSE_THRESHOLD &&
-        mouseY - y < MOUSE_THRESHOLD &&
-        mouseY - y > -MOUSE_THRESHOLD
-      ) {
-        if (radius < MAX_RADIUS) {
-          radius += 1;
-        }
-      } else if (radius > minRadius) {
-        radius -= 1;
-      }
-    };
-
-    return {
-      update,
-    };
-  };
-
-  const update = (updateInfo: UpdateInfo) => {
-    clear();
-    circles.forEach(circle => {
-      circle.update();
-    });
-  };
-
-  const clear = () => {
-    const { ctx } = appObj;
-    ctx.clearRect(
-      0,
-      0,
-      appObj.viewportSizes.width,
-      appObj.viewportSizes.height,
-    );
-  };
-
-  const setCircles = () => {
-    circles = [];
-
-    for (let i = 0; i < 800; i++) {
-      circles.push(circle());
+  clear() {
+    if (this._rendererBounds) {
+      this._ctx.clearRect(
+        0,
+        0,
+        this._rendererBounds.width,
+        this._rendererBounds.height,
+      );
     }
-  };
+  }
 
-  const init = () => {
-    addEventListeners();
-    setCircles();
-  };
+  init() {
+    this.addEventListeners();
+  }
 
-  const onResize = () => {
-    setCircles();
-  };
+  onResize = () => {};
 
-  const addEventListeners = () => {
-    window.addEventListener('resize', onResize);
-  };
-  const removeEventListeners = () => {
-    window.removeEventListener('resize', onResize);
-  };
+  addEventListeners() {
+    window.addEventListener('resize', this.onResize);
 
-  const destroy = () => {
-    removeEventListeners();
-  };
+    this._mouseMove.addEventListener('mousemoved', (e: Event) => {
+      this._mouseX = (e.target as MouseMove).mouseLerp.x;
+      this._mouseY = (e.target as MouseMove).mouseLerp.y;
+    });
+  }
+  removeEventListeners() {
+    window.removeEventListener('resize', this.onResize);
+  }
 
-  init();
-
-  return {
-    update,
-    destroy,
-  };
-};
+  destroy() {
+    this.removeEventListeners();
+  }
+}

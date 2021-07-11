@@ -8,7 +8,10 @@ export default function StarShowerPage() {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const myApp = new App(rendererWrapperEl.current, squareRef.current);
+    if (!rendererWrapperEl.current) {
+      return () => {};
+    }
+    const myApp = new App(rendererWrapperEl.current);
     myApp.init();
 
     return () => {

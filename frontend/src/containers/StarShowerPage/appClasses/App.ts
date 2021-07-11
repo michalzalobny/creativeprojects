@@ -1,8 +1,6 @@
 import TWEEN from '@tweenjs/tween.js';
 
-import { canvasSketch, CanvasSketchReturn } from './CanvasSketch';
-import { MouseMove } from './MouseMove/MouseMove';
-import { Scroll } from './Scroll/Scroll';
+import { CanvasSketch } from './CanvasSketch';
 
 export interface UpdateInfo {
   slowDownFactor: number;
@@ -10,58 +8,33 @@ export interface UpdateInfo {
   time: number;
 }
 
-interface Sizes {
-  width: number;
-  height: number;
-}
-
-export interface AppObj {
-  rendererWrapperEl: HTMLDivElement | null;
-  squareRef: HTMLDivElement | null;
-  canvasSketch: CanvasSketchReturn | null;
-  mouseMove: MouseMove | null;
-  scroll: Scroll | null;
-  rafId: number | null;
-  isResumed: boolean;
-  lastFrameTime: number | null;
-  viewportSizes: Sizes;
-  canvas: HTMLCanvasElement | null;
-  ctx: CanvasRenderingContext2D | null;
-}
-
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 
 export class App {
-  appObj: AppObj;
+  rendererWrapperEl: HTMLDivElement;
+  canvasSketch: CanvasSketch | null = null;
+  rafId: number | null = null;
+  isResumed = true;
+  lastFrameTime: number | null = null;
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D | null;
 
-  constructor(
-    rendererWrapperEl: HTMLDivElement | null,
-    squareRef: HTMLDivElement | null,
-  ) {
-    this.appObj = {
-      rendererWrapperEl: rendererWrapperEl,
-      squareRef: squareRef,
-      canvasSketch: null,
-      mouseMove: null,
-      scroll: null,
-      rafId: null,
-      isResumed: true,
-      lastFrameTime: null,
-      canvas: null,
-      ctx: null,
-      viewportSizes: { height: 0, width: 0 },
-    };
+  constructor(rendererWrapperEl: HTMLDivElement) {
+    this.rendererWrapperEl = rendererWrapperEl;
+    this.canvas = document.createElement('canvas');
+    this.rendererWrapperEl.appendChild(this.canvas);
+    this.ctx = this.canvas.getContext('2d');
   }
 
   setSizes() {
-    if (this.appObj.rendererWrapperEl && this.appObj.canvas) {
-      const viewportRect = this.appObj.rendererWrapperEl.getBoundingClientRect();
-      this.appObj.viewportSizes.width = viewportRect.width;
-      this.appObj.viewportSizes.height = viewportRect.height;
-
-      this.appObj.canvas.width = this.appObj.viewportSizes.width;
-      this.appObj.canvas.height = this.appObj.viewportSizes.height;
+    if (this.rendererWrapperEl && this.canvas) {
+      const rendererBounds = this.rendererWrapperEl.getBoundingClientRect();
+      if (this.canvasSketch) {
+        this.canvasSketch.rendererBounds = rendererBounds;
+      }
+      this.canvas.width = rendererBounds.width;
+      this.canvas.height = rendererBounds.height;
     }
   }
 
@@ -82,48 +55,34 @@ export class App {
     window.addEventListener('visibilitychange', this.onVisibilityChange);
   }
 
-  setContext() {
-    if (this.appObj.canvas) {
-      this.appObj.ctx = this.appObj.canvas.getContext('2d');
-    }
-  }
-
   destroy() {
-    if (this.appObj.canvas && this.appObj.canvas.parentNode) {
-      this.appObj.canvas.parentNode.removeChild(this.appObj.canvas);
+    if (this.canvas && this.canvas.parentNode) {
+      this.canvas.parentNode.removeChild(this.canvas);
     }
     this.stopAppFrame();
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('visibilitychange', this.onVisibilityChange);
 
-    if (this.appObj.mouseMove) {
-      this.appObj.mouseMove.destroy();
-    }
-
-    if (this.appObj.scroll) {
-      this.appObj.scroll.destroy();
-    }
-
-    if (this.appObj.canvasSketch) {
-      this.appObj.canvasSketch.destroy();
+    if (this.canvasSketch) {
+      this.canvasSketch.destroy();
     }
   }
 
   resumeAppFrame() {
-    this.appObj.rafId = window.requestAnimationFrame(this.renderOnFrame);
-    this.appObj.isResumed = true;
+    this.rafId = window.requestAnimationFrame(this.renderOnFrame);
+    this.isResumed = true;
   }
 
   renderOnFrame = (time: number) => {
-    this.appObj.rafId = window.requestAnimationFrame(this.renderOnFrame);
+    this.rafId = window.requestAnimationFrame(this.renderOnFrame);
 
-    if (this.appObj.isResumed || !this.appObj.lastFrameTime) {
-      this.appObj.lastFrameTime = window.performance.now();
-      this.appObj.isResumed = false;
+    if (this.isResumed || !this.lastFrameTime) {
+      this.lastFrameTime = window.performance.now();
+      this.isResumed = false;
       return;
     }
 
-    const delta = time - this.appObj.lastFrameTime;
+    const delta = time - this.lastFrameTime;
     let slowDownFactor = delta / DT_FPS;
 
     //Rounded slowDown factor to the nearest integer reduces physics lags
@@ -132,57 +91,30 @@ export class App {
     if (slowDownFactorRounded >= 1) {
       slowDownFactor = slowDownFactorRounded;
     }
-    this.appObj.lastFrameTime = time;
+    this.lastFrameTime = time;
     TWEEN.update(time);
 
-    if (this.appObj.mouseMove) {
-      this.appObj.mouseMove.update({ delta, slowDownFactor, time });
-    }
-
-    if (this.appObj.scroll) {
-      this.appObj.scroll.update({ delta, slowDownFactor, time });
-    }
-
-    if (this.appObj.canvasSketch) {
-      this.appObj.canvasSketch.update({ delta, slowDownFactor, time });
-    }
-
-    if (this.appObj.squareRef) {
-      // this.appObj.squareRef.style.transform = `translate3d(${this.appObj.scroll?.current.x}px,0,0)`;
-      this.appObj.squareRef.style.transform = `translate3d(${
-        this.appObj.scroll?.current.x
-      }px,${this.appObj.scroll?.currentStrength.y * 10}px,0)`;
+    if (this.canvasSketch) {
+      this.canvasSketch.update({ delta, slowDownFactor, time });
     }
   };
 
   stopAppFrame() {
-    if (this.appObj.rafId) {
-      window.cancelAnimationFrame(this.appObj.rafId);
-    }
-  }
-
-  createCanvas() {
-    this.appObj.canvas = document.createElement('canvas');
-    if (this.appObj.rendererWrapperEl) {
-      this.appObj.rendererWrapperEl.appendChild(this.appObj.canvas);
+    if (this.rafId) {
+      window.cancelAnimationFrame(this.rafId);
     }
   }
 
   init() {
-    this.createCanvas();
     this.setSizes();
     this.onResize();
-    this.setContext();
     this.setListeners();
     this.resumeAppFrame();
 
-    this.appObj.mouseMove = MouseMove.getInstance();
-
-    this.appObj.scroll = Scroll.getInstance();
-    this.appObj.scroll.addEventListener('scrolled', e => {
-      // console.log(e.target);
-    });
-
-    this.appObj.canvasSketch = canvasSketch({ appObj: this.appObj });
+    if (this.ctx) {
+      this.canvasSketch = new CanvasSketch(this.ctx);
+    } else {
+      throw new Error('ctx context could not be created');
+    }
   }
 }
