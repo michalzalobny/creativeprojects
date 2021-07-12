@@ -1,7 +1,9 @@
-import { MouseMove } from './MouseMove/MouseMove';
 import { Event } from 'three';
+
+import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './App';
 import { Star } from './Star';
+import { MiniStar } from './MiniStar';
 
 export class CanvasSketch {
   _mouseMove = MouseMove.getInstance();
@@ -10,6 +12,7 @@ export class CanvasSketch {
   _ctx: CanvasRenderingContext2D;
   _rendererBounds: DOMRect;
   _starsArray: Star[] = [];
+  _miniStarsArray: MiniStar[] = [];
 
   constructor(ctx: CanvasRenderingContext2D, rendererBounds: DOMRect) {
     this._ctx = ctx;
@@ -17,6 +20,28 @@ export class CanvasSketch {
     this._rendererBounds = rendererBounds;
     this._generateStars();
   }
+
+  _onStarHit = (e: Event) => {
+    for (let i = 0; i < 8; i++) {
+      this._miniStarsArray.push(
+        new MiniStar(
+          e.target._x,
+          e.target._y,
+          2,
+          'red',
+          this._ctx,
+          this._rendererBounds,
+        ),
+      );
+    }
+  };
+
+  _onStarDestroy = (e: Event) => {
+    const indexToRemove = this._starsArray.indexOf(e.target);
+    if (indexToRemove > -1) {
+      this._starsArray.splice(indexToRemove, 1);
+    }
+  };
 
   _generateStars() {
     for (let i = 0; i < 1; i++) {
@@ -30,13 +55,26 @@ export class CanvasSketch {
           this._rendererBounds,
         ),
       );
+      this._starsArray.forEach(star => {
+        star.addEventListener('starhit', this._onStarHit);
+      });
+      this._starsArray.forEach(star => {
+        star.addEventListener('destroystar', this._onStarDestroy);
+      });
     }
   }
 
   update(updateInfo: UpdateInfo) {
     this._clear();
-    this._ctx.fillText('HTML CANVAS', this._mouseX, this._mouseY);
+    this._ctx.fillText(
+      `x: ${Math.trunc(this._mouseX)}, y: ${Math.trunc(this._mouseY)}`,
+      this._mouseX,
+      this._mouseY,
+    );
     this._mouseMove.update(updateInfo);
+    this._miniStarsArray.forEach(star => {
+      star.update(updateInfo);
+    });
     this._starsArray.forEach(star => {
       star.update(updateInfo);
     });
@@ -70,5 +108,11 @@ export class CanvasSketch {
   destroy() {
     this._removeEventListeners();
     this._mouseMove.destroy();
+    this._starsArray.forEach(star => {
+      star.removeEventListener('starhit', this._onStarHit);
+    });
+    this._starsArray.forEach(star => {
+      star.removeEventListener('destroystar', this._onStarDestroy);
+    });
   }
 }

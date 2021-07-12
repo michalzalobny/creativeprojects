@@ -1,20 +1,14 @@
-import { EventDispatcher } from 'three';
-
 import { UpdateInfo } from './App';
+import { Star } from './Star';
+import { getRandBetween } from './utils/getRandBetween';
 
-export class Star extends EventDispatcher {
-  _x: number;
-  _y: number;
-  _radius: number;
-  _color: string;
-  _ctx: CanvasRenderingContext2D;
-  _rendererBounds: DOMRect;
+export class MiniStar extends Star {
   _velocity = {
-    x: 0,
-    y: 3,
+    x: getRandBetween(-5, 5),
+    y: getRandBetween(-15, 15),
   };
-  _gravity = 1;
-  _friction = 0.8;
+
+  _gravity = 0.1;
 
   constructor(
     x: number,
@@ -24,13 +18,7 @@ export class Star extends EventDispatcher {
     ctx: CanvasRenderingContext2D,
     rendererBounds: DOMRect,
   ) {
-    super();
-    this._ctx = ctx;
-    this._x = x;
-    this._y = y;
-    this._radius = radius;
-    this._color = color;
-    this._rendererBounds = rendererBounds;
+    super(x, y, radius, color, ctx, rendererBounds);
   }
 
   _draw() {
@@ -41,14 +29,6 @@ export class Star extends EventDispatcher {
     this._ctx.closePath();
   }
 
-  _shatter() {
-    this._radius -= 8;
-    if (this._radius <= 0) {
-      this.dispatchEvent({ type: 'destroystar' });
-    }
-    this.dispatchEvent({ type: 'starhit' });
-  }
-
   update(updateInfo: UpdateInfo) {
     this._draw();
 
@@ -57,11 +37,11 @@ export class Star extends EventDispatcher {
       this._y + this._radius + this._velocity.y >
       this._rendererBounds.height
     ) {
-      this._shatter();
       this._velocity.y = -this._velocity.y * this._friction;
     } else {
       this._velocity.y += this._gravity;
     }
+    this._x += this._velocity.x * updateInfo.slowDownFactor;
     this._y += this._velocity.y * updateInfo.slowDownFactor;
   }
 }
