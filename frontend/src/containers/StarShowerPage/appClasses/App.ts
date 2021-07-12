@@ -19,6 +19,7 @@ export class App {
   _lastFrameTime: number | null = null;
   _canvas: HTMLCanvasElement;
   _ctx: CanvasRenderingContext2D | null;
+  _rendererBounds: DOMRect | null = null;
 
   constructor(rendererWrapperEl: HTMLDivElement) {
     this._rendererWrapperEl = rendererWrapperEl;
@@ -31,11 +32,9 @@ export class App {
   _setSizes() {
     if (this._rendererWrapperEl && this._canvas) {
       const rendererBounds = this._rendererWrapperEl.getBoundingClientRect();
-      if (this._canvasSketch) {
-        this._canvasSketch.rendererBounds = rendererBounds;
-      }
-      this._canvas.width = rendererBounds.width;
-      this._canvas.height = rendererBounds.height;
+      this._rendererBounds = rendererBounds;
+      this._canvas.width = this._rendererBounds.width;
+      this._canvas.height = this._rendererBounds.height;
     }
   }
 
@@ -107,15 +106,15 @@ export class App {
   }
 
   _init() {
-    if (this._ctx) {
-      this._canvasSketch = new CanvasSketch(this._ctx);
-    } else {
-      throw new Error('ctx context could not be created');
-    }
-
     this._setSizes();
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
+
+    if (this._ctx && this._rendererBounds) {
+      this._canvasSketch = new CanvasSketch(this._ctx, this._rendererBounds);
+    } else {
+      throw new Error('ctx context could not be created');
+    }
   }
 }

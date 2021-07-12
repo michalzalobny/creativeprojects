@@ -1,38 +1,47 @@
 import { MouseMove } from './MouseMove/MouseMove';
 import { Event } from 'three';
 import { UpdateInfo } from './App';
+import { Star } from './Star';
 
 export class CanvasSketch {
   _mouseMove = MouseMove.getInstance();
   _mouseX = 0;
   _mouseY = 0;
   _ctx: CanvasRenderingContext2D;
-  _rendererBounds: DOMRect | null = null;
+  _rendererBounds: DOMRect;
+  _starsArray: Star[] = [];
 
-  constructor(ctx: CanvasRenderingContext2D) {
+  constructor(ctx: CanvasRenderingContext2D, rendererBounds: DOMRect) {
     this._ctx = ctx;
     this._addEventListeners();
+    this._rendererBounds = rendererBounds;
+    this._generateStars();
   }
 
-  set rendererBounds(bounds: DOMRect) {
-    this._rendererBounds = bounds;
+  _generateStars() {
+    for (let i = 0; i < 1; i++) {
+      this._starsArray.push(
+        new Star(this._rendererBounds.width / 2, 30, 30, 'blue', this._ctx),
+      );
+    }
   }
 
   update(updateInfo: UpdateInfo) {
     this._clear();
     this._ctx.fillText('HTML CANVAS', this._mouseX, this._mouseY);
     this._mouseMove.update(updateInfo);
+    this._starsArray.forEach(star => {
+      star.update();
+    });
   }
 
   _clear() {
-    if (this._rendererBounds) {
-      this._ctx.clearRect(
-        0,
-        0,
-        this._rendererBounds.width,
-        this._rendererBounds.height,
-      );
-    }
+    this._ctx.clearRect(
+      0,
+      0,
+      this._rendererBounds.width,
+      this._rendererBounds.height,
+    );
   }
 
   _onResize = () => {};
