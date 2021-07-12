@@ -21,7 +21,14 @@ export class CanvasSketch {
   _generateStars() {
     for (let i = 0; i < 1; i++) {
       this._starsArray.push(
-        new Star(this._rendererBounds.width / 2, 30, 30, 'blue', this._ctx),
+        new Star(
+          this._rendererBounds.width / 2,
+          30,
+          30,
+          'blue',
+          this._ctx,
+          this._rendererBounds,
+        ),
       );
     }
   }
@@ -31,7 +38,7 @@ export class CanvasSketch {
     this._ctx.fillText('HTML CANVAS', this._mouseX, this._mouseY);
     this._mouseMove.update(updateInfo);
     this._starsArray.forEach(star => {
-      star.update();
+      star.update(updateInfo);
     });
   }
 
