@@ -31,6 +31,8 @@ export class Star extends EventDispatcher {
     this._radius = radius;
     this._color = color;
     this._rendererBounds = rendererBounds;
+
+    console.log('base:', this._gravity);
   }
 
   _draw() {

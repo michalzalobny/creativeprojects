@@ -16,11 +16,12 @@ export class MiniStar extends Star {
     x: number,
     y: number,
     radius: number,
-    color: string,
     ctx: CanvasRenderingContext2D,
     rendererBounds: DOMRect,
   ) {
-    super(x, y, radius, color, ctx, rendererBounds);
+    super(x, y, radius, '#000', ctx, rendererBounds);
+
+    console.log('extended:', this._gravity);
   }
 
   _draw() {

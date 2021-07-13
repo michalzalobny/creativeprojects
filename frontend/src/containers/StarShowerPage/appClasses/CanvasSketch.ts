@@ -29,13 +29,17 @@ export class CanvasSketch {
   };
 
   _onStarHit = (e: Event) => {
+    console.log(e);
+    const targetRef = e.target;
+    setTimeout(() => {
+      console.log('settimout', e.target, targetRef);
+    }, 100);
     for (let i = 0; i < 8; i++) {
       this._miniStarsArray.push(
         new MiniStar(
           e.target._x,
           e.target._y,
           2,
-          'red',
           this._ctx,
           this._rendererBounds,
         ),
