@@ -20,8 +20,6 @@ export class MiniStar extends Star {
     rendererBounds: DOMRect,
   ) {
     super(x, y, radius, '#000', ctx, rendererBounds);
-
-    console.log('extended:', this._gravity);
   }
 
   _draw() {
