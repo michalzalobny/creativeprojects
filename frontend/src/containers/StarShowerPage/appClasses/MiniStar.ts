@@ -9,6 +9,8 @@ export class MiniStar extends Star {
   };
 
   _gravity = 0.1;
+  _ttl = 100; //time to live  - 100 rerenders
+  _opacity = 1;
 
   constructor(
     x: number,
@@ -24,7 +26,7 @@ export class MiniStar extends Star {
   _draw() {
     this._ctx.beginPath();
     this._ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
-    this._ctx.fillStyle = this._color;
+    this._ctx.fillStyle = `rgba(255,0,0, ${this._opacity})`;
     this._ctx.fill();
     this._ctx.closePath();
   }
@@ -43,5 +45,12 @@ export class MiniStar extends Star {
     }
     this._x += this._velocity.x * updateInfo.slowDownFactor;
     this._y += this._velocity.y * updateInfo.slowDownFactor;
+    this._ttl -= 1 * updateInfo.slowDownFactor;
+    this._opacity = this._ttl * 0.01; // /100
+
+    //if stars time has ended, remove it from the canvas
+    if (this._ttl <= 0) {
+      this.dispatchEvent({ type: 'destroyministar' });
+    }
   }
 }

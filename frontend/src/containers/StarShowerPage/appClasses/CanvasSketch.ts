@@ -21,6 +21,13 @@ export class CanvasSketch {
     this._generateStars();
   }
 
+  _onStarDestroyMiniStar = (e: Event) => {
+    const indexToRemove = this._miniStarsArray.indexOf(e.target);
+    if (indexToRemove > -1) {
+      this._miniStarsArray.splice(indexToRemove, 1);
+    }
+  };
+
   _onStarHit = (e: Event) => {
     for (let i = 0; i < 8; i++) {
       this._miniStarsArray.push(
@@ -34,6 +41,9 @@ export class CanvasSketch {
         ),
       );
     }
+    this._miniStarsArray.forEach(star => {
+      star.addEventListener('destroyministar', this._onStarDestroyMiniStar);
+    });
   };
 
   _onStarDestroy = (e: Event) => {
@@ -55,13 +65,13 @@ export class CanvasSketch {
           this._rendererBounds,
         ),
       );
-      this._starsArray.forEach(star => {
-        star.addEventListener('starhit', this._onStarHit);
-      });
-      this._starsArray.forEach(star => {
-        star.addEventListener('destroystar', this._onStarDestroy);
-      });
     }
+    this._starsArray.forEach(star => {
+      star.addEventListener('starhit', this._onStarHit);
+    });
+    this._starsArray.forEach(star => {
+      star.addEventListener('destroystar', this._onStarDestroy);
+    });
   }
 
   update(updateInfo: UpdateInfo) {
