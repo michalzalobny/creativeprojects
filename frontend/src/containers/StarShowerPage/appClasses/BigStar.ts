@@ -10,7 +10,7 @@ export class BigStar extends Star {
     this._color = color;
   }
 
-  _draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
     ctx.fillStyle = this._color;
@@ -31,7 +31,7 @@ export class BigStar extends Star {
     rendererBounds: RendererBounds,
     ctx: CanvasRenderingContext2D,
   ) {
-    this._draw(ctx);
+    this.draw(ctx);
 
     //Gravity implementation
     if (this._y + this._radius + this._velocity.y > rendererBounds.height) {

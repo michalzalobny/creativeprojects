@@ -14,6 +14,7 @@ export class CanvasSketch {
   _rendererBounds: RendererBounds = { width: 300, height: 200 };
   _starsArray: BigStar[] = [];
   _miniStarsArray: MiniStar[] = [];
+  _backgroundStarsArray: BigStar[] = [];
   _backgroundGradient: CanvasGradient | null = null;
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
@@ -75,25 +76,40 @@ export class CanvasSketch {
     this._starsArray.forEach(star => {
       star.addEventListener('destroystar', this._onStarDestroy);
     });
+
+    //Add background stars
+    for (let i = 0; i < 150; i++) {
+      const x = Math.random() * this._rendererBounds.width;
+      const y = Math.random() * this._rendererBounds.height;
+      const radius = Math.random() * 3;
+      this._backgroundStarsArray.push(new BigStar(x, y, radius, 'white'));
+    }
   }
 
-  _createMountainRange(amount: number, height: number, color: string) {
+  _createMountainRange(
+    amount: number,
+    height: number,
+    color: string,
+    rendererBounds: RendererBounds,
+    ctx: CanvasRenderingContext2D,
+  ) {
     for (let i = 0; i < amount; i++) {
-      const mountainWidth = this._rendererBounds.width / amount;
-      this._ctx.beginPath();
-      this._ctx.moveTo(i * mountainWidth, this._rendererBounds.height);
-      this._ctx.lineTo(
-        i * mountainWidth + mountainWidth,
-        this._rendererBounds.height,
+      const offset = rendererBounds.width * 0.2;
+      const mountainWidth = rendererBounds.width / amount;
+      ctx.beginPath();
+      ctx.moveTo(i * mountainWidth, rendererBounds.height);
+      ctx.lineTo(
+        i * mountainWidth + mountainWidth + offset,
+        rendererBounds.height,
       );
-      this._ctx.lineTo(
+      ctx.lineTo(
         i * mountainWidth + mountainWidth * 0.5,
-        this._rendererBounds.height - height,
+        rendererBounds.height - height,
       );
-      this._ctx.lineTo(i * mountainWidth, this._rendererBounds.height);
-      this._ctx.fillStyle = color;
-      this._ctx.fill();
-      this._ctx.closePath();
+      ctx.lineTo(i * mountainWidth - offset, rendererBounds.height);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.closePath();
     }
   }
 
@@ -102,7 +118,32 @@ export class CanvasSketch {
       this._ctx.fillStyle = this._backgroundGradient;
     }
     this._clear();
-    this._createMountainRange(3, 100, 'white');
+
+    this._backgroundStarsArray.forEach(star => {
+      star.draw(this._ctx);
+    });
+
+    this._createMountainRange(
+      1,
+      this._rendererBounds.height * 0.7,
+      '#384551',
+      this._rendererBounds,
+      this._ctx,
+    );
+    this._createMountainRange(
+      2,
+      this._rendererBounds.height * 0.55,
+      '#2B3843',
+      this._rendererBounds,
+      this._ctx,
+    );
+    this._createMountainRange(
+      3,
+      this._rendererBounds.height * 0.3,
+      '#26333E',
+      this._rendererBounds,
+      this._ctx,
+    );
     this._ctx.fillText(
       `x: ${Math.trunc(this._mouseX)}, y: ${Math.trunc(this._mouseY)}`,
       this._mouseX,
