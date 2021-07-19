@@ -23,7 +23,7 @@ export class BigStar extends Star {
   }
 
   _shatter() {
-    this._radius -= 8;
+    this._radius -= 3;
     this.dispatchEvent({ type: 'starhit' });
     if (this._radius <= 0) {
       this.dispatchEvent({ type: 'destroystar' });
@@ -45,5 +45,6 @@ export class BigStar extends Star {
       this._velocity.y += this._gravity;
     }
     this._y += this._velocity.y * updateInfo.slowDownFactor;
+    this._x += this._velocity.x * updateInfo.slowDownFactor;
   }
 }

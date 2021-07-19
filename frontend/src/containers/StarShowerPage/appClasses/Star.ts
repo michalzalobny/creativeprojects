@@ -2,13 +2,14 @@ import { EventDispatcher } from 'three';
 
 import { RendererBounds } from './types';
 import { UpdateInfo } from './types';
+import { getRandBetween } from './utils/getRandBetween';
 
 export class Star extends EventDispatcher {
   _x: number;
   _y: number;
   _radius: number;
   _velocity = {
-    x: 0,
+    x: getRandBetween(-4, 4),
     y: 3,
   };
   _gravity = 1;

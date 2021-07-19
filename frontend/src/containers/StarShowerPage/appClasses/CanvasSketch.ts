@@ -5,6 +5,7 @@ import { UpdateInfo } from './types';
 import { BigStar } from './BigStar';
 import { MiniStar } from './MiniStar';
 import { RendererBounds } from './types';
+import { getRandBetween } from './utils/getRandBetween';
 
 export class CanvasSketch {
   _mouseMove: MouseMove;
@@ -16,7 +17,8 @@ export class CanvasSketch {
   _miniStarsArray: MiniStar[] = [];
   _backgroundStarsArray: BigStar[] = [];
   _backgroundGradient: CanvasGradient | null = null;
-  _ticker = 0;
+  _ticker = 1;
+  _randomSpawnRate = 75;
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
     this._ctx = ctx;
@@ -109,9 +111,10 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
-    if (this._ticker % 200 === 0) {
+    if (this._ticker % this._randomSpawnRate === 0) {
+      this._randomSpawnRate = getRandBetween(75, 200);
       const x = Math.random() * this._rendererBounds.width;
-      this._starsArray.push(new BigStar(x, -100, 30, '#e3eaef'));
+      this._starsArray.push(new BigStar(x, -100, 12, '#e3eaef'));
 
       this._starsArray[this._starsArray.length - 1].addEventListener(
         'starhit',
@@ -124,7 +127,7 @@ export class CanvasSketch {
       );
     }
 
-    this._ticker += 1;
+    this._ticker += 1 * Math.floor(updateInfo.slowDownFactor);
 
     if (this._backgroundGradient) {
       this._ctx.fillStyle = this._backgroundGradient;
