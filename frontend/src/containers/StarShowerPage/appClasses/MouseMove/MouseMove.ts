@@ -91,19 +91,6 @@ export class MouseMove extends EventDispatcher {
     window.addEventListener('mouseleave', this._onMouseLeave);
   }
 
-  destroy() {
-    MouseMove._instance = null;
-    window.removeEventListener('mousedown', this._onTouchDown);
-    window.removeEventListener('mousemove', this._onTouchMove);
-    window.removeEventListener('mouseup', this._onTouchUp);
-
-    window.removeEventListener('touchstart', this._onTouchDown);
-    window.removeEventListener('touchmove', this._onTouchMove);
-    window.removeEventListener('touchend', this._onTouchUp);
-
-    window.removeEventListener('mouseleave', this._onMouseLeave);
-  }
-
   update(updateInfo: UpdateInfo) {
     this.dispatchEvent({ type: 'mousemoved' });
     const { _ease, mouse, _mouseLast, mouseLerp } = this;

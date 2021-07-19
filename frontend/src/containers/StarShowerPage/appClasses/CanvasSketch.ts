@@ -7,7 +7,7 @@ import { MiniStar } from './MiniStar';
 import { RendererBounds } from './types';
 
 export class CanvasSketch {
-  _mouseMove = MouseMove.getInstance();
+  _mouseMove: MouseMove;
   _mouseX = 0;
   _mouseY = 0;
   _ctx: CanvasRenderingContext2D;
@@ -15,8 +15,9 @@ export class CanvasSketch {
   _starsArray: Star[] = [];
   _miniStarsArray: MiniStar[] = [];
 
-  constructor(ctx: CanvasRenderingContext2D) {
+  constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
     this._ctx = ctx;
+    this._mouseMove = mouseMove;
   }
 
   init() {
@@ -74,7 +75,7 @@ export class CanvasSketch {
       this._mouseX,
       this._mouseY,
     );
-    this._mouseMove.update(updateInfo);
+
     this._miniStarsArray.forEach(star => {
       star.update(updateInfo, this._rendererBounds, this._ctx);
     });
@@ -110,7 +111,6 @@ export class CanvasSketch {
 
   destroy() {
     this._removeEventListeners();
-    this._mouseMove.destroy();
     this._starsArray.forEach(star => {
       star.removeEventListener('starhit', this._onStarHit);
     });

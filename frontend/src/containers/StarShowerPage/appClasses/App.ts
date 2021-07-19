@@ -1,5 +1,6 @@
 import TWEEN from '@tweenjs/tween.js';
 
+import { MouseMove } from './MouseMove/MouseMove';
 import { CanvasSketch } from './CanvasSketch';
 
 export interface UpdateInfo {
@@ -19,6 +20,7 @@ export class App {
   _canvas: HTMLCanvasElement;
   _ctx: CanvasRenderingContext2D | null;
   _canvasSketch: CanvasSketch | null = null;
+  _mouseMove = MouseMove.getInstance();
 
   constructor(rendererWrapperEl: HTMLDivElement) {
     this._rendererWrapperEl = rendererWrapperEl;
@@ -107,6 +109,8 @@ export class App {
     if (this._canvasSketch) {
       this._canvasSketch.update({ delta, slowDownFactor, time });
     }
+
+    this._mouseMove.update({ delta, slowDownFactor, time });
   };
 
   _stopAppFrame() {
@@ -117,7 +121,7 @@ export class App {
 
   _init() {
     if (this._ctx) {
-      this._canvasSketch = new CanvasSketch(this._ctx);
+      this._canvasSketch = new CanvasSketch(this._ctx, this._mouseMove);
     }
 
     this._setSizes();
