@@ -1,6 +1,6 @@
 import { EventDispatcher } from 'three';
 
-import { UpdateInfo } from '../App';
+import { UpdateInfo } from '../types';
 import { lerp } from './utils/lerp';
 
 interface Mouse {

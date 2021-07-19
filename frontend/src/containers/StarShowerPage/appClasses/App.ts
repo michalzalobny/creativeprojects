@@ -3,12 +3,6 @@ import TWEEN from '@tweenjs/tween.js';
 import { MouseMove } from './MouseMove/MouseMove';
 import { CanvasSketch } from './CanvasSketch';
 
-export interface UpdateInfo {
-  slowDownFactor: number;
-  delta: number;
-  time: number;
-}
-
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
 

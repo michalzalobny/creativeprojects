@@ -1,4 +1,4 @@
-import { UpdateInfo } from './App';
+import { UpdateInfo } from './types';
 import { Star } from './Star';
 import { getRandBetween } from './utils/getRandBetween';
 import { RendererBounds } from './types';
@@ -8,18 +8,12 @@ export class MiniStar extends Star {
     x: getRandBetween(-5, 5),
     y: getRandBetween(-15, 15),
   };
-
   _gravity = 0.1;
   _ttl = 100; //time to live  - 100 rerenders
   _opacity = 1;
 
-  constructor(
-    x: number,
-    y: number,
-    radius: number,
-    ctx: CanvasRenderingContext2D,
-  ) {
-    super(x, y, radius, '#000');
+  constructor(x: number, y: number, radius: number) {
+    super(x, y, radius);
   }
 
   _draw(ctx: CanvasRenderingContext2D) {
@@ -35,6 +29,7 @@ export class MiniStar extends Star {
     rendererBounds: RendererBounds,
     ctx: CanvasRenderingContext2D,
   ) {
+    super.update(updateInfo, rendererBounds, ctx);
     this._draw(ctx);
 
     //Gravity implementation

@@ -1,7 +1,7 @@
 import { EventDispatcher } from 'three';
 import normalizeWheel from 'normalize-wheel';
 
-import { UpdateInfo } from '../App';
+import { UpdateInfo } from '../types';
 import { lerp } from './utils/lerp';
 
 const SCROLL_SPEED_X = 0;

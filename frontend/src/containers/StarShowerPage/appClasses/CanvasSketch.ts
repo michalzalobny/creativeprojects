@@ -1,8 +1,8 @@
 import { Event } from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
-import { UpdateInfo } from './App';
-import { Star } from './Star';
+import { UpdateInfo } from './types';
+import { BigStar } from './BigStar';
 import { MiniStar } from './MiniStar';
 import { RendererBounds } from './types';
 
@@ -12,7 +12,7 @@ export class CanvasSketch {
   _mouseY = 0;
   _ctx: CanvasRenderingContext2D;
   _rendererBounds: RendererBounds = { width: 1, height: 1 };
-  _starsArray: Star[] = [];
+  _starsArray: BigStar[] = [];
   _miniStarsArray: MiniStar[] = [];
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
@@ -38,9 +38,7 @@ export class CanvasSketch {
 
   _onStarHit = (e: Event) => {
     for (let i = 0; i < 8; i++) {
-      this._miniStarsArray.push(
-        new MiniStar(e.target._x, e.target._y, 2, this._ctx),
-      );
+      this._miniStarsArray.push(new MiniStar(e.target._x, e.target._y, 2));
     }
     this._miniStarsArray.forEach(star => {
       star.addEventListener('destroyministar', this._onStarDestroyMiniStar);
@@ -57,7 +55,7 @@ export class CanvasSketch {
   _generateStars() {
     for (let i = 0; i < 1; i++) {
       this._starsArray.push(
-        new Star(this._rendererBounds.width / 2, 30, 30, 'blue'),
+        new BigStar(this._rendererBounds.width / 2, 30, 30, 'blue'),
       );
     }
     this._starsArray.forEach(star => {
