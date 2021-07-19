@@ -9,7 +9,7 @@ export class Star extends EventDispatcher {
   _y: number;
   _radius: number;
   _velocity = {
-    x: getRandBetween(-4, 4),
+    x: getRandBetween(-6, 6),
     y: 3,
   };
   _gravity = 1;

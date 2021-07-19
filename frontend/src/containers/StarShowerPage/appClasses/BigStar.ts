@@ -44,6 +44,16 @@ export class BigStar extends Star {
     } else {
       this._velocity.y += this._gravity;
     }
+
+    //Ball hits side of the screen
+    if (
+      this._x + this._radius + this._velocity.x > rendererBounds.width ||
+      this._x - this._radius <= 0
+    ) {
+      this._shatter();
+      this._velocity.x = -this._velocity.x * this._friction;
+    }
+
     this._y += this._velocity.y * updateInfo.slowDownFactor;
     this._x += this._velocity.x * updateInfo.slowDownFactor;
   }

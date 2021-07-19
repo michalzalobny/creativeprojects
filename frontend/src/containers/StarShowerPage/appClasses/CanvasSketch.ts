@@ -7,6 +7,8 @@ import { MiniStar } from './MiniStar';
 import { RendererBounds } from './types';
 import { getRandBetween } from './utils/getRandBetween';
 
+const RADIUS = 12;
+
 export class CanvasSketch {
   _mouseMove: MouseMove;
   _mouseX = 0;
@@ -113,8 +115,11 @@ export class CanvasSketch {
   update(updateInfo: UpdateInfo) {
     if (this._ticker % this._randomSpawnRate === 0) {
       this._randomSpawnRate = getRandBetween(75, 200);
-      const x = Math.random() * this._rendererBounds.width;
-      this._starsArray.push(new BigStar(x, -100, 12, '#e3eaef'));
+      const x = Math.max(
+        12,
+        Math.random() * this._rendererBounds.width - RADIUS,
+      );
+      this._starsArray.push(new BigStar(x, -100, RADIUS, '#e3eaef'));
 
       this._starsArray[this._starsArray.length - 1].addEventListener(
         'starhit',
