@@ -24,10 +24,10 @@ export class BigStar extends Star {
 
   _shatter() {
     this._radius -= 8;
+    this.dispatchEvent({ type: 'starhit' });
     if (this._radius <= 0) {
       this.dispatchEvent({ type: 'destroystar' });
     }
-    this.dispatchEvent({ type: 'starhit' });
   }
 
   update(

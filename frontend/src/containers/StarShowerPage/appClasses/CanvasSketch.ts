@@ -16,6 +16,7 @@ export class CanvasSketch {
   _miniStarsArray: MiniStar[] = [];
   _backgroundStarsArray: BigStar[] = [];
   _backgroundGradient: CanvasGradient | null = null;
+  _ticker = 0;
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
     this._ctx = ctx;
@@ -24,7 +25,7 @@ export class CanvasSketch {
 
   init() {
     this._addEventListeners();
-    this._generateStars();
+    this._generateStarsBackground();
 
     //Create background
     this._backgroundGradient = this._ctx.createLinearGradient(
@@ -40,7 +41,9 @@ export class CanvasSketch {
   _onStarDestroyMiniStar = (e: Event) => {
     const indexToRemove = this._miniStarsArray.indexOf(e.target);
     if (indexToRemove > -1) {
+      const starToRemove = this._miniStarsArray[indexToRemove];
       this._miniStarsArray.splice(indexToRemove, 1);
+      starToRemove.removeEventListener('destroyministar', this._onStarDestroy);
     }
   };
 
@@ -49,7 +52,7 @@ export class CanvasSketch {
   }
 
   _onStarHit = (e: Event) => {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 4; i++) {
       this._miniStarsArray.push(new MiniStar(e.target._x, e.target._y, 2));
     }
     this._miniStarsArray.forEach(star => {
@@ -59,24 +62,16 @@ export class CanvasSketch {
 
   _onStarDestroy = (e: Event) => {
     const indexToRemove = this._starsArray.indexOf(e.target);
+
     if (indexToRemove > -1) {
+      const starToRemove = this._starsArray[indexToRemove];
       this._starsArray.splice(indexToRemove, 1);
+      starToRemove.removeEventListener('starhit', this._onStarHit);
+      starToRemove.removeEventListener('destroystar', this._onStarDestroy);
     }
   };
 
-  _generateStars() {
-    for (let i = 0; i < 1; i++) {
-      this._starsArray.push(
-        new BigStar(this._rendererBounds.width / 2, 30, 30, '#e3eaef'),
-      );
-    }
-    this._starsArray.forEach(star => {
-      star.addEventListener('starhit', this._onStarHit);
-    });
-    this._starsArray.forEach(star => {
-      star.addEventListener('destroystar', this._onStarDestroy);
-    });
-
+  _generateStarsBackground() {
     //Add background stars
     for (let i = 0; i < 150; i++) {
       const x = Math.random() * this._rendererBounds.width;
@@ -114,6 +109,23 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
+    if (this._ticker % 200 === 0) {
+      const x = Math.random() * this._rendererBounds.width;
+      this._starsArray.push(new BigStar(x, -100, 30, '#e3eaef'));
+
+      this._starsArray[this._starsArray.length - 1].addEventListener(
+        'starhit',
+        this._onStarHit,
+      );
+
+      this._starsArray[this._starsArray.length - 1].addEventListener(
+        'destroystar',
+        this._onStarDestroy,
+      );
+    }
+
+    this._ticker += 1;
+
     if (this._backgroundGradient) {
       this._ctx.fillStyle = this._backgroundGradient;
     }

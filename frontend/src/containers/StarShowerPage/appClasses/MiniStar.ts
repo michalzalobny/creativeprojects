@@ -9,7 +9,7 @@ export class MiniStar extends Star {
     y: getRandBetween(-15, 15),
   };
   _gravity = 0.1;
-  _ttl = 200; //time to live  - 100 rerenders
+  _ttl = 100; //time to live  - 100 rerenders
   _opacity = 1;
 
   constructor(x: number, y: number, radius: number) {
