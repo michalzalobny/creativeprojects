@@ -11,7 +11,7 @@ export class CanvasSketch {
   _mouseX = 0;
   _mouseY = 0;
   _ctx: CanvasRenderingContext2D;
-  _rendererBounds: RendererBounds = { width: 1, height: 1 };
+  _rendererBounds: RendererBounds = { width: 300, height: 200 };
   _starsArray: BigStar[] = [];
   _miniStarsArray: MiniStar[] = [];
   _backgroundGradient: CanvasGradient | null = null;
@@ -24,6 +24,7 @@ export class CanvasSketch {
   init() {
     this._addEventListeners();
     this._generateStars();
+
     //Create background
     this._backgroundGradient = this._ctx.createLinearGradient(
       0,
@@ -76,11 +77,32 @@ export class CanvasSketch {
     });
   }
 
+  _createMountainRange(amount: number, height: number, color: string) {
+    for (let i = 0; i < amount; i++) {
+      const mountainWidth = this._rendererBounds.width / amount;
+      this._ctx.beginPath();
+      this._ctx.moveTo(i * mountainWidth, this._rendererBounds.height);
+      this._ctx.lineTo(
+        i * mountainWidth + mountainWidth,
+        this._rendererBounds.height,
+      );
+      this._ctx.lineTo(
+        i * mountainWidth + mountainWidth * 0.5,
+        this._rendererBounds.height - height,
+      );
+      this._ctx.lineTo(i * mountainWidth, this._rendererBounds.height);
+      this._ctx.fillStyle = color;
+      this._ctx.fill();
+      this._ctx.closePath();
+    }
+  }
+
   update(updateInfo: UpdateInfo) {
     if (this._backgroundGradient) {
       this._ctx.fillStyle = this._backgroundGradient;
     }
     this._clear();
+    this._createMountainRange(3, 100, 'white');
     this._ctx.fillText(
       `x: ${Math.trunc(this._mouseX)}, y: ${Math.trunc(this._mouseY)}`,
       this._mouseX,
