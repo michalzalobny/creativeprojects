@@ -14,6 +14,7 @@ export class CanvasSketch {
   _rendererBounds: RendererBounds = { width: 1, height: 1 };
   _starsArray: BigStar[] = [];
   _miniStarsArray: MiniStar[] = [];
+  _backgroundGradient: CanvasGradient | null = null;
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
     this._ctx = ctx;
@@ -23,6 +24,15 @@ export class CanvasSketch {
   init() {
     this._addEventListeners();
     this._generateStars();
+    //Create background
+    this._backgroundGradient = this._ctx.createLinearGradient(
+      0,
+      0,
+      0,
+      this._rendererBounds.height,
+    );
+    this._backgroundGradient.addColorStop(0, '#171e26');
+    this._backgroundGradient.addColorStop(1, '#3f586b');
   }
 
   _onStarDestroyMiniStar = (e: Event) => {
@@ -67,6 +77,9 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
+    if (this._backgroundGradient) {
+      this._ctx.fillStyle = this._backgroundGradient;
+    }
     this._clear();
     this._ctx.fillText(
       `x: ${Math.trunc(this._mouseX)}, y: ${Math.trunc(this._mouseY)}`,
@@ -83,7 +96,7 @@ export class CanvasSketch {
   }
 
   _clear() {
-    this._ctx.clearRect(
+    this._ctx.fillRect(
       0,
       0,
       this._rendererBounds.width,
