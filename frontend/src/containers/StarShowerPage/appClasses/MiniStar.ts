@@ -9,7 +9,7 @@ export class MiniStar extends Star {
     y: getRandBetween(-15, 15),
   };
   _gravity = 0.1;
-  _ttl = 100; //time to live  - 100 rerenders
+  _ttl = 200; //time to live  - 100 rerenders
   _opacity = 1;
 
   constructor(x: number, y: number, radius: number) {
@@ -17,11 +17,16 @@ export class MiniStar extends Star {
   }
 
   _draw(ctx: CanvasRenderingContext2D) {
+    // save and restore makes sure that the glow effect only applies to the stars (not other canvas elements)
+    ctx.save();
     ctx.beginPath();
     ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
-    ctx.fillStyle = `rgba(255,0,0, ${this._opacity})`;
+    ctx.fillStyle = `rgba(227,234,239, ${this._opacity})`;
+    ctx.shadowColor = '#e3eaef';
+    ctx.shadowBlur = 40;
     ctx.fill();
     ctx.closePath();
+    ctx.restore();
   }
 
   update(

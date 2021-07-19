@@ -67,7 +67,7 @@ export class CanvasSketch {
   _generateStars() {
     for (let i = 0; i < 1; i++) {
       this._starsArray.push(
-        new BigStar(this._rendererBounds.width / 2, 30, 30, 'blue'),
+        new BigStar(this._rendererBounds.width / 2, 30, 30, '#e3eaef'),
       );
     }
     this._starsArray.forEach(star => {

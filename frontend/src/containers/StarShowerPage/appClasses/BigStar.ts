@@ -11,11 +11,15 @@ export class BigStar extends Star {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
+    ctx.save();
     ctx.beginPath();
     ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
     ctx.fillStyle = this._color;
+    ctx.shadowColor = '#e3eaef';
+    ctx.shadowBlur = 40;
     ctx.fill();
     ctx.closePath();
+    ctx.restore();
   }
 
   _shatter() {
