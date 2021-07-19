@@ -1,6 +1,7 @@
 import { UpdateInfo } from './App';
 import { Star } from './Star';
 import { getRandBetween } from './utils/getRandBetween';
+import { RendererBounds } from './types';
 
 export class MiniStar extends Star {
   _velocity = {
@@ -17,27 +18,27 @@ export class MiniStar extends Star {
     y: number,
     radius: number,
     ctx: CanvasRenderingContext2D,
-    rendererBounds: DOMRect,
   ) {
-    super(x, y, radius, '#000', ctx, rendererBounds);
+    super(x, y, radius, '#000');
   }
 
-  _draw() {
-    this._ctx.beginPath();
-    this._ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
-    this._ctx.fillStyle = `rgba(255,0,0, ${this._opacity})`;
-    this._ctx.fill();
-    this._ctx.closePath();
+  _draw(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
+    ctx.fillStyle = `rgba(255,0,0, ${this._opacity})`;
+    ctx.fill();
+    ctx.closePath();
   }
 
-  update(updateInfo: UpdateInfo) {
-    this._draw();
+  update(
+    updateInfo: UpdateInfo,
+    rendererBounds: RendererBounds,
+    ctx: CanvasRenderingContext2D,
+  ) {
+    this._draw(ctx);
 
     //Gravity implementation
-    if (
-      this._y + this._radius + this._velocity.y >
-      this._rendererBounds.height
-    ) {
+    if (this._y + this._radius + this._velocity.y > rendererBounds.height) {
       this._velocity.y = -this._velocity.y * this._friction;
     } else {
       this._velocity.y += this._gravity;

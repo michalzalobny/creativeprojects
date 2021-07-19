@@ -13,13 +13,12 @@ const DT_FPS = 1000 / DEFALUT_FPS;
 
 export class App {
   _rendererWrapperEl: HTMLDivElement;
-  _canvasSketch: CanvasSketch | null = null;
   _rafId: number | null = null;
   _isResumed = true;
   _lastFrameTime: number | null = null;
   _canvas: HTMLCanvasElement;
   _ctx: CanvasRenderingContext2D | null;
-  _rendererBounds: DOMRect | null = null;
+  _canvasSketch: CanvasSketch | null = null;
 
   constructor(rendererWrapperEl: HTMLDivElement) {
     this._rendererWrapperEl = rendererWrapperEl;
@@ -30,11 +29,22 @@ export class App {
   }
 
   _setSizes() {
-    if (this._rendererWrapperEl && this._canvas) {
+    if (this._rendererWrapperEl && this._canvas && this._ctx) {
       const rendererBounds = this._rendererWrapperEl.getBoundingClientRect();
-      this._rendererBounds = rendererBounds;
-      this._canvas.width = this._rendererBounds.width;
-      this._canvas.height = this._rendererBounds.height;
+
+      const w = rendererBounds.width;
+      const h = rendererBounds.height;
+      const ratio = window.devicePixelRatio;
+
+      this._canvas.width = w * ratio;
+      this._canvas.height = h * ratio;
+      this._canvas.style.width = w + 'px';
+      this._canvas.style.height = h + 'px';
+      this._ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      if (this._canvasSketch) {
+        this._canvasSketch.rendererBounds = { width: w, height: h };
+      }
     }
   }
 
@@ -106,15 +116,15 @@ export class App {
   }
 
   _init() {
+    if (this._ctx) {
+      this._canvasSketch = new CanvasSketch(this._ctx);
+    }
+
     this._setSizes();
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
 
-    if (this._ctx && this._rendererBounds) {
-      this._canvasSketch = new CanvasSketch(this._ctx, this._rendererBounds);
-    } else {
-      throw new Error('ctx context could not be created');
-    }
+    this._canvasSketch?.init();
   }
 }

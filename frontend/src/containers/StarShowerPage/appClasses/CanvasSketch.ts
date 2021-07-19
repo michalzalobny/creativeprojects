@@ -4,20 +4,23 @@ import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './App';
 import { Star } from './Star';
 import { MiniStar } from './MiniStar';
+import { RendererBounds } from './types';
 
 export class CanvasSketch {
   _mouseMove = MouseMove.getInstance();
   _mouseX = 0;
   _mouseY = 0;
   _ctx: CanvasRenderingContext2D;
-  _rendererBounds: DOMRect;
+  _rendererBounds: RendererBounds = { width: 1, height: 1 };
   _starsArray: Star[] = [];
   _miniStarsArray: MiniStar[] = [];
 
-  constructor(ctx: CanvasRenderingContext2D, rendererBounds: DOMRect) {
+  constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
+  }
+
+  init() {
     this._addEventListeners();
-    this._rendererBounds = rendererBounds;
     this._generateStars();
   }
 
@@ -28,16 +31,14 @@ export class CanvasSketch {
     }
   };
 
+  set rendererBounds(bounds: RendererBounds) {
+    this._rendererBounds = bounds;
+  }
+
   _onStarHit = (e: Event) => {
     for (let i = 0; i < 8; i++) {
       this._miniStarsArray.push(
-        new MiniStar(
-          e.target._x,
-          e.target._y,
-          2,
-          this._ctx,
-          this._rendererBounds,
-        ),
+        new MiniStar(e.target._x, e.target._y, 2, this._ctx),
       );
     }
     this._miniStarsArray.forEach(star => {
@@ -55,14 +56,7 @@ export class CanvasSketch {
   _generateStars() {
     for (let i = 0; i < 1; i++) {
       this._starsArray.push(
-        new Star(
-          this._rendererBounds.width / 2,
-          30,
-          30,
-          'blue',
-          this._ctx,
-          this._rendererBounds,
-        ),
+        new Star(this._rendererBounds.width / 2, 30, 30, 'blue'),
       );
     }
     this._starsArray.forEach(star => {
@@ -82,10 +76,10 @@ export class CanvasSketch {
     );
     this._mouseMove.update(updateInfo);
     this._miniStarsArray.forEach(star => {
-      star.update(updateInfo);
+      star.update(updateInfo, this._rendererBounds, this._ctx);
     });
     this._starsArray.forEach(star => {
-      star.update(updateInfo);
+      star.update(updateInfo, this._rendererBounds, this._ctx);
     });
   }
 
