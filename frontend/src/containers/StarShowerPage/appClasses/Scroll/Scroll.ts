@@ -141,20 +141,6 @@ export class Scroll extends EventDispatcher {
     this._onResize();
   }
 
-  destroy() {
-    window.removeEventListener('wheel', this._onWheel);
-
-    window.removeEventListener('mousedown', this._onTouchDown);
-    window.removeEventListener('mousemove', this._onTouchMove);
-    window.removeEventListener('mouseup', this._onTouchUp);
-
-    window.removeEventListener('touchstart', this._onTouchDown);
-    window.removeEventListener('touchmove', this._onTouchMove);
-    window.removeEventListener('touchend', this._onTouchUp);
-
-    window.removeEventListener('resize', this._onResize);
-  }
-
   update(updateInfo: UpdateInfo) {
     this.dispatchEvent({ type: 'scrolled' });
 
