@@ -84,7 +84,7 @@ export class CanvasSketch {
       const x = Math.random() * this._rendererBounds.width;
       const y = Math.random() * this._rendererBounds.height;
       const radius = Math.random() * 3;
-      this._backgroundStarsArray.push(new BigStar(x, y, radius, 'white'));
+      this._backgroundStarsArray.push(new BigStar(x, y, radius, 'white', 0, 0));
     }
   }
 
@@ -116,7 +116,7 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
-    this._spawnRandomStar();
+    // this._spawnRandomStar();
 
     this._ticker += 1 * Math.floor(updateInfo.slowDownFactor);
 
@@ -161,7 +161,7 @@ export class CanvasSketch {
         12,
         Math.random() * this._rendererBounds.width - RADIUS,
       );
-      this._starsArray.push(new BigStar(x, -100, RADIUS, '#e3eaef'));
+      this._starsArray.push(new BigStar(x, -100, RADIUS, '#e3eaef', 0, 0));
 
       this._starsArray[this._starsArray.length - 1].addEventListener(
         'starhit',
@@ -201,11 +201,37 @@ export class CanvasSketch {
 
   _onResize = () => {};
 
+  _onCatapultShoot = (e: Event) => {
+    console.log(e.deltaX, e.deltaY);
+    this._starsArray.push(
+      new BigStar(
+        e.x,
+        e.y,
+        e.strength * 0.1,
+        '#e3eaef',
+        -e.deltaX * 0.1,
+        -e.deltaY * 0.1,
+      ),
+    );
+
+    this._starsArray[this._starsArray.length - 1].addEventListener(
+      'starhit',
+      this._onStarHit,
+    );
+
+    this._starsArray[this._starsArray.length - 1].addEventListener(
+      'destroystar',
+      this._onStarDestroy,
+    );
+  };
+
   _addEventListeners() {
     window.addEventListener('resize', this._onResize);
+    this._catapult.addEventListener('shoot', this._onCatapultShoot);
   }
   _removeEventListeners() {
     window.removeEventListener('resize', this._onResize);
+    this._catapult.removeEventListener('shoot', this._onCatapultShoot);
 
     this._starsArray.forEach(star => {
       star.removeEventListener('starhit', this._onStarHit);

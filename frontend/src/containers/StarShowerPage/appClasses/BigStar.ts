@@ -6,8 +6,15 @@ import { GROUND_HEIGHT } from './CanvasSketch';
 export class BigStar extends Star {
   _color: string;
 
-  constructor(x: number, y: number, radius: number, color: string) {
-    super(x, y, radius);
+  constructor(
+    x: number,
+    y: number,
+    radius: number,
+    color: string,
+    xVelocity: number,
+    yVelocity: number,
+  ) {
+    super(x, y, radius, xVelocity, yVelocity);
     this._color = color;
   }
 

@@ -1,10 +1,10 @@
-import { Event } from 'three';
+import { Event, EventDispatcher } from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './types';
 import { getLength } from './utils/getLength';
 
-export class Catapult {
+export class Catapult extends EventDispatcher {
   _mouseMove: MouseMove;
   _mouseX = 0;
   _mouseY = 0;
@@ -13,6 +13,7 @@ export class Catapult {
   _isTouching = false;
 
   constructor(mouseMove: MouseMove) {
+    super();
     this._mouseMove = mouseMove;
   }
 
@@ -30,6 +31,25 @@ export class Catapult {
 
   _onMouseUp = (e: Event) => {
     this._isTouching = false;
+
+    const distance = getLength(
+      this._mouseX,
+      this._mouseY,
+      this._touchedX,
+      this._touchedY,
+    );
+
+    const deltaX = this._mouseX - this._touchedX;
+    const deltaY = this._mouseY - this._touchedY;
+
+    this.dispatchEvent({
+      type: 'shoot',
+      strength: distance,
+      x: this._mouseX,
+      y: this._mouseY,
+      deltaX,
+      deltaY,
+    });
   };
 
   _onMouseMove = (e: Event) => {

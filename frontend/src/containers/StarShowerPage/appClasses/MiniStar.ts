@@ -14,7 +14,7 @@ export class MiniStar extends Star {
   _opacity = 1;
 
   constructor(x: number, y: number, radius: number) {
-    super(x, y, radius);
+    super(x, y, radius, 0, 0);
   }
 
   _draw(ctx: CanvasRenderingContext2D) {
