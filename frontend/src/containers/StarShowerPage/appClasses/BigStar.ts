@@ -30,7 +30,7 @@ export class BigStar extends Star {
   }
 
   _shatter() {
-    this._radius -= 8;
+    this._radius -= 4;
     this.dispatchEvent({ type: 'starhit' });
     if (this._radius <= 0) {
       this.dispatchEvent({ type: 'destroystar' });
