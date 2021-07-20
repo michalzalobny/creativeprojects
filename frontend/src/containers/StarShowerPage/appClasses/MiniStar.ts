@@ -37,14 +37,6 @@ export class MiniStar extends Star {
     super.update(updateInfo, rendererBounds, ctx);
     this._draw(ctx);
 
-    //Gravity implementation
-    if (this._y + this._radius + this._velocity.y > rendererBounds.height) {
-      this._velocity.y = -this._velocity.y * this._friction;
-    } else {
-      this._velocity.y += this._gravity;
-    }
-    this._x += this._velocity.x * updateInfo.slowDownFactor;
-    this._y += this._velocity.y * updateInfo.slowDownFactor;
     this._ttl -= 1 * updateInfo.slowDownFactor;
     this._opacity = this._ttl * 0.01; // /100
 

@@ -12,7 +12,7 @@ export class Star extends EventDispatcher {
     x: 0,
     y: 0,
   };
-  _gravity = 0.8;
+  _gravity = 0.5;
   _friction = 0.8;
 
   constructor(
@@ -34,5 +34,27 @@ export class Star extends EventDispatcher {
     updateInfo: UpdateInfo,
     rendererBounds: RendererBounds,
     ctx: CanvasRenderingContext2D,
-  ) {}
+  ) {
+    //Ball hits top/bottom of the screen
+    if (
+      this._y + this._radius + this._velocity.y >= rendererBounds.height ||
+      this._y - this._radius + this._velocity.y <= 0
+    ) {
+      this._velocity.y = -this._velocity.y * this._friction;
+      //Gravity implementation
+    } else {
+      this._velocity.y += this._gravity;
+    }
+
+    //Ball hits side of the screen
+    if (
+      this._x + this._radius + this._velocity.x >= rendererBounds.width ||
+      this._x - this._radius + this._velocity.x <= 0
+    ) {
+      this._velocity.x = -this._velocity.x * this._friction;
+    }
+
+    this._y += this._velocity.y * updateInfo.slowDownFactor;
+    this._x += this._velocity.x * updateInfo.slowDownFactor;
+  }
 }
