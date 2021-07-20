@@ -3,6 +3,9 @@ import { Event, EventDispatcher } from 'three';
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './types';
 import { getLength } from './utils/getLength';
+import { RendererBounds } from './types';
+
+export const CATAPULT_MULTIPLIER = 0.1;
 
 export class Catapult extends EventDispatcher {
   _mouseMove: MouseMove;
@@ -11,6 +14,7 @@ export class Catapult extends EventDispatcher {
   _touchedX = 0;
   _touchedY = 0;
   _isTouching = false;
+  _rendererBounds: RendererBounds = { width: 300, height: 200 };
 
   constructor(mouseMove: MouseMove) {
     super();
@@ -19,6 +23,10 @@ export class Catapult extends EventDispatcher {
 
   init() {
     this._addEventListeners();
+  }
+
+  set rendererBounds(bounds: RendererBounds) {
+    this._rendererBounds = bounds;
   }
 
   _onMouseDown = (e: Event) => {
@@ -53,8 +61,34 @@ export class Catapult extends EventDispatcher {
   };
 
   _onMouseMove = (e: Event) => {
-    this._mouseX = (e.target as MouseMove).mouse.x;
-    this._mouseY = (e.target as MouseMove).mouse.y;
+    const starRadius =
+      getLength(this._mouseX, this._mouseY, this._touchedX, this._touchedY) *
+      CATAPULT_MULTIPLIER; //The radius of the star
+
+    //Restrict drawing the star outside of the renderer bounds
+    const newX = (e.target as MouseMove).mouse.x;
+    const xLeftBoundary = starRadius;
+    const xRightBoundary = this._rendererBounds.width - starRadius;
+
+    if (newX >= xRightBoundary) {
+      this._mouseX = xRightBoundary;
+    } else if (newX <= xLeftBoundary) {
+      this._mouseX = xLeftBoundary;
+    } else {
+      this._mouseX = newX;
+    }
+
+    const newY = (e.target as MouseMove).mouse.y;
+    const yTopBoundary = this._rendererBounds.height - starRadius;
+    const yBottomBoundary = starRadius;
+
+    if (newY >= yTopBoundary) {
+      this._mouseY = yTopBoundary;
+    } else if (newY <= yBottomBoundary) {
+      this._mouseY = yBottomBoundary;
+    } else {
+      this._mouseY = newY;
+    }
   };
 
   _addEventListeners() {
@@ -97,7 +131,13 @@ export class Catapult extends EventDispatcher {
       this._touchedY,
     );
     ctx.beginPath();
-    ctx.arc(this._mouseX, this._mouseY, distance * 0.1, 0, 2 * Math.PI);
+    ctx.arc(
+      this._mouseX,
+      this._mouseY,
+      distance * CATAPULT_MULTIPLIER,
+      0,
+      2 * Math.PI,
+    );
     ctx.lineWidth = 2;
     ctx.strokeStyle = 'white';
     ctx.stroke();

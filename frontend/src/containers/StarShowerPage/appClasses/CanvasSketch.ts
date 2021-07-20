@@ -1,6 +1,6 @@
 import { Event } from 'three';
 
-import { Catapult } from './Catapult';
+import { Catapult, CATAPULT_MULTIPLIER } from './Catapult';
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './types';
 import { BigStar } from './BigStar';
@@ -26,6 +26,7 @@ export class CanvasSketch {
   init() {
     this._addEventListeners();
     this._generateStarsBackground();
+    this._catapult.rendererBounds = this._rendererBounds;
     this._catapult.init();
 
     //Create background
@@ -160,17 +161,19 @@ export class CanvasSketch {
     );
   }
 
-  _onResize = () => {};
+  _onResize = () => {
+    this._catapult.rendererBounds = this._rendererBounds;
+  };
 
   _onCatapultShoot = (e: Event) => {
     this._starsArray.push(
       new BigStar(
         e.x,
         e.y,
-        e.strength * 0.1,
+        e.strength * CATAPULT_MULTIPLIER,
         '#e3eaef',
-        -e.deltaX * 0.1,
-        -e.deltaY * 0.1,
+        -e.deltaX * CATAPULT_MULTIPLIER,
+        -e.deltaY * CATAPULT_MULTIPLIER,
       ),
     );
 
