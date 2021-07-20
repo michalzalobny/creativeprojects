@@ -70,10 +70,11 @@ export class Catapult extends EventDispatcher {
     const xLeftBoundary = starRadius;
     const xRightBoundary = this._rendererBounds.width - starRadius;
 
+    //Added or removed 1 pixel, to fix collision bug
     if (newX >= xRightBoundary) {
-      this._mouseX = xRightBoundary;
+      this._mouseX = xRightBoundary - 1;
     } else if (newX <= xLeftBoundary) {
-      this._mouseX = xLeftBoundary;
+      this._mouseX = xLeftBoundary + 1;
     } else {
       this._mouseX = newX;
     }
@@ -83,9 +84,9 @@ export class Catapult extends EventDispatcher {
     const yBottomBoundary = starRadius;
 
     if (newY >= yTopBoundary) {
-      this._mouseY = yTopBoundary;
+      this._mouseY = yTopBoundary - 1;
     } else if (newY <= yBottomBoundary) {
-      this._mouseY = yBottomBoundary;
+      this._mouseY = yBottomBoundary + 1;
     } else {
       this._mouseY = newY;
     }
