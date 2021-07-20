@@ -1,6 +1,7 @@
 import { Star } from './Star';
 import { UpdateInfo } from './types';
 import { RendererBounds } from './types';
+import { GROUND_HEIGHT } from './CanvasSketch';
 
 export class BigStar extends Star {
   _color: string;
@@ -38,7 +39,10 @@ export class BigStar extends Star {
     this.draw(ctx);
 
     //Gravity implementation
-    if (this._y + this._radius + this._velocity.y > rendererBounds.height) {
+    if (
+      this._y + this._radius + this._velocity.y >
+      rendererBounds.height - GROUND_HEIGHT
+    ) {
       this._shatter();
       this._velocity.y = -this._velocity.y * this._friction;
     } else {

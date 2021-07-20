@@ -8,6 +8,7 @@ import { RendererBounds } from './types';
 import { getRandBetween } from './utils/getRandBetween';
 
 const RADIUS = 12;
+export const GROUND_HEIGHT = 60;
 
 export class CanvasSketch {
   _mouseMove: MouseMove;
@@ -164,6 +165,15 @@ export class CanvasSketch {
       this._rendererBounds,
       this._ctx,
     );
+
+    this._ctx.fillStyle = '#182028';
+    this._ctx.fillRect(
+      0,
+      this._rendererBounds.height - GROUND_HEIGHT,
+      this._rendererBounds.width,
+      GROUND_HEIGHT,
+    );
+
     this._ctx.fillText(
       `x: ${Math.trunc(this._mouseX)}, y: ${Math.trunc(this._mouseY)}`,
       this._mouseX,

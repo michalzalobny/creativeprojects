@@ -2,6 +2,7 @@ import { UpdateInfo } from './types';
 import { Star } from './Star';
 import { getRandBetween } from './utils/getRandBetween';
 import { RendererBounds } from './types';
+import { GROUND_HEIGHT } from './CanvasSketch';
 
 export class MiniStar extends Star {
   _velocity = {
@@ -38,7 +39,10 @@ export class MiniStar extends Star {
     this._draw(ctx);
 
     //Gravity implementation
-    if (this._y + this._radius + this._velocity.y > rendererBounds.height) {
+    if (
+      this._y + this._radius + this._velocity.y >
+      rendererBounds.height - GROUND_HEIGHT
+    ) {
       this._velocity.y = -this._velocity.y * this._friction;
     } else {
       this._velocity.y += this._gravity;
