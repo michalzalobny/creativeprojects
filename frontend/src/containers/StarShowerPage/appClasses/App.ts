@@ -100,11 +100,11 @@ export class App {
     this._lastFrameTime = time;
     TWEEN.update(time);
 
+    this._mouseMove.update({ delta, slowDownFactor, time });
+
     if (this._canvasSketch) {
       this._canvasSketch.update({ delta, slowDownFactor, time });
     }
-
-    this._mouseMove.update({ delta, slowDownFactor, time });
   };
 
   _stopAppFrame() {

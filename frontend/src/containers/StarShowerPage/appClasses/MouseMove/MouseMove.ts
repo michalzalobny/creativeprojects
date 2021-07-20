@@ -49,6 +49,9 @@ export class MouseMove extends EventDispatcher {
     this._mouseLast.y =
       'touches' in event ? event.touches[0].clientY : event.clientY;
 
+    this.mouse.x = this._mouseLast.x;
+    this.mouse.y = this._mouseLast.y;
+
     this.dispatchEvent({ type: 'down' });
   };
 

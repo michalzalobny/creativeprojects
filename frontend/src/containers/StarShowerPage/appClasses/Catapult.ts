@@ -23,11 +23,12 @@ export class Catapult {
     this._isTouching = true;
     this._touchedX = (e.target as MouseMove).mouse.x;
     this._touchedY = (e.target as MouseMove).mouse.y;
+    this._mouseX = this._touchedX;
+    this._mouseY = this._touchedY;
   };
 
   _onMouseUp = (e: Event) => {
     this._isTouching = false;
-    console.log('up');
   };
 
   _onMouseMove = (e: Event) => {
@@ -61,6 +62,8 @@ export class Catapult {
     ctx.beginPath();
     ctx.moveTo(this._touchedX, this._touchedY);
     ctx.lineTo(this._mouseX, this._mouseY);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'red';
     ctx.stroke();
   }
 
