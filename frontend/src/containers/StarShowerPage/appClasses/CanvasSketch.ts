@@ -138,7 +138,12 @@ export class CanvasSketch {
     if (this._backgroundGradient) {
       this._ctx.fillStyle = this._backgroundGradient;
     }
-    this._clear();
+    this._ctx.fillRect(
+      0,
+      0,
+      this._rendererBounds.width,
+      this._rendererBounds.height,
+    );
 
     this._backgroundStarsArray.forEach(star => {
       star.draw(this._ctx);
@@ -186,15 +191,6 @@ export class CanvasSketch {
     this._starsArray.forEach(star => {
       star.update(updateInfo, this._rendererBounds, this._ctx);
     });
-  }
-
-  _clear() {
-    this._ctx.fillRect(
-      0,
-      0,
-      this._rendererBounds.width,
-      this._rendererBounds.height,
-    );
   }
 
   _onResize = () => {};
