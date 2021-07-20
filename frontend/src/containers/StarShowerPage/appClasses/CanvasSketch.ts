@@ -1,5 +1,6 @@
 import { Event } from 'three';
 
+import { Catapult } from './Catapult';
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './types';
 import { BigStar } from './BigStar';
@@ -11,9 +12,8 @@ const RADIUS = 12;
 export const GROUND_HEIGHT = 60;
 
 export class CanvasSketch {
+  _catapult: Catapult;
   _mouseMove: MouseMove;
-  _mouseX = 0;
-  _mouseY = 0;
   _ctx: CanvasRenderingContext2D;
   _rendererBounds: RendererBounds = { width: 300, height: 200 };
   _starsArray: BigStar[] = [];
@@ -26,11 +26,13 @@ export class CanvasSketch {
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
     this._ctx = ctx;
     this._mouseMove = mouseMove;
+    this._catapult = new Catapult(this._mouseMove);
   }
 
   init() {
     this._addEventListeners();
     this._generateStarsBackground();
+    this._catapult.init();
 
     //Create background
     this._backgroundGradient = this._ctx.createLinearGradient(
@@ -142,18 +144,14 @@ export class CanvasSketch {
       GROUND_HEIGHT,
     );
 
-    this._ctx.fillText(
-      `x: ${Math.trunc(this._mouseX)}, y: ${Math.trunc(this._mouseY)}`,
-      this._mouseX,
-      this._mouseY,
-    );
-
     this._miniStarsArray.forEach(star => {
       star.update(updateInfo, this._rendererBounds, this._ctx);
     });
     this._starsArray.forEach(star => {
       star.update(updateInfo, this._rendererBounds, this._ctx);
     });
+
+    this._catapult.update(updateInfo, this._ctx);
   }
 
   _spawnRandomStar() {
@@ -203,27 +201,22 @@ export class CanvasSketch {
 
   _onResize = () => {};
 
-  _onMouseMove = (e: Event) => {
-    this._mouseX = (e.target as MouseMove).mouseLerp.x;
-    this._mouseY = (e.target as MouseMove).mouseLerp.y;
-  };
-
   _addEventListeners() {
     window.addEventListener('resize', this._onResize);
-    this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
   }
   _removeEventListeners() {
     window.removeEventListener('resize', this._onResize);
-    this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
-  }
 
-  destroy() {
-    this._removeEventListeners();
     this._starsArray.forEach(star => {
       star.removeEventListener('starhit', this._onStarHit);
     });
     this._starsArray.forEach(star => {
       star.removeEventListener('destroystar', this._onStarDestroy);
     });
+  }
+
+  destroy() {
+    this._removeEventListeners();
+    this._catapult.destroy();
   }
 }

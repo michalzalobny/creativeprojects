@@ -48,6 +48,8 @@ export class MouseMove extends EventDispatcher {
       'touches' in event ? event.touches[0].clientX : event.clientX;
     this._mouseLast.y =
       'touches' in event ? event.touches[0].clientY : event.clientY;
+
+    this.dispatchEvent({ type: 'down' });
   };
 
   _onTouchMove = (event: TouchEvent | MouseEvent) => {
@@ -75,6 +77,7 @@ export class MouseMove extends EventDispatcher {
 
   _onTouchUp = () => {
     this._isTouching = false;
+    this.dispatchEvent({ type: 'up' });
   };
 
   _onMouseLeave = () => {};
