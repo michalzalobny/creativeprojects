@@ -30,7 +30,7 @@ export class BigStar extends Star {
   }
 
   _shatter() {
-    this._radius -= 3;
+    this._radius -= 6;
     this.dispatchEvent({ type: 'starhit' });
     if (this._radius <= 0) {
       this.dispatchEvent({ type: 'destroystar' });
@@ -42,6 +42,7 @@ export class BigStar extends Star {
     rendererBounds: RendererBounds,
     ctx: CanvasRenderingContext2D,
   ) {
+    super.update(updateInfo, rendererBounds, ctx);
     this.draw(ctx);
 
     //Gravity implementation
