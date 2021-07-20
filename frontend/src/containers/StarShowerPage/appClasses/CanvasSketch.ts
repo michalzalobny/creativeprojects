@@ -114,24 +114,7 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
-    if (this._ticker % this._randomSpawnRate === 0) {
-      this._randomSpawnRate = getRandBetween(75, 200);
-      const x = Math.max(
-        12,
-        Math.random() * this._rendererBounds.width - RADIUS,
-      );
-      this._starsArray.push(new BigStar(x, -100, RADIUS, '#e3eaef'));
-
-      this._starsArray[this._starsArray.length - 1].addEventListener(
-        'starhit',
-        this._onStarHit,
-      );
-
-      this._starsArray[this._starsArray.length - 1].addEventListener(
-        'destroystar',
-        this._onStarDestroy,
-      );
-    }
+    this._spawnRandomStar();
 
     this._ticker += 1 * Math.floor(updateInfo.slowDownFactor);
 
@@ -149,27 +132,7 @@ export class CanvasSketch {
       star.draw(this._ctx);
     });
 
-    this._createMountainRange(
-      1,
-      this._rendererBounds.height * 0.7,
-      '#384551',
-      this._rendererBounds,
-      this._ctx,
-    );
-    this._createMountainRange(
-      2,
-      this._rendererBounds.height * 0.55,
-      '#2B3843',
-      this._rendererBounds,
-      this._ctx,
-    );
-    this._createMountainRange(
-      3,
-      this._rendererBounds.height * 0.3,
-      '#26333E',
-      this._rendererBounds,
-      this._ctx,
-    );
+    this._createMountains();
 
     this._ctx.fillStyle = '#182028';
     this._ctx.fillRect(
@@ -191,6 +154,51 @@ export class CanvasSketch {
     this._starsArray.forEach(star => {
       star.update(updateInfo, this._rendererBounds, this._ctx);
     });
+  }
+
+  _spawnRandomStar() {
+    if (this._ticker % this._randomSpawnRate === 0) {
+      this._randomSpawnRate = getRandBetween(75, 200);
+      const x = Math.max(
+        12,
+        Math.random() * this._rendererBounds.width - RADIUS,
+      );
+      this._starsArray.push(new BigStar(x, -100, RADIUS, '#e3eaef'));
+
+      this._starsArray[this._starsArray.length - 1].addEventListener(
+        'starhit',
+        this._onStarHit,
+      );
+
+      this._starsArray[this._starsArray.length - 1].addEventListener(
+        'destroystar',
+        this._onStarDestroy,
+      );
+    }
+  }
+
+  _createMountains() {
+    this._createMountainRange(
+      1,
+      this._rendererBounds.height * 0.7,
+      '#384551',
+      this._rendererBounds,
+      this._ctx,
+    );
+    this._createMountainRange(
+      2,
+      this._rendererBounds.height * 0.55,
+      '#2B3843',
+      this._rendererBounds,
+      this._ctx,
+    );
+    this._createMountainRange(
+      3,
+      this._rendererBounds.height * 0.3,
+      '#26333E',
+      this._rendererBounds,
+      this._ctx,
+    );
   }
 
   _onResize = () => {};
