@@ -2,6 +2,7 @@ import { Event } from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './types';
+import { getLength } from './utils/getLength';
 
 export class Catapult {
   _mouseMove: MouseMove;
@@ -55,6 +56,7 @@ export class Catapult {
   _draw(ctx: CanvasRenderingContext2D) {
     if (this._isTouching) {
       this._drawLine(ctx);
+      this._drawPowerCircle(ctx);
     }
   }
 
@@ -62,8 +64,22 @@ export class Catapult {
     ctx.beginPath();
     ctx.moveTo(this._touchedX, this._touchedY);
     ctx.lineTo(this._mouseX, this._mouseY);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+  }
+
+  _drawPowerCircle(ctx: CanvasRenderingContext2D) {
+    const distance = getLength(
+      this._mouseX,
+      this._mouseY,
+      this._touchedX,
+      this._touchedY,
+    );
+    ctx.beginPath();
+    ctx.arc(this._mouseX, this._mouseY, distance * 0.1, 0, 2 * Math.PI);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'white';
     ctx.stroke();
   }
 
