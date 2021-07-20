@@ -6,10 +6,6 @@ import { UpdateInfo } from './types';
 import { BigStar } from './BigStar';
 import { MiniStar } from './MiniStar';
 import { RendererBounds } from './types';
-import { getRandBetween } from './utils/getRandBetween';
-
-const RADIUS = 12;
-export const GROUND_HEIGHT = 60;
 
 export class CanvasSketch {
   _catapult: Catapult;
@@ -20,8 +16,6 @@ export class CanvasSketch {
   _miniStarsArray: MiniStar[] = [];
   _backgroundStarsArray: BigStar[] = [];
   _backgroundGradient: CanvasGradient | null = null;
-  _ticker = 1;
-  _randomSpawnRate = 75;
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
     this._ctx = ctx;
@@ -116,10 +110,6 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
-    // this._spawnRandomStar();
-
-    this._ticker += 1 * Math.floor(updateInfo.slowDownFactor);
-
     if (this._backgroundGradient) {
       this._ctx.fillStyle = this._backgroundGradient;
     }
@@ -136,14 +126,6 @@ export class CanvasSketch {
 
     this._createMountains();
 
-    this._ctx.fillStyle = '#182028';
-    this._ctx.fillRect(
-      0,
-      this._rendererBounds.height - GROUND_HEIGHT,
-      this._rendererBounds.width,
-      GROUND_HEIGHT,
-    );
-
     this._miniStarsArray.forEach(star => {
       star.update(updateInfo, this._rendererBounds, this._ctx);
     });
@@ -152,27 +134,6 @@ export class CanvasSketch {
     });
 
     this._catapult.update(updateInfo, this._ctx);
-  }
-
-  _spawnRandomStar() {
-    if (this._ticker % this._randomSpawnRate === 0) {
-      this._randomSpawnRate = getRandBetween(75, 200);
-      const x = Math.max(
-        12,
-        Math.random() * this._rendererBounds.width - RADIUS,
-      );
-      this._starsArray.push(new BigStar(x, -100, RADIUS, '#e3eaef', 0, 0));
-
-      this._starsArray[this._starsArray.length - 1].addEventListener(
-        'starhit',
-        this._onStarHit,
-      );
-
-      this._starsArray[this._starsArray.length - 1].addEventListener(
-        'destroystar',
-        this._onStarDestroy,
-      );
-    }
   }
 
   _createMountains() {
@@ -202,7 +163,6 @@ export class CanvasSketch {
   _onResize = () => {};
 
   _onCatapultShoot = (e: Event) => {
-    console.log(e.deltaX, e.deltaY);
     this._starsArray.push(
       new BigStar(
         e.x,
