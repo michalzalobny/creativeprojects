@@ -47,6 +47,10 @@ export class Catapult extends EventDispatcher {
       this._touchedY,
     );
 
+    if (distance <= 0) {
+      return;
+    }
+
     const deltaX = this._mouseX - this._touchedX;
     const deltaY = this._mouseY - this._touchedY;
 
