@@ -46,15 +46,15 @@ export class BigStar extends Star {
     this.draw(ctx);
 
     if (
-      this._y + this._radius + this._velocity.y >= rendererBounds.height ||
-      this._y - this._radius + this._velocity.y <= 0
+      this._y + this._radius + this._velocity.y > rendererBounds.height ||
+      this._y - this._radius + this._velocity.y < 0
     ) {
       this._shatter();
     }
 
     if (
-      this._x + this._radius + this._velocity.x >= rendererBounds.width ||
-      this._x - this._radius + this._velocity.x <= 0
+      this._x + this._radius + this._velocity.x > rendererBounds.width ||
+      this._x - this._radius + this._velocity.x < 0
     ) {
       this._shatter();
     }
