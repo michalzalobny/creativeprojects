@@ -78,7 +78,7 @@ export class CanvasSketch {
     this._backgroundStarsArray = [];
 
     //Add background stars
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < this._rendererBounds.width * 0.1; i++) {
       const x = Math.random() * this._rendererBounds.width;
       const y = Math.random() * this._rendererBounds.height;
       const radius = Math.random() * 3;
