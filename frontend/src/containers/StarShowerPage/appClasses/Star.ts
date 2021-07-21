@@ -14,6 +14,7 @@ export class Star extends EventDispatcher {
   };
   _gravity = 0.5;
   _friction = 0.8;
+  _noGravity = false;
 
   constructor(
     x: number,
@@ -21,6 +22,7 @@ export class Star extends EventDispatcher {
     radius: number,
     xVelocity: number,
     yVelocity: number,
+    noGravity: boolean,
   ) {
     super();
     this._x = x;
@@ -28,6 +30,7 @@ export class Star extends EventDispatcher {
     this._radius = radius;
     this._velocity.x = xVelocity;
     this._velocity.y = yVelocity;
+    this._noGravity = noGravity;
   }
 
   update(
@@ -35,6 +38,10 @@ export class Star extends EventDispatcher {
     rendererBounds: RendererBounds,
     ctx: CanvasRenderingContext2D,
   ) {
+    if (this._noGravity) {
+      return;
+    }
+
     //Ball hits top/bottom of the screen
     if (
       this._y + this._radius + this._velocity.y >= rendererBounds.height ||

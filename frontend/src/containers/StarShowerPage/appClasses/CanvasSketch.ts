@@ -1,5 +1,6 @@
 import { Event } from 'three';
 
+import { BackgroundStar } from './BackgroundStar';
 import { Catapult, CATAPULT_MULTIPLIER } from './Catapult';
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo } from './types';
@@ -14,7 +15,7 @@ export class CanvasSketch {
   _rendererBounds: RendererBounds = { width: 300, height: 200 };
   _starsArray: BigStar[] = [];
   _miniStarsArray: MiniStar[] = [];
-  _backgroundStarsArray: BigStar[] = [];
+  _backgroundStarsArray: BackgroundStar[] = [];
   _backgroundGradient: CanvasGradient | null = null;
 
   constructor(ctx: CanvasRenderingContext2D, mouseMove: MouseMove) {
@@ -74,12 +75,14 @@ export class CanvasSketch {
   };
 
   _generateStarsBackground() {
+    this._backgroundStarsArray = [];
+
     //Add background stars
     for (let i = 0; i < 150; i++) {
       const x = Math.random() * this._rendererBounds.width;
       const y = Math.random() * this._rendererBounds.height;
       const radius = Math.random() * 3;
-      this._backgroundStarsArray.push(new BigStar(x, y, radius, 'white', 0, 0));
+      this._backgroundStarsArray.push(new BackgroundStar(x, y, radius, 0, 0));
     }
   }
 
@@ -111,6 +114,10 @@ export class CanvasSketch {
   }
 
   update(updateInfo: UpdateInfo) {
+    this._backgroundStarsArray.forEach(star => {
+      star.update(updateInfo, this._rendererBounds, this._ctx);
+    });
+
     if (this._backgroundGradient) {
       this._ctx.fillStyle = this._backgroundGradient;
     }
@@ -162,6 +169,7 @@ export class CanvasSketch {
   }
 
   _onResize = () => {
+    this._generateStarsBackground();
     this._catapult.rendererBounds = this._rendererBounds;
   };
 
