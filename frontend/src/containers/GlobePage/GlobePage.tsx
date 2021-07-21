@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Head } from 'utils/seo/Head';
+import { Layout } from 'components/Layout/Layout';
 
 import { Wrapper } from './styled/Wrapper';
 import { PageProps } from './data';
 import { GlobeApp } from './components/GlobeApp/GlobeApp';
-import { Layout } from 'components/Layout/Layout';
 
 export default function GlobePage(props: PageProps) {
   return (

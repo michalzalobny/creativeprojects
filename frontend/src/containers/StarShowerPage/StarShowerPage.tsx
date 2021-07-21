@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
+import { Head } from 'utils/seo/Head';
+import { Layout } from 'components/Layout/Layout';
+
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
 import { App } from './appClasses/App';
@@ -7,8 +10,9 @@ import { Text } from './styled/Text';
 import { InfoWrapper } from './styled/InfoWrapper';
 import { InfoBackground } from './styled/InfoBackground';
 import { useState } from 'react';
+import { PageProps } from './data';
 
-export default function StarShowerPage() {
+export default function StarShowerPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const [hideInfo, setHideInfo] = useState(false);
 
@@ -40,6 +44,8 @@ export default function StarShowerPage() {
 
   return (
     <>
+      <Head {...props.head} />
+      <Layout allProjects={props.allProjectsData} />
       <Wrapper>
         <CanvasWrapper ref={rendererWrapperEl} />
         <InfoWrapper animate={hideInfo ? 'animate' : 'initial'}>
