@@ -5,9 +5,11 @@ import { getRand } from './utils/getRandBetween';
 
 export class BackgroundStar extends Star {
   _velocity = {
-    x: getRand(-1, 1),
-    y: 0,
+    x: getRand(1, 3),
+    y: getRand(1, 3),
   };
+  _animationDirection = getRand(-2, 2);
+  _opacity = 1;
 
   constructor(
     x: number,
@@ -23,12 +25,17 @@ export class BackgroundStar extends Star {
     ctx.save();
     ctx.beginPath();
     ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = `rgba(255,255,255, ${this._opacity})`;
     ctx.shadowColor = '#e3eaef';
     ctx.shadowBlur = 40;
     ctx.fill();
     ctx.closePath();
     ctx.restore();
+  }
+
+  updateVelocity() {
+    this._velocity.x = getRand(1, 3);
+    this._velocity.y = getRand(1, 3);
   }
 
   update(
@@ -39,16 +46,36 @@ export class BackgroundStar extends Star {
     super.update(updateInfo, rendererBounds, ctx);
     this.draw(ctx);
 
-    //Move the stars infinitely
-
+    //Infinite star move X
     let newX =
-      (this._x + this._velocity.x * updateInfo.slowDownFactor) %
-      rendererBounds.width;
-
-    if (newX <= 0) {
+      this._x +
+      this._velocity.x * this._animationDirection * updateInfo.slowDownFactor;
+    if (newX < 0) {
+      this.updateVelocity();
       newX = rendererBounds.width;
     }
-
+    if (newX > rendererBounds.width) {
+      this.updateVelocity();
+      newX = 0;
+    }
     this._x = newX;
+
+    //Infinite star move Y
+    let newY =
+      this._y +
+      this._velocity.y * this._animationDirection * updateInfo.slowDownFactor;
+    if (newY < 0) {
+      this.updateVelocity();
+      newY = rendererBounds.height;
+    }
+
+    if (newY > rendererBounds.height) {
+      this.updateVelocity();
+      newY = 0;
+    }
+    this._y = newY;
+
+    //Manage star opacity - the higher the star is the more bright it
+    this._opacity = 1 - this._y / rendererBounds.height;
   }
 }
