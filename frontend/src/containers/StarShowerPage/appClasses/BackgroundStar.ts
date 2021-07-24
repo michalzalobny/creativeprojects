@@ -5,10 +5,10 @@ import { getRand } from './utils/getRandBetween';
 
 export class BackgroundStar extends Star {
   _velocity = {
-    x: getRand(1, 3),
-    y: getRand(1, 3),
+    x: getRand(1, 2),
+    y: getRand(1, 2),
   };
-  _animationDirection = getRand(-2, 2);
+  _animationDirection = getRand(-1, 1);
   _opacity = 1;
 
   constructor(
@@ -34,8 +34,8 @@ export class BackgroundStar extends Star {
   }
 
   updateVelocity() {
-    this._velocity.x = getRand(1, 3);
-    this._velocity.y = getRand(1, 3);
+    this._velocity.x = getRand(1, 2);
+    this._velocity.y = getRand(1, 2);
   }
 
   update(
