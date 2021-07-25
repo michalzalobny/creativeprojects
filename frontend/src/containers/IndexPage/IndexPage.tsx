@@ -20,8 +20,8 @@ export default function IndexPage(props: IndexPageProps) {
         <Link passHref href={'/motion-circle'}>
           <LinkWrapper>Motion circle</LinkWrapper>
         </Link>
-        <Link passHref href={'/star-shower'}>
-          <LinkWrapper>Star shower</LinkWrapper>
+        <Link passHref href={'/constellation'}>
+          <LinkWrapper>Constellation</LinkWrapper>
         </Link>
       </Wrapper>
     </>
