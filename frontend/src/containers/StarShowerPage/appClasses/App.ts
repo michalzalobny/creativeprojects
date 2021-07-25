@@ -102,8 +102,8 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
 
-    if (this._canvasSketch) {
-      this._canvasSketch.update({ delta, slowDownFactor, time });
+    if (this._canvasSketch && this._ctx) {
+      this._canvasSketch.update({ delta, slowDownFactor, time }, this._ctx);
     }
   };
 
@@ -115,7 +115,7 @@ export class App {
 
   _init() {
     if (this._ctx) {
-      this._canvasSketch = new CanvasSketch(this._ctx, this._mouseMove);
+      this._canvasSketch = new CanvasSketch(this._mouseMove);
     }
 
     this._setSizes();
@@ -123,6 +123,8 @@ export class App {
     this._setListeners();
     this._resumeAppFrame();
 
-    this._canvasSketch?.init();
+    if (this._canvasSketch && this._ctx) {
+      this._canvasSketch.init(this._ctx);
+    }
   }
 }
