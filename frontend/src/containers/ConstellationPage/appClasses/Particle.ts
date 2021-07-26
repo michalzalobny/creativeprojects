@@ -71,13 +71,6 @@ export class Particle extends EventDispatcher {
       this._ease * updateInfo.slowDownFactor,
     );
 
-    //radius circle
-    ctx.beginPath();
-    ctx.arc(mouseX, mouseY, mouseRadius, 0, 2 * Math.PI);
-
-    ctx.strokeStyle = 'white';
-    ctx.lineWidth = 0.02;
-    ctx.stroke();
     this._draw(ctx);
 
     //Infinite star move X

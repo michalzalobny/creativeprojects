@@ -12,6 +12,7 @@ import {
   MOUSE_RADIUS,
   STARS_SPEED,
 } from './constants';
+import { MouseCircle } from './MouseCircle';
 
 export class CanvasSketch {
   _mouseX = 0;
@@ -19,12 +20,14 @@ export class CanvasSketch {
   _mouseRadius = MOUSE_RADIUS;
   _background: Background;
   _mouseMove: MouseMove;
+  _mouseCircle: MouseCircle;
   _rendererBounds: RendererBounds = { width: 300, height: 200 };
   _particlesArray: Particle[] = [];
 
   constructor(mouseMove: MouseMove) {
     this._mouseMove = mouseMove;
     this._background = new Background();
+    this._mouseCircle = new MouseCircle();
   }
 
   _generateParticles() {
@@ -53,6 +56,7 @@ export class CanvasSketch {
 
     this._background.rendererBounds = this._rendererBounds;
     this._background.init(ctx);
+    this._mouseCircle.init();
 
     this._generateParticles();
   }
@@ -130,6 +134,14 @@ export class CanvasSketch {
     });
 
     this._connectParticles(ctx);
+
+    this._mouseCircle.update(
+      updateInfo,
+      ctx,
+      this._mouseX,
+      this._mouseY,
+      this._mouseRadius,
+    );
   }
 
   _onResize = () => {
