@@ -28,6 +28,8 @@ export class Particle extends EventDispatcher {
     super();
     this._x = x;
     this._y = y;
+    this._xLerp = x;
+    this._yLerp = y;
     this._yDestination = y;
     this._xDestination = x;
     this._radius = radius;
@@ -100,7 +102,7 @@ export class Particle extends EventDispatcher {
     //Collistion detection
     const dx = mouseX - this._x;
     const dy = mouseY - this._y;
-    const movePower = 100;
+    const movePower = mouseRadius;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     //The particle has entered our mouse radius

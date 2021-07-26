@@ -1,8 +1,11 @@
+import * as THREE from 'three';
+
 import { MouseMove } from './MouseMove/MouseMove';
 import { UpdateInfo, RendererBounds } from './types';
 import { getRand } from './utils/getRandBetween';
 import { Background } from './Background';
 import { Particle } from './Particle';
+import { getBoundaryOpacity } from './utils/getBoundaryOpacity';
 
 export class CanvasSketch {
   _mouseX = 0;
@@ -67,88 +70,36 @@ export class CanvasSketch {
         const distance = dx * dx + dy * dy;
 
         if (distance < minDist) {
-          const aXBorderDist =
-            this._particlesArray[a]._x / this._rendererBounds.width;
+          const aXOpacity = getBoundaryOpacity({
+            borderVal,
+            coordinate: this._particlesArray[a]._x,
+            referenceVal: this._rendererBounds.width,
+          });
 
-          let opacityAXMultiplier = 1;
+          const aYOpacity = getBoundaryOpacity({
+            borderVal,
+            coordinate: this._particlesArray[a]._y,
+            referenceVal: this._rendererBounds.height,
+          });
 
-          if (aXBorderDist <= borderVal) {
-            opacityAXMultiplier = Math.min(
-              Math.max(aXBorderDist / borderVal, 0),
-              1,
-            );
-          }
+          const bXOpacity = getBoundaryOpacity({
+            borderVal,
+            coordinate: this._particlesArray[b]._x,
+            referenceVal: this._rendererBounds.width,
+          });
 
-          if (aXBorderDist >= 1 - borderVal) {
-            opacityAXMultiplier = Math.min(
-              Math.max((1 - aXBorderDist) / borderVal, 0),
-              1,
-            );
-          }
-
-          const aYBorderDist =
-            this._particlesArray[a]._y / this._rendererBounds.height;
-
-          let opacityAYMultiplier = 1;
-
-          if (aYBorderDist <= borderVal) {
-            opacityAYMultiplier = Math.min(
-              Math.max(aYBorderDist / borderVal, 0),
-              1,
-            );
-          }
-
-          if (aYBorderDist >= 1 - borderVal) {
-            opacityAYMultiplier = Math.min(
-              Math.max((1 - aYBorderDist) / borderVal, 0),
-              1,
-            );
-          }
-
-          const bXBorderDist =
-            this._particlesArray[b]._x / this._rendererBounds.width;
-
-          let opacityBXMultiplier = 1;
-
-          if (bXBorderDist <= borderVal) {
-            opacityBXMultiplier = Math.min(
-              Math.max(bXBorderDist / borderVal, 0),
-              1,
-            );
-          }
-
-          if (bXBorderDist >= 1 - borderVal) {
-            opacityBXMultiplier = Math.min(
-              Math.max((1 - bXBorderDist) / borderVal, 0),
-              1,
-            );
-          }
-
-          const bYBorderDist =
-            this._particlesArray[b]._y / this._rendererBounds.height;
-
-          let opacityBYMultiplier = 1;
-
-          if (bYBorderDist <= borderVal) {
-            opacityBYMultiplier = Math.min(
-              Math.max(bYBorderDist / borderVal, 0),
-              1,
-            );
-          }
-
-          if (bYBorderDist >= 1 - borderVal) {
-            opacityBYMultiplier = Math.min(
-              Math.max((1 - bYBorderDist) / borderVal, 0),
-              1,
-            );
-          }
+          const bYOpacity = getBoundaryOpacity({
+            borderVal,
+            coordinate: this._particlesArray[b]._y,
+            referenceVal: this._rendererBounds.height,
+          });
 
           opacity =
             (1 - distance / minDist) *
-            opacityAXMultiplier *
-            opacityAYMultiplier *
-            opacityBXMultiplier *
-            opacityBYMultiplier;
+            aXOpacity *
+            aYOpacity *
+            bXOpacity *
+            bYOpacity;
 
           ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
           ctx.beginPath();
@@ -182,22 +133,18 @@ export class CanvasSketch {
     this._background.rendererBounds = this._rendererBounds;
   };
 
-  _onMouseMove = e => {
+  _onMouseMove = (e: THREE.Event) => {
     this._mouseX = (e.target as MouseMove).mouse.x;
     this._mouseY = (e.target as MouseMove).mouse.y;
   };
 
-  _onMouseLeave = e => {};
-
   _addEventListeners() {
     window.addEventListener('resize', this._onResize);
-    window.addEventListener('mouseout', this._onMouseLeave);
     this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
   }
 
   _removeEventListeners() {
     window.removeEventListener('resize', this._onResize);
-    window.removeEventListener('mouseout', this._onMouseLeave);
     this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
   }
 
