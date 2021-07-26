@@ -22,8 +22,8 @@ export class Background extends EventDispatcher {
       0,
       this._rendererBounds.height,
     );
-    this._backgroundGradient.addColorStop(0, '#171e26');
-    this._backgroundGradient.addColorStop(1, '#3f586b');
+    this._backgroundGradient.addColorStop(0, '#0B1321');
+    this._backgroundGradient.addColorStop(1, '#080F1C');
   }
 
   _draw(ctx: CanvasRenderingContext2D) {}

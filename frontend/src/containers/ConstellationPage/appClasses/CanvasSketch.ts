@@ -6,11 +6,17 @@ import { getRand } from './utils/getRandBetween';
 import { Background } from './Background';
 import { Particle } from './Particle';
 import { getBoundaryOpacity } from './utils/getBoundaryOpacity';
+import {
+  BORDER_DRAW_OFFSET,
+  MIN_DIST_TO_DRAW,
+  MOUSE_RADIUS,
+  STARS_SPEED,
+} from './constants';
 
 export class CanvasSketch {
   _mouseX = 0;
   _mouseY = 0;
-  _mouseRadius = 0;
+  _mouseRadius = MOUSE_RADIUS;
   _background: Background;
   _mouseMove: MouseMove;
   _rendererBounds: RendererBounds = { width: 300, height: 200 };
@@ -28,14 +34,14 @@ export class CanvasSketch {
       this._rendererBounds.width * this._rendererBounds.height * 0.00004;
 
     for (let i = 0; i < particlesAmount; i++) {
-      const radius = getRand(1, 3);
+      const radius = getRand(0.5, 4);
       const x =
         Math.random() * (this._rendererBounds.width - radius * 2) + radius;
       const y =
         Math.random() * (this._rendererBounds.height - radius * 2) + radius;
 
-      const directionX = getRand(-1, 1);
-      const directionY = getRand(-1, 1);
+      const directionX = getRand(-STARS_SPEED, STARS_SPEED);
+      const directionY = getRand(-STARS_SPEED, STARS_SPEED);
       this._particlesArray.push(
         new Particle(x, y, radius, 'white', directionX, directionY),
       );
@@ -53,13 +59,9 @@ export class CanvasSketch {
 
   set rendererBounds(bounds: RendererBounds) {
     this._rendererBounds = bounds;
-    this._mouseRadius = 90;
   }
 
   _connectParticles(ctx: CanvasRenderingContext2D) {
-    const minDist = 4;
-    let opacity = 1;
-    const borderVal = 0.05;
     for (let a = 0; a < this._particlesArray.length; a++) {
       for (let b = a; b < this._particlesArray.length; b++) {
         const dx =
@@ -69,33 +71,34 @@ export class CanvasSketch {
 
         const distance = dx * dx + dy * dy;
 
-        if (distance < minDist) {
+        if (distance < MIN_DIST_TO_DRAW) {
+          let opacity = 1;
           const aXOpacity = getBoundaryOpacity({
-            borderVal,
+            borderVal: BORDER_DRAW_OFFSET,
             coordinate: this._particlesArray[a]._x,
             referenceVal: this._rendererBounds.width,
           });
 
           const aYOpacity = getBoundaryOpacity({
-            borderVal,
+            borderVal: BORDER_DRAW_OFFSET,
             coordinate: this._particlesArray[a]._y,
             referenceVal: this._rendererBounds.height,
           });
 
           const bXOpacity = getBoundaryOpacity({
-            borderVal,
+            borderVal: BORDER_DRAW_OFFSET,
             coordinate: this._particlesArray[b]._x,
             referenceVal: this._rendererBounds.width,
           });
 
           const bYOpacity = getBoundaryOpacity({
-            borderVal,
+            borderVal: BORDER_DRAW_OFFSET,
             coordinate: this._particlesArray[b]._y,
             referenceVal: this._rendererBounds.height,
           });
 
           opacity =
-            (1 - distance / minDist) *
+            (1 - distance / MIN_DIST_TO_DRAW) *
             aXOpacity *
             aYOpacity *
             bXOpacity *
