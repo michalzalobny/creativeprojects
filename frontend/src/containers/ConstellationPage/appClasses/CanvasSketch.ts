@@ -104,6 +104,7 @@ export class CanvasSketch {
             bXOpacity *
             bYOpacity;
 
+          ctx.lineWidth = 1;
           ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
           ctx.beginPath();
           ctx.moveTo(this._particlesArray[a]._x, this._particlesArray[a]._y);

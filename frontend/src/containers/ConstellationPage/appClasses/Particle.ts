@@ -74,8 +74,9 @@ export class Particle extends EventDispatcher {
     //radius circle
     ctx.beginPath();
     ctx.arc(mouseX, mouseY, mouseRadius, 0, 2 * Math.PI);
-    ctx.lineWidth = 2;
+
     ctx.strokeStyle = 'white';
+    ctx.lineWidth = 0.02;
     ctx.stroke();
     this._draw(ctx);
 

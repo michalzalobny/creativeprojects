@@ -22,7 +22,7 @@ export class Background extends EventDispatcher {
       0,
       this._rendererBounds.height,
     );
-    this._backgroundGradient.addColorStop(0, '#0B1321');
+    this._backgroundGradient.addColorStop(0, '#142C4F');
     this._backgroundGradient.addColorStop(1, '#080F1C');
   }
 
