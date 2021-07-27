@@ -14,7 +14,7 @@ export interface PageProps {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const projectData = (await getProjectData('star-shower')) as ProjectData;
+  const projectData = (await getProjectData('constellation')) as ProjectData;
   const allProjectsData = await getAllProjectsData();
   const projectHead = projectData.localizedHead;
 
