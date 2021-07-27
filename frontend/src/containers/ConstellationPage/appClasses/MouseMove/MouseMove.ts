@@ -94,7 +94,7 @@ export class MouseMove extends EventDispatcher {
     window.addEventListener('touchmove', this._onTouchMove);
     window.addEventListener('touchend', this._onTouchUp);
 
-    window.addEventListener('mouseleave', this._onMouseLeave);
+    window.addEventListener('mouseout', this._onMouseLeave);
   }
 
   update(updateInfo: UpdateInfo) {

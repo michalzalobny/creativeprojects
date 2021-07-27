@@ -166,5 +166,6 @@ export class CanvasSketch {
 
   destroy() {
     this._removeEventListeners();
+    this._mouseCircle.destroy();
   }
 }

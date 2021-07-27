@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 20 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 193 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 194 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -521,6 +521,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (5, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (6, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -706,6 +710,42 @@ VALUES
     5,
     5
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    11,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    11,
+    6
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    12,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    6,
+    6
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -746,6 +786,14 @@ VALUES
     5,
     1,
     'Star shower page created with 2D canvas and React.js'
+  );
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (
+    6,
+    1,
+    'A page resembling a constellation of stars. Made with plain javaScript and 2D canvas. '
   );
 
 # ------------------------------------------------------------
@@ -797,6 +845,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (10, 'Star Shower', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (11, 'Constellation', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (12, 'Constellation', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -1603,6 +1659,24 @@ VALUES
     '2021-07-21 20:44:23',
     '2021-07-21 20:44:23'
   );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    6,
+    'constellation',
+    1,
+    1,
+    '2021-07-27 10:24:18',
+    '2021-07-27 10:24:18'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: projects_components
@@ -1842,6 +1916,42 @@ VALUES
     10,
     5
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    14,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    6,
+    6
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    15,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    12,
+    6
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -1867,7 +1977,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$PNSPFPffJU.eKv4iUn74quASKcN7JZVcnidKCYcHdjyg22Ivaxs2W',
+    '$2b$10$.RT3o5VThvGjM6UzfmOx1.uMZ5djGgX06z2lMNBURP/oWcraX4RSG',
     NULL,
     NULL,
     1,
@@ -4398,6 +4508,50 @@ VALUES
     '2021-07-21 20:43:27',
     '2021-07-21 20:43:27'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    20,
+    'qqqq.png',
+    '',
+    '',
+    1795,
+    854,
+    '{\"thumbnail\":{\"name\":\"thumbnail_qqqq.png\",\"hash\":\"thumbnail_qqqq_c0ed5caf0c\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":117,\"size\":9.23,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1627381415/thumbnail_qqqq_c0ed5caf0c.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_qqqq_c0ed5caf0c\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_qqqq.png\",\"hash\":\"large_qqqq_c0ed5caf0c\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":476,\"size\":73.59,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1627381417/large_qqqq_c0ed5caf0c.png\",\"provider_metadata\":{\"public_id\":\"large_qqqq_c0ed5caf0c\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_qqqq.png\",\"hash\":\"medium_qqqq_c0ed5caf0c\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":357,\"size\":41.53,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1627381418/medium_qqqq_c0ed5caf0c.png\",\"provider_metadata\":{\"public_id\":\"medium_qqqq_c0ed5caf0c\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_qqqq.png\",\"hash\":\"small_qqqq_c0ed5caf0c\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":238,\"size\":23.68,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1627381419/small_qqqq_c0ed5caf0c.png\",\"provider_metadata\":{\"public_id\":\"small_qqqq_c0ed5caf0c\",\"resource_type\":\"image\"}}}',
+    'qqqq_c0ed5caf0c',
+    '.png',
+    'image/png',
+    94.74,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1627381414/qqqq_c0ed5caf0c.png',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"qqqq_c0ed5caf0c\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-07-27 10:23:39',
+    '2021-07-27 10:23:39'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -4739,6 +4893,24 @@ VALUES
     192,
     19,
     5,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    193,
+    20,
+    6,
     'components_page_localized_heads',
     'ogImage',
     1
