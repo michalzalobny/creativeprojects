@@ -9,13 +9,11 @@ export class Particle extends EventDispatcher {
   _y: number;
   _xDestination: number;
   _yDestination: number;
-  _xLerp: number;
-  _yLerp: number;
   _radius: number;
   _color: string;
   _directionX: number;
   _directionY: number;
-  _ease = 0.09;
+  _ease = 0.1;
 
   constructor(
     x: number,
@@ -28,8 +26,6 @@ export class Particle extends EventDispatcher {
     super();
     this._x = x;
     this._y = y;
-    this._xLerp = x;
-    this._yLerp = y;
     this._yDestination = y;
     this._xDestination = x;
     this._radius = radius;
