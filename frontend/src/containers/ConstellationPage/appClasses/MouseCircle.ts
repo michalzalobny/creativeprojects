@@ -32,11 +32,13 @@ export class MouseCircle extends EventDispatcher {
   _addEventListeners() {
     window.addEventListener('mouseout', this._onMouseOut);
     window.addEventListener('mouseover', this._onMouseEnter);
+    window.addEventListener('pointerdown', this._onMouseEnter);
   }
 
   _removeEventListeners() {
     window.removeEventListener('mouseout', this._onMouseOut);
     window.removeEventListener('mouseover', this._onMouseEnter);
+    window.removeEventListener('pointerdown', this._onMouseEnter);
   }
 
   _draw(ctx: CanvasRenderingContext2D, mouseRadius: number) {
