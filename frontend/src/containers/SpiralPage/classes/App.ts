@@ -1,4 +1,7 @@
 import TWEEN from '@tweenjs/tween.js';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line node/no-unpublished-import
 import { OrbitControls } from '../../../../node_modules/three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
 
@@ -19,7 +22,7 @@ export class App {
   _renderer: THREE.WebGLRenderer;
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
-  _spiralScene = new SpiralScene();
+  _spiralScene: SpiralScene;
   _orbitControls: OrbitControls;
 
   constructor(rendererWrapperEl: HTMLDivElement) {
@@ -27,7 +30,7 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
-    this._camera.position.set(0, 0, 2);
+    this._spiralScene = new SpiralScene(this._camera);
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
       antialias: false,
