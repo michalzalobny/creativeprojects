@@ -12,7 +12,7 @@ export class SpiralSpline extends THREE.Object3D {
     return {
       x: Math.sin(progress * loops * Math.PI * 2 + offset) * radius * progress,
       y: Math.cos(progress * loops * Math.PI * 2 + offset) * radius * progress,
-      z: -100, //-40
+      z: -40, //-40
     };
   }
 

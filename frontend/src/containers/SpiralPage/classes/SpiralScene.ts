@@ -9,12 +9,11 @@ export class SpiralScene extends StoryScene {
   spiralSpline = new SpiralSpline();
   _scroll: Scroll;
   _currentIndexFloat = 0;
-  zeroProgressOffset = 0.25;
   _targetYScroll = 0;
   _currentYScroll = 0;
   _lerpEase = 0.07;
   _scrollYMultiplier = 0.00025;
-  _itemSpacing = 1;
+  _zeroProgressOffset = 0.427;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
     super(camera, scroll);
@@ -29,9 +28,10 @@ export class SpiralScene extends StoryScene {
     this._currentIndexFloat = this._currentYScroll;
 
     this.storyItems.forEach((item, index) => {
-      const startValue = (index / this.storyItems.length) * this._itemSpacing;
+      const startValue =
+        -this._zeroProgressOffset + index / (this.storyItems.length - 1);
       const currentOffset =
-        startValue + this._currentIndexFloat / this.storyItems.length;
+        startValue + this._currentIndexFloat / (this.storyItems.length - 1);
 
       const itemPosition = this.spiralSpline.getPointPosition(currentOffset);
 
@@ -54,7 +54,7 @@ export class SpiralScene extends StoryScene {
 
     this._targetYScroll = Math.min(
       Math.max(0, newTarget),
-      this.storyItems.length,
+      this.storyItems.length - 1,
     );
   };
 
