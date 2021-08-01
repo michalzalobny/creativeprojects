@@ -5,7 +5,7 @@ import { Layout } from 'components/Layout/Layout';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
-import { App } from './appClasses/App';
+import { App } from './classes/App';
 import { PageProps } from './data';
 
 export default function SpiralPage(props: PageProps) {

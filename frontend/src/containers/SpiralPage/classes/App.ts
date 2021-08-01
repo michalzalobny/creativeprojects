@@ -1,7 +1,8 @@
 import TWEEN from '@tweenjs/tween.js';
+import * as THREE from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
-import { CanvasSketch } from './CanvasSketch';
+import { Scroll } from './Scroll/Scroll';
 
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
@@ -12,40 +13,34 @@ export class App {
   _isResumed = true;
   _lastFrameTime: number | null = null;
   _canvas: HTMLCanvasElement;
-  _ctx: CanvasRenderingContext2D | null;
-  _canvasSketch: CanvasSketch | null = null;
+  _camera: THREE.PerspectiveCamera;
+  _scene: THREE.Scene;
+  _renderer: THREE.WebGLRenderer;
   _mouseMove = MouseMove.getInstance();
+  _scroll = Scroll.getInstance();
 
   constructor(rendererWrapperEl: HTMLDivElement) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
-    this._ctx = this._canvas.getContext('2d');
+    this._camera = new THREE.PerspectiveCamera();
+    this._camera.position.set(0, 0, 100);
+    this._scene = new THREE.Scene();
+    this._renderer = new THREE.WebGLRenderer({
+      canvas: this._canvas,
+      antialias: false,
+      alpha: true,
+    });
     this._init();
   }
 
-  _setSizes() {
-    if (this._rendererWrapperEl && this._canvas && this._ctx) {
-      const rendererBounds = this._rendererWrapperEl.getBoundingClientRect();
-
-      const w = rendererBounds.width;
-      const h = rendererBounds.height;
-      const ratio = window.devicePixelRatio;
-
-      this._canvas.width = w * ratio;
-      this._canvas.height = h * ratio;
-      this._canvas.style.width = w + 'px';
-      this._canvas.style.height = h + 'px';
-      this._ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-      if (this._canvasSketch) {
-        this._canvasSketch.rendererBounds = { width: w, height: h };
-      }
-    }
-  }
-
   _onResize = () => {
-    this._setSizes();
+    const rendererBounds = this._rendererWrapperEl.getBoundingClientRect();
+    const aspectRatio = rendererBounds.width / rendererBounds.height;
+    this._camera.aspect = aspectRatio;
+    this._renderer.setSize(rendererBounds.width, rendererBounds.height);
+    this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this._camera.updateProjectionMatrix();
   };
 
   _onVisibilityChange = () => {
@@ -62,16 +57,12 @@ export class App {
   }
 
   destroy() {
-    if (this._canvas && this._canvas.parentNode) {
+    if (this._canvas.parentNode) {
       this._canvas.parentNode.removeChild(this._canvas);
     }
     this._stopAppFrame();
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
-
-    if (this._canvasSketch) {
-      this._canvasSketch.destroy();
-    }
   }
 
   _resumeAppFrame() {
@@ -101,10 +92,7 @@ export class App {
     TWEEN.update(time);
 
     this._mouseMove.update({ delta, slowDownFactor, time });
-
-    if (this._canvasSketch && this._ctx) {
-      this._canvasSketch.update({ delta, slowDownFactor, time }, this._ctx);
-    }
+    this._scroll.update({ delta, slowDownFactor, time });
   };
 
   _stopAppFrame() {
@@ -114,17 +102,8 @@ export class App {
   }
 
   _init() {
-    if (this._ctx) {
-      this._canvasSketch = new CanvasSketch(this._mouseMove);
-    }
-
-    this._setSizes();
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
-
-    if (this._canvasSketch && this._ctx) {
-      this._canvasSketch.init(this._ctx);
-    }
   }
 }
