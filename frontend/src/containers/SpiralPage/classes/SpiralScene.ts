@@ -13,8 +13,8 @@ export class SpiralScene extends StoryScene {
   _targetYScroll = 0;
   _currentYScroll = 0;
   _lerpEase = 0.07;
-  _scrollYMultiplier = 0.004;
-  _itemSpacing = 0.056;
+  _scrollYMultiplier = 0.00025;
+  _itemSpacing = 1;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
     super(camera, scroll);
@@ -29,31 +29,32 @@ export class SpiralScene extends StoryScene {
     this._currentIndexFloat = this._currentYScroll;
 
     this.storyItems.forEach((item, index) => {
-      const dIndex = index - this._currentIndexFloat;
+      const startValue = (index / this.storyItems.length) * this._itemSpacing;
+      const currentOffset =
+        startValue + this._currentIndexFloat / this.storyItems.length;
 
-      const dProgress = dIndex * this._itemSpacing;
-
-      const splineProgress = dProgress + this.zeroProgressOffset;
-      const itemPosition = this.spiralSpline.getPointPosition(splineProgress);
+      const itemPosition = this.spiralSpline.getPointPosition(currentOffset);
 
       item.position.set(
         itemPosition.x + this.spiralSpline.position.x,
         itemPosition.y + this.spiralSpline.position.y,
         itemPosition.z + this.spiralSpline.position.z,
       );
-      const opacity = 1 + (0.5 - dProgress - this.zeroProgressOffset) * 8;
+      // const opacity = 1 + (0.5 - currentOffset) * 8;
       // item.setOpacity(opacity);
-      const scale = Math.min(Math.pow(opacity, 0.2), 1);
+      const scale = Math.min(Math.pow(currentOffset, 0.4), 1);
       item.scale.set(scale, scale, scale);
     });
   };
 
   _onScrollApplied = (e: THREE.Event) => {
-    const newTarget = this._targetYScroll - e.y * this._scrollYMultiplier;
+    const newTarget =
+      this._targetYScroll -
+      e.y * this._scrollYMultiplier * this.storyItems.length; //It depends on the amount of items because the amount changes the speed of scrolling
 
     this._targetYScroll = Math.min(
       Math.max(0, newTarget),
-      this.storyItems.length - 1,
+      this.storyItems.length,
     );
   };
 

@@ -9,7 +9,7 @@ import { Scroll } from './Scroll/Scroll';
 
 export class StoryScene extends InteractiveScene {
   storyItems: StoryItem[] = [];
-  planeGeometry = new THREE.PlaneGeometry(30, 40);
+  planeGeometry = new THREE.PlaneGeometry(6, 8);
   _scroll: Scroll;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {

@@ -123,7 +123,7 @@ export class App {
     this._setListeners();
     this._resumeAppFrame();
 
-    this._spiralScene.items = Array.from(Array(10).keys()).map((item, key) => {
+    this._spiralScene.items = Array.from(Array(15).keys()).map((item, key) => {
       return { number: key };
     });
 

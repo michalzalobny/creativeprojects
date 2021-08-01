@@ -10,15 +10,9 @@ export class SpiralSpline extends THREE.Object3D {
     offset: number,
   ) {
     return {
-      x:
-        Math.sin(progress * loops * Math.PI * 2 + offset) *
-        radius *
-        Math.pow((1 - progress) * funnel, 0.5),
-      y:
-        Math.cos(progress * loops * Math.PI * 2 + offset) *
-        radius *
-        Math.pow((1 - progress) * funnel, 0.5),
-      z: -progress * depth,
+      x: Math.sin(progress * loops * Math.PI * 2 + offset) * radius * progress,
+      y: Math.cos(progress * loops * Math.PI * 2 + offset) * radius * progress,
+      z: -100, //-40
     };
   }
 
@@ -31,10 +25,10 @@ export class SpiralSpline extends THREE.Object3D {
 
   constructor(
     radius = 100,
-    loops = 5,
+    loops = 4,
     depth = 200,
     funnel = 1,
-    offset = 0,
+    offset = 50,
     density = 500,
   ) {
     super();
