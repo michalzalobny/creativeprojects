@@ -42,7 +42,7 @@ export class SpiralScene extends StoryScene {
       );
       // const opacity = 1 + (0.5 - currentOffset) * 8;
       // item.setOpacity(opacity);
-      const scale = Math.min(Math.pow(currentOffset, 0.4), 1);
+      const scale = Math.min(Math.pow(currentOffset, 0.6), 1);
       item.scale.set(scale, scale, scale);
     });
   };
