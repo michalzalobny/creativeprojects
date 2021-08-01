@@ -30,7 +30,7 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
-    this._spiralScene = new SpiralScene(this._camera);
+    this._spiralScene = new SpiralScene(this._camera, this._scroll);
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
       antialias: false,
@@ -38,6 +38,7 @@ export class App {
     });
 
     this._orbitControls = new OrbitControls(this._camera, this._canvas);
+    this._orbitControls.enabled = false;
 
     this._init();
   }
@@ -106,6 +107,7 @@ export class App {
     this._scroll.update({ delta, slowDownFactor, time });
 
     this._orbitControls.update();
+    this._spiralScene.update({ delta, slowDownFactor, time });
 
     this._renderer.render(this._spiralScene, this._camera);
   };
@@ -120,6 +122,10 @@ export class App {
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
+
+    this._spiralScene.items = Array.from(Array(10).keys()).map((item, key) => {
+      return { number: key };
+    });
 
     this._spiralScene.init();
   }

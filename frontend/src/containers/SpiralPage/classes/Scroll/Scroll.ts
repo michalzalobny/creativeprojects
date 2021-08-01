@@ -11,6 +11,8 @@ const MOMENTUM_CARRY = 0.2;
 const MOMENTUM_DAMPING = 0.58;
 const MOUSE_MULTIPLIER = 1;
 
+const MOUSE_SCROLL_MULTIPLIER = 0.5;
+
 interface ApplyScrollXY {
   x: number;
   y: number;
@@ -58,6 +60,7 @@ export class Scroll extends EventDispatcher {
   _applyScrollXY({ x, y }: ApplyScrollXY) {
     this._applyScrollX(x);
     this._applyScrollY(y);
+    this.dispatchEvent({ type: 'appliedscroll', x, y });
   }
 
   _applyScrollX(amountPx: number) {
@@ -118,7 +121,10 @@ export class Scroll extends EventDispatcher {
 
     const { pixelY } = normalizeWheel(event);
 
-    this._applyScrollXY({ x: -pixelY, y: -pixelY });
+    this._applyScrollXY({
+      x: -pixelY * MOUSE_SCROLL_MULTIPLIER,
+      y: -pixelY * MOUSE_SCROLL_MULTIPLIER,
+    });
   };
 
   _onResize = () => {

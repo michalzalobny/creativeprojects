@@ -13,3 +13,7 @@ export interface Bounds {
   width: number;
   height: number;
 }
+
+export interface StoryItemProps {
+  number: number;
+}
