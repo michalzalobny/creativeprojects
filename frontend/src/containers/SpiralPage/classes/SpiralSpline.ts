@@ -13,11 +13,11 @@ export class SpiralSpline extends THREE.Object3D {
       x:
         Math.sin(progress * loops * Math.PI * 2 + offset) *
         radius *
-        Math.pow(1 - progress * funnel, 0.5),
+        Math.pow((1 - progress) * funnel, 0.5),
       y:
         Math.cos(progress * loops * Math.PI * 2 + offset) *
         radius *
-        Math.pow(1 - progress * funnel, 0.5),
+        Math.pow((1 - progress) * funnel, 0.5),
       z: -progress * depth,
     };
   }
@@ -51,7 +51,7 @@ export class SpiralSpline extends THREE.Object3D {
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
     const material = new THREE.LineDashedMaterial({
-      color: 'red',
+      color: 'white',
       linewidth: 1,
       scale: 1,
       dashSize: 0.4,
