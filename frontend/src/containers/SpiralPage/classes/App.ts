@@ -3,6 +3,7 @@ import * as THREE from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
 import { Scroll } from './Scroll/Scroll';
+import { SpiralScene } from './SpiralScene';
 
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
@@ -14,18 +15,17 @@ export class App {
   _lastFrameTime: number | null = null;
   _canvas: HTMLCanvasElement;
   _camera: THREE.PerspectiveCamera;
-  _scene: THREE.Scene;
   _renderer: THREE.WebGLRenderer;
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
+  _spiralScene = new SpiralScene();
 
   constructor(rendererWrapperEl: HTMLDivElement) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
-    this._camera.position.set(0, 0, 100);
-    this._scene = new THREE.Scene();
+    this._camera.position.set(0, 0, 2);
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
       antialias: false,
@@ -40,7 +40,10 @@ export class App {
     this._camera.aspect = aspectRatio;
     this._renderer.setSize(rendererBounds.width, rendererBounds.height);
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this._renderer.setClearColor(new THREE.Color('#000'));
     this._camera.updateProjectionMatrix();
+
+    this._spiralScene.rendererBounds = rendererBounds;
   };
 
   _onVisibilityChange = () => {
@@ -93,6 +96,7 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
+    this._renderer.render(this._spiralScene, this._camera);
   };
 
   _stopAppFrame() {
@@ -105,5 +109,7 @@ export class App {
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
+
+    this._spiralScene.init();
   }
 }
