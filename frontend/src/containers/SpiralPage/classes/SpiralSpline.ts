@@ -27,6 +27,7 @@ export class SpiralSpline extends THREE.Object3D {
   depth: number;
   funnel: number;
   offset: number;
+  density: number;
 
   constructor(
     radius = 100,
@@ -42,10 +43,15 @@ export class SpiralSpline extends THREE.Object3D {
     this.depth = depth;
     this.funnel = funnel;
     this.offset = offset;
+    this.density = density;
 
+    this._drawSpiral();
+  }
+
+  _drawSpiral() {
     const points: THREE.Vector3[] = [];
-    for (let i = 0; i < density; ++i) {
-      const position = this.getPointPosition((i + 1) / density);
+    for (let i = 0; i < this.density; ++i) {
+      const position = this.getPointPosition((i + 1) / this.density);
       points.push(new THREE.Vector3(position.x, position.y, position.z));
     }
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
