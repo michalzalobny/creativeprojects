@@ -23,6 +23,9 @@ export default function IndexPage(props: IndexPageProps) {
         <Link passHref href={'/stack-tower'}>
           <LinkWrapper>Stack tower</LinkWrapper>
         </Link>
+        <Link passHref href={'/spiral'}>
+          <LinkWrapper>Spiral</LinkWrapper>
+        </Link>
       </Wrapper>
     </>
   );
