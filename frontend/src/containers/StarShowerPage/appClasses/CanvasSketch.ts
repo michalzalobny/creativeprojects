@@ -81,6 +81,7 @@ export class CanvasSketch {
   _onResize = () => {
     this._background.generateStarsBackground();
     this._catapult.rendererBounds = this._rendererBounds;
+    this._background.rendererBounds = this._rendererBounds;
   };
 
   _onCatapultShoot = (e: Event) => {
