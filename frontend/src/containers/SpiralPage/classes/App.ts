@@ -1,4 +1,5 @@
 import TWEEN from '@tweenjs/tween.js';
+import { OrbitControls } from '../../../../node_modules/three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
@@ -19,6 +20,7 @@ export class App {
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
   _spiralScene = new SpiralScene();
+  _orbitControls: OrbitControls;
 
   constructor(rendererWrapperEl: HTMLDivElement) {
     this._rendererWrapperEl = rendererWrapperEl;
@@ -31,6 +33,9 @@ export class App {
       antialias: false,
       alpha: true,
     });
+
+    this._orbitControls = new OrbitControls(this._camera, this._canvas);
+
     this._init();
   }
 
@@ -96,6 +101,9 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
+
+    this._orbitControls.update();
+
     this._renderer.render(this._spiralScene, this._camera);
   };
 

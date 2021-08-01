@@ -8,3 +8,8 @@ export interface UpdateInfo {
   delta: number;
   time: number;
 }
+
+export interface Bounds {
+  width: number;
+  height: number;
+}
