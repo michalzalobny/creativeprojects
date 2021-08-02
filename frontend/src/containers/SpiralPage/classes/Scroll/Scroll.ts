@@ -11,7 +11,7 @@ const MOMENTUM_CARRY = 0.2;
 const MOMENTUM_DAMPING = 0.58;
 const MOUSE_MULTIPLIER = 1;
 
-const MOUSE_SCROLL_MULTIPLIER = 0.5;
+const MOUSE_SCROLL_MULTIPLIER = 0.3;
 
 interface ApplyScrollXY {
   x: number;

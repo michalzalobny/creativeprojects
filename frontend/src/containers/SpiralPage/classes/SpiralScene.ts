@@ -11,8 +11,8 @@ export class SpiralScene extends StoryScene {
   _currentIndexFloat = 0;
   _targetYScroll = 0;
   _currentYScroll = 0;
-  _lerpEase = 0.07;
-  _scrollYMultiplier = 0.005;
+  _lerpEase = 0.05;
+  _scrollYMultiplier = 0.008;
   _zeroProgressOffset = 0.575;
   _itemSpacing = 0.056;
 
