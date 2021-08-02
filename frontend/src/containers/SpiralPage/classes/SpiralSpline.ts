@@ -21,7 +21,7 @@ export class SpiralSpline extends THREE.Object3D {
   density: number;
   depth: number;
 
-  constructor(radius = 100, loops = 4, offset = 50, density = 500, depth = 50) {
+  constructor(radius = 100, loops = 5, offset = 50, density = 500, depth = 50) {
     super();
     this.radius = radius;
     this.loops = loops;
