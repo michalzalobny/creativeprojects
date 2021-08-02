@@ -1,15 +1,13 @@
 import * as THREE from 'three';
 
-import { UpdateInfo } from './types';
-
+import { UpdateInfo, StoryItemProps, Bounds } from './types';
 import { InteractiveScene } from './InteractiveScene';
 import { StoryItem } from './StoryItem';
-import { StoryItemProps } from './types';
 import { Scroll } from './Scroll/Scroll';
 
 export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem[] = [];
-  _planeGeometry = new THREE.PlaneGeometry(12, 18);
+  _planeGeometry = new THREE.PlaneGeometry(1, 1);
   _scroll: Scroll;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
@@ -34,6 +32,17 @@ export class StoryScene extends InteractiveScene {
         this._storyItems.push(item3D);
         this.add(item3D);
       });
+    this._storyItems.forEach(item => {
+      item.rendererBounds = this._rendererBounds;
+      item.init();
+    });
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+    this._storyItems.forEach(item => {
+      item.rendererBounds = bounds;
+    });
   }
 
   init() {}
