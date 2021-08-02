@@ -26,7 +26,7 @@ export class SpiralScene extends StoryScene {
   positionItems = (updateInfo: UpdateInfo) => {
     this._currentIndexFloat = this._currentYScroll;
 
-    this.storyItems.forEach((item, index) => {
+    this._storyItems.forEach((item, index) => {
       const dIndex = -(index - this._currentIndexFloat);
       const dProgress = dIndex * this._itemSpacing;
       const splineProgress = dProgress + this._zeroProgressOffset;
@@ -49,7 +49,7 @@ export class SpiralScene extends StoryScene {
 
     this._targetYScroll = Math.min(
       Math.max(0, newTarget),
-      this.storyItems.length - 1,
+      this._storyItems.length - 1,
     );
   };
 
