@@ -50,7 +50,7 @@ export class SpiralScene extends StoryScene {
   _onScrollApplied = (e: THREE.Event) => {
     const newTarget =
       this._targetYScroll -
-      e.y * this._scrollYMultiplier * this.storyItems.length; //It depends on the amount of items because the amount changes the speed of scrolling
+      e.y * this._scrollYMultiplier * this.storyItems.length;
 
     this._targetYScroll = Math.min(
       Math.max(0, newTarget),
