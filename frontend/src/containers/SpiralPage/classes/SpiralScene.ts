@@ -6,7 +6,7 @@ import { Scroll } from './Scroll/Scroll';
 import { lerp } from './utils/lerp';
 
 export class SpiralScene extends StoryScene {
-  spiralSpline = new SpiralSpline();
+  _spiralSpline = new SpiralSpline();
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetYScroll = 0;
@@ -20,8 +20,8 @@ export class SpiralScene extends StoryScene {
 
     this._scroll = scroll;
 
-    this.camera.fov = 60;
-    this.camera.position.z = this.spiralSpline.depth * 1.5;
+    this._camera.fov = 60;
+    this._camera.position.z = this._spiralSpline.depth * 1.5;
   }
 
   positionItems = (updateInfo: UpdateInfo) => {
@@ -33,12 +33,12 @@ export class SpiralScene extends StoryScene {
       const currentOffset =
         startValue + this._currentIndexFloat / (this.storyItems.length - 1);
 
-      const itemPosition = this.spiralSpline.getPointPosition(currentOffset);
+      const itemPosition = this._spiralSpline.getPointPosition(currentOffset);
 
       item.position.set(
-        itemPosition.x + this.spiralSpline.position.x,
-        itemPosition.y + this.spiralSpline.position.y,
-        itemPosition.z + this.spiralSpline.position.z,
+        itemPosition.x + this._spiralSpline.position.x,
+        itemPosition.y + this._spiralSpline.position.y,
+        itemPosition.z + this._spiralSpline.position.z,
       );
       // const opacity = 1 + (0.5 - currentOffset) * 8;
       // item.setOpacity(opacity);
@@ -88,7 +88,7 @@ export class SpiralScene extends StoryScene {
     super.init();
     this._setListeners();
 
-    this.spiralSpline.position.z = this.spiralSpline.depth;
-    this.add(this.spiralSpline);
+    this._spiralSpline.position.z = this._spiralSpline.depth;
+    this.add(this._spiralSpline);
   }
 }

@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import { Bounds } from './types';
 
 export class InteractiveScene extends THREE.Scene {
-  raycaster = new THREE.Raycaster();
+  _raycaster = new THREE.Raycaster();
   _rendererBounds: Bounds = { height: 100, width: 100 };
-  camera: THREE.PerspectiveCamera;
+  _camera: THREE.PerspectiveCamera;
 
   constructor(camera: THREE.PerspectiveCamera) {
     super();
-    this.camera = camera;
+    this._camera = camera;
   }
 
   set rendererBounds(bounds: Bounds) {
