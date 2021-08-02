@@ -4,6 +4,7 @@ import TWEEN from '@tweenjs/tween.js';
 import fragmentShader from './shaders/storyItem/fragment.glsl';
 import vertexShader from './shaders/storyItem/vertex.glsl';
 import { UpdateInfo, Bounds } from './types';
+import { Scroll } from './Scroll/Scroll';
 export class StoryItem extends THREE.Object3D {
   _geometry: THREE.PlaneGeometry;
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
@@ -86,6 +87,13 @@ export class StoryItem extends THREE.Object3D {
       'https://images.unsplash.com/photo-1622495488268-a2f56bf10385?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80',
     );
   }
-  update(updateInfo: UpdateInfo) {}
+  update(updateInfo: UpdateInfo, scroll: Scroll) {
+    if (!this._mesh) {
+      return;
+    }
+    const strength = scroll.currentStrength.y / this._rendererBounds.height;
+
+    this._mesh.material.uniforms.uStrength.value = strength * 20;
+  }
   destroy() {}
 }

@@ -190,7 +190,7 @@ export class Scroll extends EventDispatcher {
       this._targetStrength.y,
       this._ease * updateInfo.slowDownFactor,
     );
-    this._targetStrength.y = Math.abs(this.current.y - this._last.y);
+    this._targetStrength.y = this.current.y - this._last.y;
 
     //Update strengthX
     this.currentStrength.x = lerp(
@@ -198,7 +198,7 @@ export class Scroll extends EventDispatcher {
       this._targetStrength.x,
       this._ease * updateInfo.slowDownFactor,
     );
-    this._targetStrength.x = Math.abs(this.current.x - this._last.x);
+    this._targetStrength.x = this.current.x - this._last.x;
 
     const timeFactor = Math.min(
       Math.max(updateInfo.time / (1000 / updateInfo.time), 1),

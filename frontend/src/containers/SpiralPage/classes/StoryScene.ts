@@ -7,7 +7,7 @@ import { Scroll } from './Scroll/Scroll';
 
 export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem[] = [];
-  _planeGeometry = new THREE.PlaneGeometry(1, 1);
+  _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _scroll: Scroll;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
@@ -46,7 +46,12 @@ export class StoryScene extends InteractiveScene {
   }
 
   init() {}
-  update(updateInfo: UpdateInfo) {}
+  update(updateInfo: UpdateInfo) {
+    this._storyItems.forEach(item => {
+      item.rendererBounds = this._rendererBounds;
+      item.update(updateInfo, this._scroll);
+    });
+  }
   destroy() {
     this._destroyItems();
     this._planeGeometry.dispose();
