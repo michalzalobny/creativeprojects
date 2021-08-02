@@ -13,7 +13,7 @@ export class SpiralScene extends StoryScene {
   _currentYScroll = 0;
   _lerpEase = 0.05;
   _scrollYMultiplier = 0.008;
-  _zeroProgressOffset = 0.575;
+  _zeroProgressOffset = 0.46;
   _itemSpacing = 0.056;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
