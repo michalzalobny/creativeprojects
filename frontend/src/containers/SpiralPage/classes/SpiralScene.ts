@@ -17,11 +17,9 @@ export class SpiralScene extends StoryScene {
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
     super(camera, scroll);
-
     this._scroll = scroll;
 
-    this._camera.fov = 60;
-    this._camera.position.z = this._spiralSpline.depth * 1.5;
+    this._camera.position.z = this._spiralSpline.depth * 1.6;
   }
 
   positionItems = (updateInfo: UpdateInfo) => {
@@ -88,7 +86,6 @@ export class SpiralScene extends StoryScene {
     super.init();
     this._setListeners();
 
-    this._spiralSpline.position.z = this._spiralSpline.depth;
     this.add(this._spiralSpline);
   }
 }
