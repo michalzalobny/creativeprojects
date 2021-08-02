@@ -12,43 +12,40 @@ export class SpiralScene extends StoryScene {
   _targetYScroll = 0;
   _currentYScroll = 0;
   _lerpEase = 0.07;
-  _scrollYMultiplier = 0.00025;
-  _zeroProgressOffset = 0.427;
+  _scrollYMultiplier = 0.005;
+  _zeroProgressOffset = 0.575;
+  _itemSpacing = 0.056;
 
   constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
     super(camera, scroll);
     this._scroll = scroll;
 
-    this._camera.position.z = this._spiralSpline.depth * 1.6;
+    this._camera.position.z = this._spiralSpline.depth * 1.5;
   }
 
   positionItems = (updateInfo: UpdateInfo) => {
     this._currentIndexFloat = this._currentYScroll;
 
     this.storyItems.forEach((item, index) => {
-      const startValue =
-        -this._zeroProgressOffset + index / (this.storyItems.length - 1);
-      const currentOffset =
-        startValue + this._currentIndexFloat / (this.storyItems.length - 1);
-
-      const itemPosition = this._spiralSpline.getPointPosition(currentOffset);
+      const dIndex = -(index - this._currentIndexFloat);
+      const dProgress = dIndex * this._itemSpacing;
+      const splineProgress = dProgress + this._zeroProgressOffset;
+      const itemPosition = this._spiralSpline.getPointPosition(splineProgress);
 
       item.position.set(
         itemPosition.x + this._spiralSpline.position.x,
         itemPosition.y + this._spiralSpline.position.y,
         itemPosition.z + this._spiralSpline.position.z,
       );
-      // const opacity = 1 + (0.5 - currentOffset) * 8;
+      // const opacity = 1 + (0.5 - splineProgress) * 8;
       // item.setOpacity(opacity);
-      const scale = Math.min(Math.pow(currentOffset, 0.6), 1);
+      const scale = Math.min(Math.pow(splineProgress, 0.6), 1);
       item.scale.set(scale, scale, scale);
     });
   };
 
   _onScrollApplied = (e: THREE.Event) => {
-    const newTarget =
-      this._targetYScroll -
-      e.y * this._scrollYMultiplier * this.storyItems.length;
+    const newTarget = this._targetYScroll - e.y * this._scrollYMultiplier;
 
     this._targetYScroll = Math.min(
       Math.max(0, newTarget),
