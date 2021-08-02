@@ -41,7 +41,7 @@ export class App {
     this._camera.aspect = aspectRatio;
     this._renderer.setSize(rendererBounds.width, rendererBounds.height);
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this._renderer.setClearColor(new THREE.Color('#000'));
+    this._renderer.setClearColor(new THREE.Color('#F9F7F2'));
     this._camera.updateProjectionMatrix();
 
     this._spiralScene.rendererBounds = rendererBounds;

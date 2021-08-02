@@ -83,9 +83,7 @@ export class StoryItem extends THREE.Object3D {
   }
 
   init() {
-    this._createMesh(
-      'https://images.unsplash.com/photo-1622495488268-a2f56bf10385?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80',
-    );
+    this._createMesh('https://source.unsplash.com/random');
   }
   update(updateInfo: UpdateInfo, scroll: Scroll) {
     if (!this._mesh) {

@@ -40,7 +40,7 @@ export class SpiralSpline extends THREE.Object3D {
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
     const material = new THREE.LineDashedMaterial({
-      color: 'white',
+      color: '#AF914F',
       linewidth: 1,
       scale: 1,
       dashSize: 0.4,
