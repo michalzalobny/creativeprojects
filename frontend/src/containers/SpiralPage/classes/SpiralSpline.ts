@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 
-import { MouseMove } from './MouseMove/MouseMove';
-import { UpdateInfo, Bounds } from './types';
+import { UpdateInfo } from './types';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import vertexShader from './shaders/dots/vertex.glsl';
 
@@ -24,44 +23,17 @@ export class SpiralSpline extends THREE.Object3D {
   _radius: number;
   _loops: number;
   _density: number;
+  _intersectPoint: THREE.Vector3 | null = null;
   depth: number;
-  _mouseMove: MouseMove;
-  _rendererBounds: Bounds = { height: 100, width: 100 };
-  _raycasterPlane: THREE.Mesh<
-    THREE.PlaneGeometry,
-    THREE.MeshBasicMaterial
-  > | null = null;
-  _raycaster: THREE.Raycaster;
-  _camera: THREE.Camera;
 
-  constructor(
-    radius = 100,
-    loops = 5,
-    density = 1,
-    depth = 50,
-    mouseMove: MouseMove,
-    raycaster: THREE.Raycaster,
-    camera: THREE.Camera,
-  ) {
+  constructor(radius = 100, loops = 5, density = 1, depth = 50) {
     super();
     this._radius = radius;
     this._loops = loops;
     this._density = density;
     this.depth = depth;
-    this._mouseMove = mouseMove;
-    this._raycaster = raycaster;
-    this._camera = camera;
-    this._drawRaycasterPlane();
-    this._drawSpiral();
-  }
 
-  _drawRaycasterPlane() {
-    this._raycasterPlane = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1000, 1000),
-      new THREE.MeshBasicMaterial(),
-    );
-    this._raycasterPlane.position.z = -this.depth;
-    this.add(this._raycasterPlane);
+    this._drawSpiral();
   }
 
   _drawSpiral() {
@@ -134,48 +106,20 @@ export class SpiralSpline extends THREE.Object3D {
     );
   }
 
-  onMouseMove = (e: THREE.Event) => {
-    const currentX = (e.target as MouseMove).mouseLerp.x;
-    const currentY = (e.target as MouseMove).mouseLerp.y;
-
-    const mouseX = (currentX / this._rendererBounds.width) * 2 - 1;
-    const mouseY = -(currentY / this._rendererBounds.height) * 2 + 1;
-
-    this._raycaster.setFromCamera({ x: mouseX, y: mouseY }, this._camera);
-
-    if (this._raycasterPlane) {
-      const intersects = this._raycaster.intersectObjects([
-        this._raycasterPlane,
-      ]);
-      if (intersects[0] && this._material) {
-        this._material.uniforms.uMouse3D.value = intersects[0].point;
-      }
-    }
-  };
-
-  _addEvents() {
-    this._mouseMove.addEventListener('mousemoved', this.onMouseMove);
+  set intersectPoint(point: THREE.Vector3) {
+    this._intersectPoint = point;
   }
 
-  _removeEvents() {
-    this._mouseMove.removeEventListener('mousemoved', this.onMouseMove);
-  }
-
-  set rendererBounds(bounds: Bounds) {
-    this._rendererBounds = bounds;
-  }
-
-  init() {
-    this._addEvents();
-  }
+  init() {}
 
   update(updateInfo: UpdateInfo) {
     if (this._mesh) {
       this._mesh.material.uniforms.uTime.value = updateInfo.time;
     }
+    if (this._intersectPoint && this._mesh) {
+      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
+    }
   }
 
-  destroy() {
-    this._removeEvents();
-  }
+  destroy() {}
 }

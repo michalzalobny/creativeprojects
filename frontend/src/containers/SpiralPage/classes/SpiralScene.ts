@@ -1,21 +1,14 @@
 import * as THREE from 'three';
 import { StoryScene } from './StoryScene';
 import { SpiralSpline } from './SpiralSpline';
-import { UpdateInfo, Bounds } from './types';
+import { UpdateInfo } from './types';
 import { Scroll } from './Scroll/Scroll';
 import { lerp } from './utils/lerp';
 import { MouseMove } from './MouseMove/MouseMove';
 
 export class SpiralScene extends StoryScene {
-  _spiralSpline = new SpiralSpline(
-    100,
-    5,
-    1,
-    50,
-    this._mouseMove,
-    this._raycaster,
-    this._camera,
-  );
+  _intersectPoint = new THREE.Vector3(0);
+  _spiralSpline = new SpiralSpline(100, 5, 1, 50);
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetYScroll = 0;
@@ -24,6 +17,10 @@ export class SpiralScene extends StoryScene {
   _scrollYMultiplier = 0.008;
   _zeroProgressOffset = 0.46;
   _itemSpacing = 0.056;
+  _raycasterPlane: THREE.Mesh<
+    THREE.PlaneGeometry,
+    THREE.MeshBasicMaterial
+  > | null = null;
 
   constructor(
     camera: THREE.PerspectiveCamera,
@@ -32,8 +29,17 @@ export class SpiralScene extends StoryScene {
   ) {
     super(camera, scroll, mouseMove);
     this._scroll = scroll;
-
+    this._drawRaycasterPlane();
     this._camera.position.z = this._spiralSpline.depth * 1.5;
+  }
+
+  _drawRaycasterPlane() {
+    this._raycasterPlane = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(1000, 1000),
+      new THREE.MeshBasicMaterial(),
+    );
+    this._raycasterPlane.position.z = -this._spiralSpline.depth;
+    this.add(this._raycasterPlane);
   }
 
   positionItems = (updateInfo: UpdateInfo) => {
@@ -74,17 +80,34 @@ export class SpiralScene extends StoryScene {
     );
   }
 
+  _onMouseMove = (e: THREE.Event) => {
+    const currentX = (e.target as MouseMove).mouseLerp.x;
+    const currentY = (e.target as MouseMove).mouseLerp.y;
+
+    const mouseX = (currentX / this._rendererBounds.width) * 2 - 1;
+    const mouseY = -(currentY / this._rendererBounds.height) * 2 + 1;
+
+    this._raycaster.setFromCamera({ x: mouseX, y: mouseY }, this._camera);
+
+    if (this._raycasterPlane) {
+      const intersects = this._raycaster.intersectObjects([
+        this._raycasterPlane,
+      ]);
+      if (intersects[0]) {
+        this._intersectPoint = intersects[0].point;
+        this._spiralSpline.intersectPoint = this._intersectPoint;
+      }
+    }
+  };
+
   _addListeners() {
     this._scroll.addEventListener('appliedscroll', this._onScrollApplied);
+    this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
   }
 
   _removeListeners() {
     this._scroll.removeEventListener('appliedscroll', this._onScrollApplied);
-  }
-
-  set rendererBounds(bounds: Bounds) {
-    super.rendererBounds = bounds;
-    this._spiralSpline.rendererBounds = bounds;
+    this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
   }
 
   update(updateInfo: UpdateInfo) {
