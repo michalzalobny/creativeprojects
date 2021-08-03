@@ -14,11 +14,11 @@ void main(){
 
     // Cursor animation
     float dist = distance(position.xy, uMouse3D.xy);
-    float area = 1.- smoothstep(0., 40., dist);
+    float area = 1.- smoothstep(0., 30., dist);
     stablePosition.z += dist * 0.1;
 
-    stablePosition.x += 4.*sin(uTime * 0.001 * aRandom) * area ;
-    stablePosition.y += 4.*cos(uTime * 0.001 * aRandom) * area ;
+    stablePosition.x += 5.*sin(uTime * 0.004 * aRandom) * area;
+    stablePosition.y += 5.*cos(uTime * 0.004 * aRandom) * area;
     stablePosition.z += 4.*cos(uTime * 0.001 * aRandom) * area;
     
 

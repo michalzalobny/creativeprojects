@@ -22,7 +22,7 @@ void main() {
 
   // Cursor animation
   float dist = distance(position.xy, uMouse3D.xy);
-  float area = 1.- smoothstep(0., 40., dist);
+  float area = 1.- smoothstep(0., 30., dist);
   stablePosition.z += dist * 0.1;
 
   vec4 newPosition = modelViewMatrix * vec4(stablePosition, 1.0);
