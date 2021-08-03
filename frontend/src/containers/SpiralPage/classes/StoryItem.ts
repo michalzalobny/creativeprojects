@@ -10,44 +10,54 @@ export class StoryItem extends THREE.Object3D {
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;
   _rendererBounds: Bounds = { height: 100, width: 100 };
+  _image: HTMLImageElement | null = null;
 
   constructor(geometry: THREE.PlaneGeometry) {
     super();
     this._geometry = geometry;
+    this._createMesh('https://source.unsplash.com/random');
   }
 
-  _createMesh(imageSrc: string) {
-    const image = new Image();
+  _onImageLoad = () => {
     const texture = new THREE.Texture();
-    image.src = imageSrc;
-    image.crossOrigin = 'anonymous';
-    image.onload = () => {
-      texture.image = image;
-      texture.needsUpdate = true;
-      if (this._material && this._mesh) {
-        this._material.uniforms.uImageSizes.value = [
-          image.naturalWidth,
-          image.naturalHeight,
-        ];
+    texture.image = this._image;
+    texture.needsUpdate = true;
+    if (this._material && this._mesh && this._image) {
+      this._material.uniforms.tMap.value = texture;
 
-        const isVertical = image.naturalHeight >= image.naturalWidth;
+      this._material.uniforms.uImageSizes.value = [
+        this._image.naturalWidth,
+        this._image.naturalHeight,
+      ];
 
-        const sizeX = isVertical ? 30 : 50;
-        const sizeY = isVertical ? 50 : 30;
+      const isVertical = this._image.naturalHeight >= this._image.naturalWidth;
 
-        this._material.uniforms.uPlaneSizes.value = [sizeX, sizeY];
-        this._mesh.scale.x = sizeX;
-        this._mesh.scale.y = sizeY;
+      const sizeX = isVertical ? 40 : 50;
+      const sizeY = isVertical ? 50 : 30;
 
-        this._fadeImageIn(this._mesh);
-      }
-    };
+      this._material.uniforms.uPlaneSizes.value = [sizeX, sizeY];
+      this._mesh.scale.x = sizeX;
+      this._mesh.scale.y = sizeY;
+
+      this._fadeImageIn(this._mesh);
+    }
+  };
+
+  _createMesh(imageSrc: string) {
+    this._image = new Image();
+    this._image.src = imageSrc;
+    this._image.crossOrigin = 'anonymous';
+
+    if (this._image.complete) {
+      this._onImageLoad();
+    }
+    this._image.addEventListener('load', this._onImageLoad);
 
     this._material = new THREE.ShaderMaterial({
       transparent: true,
       side: THREE.DoubleSide,
       uniforms: {
-        tMap: { value: texture },
+        tMap: { value: null },
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
         uViewportSizes: {
@@ -61,7 +71,6 @@ export class StoryItem extends THREE.Object3D {
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
-
     this.add(this._mesh);
   }
 
@@ -69,8 +78,8 @@ export class StoryItem extends THREE.Object3D {
     const tweenProgress = new TWEEN.Tween({
       progress: mesh.material.uniforms.uOpacity.value,
     })
-      .to({ progress: 1 }, 800)
-      .easing(TWEEN.Easing.Linear.None)
+      .to({ progress: 1 }, 2000)
+      .easing(TWEEN.Easing.Sinusoidal.In)
       .onUpdate(obj => {
         mesh.material.uniforms.uOpacity.value = obj.progress;
       });
@@ -80,11 +89,14 @@ export class StoryItem extends THREE.Object3D {
 
   set rendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
+    if (this._material) {
+      this._material.uniforms.uViewportSizes.value = [
+        this._rendererBounds.width,
+        this._rendererBounds.height,
+      ];
+    }
   }
 
-  init() {
-    this._createMesh('https://source.unsplash.com/random');
-  }
   update(updateInfo: UpdateInfo, scroll: Scroll) {
     if (!this._mesh) {
       return;
@@ -93,5 +105,7 @@ export class StoryItem extends THREE.Object3D {
 
     this._mesh.material.uniforms.uStrength.value = strength * 20;
   }
-  destroy() {}
+  destroy() {
+    this._image && this._image.removeEventListener('load', this._onImageLoad);
+  }
 }

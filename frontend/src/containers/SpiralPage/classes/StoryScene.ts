@@ -17,8 +17,8 @@ export class StoryScene extends InteractiveScene {
 
   _destroyItems() {
     this._storyItems.forEach(item => {
-      this.remove(item);
       item.destroy();
+      this.remove(item);
     });
     this._storyItems = [];
   }
@@ -32,10 +32,6 @@ export class StoryScene extends InteractiveScene {
         this._storyItems.push(item3D);
         this.add(item3D);
       });
-    this._storyItems.forEach(item => {
-      item.rendererBounds = this._rendererBounds;
-      item.init();
-    });
   }
 
   set rendererBounds(bounds: Bounds) {
@@ -46,12 +42,14 @@ export class StoryScene extends InteractiveScene {
   }
 
   init() {}
+
   update(updateInfo: UpdateInfo) {
     this._storyItems.forEach(item => {
       item.rendererBounds = this._rendererBounds;
       item.update(updateInfo, this._scroll);
     });
   }
+
   destroy() {
     this._destroyItems();
     this._planeGeometry.dispose();
