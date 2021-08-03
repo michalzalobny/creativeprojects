@@ -11,6 +11,7 @@ export class StoryItem extends THREE.Object3D {
   _material: THREE.ShaderMaterial | null = null;
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _image: HTMLImageElement | null = null;
+  _intersectPoint: THREE.Vector3 | null = null;
 
   constructor(geometry: THREE.PlaneGeometry) {
     super();
@@ -62,6 +63,8 @@ export class StoryItem extends THREE.Object3D {
         tMap: { value: null },
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
+        uTime: { value: 0 },
+        uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
         uViewportSizes: {
           value: [this._rendererBounds.width, this._rendererBounds.height],
         },
@@ -89,6 +92,10 @@ export class StoryItem extends THREE.Object3D {
     tweenProgress.start();
   }
 
+  set intersectPoint(point: THREE.Vector3) {
+    this._intersectPoint = point;
+  }
+
   set rendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
     if (this._material) {
@@ -104,8 +111,13 @@ export class StoryItem extends THREE.Object3D {
       return;
     }
     const strength = scroll.currentStrength.y / this._rendererBounds.height;
-
     this._mesh.material.uniforms.uStrength.value = strength * 20;
+
+    this._mesh.material.uniforms.uTime.value = updateInfo.time;
+
+    if (this._intersectPoint) {
+      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
+    }
   }
   destroy() {
     this._image && this._image.removeEventListener('load', this._onImageLoad);

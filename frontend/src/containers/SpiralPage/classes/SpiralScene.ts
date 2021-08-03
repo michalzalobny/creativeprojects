@@ -96,6 +96,10 @@ export class SpiralScene extends StoryScene {
       if (intersects[0]) {
         this._intersectPoint = intersects[0].point;
         this._spiralSpline.intersectPoint = this._intersectPoint;
+
+        this._storyItems.forEach(item => {
+          item.intersectPoint = this._intersectPoint;
+        });
       }
     }
   };
