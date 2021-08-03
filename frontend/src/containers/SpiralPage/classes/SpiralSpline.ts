@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo } from './types';
+import { UpdateInfo, Bounds } from './types';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import vertexShader from './shaders/dots/vertex.glsl';
 
@@ -24,6 +24,7 @@ export class SpiralSpline extends THREE.Object3D {
   _loops: number;
   _density: number;
   _intersectPoint: THREE.Vector3 | null = null;
+  _rendererBounds: Bounds = { height: 100, width: 100 };
   depth: number;
 
   constructor(radius = 100, loops = 5, density = 1, depth = 50) {
@@ -80,7 +81,7 @@ export class SpiralSpline extends THREE.Object3D {
       depthTest: false,
       transparent: true,
       uniforms: {
-        uPixelRatio: { value: window.devicePixelRatio },
+        uPixelRatio: { value: 1 },
         uSize: { value: 350 },
         uTime: { value: 0 },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
@@ -104,6 +105,15 @@ export class SpiralSpline extends THREE.Object3D {
       this._loops,
       this.depth,
     );
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    this._rendererBounds = bounds;
+    if (this._material) {
+      this._material.uniforms.uPixelRatio.value =
+        (Math.min(2, window.devicePixelRatio) * this._rendererBounds.height) /
+        1080;
+    }
   }
 
   set intersectPoint(point: THREE.Vector3) {

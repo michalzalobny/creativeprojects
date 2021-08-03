@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { StoryScene } from './StoryScene';
 import { SpiralSpline } from './SpiralSpline';
-import { UpdateInfo } from './types';
+import { UpdateInfo, Bounds } from './types';
 import { Scroll } from './Scroll/Scroll';
 import { lerp } from './utils/lerp';
 import { MouseMove } from './MouseMove/MouseMove';
@@ -112,6 +112,11 @@ export class SpiralScene extends StoryScene {
   _removeListeners() {
     this._scroll.removeEventListener('appliedscroll', this._onScrollApplied);
     this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+    this._spiralSpline.rendererBounds = this._rendererBounds;
   }
 
   update(updateInfo: UpdateInfo) {
