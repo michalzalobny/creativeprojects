@@ -120,6 +120,7 @@ export class SpiralSpline extends THREE.Object3D {
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randomArray, 1));
 
     this._mesh = new THREE.Points(geometry, this._material);
+    this._mesh.renderOrder = -1;
 
     this.add(this._mesh);
   }
