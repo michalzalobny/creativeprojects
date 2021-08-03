@@ -4,14 +4,19 @@ import { UpdateInfo, StoryItemProps, Bounds } from './types';
 import { InteractiveScene } from './InteractiveScene';
 import { StoryItem } from './StoryItem';
 import { Scroll } from './Scroll/Scroll';
+import { MouseMove } from './MouseMove/MouseMove';
 
 export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem[] = [];
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _scroll: Scroll;
 
-  constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
-    super(camera);
+  constructor(
+    camera: THREE.PerspectiveCamera,
+    scroll: Scroll,
+    mouseMove: MouseMove,
+  ) {
+    super(camera, mouseMove);
     this._scroll = scroll;
   }
 

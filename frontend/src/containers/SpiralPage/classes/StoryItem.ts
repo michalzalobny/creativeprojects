@@ -55,7 +55,9 @@ export class StoryItem extends THREE.Object3D {
 
     this._material = new THREE.ShaderMaterial({
       transparent: true,
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
+      depthWrite: false,
+      depthTest: false,
       uniforms: {
         tMap: { value: null },
         uPlaneSizes: { value: [0, 0] },

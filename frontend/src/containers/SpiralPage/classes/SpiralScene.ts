@@ -1,12 +1,21 @@
 import * as THREE from 'three';
 import { StoryScene } from './StoryScene';
 import { SpiralSpline } from './SpiralSpline';
-import { UpdateInfo } from './types';
+import { UpdateInfo, Bounds } from './types';
 import { Scroll } from './Scroll/Scroll';
 import { lerp } from './utils/lerp';
+import { MouseMove } from './MouseMove/MouseMove';
 
 export class SpiralScene extends StoryScene {
-  _spiralSpline = new SpiralSpline();
+  _spiralSpline = new SpiralSpline(
+    100,
+    5,
+    1,
+    50,
+    this._mouseMove,
+    this._raycaster,
+    this._camera,
+  );
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetYScroll = 0;
@@ -16,8 +25,12 @@ export class SpiralScene extends StoryScene {
   _zeroProgressOffset = 0.46;
   _itemSpacing = 0.056;
 
-  constructor(camera: THREE.PerspectiveCamera, scroll: Scroll) {
-    super(camera, scroll);
+  constructor(
+    camera: THREE.PerspectiveCamera,
+    scroll: Scroll,
+    mouseMove: MouseMove,
+  ) {
+    super(camera, scroll, mouseMove);
     this._scroll = scroll;
 
     this._camera.position.z = this._spiralSpline.depth * 1.5;
@@ -61,7 +74,7 @@ export class SpiralScene extends StoryScene {
     );
   }
 
-  _setListeners() {
+  _addListeners() {
     this._scroll.addEventListener('appliedscroll', this._onScrollApplied);
   }
 
@@ -69,19 +82,27 @@ export class SpiralScene extends StoryScene {
     this._scroll.removeEventListener('appliedscroll', this._onScrollApplied);
   }
 
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+    this._spiralSpline.rendererBounds = bounds;
+  }
+
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this.positionItems(updateInfo);
     this._lerpValues(updateInfo);
+    this._spiralSpline.update(updateInfo);
   }
   destroy() {
     super.destroy();
+    this._spiralSpline.destroy();
     this._removeListeners();
   }
 
   init() {
     super.init();
-    this._setListeners();
+    this._addListeners();
+    this._spiralSpline.init();
 
     this.add(this._spiralSpline);
   }

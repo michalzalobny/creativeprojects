@@ -25,7 +25,11 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
-    this._spiralScene = new SpiralScene(this._camera, this._scroll);
+    this._spiralScene = new SpiralScene(
+      this._camera,
+      this._scroll,
+      this._mouseMove,
+    );
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
       antialias: false,
@@ -41,7 +45,6 @@ export class App {
     this._camera.aspect = aspectRatio;
     this._renderer.setSize(rendererBounds.width, rendererBounds.height);
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this._renderer.setClearColor(new THREE.Color('#F9F7F2'));
     this._camera.updateProjectionMatrix();
 
     this._spiralScene.rendererBounds = rendererBounds;
