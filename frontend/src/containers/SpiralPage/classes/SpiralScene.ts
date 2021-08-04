@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 import { StoryScene } from './StoryScene';
-import { SpiralSpline } from './SpiralSpline';
+import { SpiralSpline3D } from './SpiralSpline3D';
 import { UpdateInfo, Bounds } from './types';
 import { Scroll } from './Scroll/Scroll';
 import { lerp } from './utils/lerp';
 import { MouseMove } from './MouseMove/MouseMove';
 
 export class SpiralScene extends StoryScene {
-  _spiralSpline = new SpiralSpline(100, 5, 1, 50);
+  _spiralSpline = new SpiralSpline3D(100, 5, 1, 50);
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetYScroll = 0;

@@ -3,8 +3,9 @@ import * as THREE from 'three';
 import { UpdateInfo, Bounds } from './types';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import vertexShader from './shaders/dots/vertex.glsl';
+import { InteractiveObject3D } from './InteractiveObject3D';
 
-export class SpiralSpline extends THREE.Object3D {
+export class SpiralSpline3D extends InteractiveObject3D {
   _mesh: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;
   _radius: number;
@@ -99,7 +100,7 @@ export class SpiralSpline extends THREE.Object3D {
   }
 
   getPointPosition(progress: number) {
-    return SpiralSpline.getPointPosition(
+    return SpiralSpline3D.getPointPosition(
       progress,
       this._radius,
       this._loops,

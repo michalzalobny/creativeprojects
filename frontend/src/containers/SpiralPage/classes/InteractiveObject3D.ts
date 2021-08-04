@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export type ColliderName = 'storyItem' | 'backgroundPlane';
 
-export class InteractiveObject extends THREE.Object3D {
+export class InteractiveObject3D extends THREE.Object3D {
   colliderName: ColliderName | null = null;
   _isHovered = false;
 

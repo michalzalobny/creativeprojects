@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { MouseMove } from './MouseMove/MouseMove';
 import { Bounds, UpdateInfo, Coords } from './types';
-import { InteractiveObject, ColliderName } from './InteractiveObject';
+import { InteractiveObject3D, ColliderName } from './InteractiveObject3D';
 import { IntersectiveBackground3D } from './IntersectiveBackground3D';
 
 export class InteractiveScene extends THREE.Scene {
@@ -14,7 +14,7 @@ export class InteractiveScene extends THREE.Scene {
   _mouse3DLerp: Coords = { x: 0, y: 0 };
   _intersectPoint = new THREE.Vector3(0);
   _intersectPointLerp = new THREE.Vector3(0);
-  _hoveredObject: InteractiveObject | null = null;
+  _hoveredObject: InteractiveObject3D | null = null;
   _intersectiveBackground3D = new IntersectiveBackground3D();
 
   constructor(camera: THREE.PerspectiveCamera, mouseMove: MouseMove) {
@@ -31,11 +31,11 @@ export class InteractiveScene extends THREE.Scene {
   ) {
     this._raycaster.setFromCamera({ x, y }, this._camera);
     const intersects = this._raycaster.intersectObjects(this.children, true);
-    const intersectingObjects: InteractiveObject[] = [];
+    const intersectingObjects: InteractiveObject3D[] = [];
 
     for (let i = 0; i < intersects.length; ++i) {
       const interactiveObject = intersects[i].object
-        .parent as InteractiveObject;
+        .parent as InteractiveObject3D;
       if (interactiveObject.colliderName === colliderName) {
         if (fnToCallIfHit) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment

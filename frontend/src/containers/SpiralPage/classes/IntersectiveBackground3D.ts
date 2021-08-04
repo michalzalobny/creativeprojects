@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-import { InteractiveObject } from './InteractiveObject';
+import { InteractiveObject3D } from './InteractiveObject3D';
 
-export class IntersectiveBackground3D extends InteractiveObject {
+export class IntersectiveBackground3D extends InteractiveObject3D {
   _raycasterPlane: THREE.Mesh<
     THREE.PlaneGeometry,
     THREE.MeshBasicMaterial

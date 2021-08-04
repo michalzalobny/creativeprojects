@@ -5,10 +5,10 @@ import fragmentShader from './shaders/storyItem/fragment.glsl';
 import vertexShader from './shaders/storyItem/vertex.glsl';
 import { UpdateInfo, Bounds } from './types';
 import { Scroll } from './Scroll/Scroll';
-import { InteractiveObject } from './InteractiveObject';
+import { InteractiveObject3D } from './InteractiveObject3D';
 import { lerp } from './utils/lerp';
 
-export class StoryItem extends InteractiveObject {
+export class StoryItem3D extends InteractiveObject3D {
   _geometry: THREE.PlaneGeometry;
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;

@@ -2,12 +2,12 @@ import * as THREE from 'three';
 
 import { UpdateInfo, StoryItemProps, Bounds } from './types';
 import { InteractiveScene } from './InteractiveScene';
-import { StoryItem } from './StoryItem';
+import { StoryItem3D } from './StoryItem3D';
 import { Scroll } from './Scroll/Scroll';
 import { MouseMove } from './MouseMove/MouseMove';
 
 export class StoryScene extends InteractiveScene {
-  _storyItems: StoryItem[] = [];
+  _storyItems: StoryItem3D[] = [];
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _scroll: Scroll;
 
@@ -33,7 +33,7 @@ export class StoryScene extends InteractiveScene {
 
     items &&
       items.forEach(item => {
-        const item3D = new StoryItem(this._planeGeometry);
+        const item3D = new StoryItem3D(this._planeGeometry);
         this._storyItems.push(item3D);
         this.add(item3D);
       });
