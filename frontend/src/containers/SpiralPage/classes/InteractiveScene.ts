@@ -106,12 +106,24 @@ export class InteractiveScene extends THREE.Scene {
     }
   };
 
+  _onClick = (e: THREE.Event) => {
+    const mouseX = (e.target as MouseMove).mouse.x;
+    const mouseY = (e.target as MouseMove).mouse.y;
+
+    const mouse3DX = (mouseX / this._rendererBounds.width) * 2 - 1;
+    const mouse3DY = -(mouseY / this._rendererBounds.height) * 2 + 1;
+
+    this._performRaycast(mouse3DX, mouse3DY, 'storyItem', 'onClick');
+  };
+
   _setListeners() {
     this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
+    this._mouseMove.addEventListener('clicked', this._onClick);
   }
 
   _removeListeners() {
     this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
+    this._mouseMove.removeEventListener('clicked', this._onClick);
   }
 
   init() {

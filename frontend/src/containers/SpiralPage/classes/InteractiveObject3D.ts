@@ -19,4 +19,8 @@ export class InteractiveObject3D extends THREE.Object3D {
     this._isHovered = false;
     this.dispatchEvent({ type: 'mouseout' });
   }
+
+  onClick() {
+    this.dispatchEvent({ type: 'click' });
+  }
 }

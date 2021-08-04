@@ -80,10 +80,15 @@ export class MouseMove extends EventDispatcher {
 
   _onMouseLeave = () => {};
 
+  _onClick = () => {
+    this.dispatchEvent({ type: 'clicked' });
+  };
+
   _addEvents() {
     window.addEventListener('mousedown', this._onTouchDown);
     window.addEventListener('mousemove', this._onTouchMove);
     window.addEventListener('mouseup', this._onTouchUp);
+    window.addEventListener('click', this._onClick);
 
     window.addEventListener('touchstart', this._onTouchDown);
     window.addEventListener('touchmove', this._onTouchMove);

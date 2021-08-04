@@ -117,6 +117,7 @@ export class App {
     this._setListeners();
     this._resumeAppFrame();
 
+    //TODO: Preload items before loading
     this._spiralScene.items = Array.from(Array(12).keys()).map((item, key) => {
       return { number: key };
     });
