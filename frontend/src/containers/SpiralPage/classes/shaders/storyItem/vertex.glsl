@@ -18,8 +18,8 @@ void main() {
   vec3 newPos = position;
 
   //Parallax mouse animation
-  stablePosition.x -= uMouse3D.x * 0.004;
-  stablePosition.y -= uMouse3D.y * 0.004;
+  stablePosition.x -= uMouse3D.x * 0.002;
+  stablePosition.y -= uMouse3D.y * 0.002;
 
   // Cursor animation
   float dist = distance(position.xy, uMouse3D.xy);
@@ -33,10 +33,15 @@ void main() {
   
   newPosition.x += sin(newPos.y * PI + PI / 2.0) * abs(uStrength) * newPosition.x;
   newPosition.y += sin(newPos.x * PI + PI / 2.0) * abs(uStrength) * newPosition.y;
-  
 
+  //Wave on scroll
+  float scrollElevation = sin(newPosition.x * 0.05  - uTime * 0.0002) * 5.;
+  scrollElevation += sin(newPosition.y * 0.05  - uTime * 0.0002) * 5.;
+  newPosition.z += scrollElevation * uStrength * 5.;
+  
+  //Wave when hovered
   float elevation = sin(newPosition.x * 0.3  - uTime * 0.003) * 3.;
-  elevation += sin(newPosition.y * 0.3  - uTime * 0.003) * 3.;
+  elevation += sin(newPosition.y * 0.3  - uTime * 0.005) * 3.;
   newPosition.z += elevation * uHovered;
 
   gl_Position = projectionMatrix * newPosition;
