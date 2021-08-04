@@ -7,7 +7,7 @@ export const Wrapper = styled(motion.div)<Props>`
   position: relative;
   min-width: 100%;
   height: 100%;
-  background-color: #734e73;
+  background-color: #faf6ee;
 `;
 
 Wrapper.defaultProps = {
