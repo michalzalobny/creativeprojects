@@ -11,7 +11,7 @@ interface Mouse {
 export class MouseMove extends EventDispatcher {
   _mouseLast: Mouse = { x: 0, y: 0 };
   _isTouching = false;
-  _ease = 0.09;
+  _ease = 0.06;
   mouse: Mouse = { x: 0, y: 0 };
   mouseLerp: Mouse = { x: 0, y: 0 };
   strength = 0;
@@ -56,11 +56,6 @@ export class MouseMove extends EventDispatcher {
   };
 
   _onTouchMove = (event: TouchEvent | MouseEvent) => {
-    // Uncomment if should draw only when pressed
-    // if (!this._isTouching) {
-    //   return;
-    // }
-
     const touchX =
       'touches' in event ? event.touches[0].clientX : event.clientX;
     const touchY =
@@ -115,10 +110,3 @@ export class MouseMove extends EventDispatcher {
     );
   }
 }
-
-// //Update mouse3Ds
-// mouse3D.x = (mouse.x / this.viewportSizes.width) * 2 - 1;
-// mouse3D.y = -(mouse.y / this.viewportSizes.height) * 2 + 1;
-
-// mouse3DLerp.x = (mouseLerp.x / this.viewportSizes.width) * 2 - 1;
-// mouse3DLerp.y = -(mouseLerp.y / this.viewportSizes.height) * 2 + 1;
