@@ -5,7 +5,10 @@ import fragmentShader from './shaders/storyItem/fragment.glsl';
 import vertexShader from './shaders/storyItem/vertex.glsl';
 import { UpdateInfo, Bounds } from './types';
 import { Scroll } from './Scroll/Scroll';
-export class StoryItem extends THREE.Object3D {
+import { InteractiveObject } from './InteractiveObject';
+import { lerp } from './utils/lerp';
+
+export class StoryItem extends InteractiveObject {
   _geometry: THREE.PlaneGeometry;
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;
@@ -17,6 +20,8 @@ export class StoryItem extends THREE.Object3D {
   _offsetOpacity = 0;
   _isVisible = false;
   _opacityTween: Tween<{ progress: number }> | null = null;
+  _currentHoverValue = 0;
+  _destinationHoverValue = 0;
 
   constructor(geometry: THREE.PlaneGeometry) {
     super();
@@ -69,6 +74,7 @@ export class StoryItem extends THREE.Object3D {
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
         uTime: { value: 0 },
+        uHovered: { value: 0 },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
         uViewportSizes: {
           value: [this._rendererBounds.width, this._rendererBounds.height],
@@ -81,6 +87,8 @@ export class StoryItem extends THREE.Object3D {
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
+    // this.setColliderName(this._mesh, 'storyItem');
+    this.setColliderName('storyItem');
     this.add(this._mesh);
   }
 
@@ -103,6 +111,34 @@ export class StoryItem extends THREE.Object3D {
     this._opacityTween.start();
   }
 
+  _updateOpacity() {
+    if (this._mesh) {
+      const computedOpacity = Math.min(
+        this._masterOpacity * this._tweenOpacity + this._offsetOpacity,
+        1,
+      );
+      this._mesh.material.uniforms.uOpacity.value = computedOpacity;
+      this._isVisible = computedOpacity > 0;
+    }
+  }
+
+  _updateHover(updateInfo: UpdateInfo) {
+    if (this._isHovered) {
+      this._destinationHoverValue = 1;
+    } else {
+      this._destinationHoverValue = 0;
+    }
+
+    this._currentHoverValue = lerp(
+      this._currentHoverValue,
+      this._destinationHoverValue,
+      0.02 * updateInfo.slowDownFactor,
+    );
+    if (this._mesh) {
+      this._mesh.material.uniforms.uHovered.value = this._currentHoverValue;
+    }
+  }
+
   set intersectPoint(point: THREE.Vector3) {
     this._intersectPoint = point;
   }
@@ -121,18 +157,8 @@ export class StoryItem extends THREE.Object3D {
     this._masterOpacity = value;
   }
 
-  _updateOpacity() {
-    if (this._mesh) {
-      const computedOpacity = Math.min(
-        this._masterOpacity * this._tweenOpacity + this._offsetOpacity,
-        1,
-      );
-      this._mesh.material.uniforms.uOpacity.value = computedOpacity;
-      this._isVisible = computedOpacity > 0;
-    }
-  }
-
   update(updateInfo: UpdateInfo, scroll: Scroll) {
+    this._updateHover(updateInfo);
     this._updateOpacity();
     if (!this._mesh) {
       return;

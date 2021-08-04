@@ -5,19 +5,6 @@ import fragmentShader from './shaders/dots/fragment.glsl';
 import vertexShader from './shaders/dots/vertex.glsl';
 
 export class SpiralSpline extends THREE.Object3D {
-  static getPointPosition(
-    progress: number,
-    radius: number,
-    loops: number,
-    depth: number,
-  ) {
-    return {
-      x: Math.sin(progress * loops * Math.PI * 2) * radius * progress,
-      y: Math.cos(progress * loops * Math.PI * 2) * radius * progress,
-      z: -depth,
-    };
-  }
-
   _mesh: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;
   _radius: number;
@@ -96,6 +83,19 @@ export class SpiralSpline extends THREE.Object3D {
     this._mesh.renderOrder = -1;
 
     this.add(this._mesh);
+  }
+
+  static getPointPosition(
+    progress: number,
+    radius: number,
+    loops: number,
+    depth: number,
+  ) {
+    return {
+      x: Math.sin(progress * loops * Math.PI * 2) * radius * progress,
+      y: Math.cos(progress * loops * Math.PI * 2) * radius * progress,
+      z: -depth,
+    };
   }
 
   getPointPosition(progress: number) {

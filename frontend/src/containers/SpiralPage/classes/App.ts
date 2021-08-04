@@ -32,7 +32,7 @@ export class App {
     );
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
-      antialias: false,
+      antialias: true,
       alpha: true,
     });
 

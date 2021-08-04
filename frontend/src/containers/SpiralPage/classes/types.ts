@@ -17,3 +17,8 @@ export interface Bounds {
 export interface StoryItemProps {
   number: number;
 }
+
+export interface Coords {
+  x: number;
+  y: number;
+}

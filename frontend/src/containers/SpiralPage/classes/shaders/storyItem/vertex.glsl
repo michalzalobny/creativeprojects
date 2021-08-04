@@ -8,6 +8,7 @@ uniform vec2 uViewportSizes;
 uniform vec2 uPlaneSizes;
 uniform float uTime;
 uniform vec3 uMouse3D;
+uniform float uHovered;
 
 varying vec2 vUv;
 
@@ -29,8 +30,14 @@ void main() {
 
   newPosition.x += sin(newPosition.y / uPlaneSizes.y * 0.9 * PI + PI / 2.0) * uStrength * 5.;
   newPosition.y += sin(newPosition.x / uPlaneSizes.x * 0.9 * PI + PI / 2.0) * uStrength * 15.;
-  newPosition.x += sin(newPos.y * PI + PI / 2.0) * abs(uStrength)  * newPosition.x;
-  newPosition.y += sin(newPos.x * PI + PI / 2.0) * abs(uStrength)  * newPosition.y;
+  
+  newPosition.x += sin(newPos.y * PI + PI / 2.0) * abs(uStrength) * newPosition.x;
+  newPosition.y += sin(newPos.x * PI + PI / 2.0) * abs(uStrength) * newPosition.y;
+  
+
+  float elevation = sin(newPosition.x * 0.3  - uTime * 0.003) * 3.;
+  elevation += sin(newPosition.y * 0.3  - uTime * 0.003) * 3.;
+  newPosition.z += elevation * uHovered;
 
   gl_Position = projectionMatrix * newPosition;
 

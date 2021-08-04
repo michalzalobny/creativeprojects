@@ -46,9 +46,12 @@ export class StoryScene extends InteractiveScene {
     });
   }
 
-  init() {}
+  init() {
+    super.init();
+  }
 
   update(updateInfo: UpdateInfo) {
+    super.update(updateInfo);
     this._storyItems.forEach(item => {
       item.rendererBounds = this._rendererBounds;
       item.update(updateInfo, this._scroll);
@@ -56,6 +59,7 @@ export class StoryScene extends InteractiveScene {
   }
 
   destroy() {
+    super.destroy();
     this._destroyItems();
     this._planeGeometry.dispose();
   }
