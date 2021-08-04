@@ -157,6 +157,18 @@ export class StoryItem3D extends InteractiveObject3D {
     this._masterOpacity = value;
   }
 
+  onMouseOver() {
+    if (this._isVisible) {
+      super.onMouseOver();
+    }
+  }
+
+  onClick() {
+    if (this._isVisible) {
+      super.onClick();
+    }
+  }
+
   update(updateInfo: UpdateInfo, scroll: Scroll) {
     this._updateHover(updateInfo);
     this._updateOpacity();
