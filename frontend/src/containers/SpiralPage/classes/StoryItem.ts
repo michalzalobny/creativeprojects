@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import TWEEN from '@tweenjs/tween.js';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import fragmentShader from './shaders/storyItem/fragment.glsl';
 import vertexShader from './shaders/storyItem/vertex.glsl';
@@ -12,6 +12,11 @@ export class StoryItem extends THREE.Object3D {
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _image: HTMLImageElement | null = null;
   _intersectPoint: THREE.Vector3 | null = null;
+  _masterOpacity = 1;
+  _tweenOpacity = 0;
+  _offsetOpacity = 0;
+  _isVisible = false;
+  _opacityTween: Tween<{ progress: number }> | null = null;
 
   constructor(geometry: THREE.PlaneGeometry) {
     super();
@@ -40,7 +45,7 @@ export class StoryItem extends THREE.Object3D {
       this._mesh.scale.x = sizeX;
       this._mesh.scale.y = sizeY;
 
-      this._fadeImageIn(this._mesh);
+      this._animateOpacity(1);
     }
   };
 
@@ -79,17 +84,23 @@ export class StoryItem extends THREE.Object3D {
     this.add(this._mesh);
   }
 
-  _fadeImageIn(mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>) {
-    const tweenProgress = new TWEEN.Tween({
-      progress: mesh.material.uniforms.uOpacity.value,
-    })
-      .to({ progress: 1 }, 2000)
+  _animateOpacity(destination: number) {
+    if (this._opacityTween) {
+      this._opacityTween.stop();
+    }
+
+    this._opacityTween = new TWEEN.Tween({ progress: this._tweenOpacity })
+      .to({ progress: destination }, 2000)
       .easing(TWEEN.Easing.Sinusoidal.In)
       .onUpdate(obj => {
-        mesh.material.uniforms.uOpacity.value = obj.progress;
+        if (!this._mesh) {
+          return;
+        }
+
+        this._tweenOpacity = obj.progress;
       });
 
-    tweenProgress.start();
+    this._opacityTween.start();
   }
 
   set intersectPoint(point: THREE.Vector3) {
@@ -106,7 +117,23 @@ export class StoryItem extends THREE.Object3D {
     }
   }
 
+  set opacity(value: number) {
+    this._masterOpacity = value;
+  }
+
+  _updateOpacity() {
+    if (this._mesh) {
+      const computedOpacity = Math.min(
+        this._masterOpacity * this._tweenOpacity + this._offsetOpacity,
+        1,
+      );
+      this._mesh.material.uniforms.uOpacity.value = computedOpacity;
+      this._isVisible = computedOpacity > 0;
+    }
+  }
+
   update(updateInfo: UpdateInfo, scroll: Scroll) {
+    this._updateOpacity();
     if (!this._mesh) {
       return;
     }

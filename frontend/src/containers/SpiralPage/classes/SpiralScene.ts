@@ -17,6 +17,8 @@ export class SpiralScene extends StoryScene {
   _scrollYMultiplier = 0.008;
   _zeroProgressOffset = 0.46;
   _itemSpacing = 0.056;
+  _opacityAppearStart = 0.3;
+  _opacityDistance = 15;
   _raycasterPlane: THREE.Mesh<
     THREE.PlaneGeometry,
     THREE.MeshBasicMaterial
@@ -56,9 +58,10 @@ export class SpiralScene extends StoryScene {
         itemPosition.y + this._spiralSpline.position.y,
         itemPosition.z + this._spiralSpline.position.z,
       );
-      // const opacity = 1 + (0.5 - splineProgress) * 8;
-      // item.setOpacity(opacity);
-      const scale = Math.min(Math.pow(splineProgress, 0.6), 1);
+      const opacity =
+        1 - (this._opacityAppearStart - splineProgress) * this._opacityDistance;
+      item.opacity = opacity;
+      const scale = Math.min(Math.pow(splineProgress, 0.95), 1);
       item.scale.set(scale, scale, scale);
     });
   };
