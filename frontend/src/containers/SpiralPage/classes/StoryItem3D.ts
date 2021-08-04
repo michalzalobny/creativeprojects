@@ -159,8 +159,14 @@ export class StoryItem3D extends InteractiveObject3D {
 
   onMouseOver() {
     if (this._isVisible) {
+      document.body.style.cursor = 'pointer';
       super.onMouseOver();
     }
+  }
+
+  onMouseOut() {
+    super.onMouseOut();
+    document.body.style.cursor = 'initial';
   }
 
   onClick() {
