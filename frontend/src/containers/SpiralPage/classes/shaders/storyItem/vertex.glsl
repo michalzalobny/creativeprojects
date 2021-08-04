@@ -29,19 +29,19 @@ void main() {
   vec4 newPosition = modelViewMatrix * vec4(stablePosition, 1.0);
 
   newPosition.x += sin(newPosition.y / uPlaneSizes.y * 0.9 * PI + PI / 2.0) * uStrength * 5.;
-  newPosition.y += sin(newPosition.x / uPlaneSizes.x * 0.9 * PI + PI / 2.0) * uStrength * 15.;
+  newPosition.y += sin(newPosition.x / uPlaneSizes.x * 0.9 * PI + PI / 2.0) * uStrength * 8.;
   
-  newPosition.x += sin(newPos.y * PI + PI / 2.0) * abs(uStrength) * newPosition.x;
-  newPosition.y += sin(newPos.x * PI + PI / 2.0) * abs(uStrength) * newPosition.y;
+  newPosition.x += sin(newPos.y * PI + PI / 2.0) * abs(uStrength) * newPosition.x * 0.5;
+  newPosition.y += sin(newPos.x * PI + PI / 2.0) * abs(uStrength) * newPosition.y * 0.5;
 
   //Wave on scroll
-  float scrollElevation = sin(newPosition.x * 0.05  - uTime * 0.0002) * 5.;
-  scrollElevation += sin(newPosition.y * 0.05  - uTime * 0.0002) * 5.;
+  float scrollElevation = sin(newPosition.x * 0.05  - uTime * 0.0002) * 8.;
+  scrollElevation += sin(newPosition.y * 0.05  - uTime * 0.0002) * 8.;
   newPosition.z += scrollElevation * uStrength * 5.;
   
   //Wave when hovered
-  float elevation = sin(newPosition.x * 0.3  - uTime * 0.003) * 3.;
-  elevation += sin(newPosition.y * 0.3  - uTime * 0.005) * 3.;
+  float elevation = sin(newPosition.x * 0.1  - uTime * 0.002) * 4.5;
+  elevation += sin(newPosition.y * 0.2  - uTime * -0.003) * 4.5;
   newPosition.z += elevation * uHovered;
 
   gl_Position = projectionMatrix * newPosition;
