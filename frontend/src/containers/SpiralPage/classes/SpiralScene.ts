@@ -7,17 +7,18 @@ import { lerp } from './utils/lerp';
 import { MouseMove } from './MouseMove/MouseMove';
 
 export class SpiralScene extends StoryScene {
+  static lerpEase = 0.05;
+  static scrollYMultiplier = 0.008;
+  static zeroProgressOffset = 0.46;
+  static itemSpacing = 0.056;
+  static opacityAppearStart = 0.3;
+  static opacityDistance = 15;
+
   _spiralSpline = new SpiralSpline3D(100, 5, 1, 50);
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetYScroll = 0;
   _currentYScroll = 0;
-  _lerpEase = 0.05;
-  _scrollYMultiplier = 0.008;
-  _zeroProgressOffset = 0.46;
-  _itemSpacing = 0.056;
-  _opacityAppearStart = 0.3;
-  _opacityDistance = 15;
 
   constructor(
     camera: THREE.PerspectiveCamera,
@@ -40,8 +41,8 @@ export class SpiralScene extends StoryScene {
 
     this._storyItems.forEach((item, index) => {
       const dIndex = -(index - this._currentIndexFloat);
-      const dProgress = dIndex * this._itemSpacing;
-      const splineProgress = dProgress + this._zeroProgressOffset;
+      const dProgress = dIndex * SpiralScene.itemSpacing;
+      const splineProgress = dProgress + SpiralScene.zeroProgressOffset;
       const itemPosition = this._spiralSpline.getPointPosition(splineProgress);
 
       item.position.set(
@@ -50,7 +51,9 @@ export class SpiralScene extends StoryScene {
         itemPosition.z + this._spiralSpline.position.z,
       );
       const opacity =
-        1 - (this._opacityAppearStart - splineProgress) * this._opacityDistance;
+        1 -
+        (SpiralScene.opacityAppearStart - splineProgress) *
+          SpiralScene.opacityDistance;
       item.opacity = opacity;
       const scale = Math.min(Math.pow(splineProgress, 0.95), 1);
       item.scale.set(scale, scale, scale);
@@ -58,7 +61,7 @@ export class SpiralScene extends StoryScene {
   };
 
   _onScrollApplied = (e: THREE.Event) => {
-    const newTarget = this._targetYScroll - e.y * this._scrollYMultiplier;
+    const newTarget = this._targetYScroll - e.y * SpiralScene.scrollYMultiplier;
 
     this._targetYScroll = Math.min(
       Math.max(0, newTarget),
@@ -70,7 +73,7 @@ export class SpiralScene extends StoryScene {
     this._currentYScroll = lerp(
       this._currentYScroll,
       this._targetYScroll,
-      this._lerpEase * updateInfo.slowDownFactor,
+      SpiralScene.lerpEase * updateInfo.slowDownFactor,
     );
   }
 
