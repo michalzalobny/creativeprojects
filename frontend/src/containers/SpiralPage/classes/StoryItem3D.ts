@@ -12,6 +12,7 @@ export class StoryItem3D extends InteractiveObject3D {
   _geometry: THREE.PlaneGeometry;
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;
+  _texture: THREE.Texture | null = null;
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _image: HTMLImageElement | null = null;
   _intersectPoint: THREE.Vector3 | null = null;
@@ -30,11 +31,11 @@ export class StoryItem3D extends InteractiveObject3D {
   }
 
   _onImageLoad = () => {
-    const texture = new THREE.Texture();
-    texture.image = this._image;
-    texture.needsUpdate = true;
+    this._texture = new THREE.Texture();
+    this._texture.image = this._image;
+    this._texture.needsUpdate = true;
     if (this._material && this._mesh && this._image) {
-      this._material.uniforms.tMap.value = texture;
+      this._material.uniforms.tMap.value = this._texture;
 
       this._material.uniforms.uImageSizes.value = [
         this._image.naturalWidth,
@@ -87,7 +88,6 @@ export class StoryItem3D extends InteractiveObject3D {
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
-    // this.setColliderName(this._mesh, 'storyItem');
     this.setColliderName('storyItem');
     this.add(this._mesh);
   }
@@ -201,6 +201,12 @@ export class StoryItem3D extends InteractiveObject3D {
     }
   }
   destroy() {
+    super.destroy();
     this._image && this._image.removeEventListener('load', this._onImageLoad);
+    this._geometry?.dispose();
+    this._material?.dispose();
+    if (this._mesh) {
+      this.remove(this._mesh);
+    }
   }
 }
