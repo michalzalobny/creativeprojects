@@ -3,27 +3,26 @@ import * as THREE from 'three';
 import { InteractiveObject3D } from './InteractiveObject3D';
 
 export class IntersectiveBackground3D extends InteractiveObject3D {
-  _raycasterPlane: THREE.Mesh<
-    THREE.PlaneGeometry,
-    THREE.MeshBasicMaterial
-  > | null = null;
+  _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
+  _geometry: THREE.PlaneGeometry | null = null;
+  _material: THREE.MeshBasicMaterial | null = null;
 
   constructor() {
     super();
   }
 
   _drawRaycasterPlane() {
-    this._raycasterPlane = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1000, 1000),
-      new THREE.MeshBasicMaterial({
-        transparent: true,
-        depthWrite: false,
-        depthTest: false,
-        opacity: 0,
-      }),
-    );
+    this._geometry = new THREE.PlaneBufferGeometry(1000, 1000);
+    this._material = new THREE.MeshBasicMaterial({
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      opacity: 0,
+    });
 
-    this.add(this._raycasterPlane);
+    this._mesh = new THREE.Mesh(this._geometry, this._material);
+
+    this.add(this._mesh);
   }
 
   getIntersectPoint(
@@ -34,11 +33,8 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
   ) {
     raycaster.setFromCamera({ x, y }, camera);
 
-    if (this._raycasterPlane) {
-      const intersects = raycaster.intersectObjects(
-        [this._raycasterPlane],
-        true,
-      );
+    if (this._mesh) {
+      const intersects = raycaster.intersectObjects([this._mesh], true);
       if (intersects[0]) {
         return intersects[0].point;
       }
@@ -48,8 +44,8 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
   }
 
   setPlaneDepth(value: number) {
-    if (this._raycasterPlane) {
-      this._raycasterPlane.position.z = value;
+    if (this._mesh) {
+      this._mesh.position.z = value;
     }
   }
 
@@ -57,5 +53,11 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
     this._drawRaycasterPlane();
   }
 
-  destroy() {}
+  destroy() {
+    this._geometry?.dispose();
+    this._material?.dispose();
+    if (this._mesh) {
+      this.remove(this._mesh);
+    }
+  }
 }

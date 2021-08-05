@@ -63,12 +63,6 @@ export class InteractiveScene extends THREE.Scene {
     this._mouse3DLerp.x = (mouseLerpX / this._rendererBounds.width) * 2 - 1;
     this._mouse3DLerp.y = -(mouseLerpY / this._rendererBounds.height) * 2 + 1;
 
-    const objects = this._performRaycast(
-      this._mouse3D.x,
-      this._mouse3D.y,
-      'storyItem',
-    );
-
     const intersectPoint = this._intersectiveBackground3D.getIntersectPoint(
       this._mouse3D.x,
       this._mouse3D.y,
@@ -90,6 +84,12 @@ export class InteractiveScene extends THREE.Scene {
     if (intersectPointLerp) {
       this._intersectPointLerp = intersectPointLerp;
     }
+
+    const objects = this._performRaycast(
+      this._mouse3D.x,
+      this._mouse3D.y,
+      'storyItem',
+    );
 
     if (objects.length > 0) {
       const hoveredObject = objects[0];
@@ -116,7 +116,7 @@ export class InteractiveScene extends THREE.Scene {
     this._performRaycast(mouse3DX, mouse3DY, 'storyItem', 'onClick');
   };
 
-  _setListeners() {
+  _addListeners() {
     this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
     this._mouseMove.addEventListener('clicked', this._onClick);
   }
@@ -126,8 +126,12 @@ export class InteractiveScene extends THREE.Scene {
     this._mouseMove.removeEventListener('clicked', this._onClick);
   }
 
+  set rendererBounds(bounds: Bounds) {
+    this._rendererBounds = bounds;
+  }
+
   init() {
-    this._setListeners();
+    this._addListeners();
     this._intersectiveBackground3D.init();
     this.add(this._intersectiveBackground3D);
   }
@@ -137,9 +141,5 @@ export class InteractiveScene extends THREE.Scene {
   destroy() {
     this._removeListeners();
     this._intersectiveBackground3D.destroy();
-  }
-
-  set rendererBounds(bounds: Bounds) {
-    this._rendererBounds = bounds;
   }
 }

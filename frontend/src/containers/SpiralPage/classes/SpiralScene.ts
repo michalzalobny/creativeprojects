@@ -69,10 +69,12 @@ export class SpiralScene extends StoryScene {
   }
 
   _addListeners() {
+    super._addListeners();
     this._scroll.addEventListener('appliedscroll', this._onScrollApplied);
   }
 
   _removeListeners() {
+    super._removeListeners();
     this._scroll.removeEventListener('appliedscroll', this._onScrollApplied);
   }
 

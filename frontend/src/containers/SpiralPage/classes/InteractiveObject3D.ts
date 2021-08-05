@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export type ColliderName = 'storyItem' | 'backgroundPlane';
+export type ColliderName = 'storyItem';
 
 export class InteractiveObject3D extends THREE.Object3D {
   colliderName: ColliderName | null = null;
