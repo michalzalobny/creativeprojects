@@ -32,17 +32,16 @@ export class SpiralSpline3D extends InteractiveObject3D {
     const thetaMax = this._loops * rotation;
     const awayStep = this._radius / thetaMax;
     const chord = this._density;
-    let amount = 0;
+    let particlesAmount = 0;
 
     for (let theta = this._density; theta <= thetaMax; ) {
       const away = awayStep * theta;
-      amount++;
+      particlesAmount++;
       theta += chord / away;
     }
     let i = 0;
-
-    const positionArray = new Float32Array(amount * 3);
-    const randomArray = new Float32Array(amount);
+    const positionArray = new Float32Array(particlesAmount * 3);
+    const randomArray = new Float32Array(particlesAmount);
 
     for (let theta = this._density; theta <= thetaMax; ) {
       const away = awayStep * theta;
