@@ -182,10 +182,6 @@ export class StoryItem3D extends InteractiveObject3D {
     }
   }
 
-  init() {
-    super.init();
-  }
-
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._updateHover(updateInfo);

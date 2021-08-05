@@ -26,8 +26,6 @@ export class InteractiveObject3D extends THREE.Object3D {
     this.dispatchEvent({ type: 'click' });
   }
 
-  init() {}
-
   update(updateInfo: UpdateInfo) {}
 
   destroy() {}

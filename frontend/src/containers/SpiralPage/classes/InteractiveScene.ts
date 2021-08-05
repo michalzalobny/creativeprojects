@@ -132,7 +132,6 @@ export class InteractiveScene extends THREE.Scene {
 
   init() {
     this._addListeners();
-    this._intersectiveBackground3D.init();
     this.add(this._intersectiveBackground3D);
   }
 

@@ -113,7 +113,6 @@ export class SpiralScene extends StoryScene {
   init() {
     super.init();
     this._addListeners();
-    this._spiralSpline.init();
     this.add(this._spiralSpline);
     this._intersectiveBackground3D.setPlaneDepth(
       -this._spiralSpline.depth * 1.5,

@@ -124,10 +124,6 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._intersectPoint = point;
   }
 
-  init() {
-    super.init();
-  }
-
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     if (this._mesh) {

@@ -10,6 +10,7 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
 
   constructor() {
     super();
+    this._drawRaycasterPlane();
   }
 
   _drawRaycasterPlane() {
@@ -48,11 +49,6 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
     if (this._mesh) {
       this._mesh.position.z = value;
     }
-  }
-
-  init() {
-    super.init();
-    this._drawRaycasterPlane();
   }
 
   update(updateInfo: UpdateInfo) {

@@ -36,7 +36,6 @@ export class StoryScene extends InteractiveScene {
         const item3D = new StoryItem3D(this._planeGeometry);
         this._storyItems.push(item3D);
         this.add(item3D);
-        item3D.init();
       });
   }
 
