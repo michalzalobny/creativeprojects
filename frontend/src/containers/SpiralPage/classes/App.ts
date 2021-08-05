@@ -41,7 +41,7 @@ export class App {
       return { number: key };
     });
     this._onResize();
-    this._setListeners();
+    this._addListeners();
     this._resumeAppFrame();
   }
 
@@ -64,9 +64,14 @@ export class App {
     }
   };
 
-  _setListeners() {
+  _addListeners() {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('visibilitychange', this._onVisibilityChange);
+  }
+
+  _removeListeners() {
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('visibilitychange', this._onVisibilityChange);
   }
 
   destroy() {
@@ -74,8 +79,7 @@ export class App {
       this._canvas.parentNode.removeChild(this._canvas);
     }
     this._stopAppFrame();
-    window.removeEventListener('resize', this._onResize);
-    window.removeEventListener('visibilitychange', this._onVisibilityChange);
+    this._removeListeners();
   }
 
   _resumeAppFrame() {
@@ -92,6 +96,8 @@ export class App {
       return;
     }
 
+    TWEEN.update(time);
+
     const delta = time - this._lastFrameTime;
     let slowDownFactor = delta / DT_FPS;
 
@@ -102,11 +108,9 @@ export class App {
       slowDownFactor = slowDownFactorRounded;
     }
     this._lastFrameTime = time;
-    TWEEN.update(time);
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
-
     this._spiralScene.update({ delta, slowDownFactor, time });
 
     this._renderer.render(this._spiralScene, this._camera);
