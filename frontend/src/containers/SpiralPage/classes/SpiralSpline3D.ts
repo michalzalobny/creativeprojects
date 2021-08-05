@@ -8,6 +8,7 @@ import { InteractiveObject3D } from './InteractiveObject3D';
 export class SpiralSpline3D extends InteractiveObject3D {
   _mesh: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial> | null = null;
   _material: THREE.ShaderMaterial | null = null;
+  _geometry: THREE.BufferGeometry | null = null;
   _radius: number;
   _loops: number;
   _density: number;
@@ -21,12 +22,11 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._loops = loops;
     this._density = density;
     this.depth = depth;
-
     this._drawSpiral();
   }
 
   _drawSpiral() {
-    const geometry = new THREE.BufferGeometry();
+    this._geometry = new THREE.BufferGeometry();
 
     const rotation = 2 * Math.PI;
     const thetaMax = this._loops * rotation;
@@ -59,7 +59,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
       i += 1;
     }
 
-    geometry.setAttribute(
+    this._geometry.setAttribute(
       'position',
       new THREE.BufferAttribute(positionArray, 3),
     );
@@ -78,9 +78,12 @@ export class SpiralSpline3D extends InteractiveObject3D {
       vertexShader: vertexShader,
     });
 
-    geometry.setAttribute('aRandom', new THREE.BufferAttribute(randomArray, 1));
+    this._geometry.setAttribute(
+      'aRandom',
+      new THREE.BufferAttribute(randomArray, 1),
+    );
 
-    this._mesh = new THREE.Points(geometry, this._material);
+    this._mesh = new THREE.Points(this._geometry, this._material);
     this._mesh.renderOrder = -1;
 
     this.add(this._mesh);
@@ -137,5 +140,10 @@ export class SpiralSpline3D extends InteractiveObject3D {
 
   destroy() {
     super.destroy();
+    this._geometry?.dispose();
+    this._material?.dispose();
+    if (this._mesh) {
+      this.remove(this._mesh);
+    }
   }
 }
