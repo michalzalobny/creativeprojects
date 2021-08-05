@@ -84,17 +84,17 @@ export class SpiralScene extends StoryScene {
     this._scroll.removeEventListener('appliedscroll', this._onScrollApplied);
   }
 
-  set rendererBounds(bounds: Bounds) {
-    super.rendererBounds = bounds;
-    this._spiralSpline.rendererBounds = this._rendererBounds;
-  }
-
   _passIntersectPoint() {
     this._spiralSpline.intersectPoint = this._intersectPointLerp;
 
     this._storyItems.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+    this._spiralSpline.rendererBounds = this._rendererBounds;
   }
 
   update(updateInfo: UpdateInfo) {

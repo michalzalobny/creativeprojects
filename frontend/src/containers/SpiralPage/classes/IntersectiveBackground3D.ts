@@ -23,7 +23,6 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
-
     this.add(this._mesh);
   }
 
