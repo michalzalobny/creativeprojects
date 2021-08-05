@@ -21,6 +21,8 @@ export class InteractiveScene extends THREE.Scene {
     super();
     this._camera = camera;
     this._mouseMove = mouseMove;
+
+    this.add(this._intersectiveBackground3D);
   }
 
   _performRaycast(
@@ -128,11 +130,6 @@ export class InteractiveScene extends THREE.Scene {
 
   set rendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
-  }
-
-  init() {
-    this._addListeners();
-    this.add(this._intersectiveBackground3D);
   }
 
   update(updateInfo: UpdateInfo) {}

@@ -3,21 +3,14 @@ import * as THREE from 'three';
 import { UpdateInfo, StoryItemProps, Bounds } from './types';
 import { InteractiveScene } from './InteractiveScene';
 import { StoryItem3D } from './StoryItem3D';
-import { Scroll } from './Scroll/Scroll';
 import { MouseMove } from './MouseMove/MouseMove';
 
 export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem3D[] = [];
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _scroll: Scroll;
 
-  constructor(
-    camera: THREE.PerspectiveCamera,
-    scroll: Scroll,
-    mouseMove: MouseMove,
-  ) {
+  constructor(camera: THREE.PerspectiveCamera, mouseMove: MouseMove) {
     super(camera, mouseMove);
-    this._scroll = scroll;
   }
 
   _destroyItems() {
@@ -44,10 +37,6 @@ export class StoryScene extends InteractiveScene {
     this._storyItems.forEach(item => {
       item.rendererBounds = bounds;
     });
-  }
-
-  init() {
-    super.init();
   }
 
   update(updateInfo: UpdateInfo) {

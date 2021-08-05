@@ -25,6 +25,7 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
+
     this._spiralScene = new SpiralScene(
       this._camera,
       this._scroll,
@@ -36,7 +37,13 @@ export class App {
       alpha: true,
     });
 
-    this._init();
+    this._spiralScene.items = Array.from(Array(15).keys()).map((item, key) => {
+      return { number: key };
+    });
+
+    this._onResize();
+    this._setListeners();
+    this._resumeAppFrame();
   }
 
   _onResize = () => {
@@ -110,18 +117,5 @@ export class App {
     if (this._rafId) {
       window.cancelAnimationFrame(this._rafId);
     }
-  }
-
-  _init() {
-    //TODO: Preload items before loading
-    this._spiralScene.items = Array.from(Array(15).keys()).map((item, key) => {
-      return { number: key };
-    });
-
-    this._onResize();
-    this._setListeners();
-    this._resumeAppFrame();
-
-    this._spiralScene.init();
   }
 }

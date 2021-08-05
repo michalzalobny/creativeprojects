@@ -24,9 +24,15 @@ export class SpiralScene extends StoryScene {
     scroll: Scroll,
     mouseMove: MouseMove,
   ) {
-    super(camera, scroll, mouseMove);
+    super(camera, mouseMove);
     this._scroll = scroll;
     this._camera.position.z = this._spiralSpline.depth * 1.5;
+
+    this._addListeners();
+    this.add(this._spiralSpline);
+    this._intersectiveBackground3D.setPlaneDepth(
+      -this._spiralSpline.depth * 1.5,
+    );
   }
 
   _positionItems = (updateInfo: UpdateInfo) => {
@@ -108,14 +114,5 @@ export class SpiralScene extends StoryScene {
     this._spiralSpline.destroy();
     this.remove(this._spiralSpline);
     this._removeListeners();
-  }
-
-  init() {
-    super.init();
-    this._addListeners();
-    this.add(this._spiralSpline);
-    this._intersectiveBackground3D.setPlaneDepth(
-      -this._spiralSpline.depth * 1.5,
-    );
   }
 }
