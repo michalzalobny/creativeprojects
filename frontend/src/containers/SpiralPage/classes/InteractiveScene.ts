@@ -141,5 +141,6 @@ export class InteractiveScene extends THREE.Scene {
   destroy() {
     this._removeListeners();
     this._intersectiveBackground3D.destroy();
+    this.remove(this._intersectiveBackground3D);
   }
 }

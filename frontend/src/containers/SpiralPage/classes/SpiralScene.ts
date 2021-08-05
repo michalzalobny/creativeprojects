@@ -106,6 +106,7 @@ export class SpiralScene extends StoryScene {
   destroy() {
     super.destroy();
     this._spiralSpline.destroy();
+    this.remove(this._spiralSpline);
     this._removeListeners();
   }
 
