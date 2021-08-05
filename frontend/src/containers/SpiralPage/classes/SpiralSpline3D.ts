@@ -121,9 +121,12 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._intersectPoint = point;
   }
 
-  init() {}
+  init() {
+    super.init();
+  }
 
   update(updateInfo: UpdateInfo) {
+    super.update(updateInfo);
     if (this._mesh) {
       this._mesh.material.uniforms.uTime.value = updateInfo.time;
     }
@@ -132,5 +135,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
     }
   }
 
-  destroy() {}
+  destroy() {
+    super.destroy();
+  }
 }

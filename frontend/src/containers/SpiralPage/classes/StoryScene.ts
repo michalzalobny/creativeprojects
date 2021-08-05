@@ -54,7 +54,7 @@ export class StoryScene extends InteractiveScene {
     super.update(updateInfo);
     this._storyItems.forEach(item => {
       item.rendererBounds = this._rendererBounds;
-      item.update(updateInfo, this._scroll);
+      item.update(updateInfo);
     });
   }
 

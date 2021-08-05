@@ -29,7 +29,7 @@ export class SpiralScene extends StoryScene {
     this._camera.position.z = this._spiralSpline.depth * 1.5;
   }
 
-  positionItems = (updateInfo: UpdateInfo) => {
+  _positionItems = (updateInfo: UpdateInfo) => {
     this._currentIndexFloat = this._currentYScroll;
 
     this._storyItems.forEach((item, index) => {
@@ -93,11 +93,16 @@ export class SpiralScene extends StoryScene {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this.positionItems(updateInfo);
+    this._positionItems(updateInfo);
     this._lerpValues(updateInfo);
     this._spiralSpline.update(updateInfo);
     this._passIntersectPoint();
+
+    this._storyItems.forEach(item => {
+      item.updateScrollStrength(this._scroll);
+    });
   }
+
   destroy() {
     super.destroy();
     this._spiralSpline.destroy();

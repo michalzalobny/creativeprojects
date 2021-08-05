@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import { UpdateInfo } from './types';
+
 export type ColliderName = 'storyItem';
 
 export class InteractiveObject3D extends THREE.Object3D {
@@ -23,4 +25,10 @@ export class InteractiveObject3D extends THREE.Object3D {
   onClick() {
     this.dispatchEvent({ type: 'click' });
   }
+
+  init() {}
+
+  update(updateInfo: UpdateInfo) {}
+
+  destroy() {}
 }

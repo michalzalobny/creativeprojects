@@ -175,14 +175,20 @@ export class StoryItem3D extends InteractiveObject3D {
     }
   }
 
-  update(updateInfo: UpdateInfo, scroll: Scroll) {
+  updateScrollStrength(scroll: Scroll) {
+    if (this._mesh) {
+      const strength = scroll.currentStrength.y / this._rendererBounds.height;
+      this._mesh.material.uniforms.uStrength.value = strength * 20;
+    }
+  }
+
+  update(updateInfo: UpdateInfo) {
+    super.update(updateInfo);
     this._updateHover(updateInfo);
     this._updateOpacity();
     if (!this._mesh) {
       return;
     }
-    const strength = scroll.currentStrength.y / this._rendererBounds.height;
-    this._mesh.material.uniforms.uStrength.value = strength * 20;
 
     this._mesh.material.uniforms.uTime.value = updateInfo.time;
 
