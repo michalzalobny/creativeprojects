@@ -40,7 +40,6 @@ export class App {
     this._spiralScene.items = Array.from(Array(15).keys()).map((item, key) => {
       return { number: key };
     });
-
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
