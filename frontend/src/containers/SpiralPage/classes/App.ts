@@ -113,14 +113,14 @@ export class App {
   }
 
   _init() {
+    //TODO: Preload items before loading
+    this._spiralScene.items = Array.from(Array(15).keys()).map((item, key) => {
+      return { number: key };
+    });
+
     this._onResize();
     this._setListeners();
     this._resumeAppFrame();
-
-    //TODO: Preload items before loading
-    this._spiralScene.items = Array.from(Array(12).keys()).map((item, key) => {
-      return { number: key };
-    });
 
     this._spiralScene.init();
   }

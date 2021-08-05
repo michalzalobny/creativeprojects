@@ -36,6 +36,7 @@ export class StoryScene extends InteractiveScene {
         const item3D = new StoryItem3D(this._planeGeometry);
         this._storyItems.push(item3D);
         this.add(item3D);
+        item3D.init();
       });
   }
 
@@ -53,7 +54,6 @@ export class StoryScene extends InteractiveScene {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._storyItems.forEach(item => {
-      item.rendererBounds = this._rendererBounds;
       item.update(updateInfo);
     });
   }
