@@ -196,6 +196,7 @@ export class StoryItem3D extends InteractiveObject3D {
       this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
     }
   }
+
   destroy() {
     super.destroy();
     this._image && this._image.removeEventListener('load', this._onImageLoad);
