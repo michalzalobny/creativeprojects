@@ -8,15 +8,30 @@ import { MouseMove } from './MouseMove/MouseMove';
 export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem3D[] = [];
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
+  _setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>;
 
-  constructor(camera: THREE.PerspectiveCamera, mouseMove: MouseMove) {
+  constructor(
+    camera: THREE.PerspectiveCamera,
+    mouseMove: MouseMove,
+    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>,
+  ) {
     super(camera, mouseMove);
+    this._setHoveredItem = setHoveredItem;
   }
+
+  _onItemOver = (e: THREE.Event) => {
+    this._setHoveredItem(e.target);
+  };
+  _onItemLeft = (e: THREE.Event) => {
+    this._setHoveredItem(null);
+  };
 
   _destroyItems() {
     this._storyItems.forEach(item => {
       item.destroy();
       this.remove(item);
+      item.removeEventListener('pointerover', this._onItemOver);
+      item.removeEventListener('pointerleft', this._onItemLeft);
     });
     this._storyItems = [];
   }
@@ -30,6 +45,11 @@ export class StoryScene extends InteractiveScene {
         this._storyItems.push(item3D);
         this.add(item3D);
       });
+
+    this._storyItems.forEach(storyItem => {
+      storyItem.addEventListener('pointerover', this._onItemOver);
+      storyItem.addEventListener('pointerleft', this._onItemLeft);
+    });
   }
 
   set rendererBounds(bounds: Bounds) {

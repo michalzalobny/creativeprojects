@@ -25,8 +25,9 @@ export class SpiralScene extends StoryScene {
     camera: THREE.PerspectiveCamera,
     scroll: Scroll,
     mouseMove: MouseMove,
+    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>,
   ) {
-    super(camera, mouseMove);
+    super(camera, mouseMove, setHoveredItem);
     this._scroll = scroll;
     this._camera.position.z = this._spiralSpline.depth * 1.5;
 
@@ -96,12 +97,16 @@ export class SpiralScene extends StoryScene {
     });
   }
 
-  set hoveredItem(hoveredItem: StoryItem3D) {
+  set hoveredStoryItem(hoveredItem: StoryItem3D) {
     if (hoveredItem) {
       this._storyItems.forEach(item => {
         if (item !== hoveredItem) {
-          item.animateOpacity(0.1);
+          item.animateOpacity(0);
         }
+      });
+    } else {
+      this._storyItems.forEach(item => {
+        item.animateOpacity(1);
       });
     }
   }

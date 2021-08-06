@@ -2,6 +2,7 @@ import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
+import { StoryItem3D } from './StoryItem3D';
 
 import { MouseMove } from './MouseMove/MouseMove';
 import { Scroll } from './Scroll/Scroll';
@@ -22,7 +23,11 @@ export class App {
   _scroll = Scroll.getInstance();
   _spiralScene: SpiralScene;
 
-  constructor(rendererWrapperEl: HTMLDivElement, items: CreativeItem[]) {
+  constructor(
+    rendererWrapperEl: HTMLDivElement,
+    items: CreativeItem[],
+    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>,
+  ) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -32,16 +37,13 @@ export class App {
       this._camera,
       this._scroll,
       this._mouseMove,
+      setHoveredItem,
     );
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
       antialias: true,
       alpha: true,
     });
-
-    // this._spiralScene.items = Array.from(Array(6).keys()).map((item, key) => {
-    //   return { number: key };
-    // });
 
     this._spiralScene.items = Array.from(items).map((item, key) => {
       return { number: key, item: item };
@@ -79,14 +81,6 @@ export class App {
   _removeListeners() {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
-  }
-
-  destroy() {
-    if (this._canvas.parentNode) {
-      this._canvas.parentNode.removeChild(this._canvas);
-    }
-    this._stopAppFrame();
-    this._removeListeners();
   }
 
   _resumeAppFrame() {
@@ -127,5 +121,19 @@ export class App {
     if (this._rafId) {
       window.cancelAnimationFrame(this._rafId);
     }
+  }
+
+  setHoveredItem(item: StoryItem3D) {
+    if (this._spiralScene) {
+      this._spiralScene.hoveredStoryItem = item;
+    }
+  }
+
+  destroy() {
+    if (this._canvas.parentNode) {
+      this._canvas.parentNode.removeChild(this._canvas);
+    }
+    this._stopAppFrame();
+    this._removeListeners();
   }
 }
