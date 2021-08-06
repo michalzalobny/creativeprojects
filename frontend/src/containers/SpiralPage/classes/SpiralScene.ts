@@ -101,7 +101,7 @@ export class SpiralScene extends StoryScene {
     if (hoveredItem) {
       this._storyItems.forEach(item => {
         if (item !== hoveredItem) {
-          item.animateOpacity(0);
+          item.animateOpacity(0.15);
         }
       });
     } else {

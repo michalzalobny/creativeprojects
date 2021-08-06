@@ -148,8 +148,8 @@ export class StoryItem3D extends InteractiveObject3D {
     }
 
     this._opacityTween = new TWEEN.Tween({ progress: this._tweenOpacity })
-      .to({ progress: destination }, 2000)
-      .easing(TWEEN.Easing.Sinusoidal.In)
+      .to({ progress: destination }, 850)
+      .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         if (!this._mesh) {
           return;

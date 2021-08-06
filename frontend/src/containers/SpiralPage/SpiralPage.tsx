@@ -34,7 +34,7 @@ export default function SpiralPage(props: PageProps) {
   }, [props.projectData.creativeItems]);
 
   useEffect(() => {
-    myApp.current && myApp.current.setHoveredItem(null);
+    myApp.current && myApp.current.setHoveredItem(hoveredItem);
   }, [hoveredItem]);
 
   return (
