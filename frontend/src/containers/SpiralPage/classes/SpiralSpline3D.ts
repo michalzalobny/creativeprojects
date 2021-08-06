@@ -27,9 +27,8 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._density = density;
     this.depth = depth;
     this._drawSpiral();
-    setTimeout(() => {
-      this._animateProgress(1);
-    }, 1500);
+
+    this._animateProgress(1);
   }
 
   _drawSpiral() {

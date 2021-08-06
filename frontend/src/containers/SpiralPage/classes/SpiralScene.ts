@@ -5,6 +5,7 @@ import { UpdateInfo, Bounds } from './types';
 import { Scroll } from './Scroll/Scroll';
 import { lerp } from './utils/lerp';
 import { MouseMove } from './MouseMove/MouseMove';
+import { StoryItem3D } from './StoryItem3D';
 
 export class SpiralScene extends StoryScene {
   static lerpEase = 0.05;
@@ -93,6 +94,16 @@ export class SpiralScene extends StoryScene {
     this._storyItems.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
+  }
+
+  set hoveredItem(hoveredItem: StoryItem3D) {
+    if (hoveredItem) {
+      this._storyItems.forEach(item => {
+        if (item !== hoveredItem) {
+          item.animateOpacity(0.1);
+        }
+      });
+    }
   }
 
   set rendererBounds(bounds: Bounds) {

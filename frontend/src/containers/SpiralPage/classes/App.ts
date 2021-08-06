@@ -1,6 +1,8 @@
 import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 
+import { CreativeItem } from 'utils/types/strapi/CreativeItem';
+
 import { MouseMove } from './MouseMove/MouseMove';
 import { Scroll } from './Scroll/Scroll';
 import { SpiralScene } from './SpiralScene';
@@ -20,7 +22,7 @@ export class App {
   _scroll = Scroll.getInstance();
   _spiralScene: SpiralScene;
 
-  constructor(rendererWrapperEl: HTMLDivElement) {
+  constructor(rendererWrapperEl: HTMLDivElement, items: CreativeItem[]) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -37,9 +39,14 @@ export class App {
       alpha: true,
     });
 
-    this._spiralScene.items = Array.from(Array(15).keys()).map((item, key) => {
-      return { number: key };
+    // this._spiralScene.items = Array.from(Array(6).keys()).map((item, key) => {
+    //   return { number: key };
+    // });
+
+    this._spiralScene.items = Array.from(items).map((item, key) => {
+      return { number: key, item: item };
     });
+
     this._onResize();
     this._addListeners();
     this._resumeAppFrame();

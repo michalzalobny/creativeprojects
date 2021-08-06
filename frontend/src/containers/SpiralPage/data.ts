@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (!locale) {
     throw new Error('No locale provided in getStaticProps function');
   }
-  const projectData = (await getProjectData('constellation')) as ProjectData;
+  const projectData = (await getProjectData('spiral')) as ProjectData;
   const allProjectsData = await getAllProjectsData();
   const projectHead = projectData.localizedHead;
 

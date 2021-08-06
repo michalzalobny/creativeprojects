@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
+import { StoryItemProps } from './types';
+
 import fragmentShader from './shaders/storyItem/fragment.glsl';
 import vertexShader from './shaders/storyItem/vertex.glsl';
 import { UpdateInfo, Bounds } from './types';
@@ -23,11 +25,13 @@ export class StoryItem3D extends InteractiveObject3D {
   _opacityTween: Tween<{ progress: number }> | null = null;
   _currentHoverValue = 0;
   _destinationHoverValue = 0;
+  _storyItem: StoryItemProps;
 
-  constructor(geometry: THREE.PlaneGeometry) {
+  constructor(geometry: THREE.PlaneGeometry, storyItem: StoryItemProps) {
     super();
     this._geometry = geometry;
-    this._createMesh('https://source.unsplash.com/random');
+    this._storyItem = storyItem;
+    this._createMesh(this._storyItem.item.image.url);
   }
 
   _onImageLoad = () => {
@@ -51,7 +55,7 @@ export class StoryItem3D extends InteractiveObject3D {
       this._mesh.scale.x = sizeX;
       this._mesh.scale.y = sizeY;
 
-      this._animateOpacity(1);
+      this.animateOpacity(1);
     }
   };
 
@@ -90,25 +94,6 @@ export class StoryItem3D extends InteractiveObject3D {
     this._mesh = new THREE.Mesh(this._geometry, this._material);
     this.setColliderName('storyItem');
     this.add(this._mesh);
-  }
-
-  _animateOpacity(destination: number) {
-    if (this._opacityTween) {
-      this._opacityTween.stop();
-    }
-
-    this._opacityTween = new TWEEN.Tween({ progress: this._tweenOpacity })
-      .to({ progress: destination }, 2000)
-      .easing(TWEEN.Easing.Sinusoidal.In)
-      .onUpdate(obj => {
-        if (!this._mesh) {
-          return;
-        }
-
-        this._tweenOpacity = obj.progress;
-      });
-
-    this._opacityTween.start();
   }
 
   _updateOpacity() {
@@ -155,6 +140,25 @@ export class StoryItem3D extends InteractiveObject3D {
 
   set opacity(value: number) {
     this._masterOpacity = value;
+  }
+
+  animateOpacity(destination: number) {
+    if (this._opacityTween) {
+      this._opacityTween.stop();
+    }
+
+    this._opacityTween = new TWEEN.Tween({ progress: this._tweenOpacity })
+      .to({ progress: destination }, 2000)
+      .easing(TWEEN.Easing.Sinusoidal.In)
+      .onUpdate(obj => {
+        if (!this._mesh) {
+          return;
+        }
+
+        this._tweenOpacity = obj.progress;
+      });
+
+    this._opacityTween.start();
   }
 
   onMouseOver() {

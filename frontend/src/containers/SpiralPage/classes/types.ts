@@ -1,3 +1,5 @@
+import { CreativeItem } from 'utils/types/strapi/CreativeItem';
+
 export interface RendererBounds {
   width: number;
   height: number;
@@ -16,6 +18,7 @@ export interface Bounds {
 
 export interface StoryItemProps {
   number: number;
+  item: CreativeItem;
 }
 
 export interface Coords {

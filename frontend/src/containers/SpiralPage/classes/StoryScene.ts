@@ -26,7 +26,7 @@ export class StoryScene extends InteractiveScene {
 
     items &&
       items.forEach(item => {
-        const item3D = new StoryItem3D(this._planeGeometry);
+        const item3D = new StoryItem3D(this._planeGeometry, item);
         this._storyItems.push(item3D);
         this.add(item3D);
       });

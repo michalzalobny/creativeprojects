@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 194 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 219 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -470,6 +470,50 @@ INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
   (9, 'DeLorean', NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (11, 'Sunflower', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (12, 'Retro', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (13, 'Summer', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (14, 'Canyon', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (15, 'Aisle', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (16, 'Ice', 'Description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (17, 'Forest', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (18, 'Fire', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (19, 'Tsunami', 'Description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (20, 'Green', 'description');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (21, 'Space', 'description');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -525,6 +569,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (6, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (7, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -746,6 +794,42 @@ VALUES
     6,
     6
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    13,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    13,
+    7
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    14,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    7,
+    7
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -795,6 +879,10 @@ VALUES
     1,
     'A page resembling a constellation of stars. Made with plain javaScript and 2D canvas. '
   );
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (7, 1, '3D Spiral made with THREE.JS');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -853,6 +941,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (12, 'Constellation', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (13, 'Spiral', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (14, 'Spiral', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -1677,6 +1773,24 @@ VALUES
     '2021-07-27 10:24:18',
     '2021-07-27 10:24:18'
   );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    7,
+    'spiral',
+    1,
+    1,
+    '2021-08-06 21:33:21',
+    '2021-08-06 21:48:12'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: projects_components
@@ -1952,6 +2066,240 @@ VALUES
     12,
     6
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    16,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    7,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    17,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    14,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    19,
+    'creativeItems',
+    1,
+    'components_creative_component_creative_items',
+    11,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    20,
+    'creativeItems',
+    2,
+    'components_creative_component_creative_items',
+    12,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    21,
+    'creativeItems',
+    4,
+    'components_creative_component_creative_items',
+    13,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    22,
+    'creativeItems',
+    3,
+    'components_creative_component_creative_items',
+    14,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    23,
+    'creativeItems',
+    5,
+    'components_creative_component_creative_items',
+    15,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    24,
+    'creativeItems',
+    6,
+    'components_creative_component_creative_items',
+    16,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    25,
+    'creativeItems',
+    7,
+    'components_creative_component_creative_items',
+    17,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    26,
+    'creativeItems',
+    9,
+    'components_creative_component_creative_items',
+    18,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    27,
+    'creativeItems',
+    8,
+    'components_creative_component_creative_items',
+    19,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    28,
+    'creativeItems',
+    11,
+    'components_creative_component_creative_items',
+    20,
+    7
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    29,
+    'creativeItems',
+    10,
+    'components_creative_component_creative_items',
+    21,
+    7
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -1977,7 +2325,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$.RT3o5VThvGjM6UzfmOx1.uMZ5djGgX06z2lMNBURP/oWcraX4RSG',
+    '$2b$10$u/O0nKcZH/lA.5CwMbPjBemiLrgivhVglMP8pub7.K2QRKlH9z83K',
     NULL,
     NULL,
     1,
@@ -4552,6 +4900,666 @@ VALUES
     '2021-07-27 10:23:39',
     '2021-07-27 10:23:39'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    21,
+    'z1.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z1.jpg\",\"hash\":\"thumbnail_z1_bf9492377d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":4.39,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284873/thumbnail_z1_bf9492377d.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z1_bf9492377d\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z1.jpg\",\"hash\":\"medium_z1_bf9492377d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":50.06,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284875/medium_z1_bf9492377d.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z1_bf9492377d\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z1.jpg\",\"hash\":\"small_z1_bf9492377d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":27.13,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284876/small_z1_bf9492377d.jpg\",\"provider_metadata\":{\"public_id\":\"small_z1_bf9492377d\",\"resource_type\":\"image\"}}}',
+    'z1_bf9492377d',
+    '.jpg',
+    'image/jpeg',
+    71.12,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284873/z1_bf9492377d.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z1_bf9492377d\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:21:17',
+    '2021-08-06 21:21:17'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    22,
+    'z2.jpg',
+    '',
+    '',
+    632,
+    953,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z2.jpg\",\"hash\":\"thumbnail_z2_c3fedb3836\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":103,\"height\":156,\"size\":5,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284934/thumbnail_z2_c3fedb3836.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z2_c3fedb3836\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z2.jpg\",\"hash\":\"medium_z2_c3fedb3836\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":497,\"height\":750,\"size\":93.92,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284936/medium_z2_c3fedb3836.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z2_c3fedb3836\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z2.jpg\",\"hash\":\"small_z2_c3fedb3836\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":332,\"height\":500,\"size\":44.38,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284937/small_z2_c3fedb3836.jpg\",\"provider_metadata\":{\"public_id\":\"small_z2_c3fedb3836\",\"resource_type\":\"image\"}}}',
+    'z2_c3fedb3836',
+    '.jpg',
+    'image/jpeg',
+    142.80,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284933/z2_c3fedb3836.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z2_c3fedb3836\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:22:19',
+    '2021-08-06 21:22:19'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    23,
+    'z3.jpg',
+    '',
+    '',
+    1055,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z3.jpg\",\"hash\":\"thumbnail_z3_fce7f16b2c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":235,\"height\":156,\"size\":8.95,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284969/thumbnail_z3_fce7f16b2c.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z3_fce7f16b2c\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z3.jpg\",\"hash\":\"large_z3_fce7f16b2c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":664,\"size\":139.56,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284970/large_z3_fce7f16b2c.jpg\",\"provider_metadata\":{\"public_id\":\"large_z3_fce7f16b2c\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z3.jpg\",\"hash\":\"medium_z3_fce7f16b2c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":498,\"size\":82.44,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284971/medium_z3_fce7f16b2c.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z3_fce7f16b2c\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z3.jpg\",\"hash\":\"small_z3_fce7f16b2c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":332,\"size\":36.48,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284972/small_z3_fce7f16b2c.jpg\",\"provider_metadata\":{\"public_id\":\"small_z3_fce7f16b2c\",\"resource_type\":\"image\"}}}',
+    'z3_fce7f16b2c',
+    '.jpg',
+    'image/jpeg',
+    158.30,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628284968/z3_fce7f16b2c.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z3_fce7f16b2c\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:22:53',
+    '2021-08-06 21:22:53'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    24,
+    'z4.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z4.jpg\",\"hash\":\"thumbnail_z4_83be7fba08\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":2.97,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285049/thumbnail_z4_83be7fba08.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z4_83be7fba08\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z4.jpg\",\"hash\":\"medium_z4_83be7fba08\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":63.06,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285050/medium_z4_83be7fba08.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z4_83be7fba08\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z4.jpg\",\"hash\":\"small_z4_83be7fba08\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":26.6,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285051/small_z4_83be7fba08.jpg\",\"provider_metadata\":{\"public_id\":\"small_z4_83be7fba08\",\"resource_type\":\"image\"}}}',
+    'z4_83be7fba08',
+    '.jpg',
+    'image/jpeg',
+    104.05,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285048/z4_83be7fba08.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z4_83be7fba08\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:24:12',
+    '2021-08-06 21:24:12'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    25,
+    'z5.jpg',
+    '',
+    '',
+    1050,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z5.jpg\",\"hash\":\"thumbnail_z5_0f74f06f1b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":10.74,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285131/thumbnail_z5_0f74f06f1b.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z5_0f74f06f1b\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z5.jpg\",\"hash\":\"large_z5_0f74f06f1b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":160.25,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285132/large_z5_0f74f06f1b.jpg\",\"provider_metadata\":{\"public_id\":\"large_z5_0f74f06f1b\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z5.jpg\",\"hash\":\"medium_z5_0f74f06f1b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":95.32,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285133/medium_z5_0f74f06f1b.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z5_0f74f06f1b\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z5.jpg\",\"hash\":\"small_z5_0f74f06f1b\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":42.58,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285134/small_z5_0f74f06f1b.jpg\",\"provider_metadata\":{\"public_id\":\"small_z5_0f74f06f1b\",\"resource_type\":\"image\"}}}',
+    'z5_0f74f06f1b',
+    '.jpg',
+    'image/jpeg',
+    176.53,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285130/z5_0f74f06f1b.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z5_0f74f06f1b\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:25:35',
+    '2021-08-06 21:25:35'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    26,
+    'z6.jpg',
+    '',
+    '',
+    1189,
+    669,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z6.jpg\",\"hash\":\"thumbnail_z6_ba5b381107\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":8.23,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285245/thumbnail_z6_ba5b381107.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z6_ba5b381107\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z6.jpg\",\"hash\":\"large_z6_ba5b381107\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":93.34,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285246/large_z6_ba5b381107.jpg\",\"provider_metadata\":{\"public_id\":\"large_z6_ba5b381107\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z6.jpg\",\"hash\":\"medium_z6_ba5b381107\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":57.18,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285247/medium_z6_ba5b381107.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z6_ba5b381107\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z6.jpg\",\"hash\":\"small_z6_ba5b381107\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":27.7,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285248/small_z6_ba5b381107.jpg\",\"provider_metadata\":{\"public_id\":\"small_z6_ba5b381107\",\"resource_type\":\"image\"}}}',
+    'z6_ba5b381107',
+    '.jpg',
+    'image/jpeg',
+    124.03,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285243/z6_ba5b381107.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z6_ba5b381107\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:27:28',
+    '2021-08-06 21:27:29'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    27,
+    'z7.jpg',
+    '',
+    '',
+    1189,
+    669,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z7.jpg\",\"hash\":\"thumbnail_z7_6713ef4a14\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":8.32,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285313/thumbnail_z7_6713ef4a14.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z7_6713ef4a14\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z7.jpg\",\"hash\":\"large_z7_6713ef4a14\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":563,\"size\":114.99,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285314/large_z7_6713ef4a14.jpg\",\"provider_metadata\":{\"public_id\":\"large_z7_6713ef4a14\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z7.jpg\",\"hash\":\"medium_z7_6713ef4a14\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":67.54,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285315/medium_z7_6713ef4a14.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z7_6713ef4a14\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z7.jpg\",\"hash\":\"small_z7_6713ef4a14\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":30.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285316/small_z7_6713ef4a14.jpg\",\"provider_metadata\":{\"public_id\":\"small_z7_6713ef4a14\",\"resource_type\":\"image\"}}}',
+    'z7_6713ef4a14',
+    '.jpg',
+    'image/jpeg',
+    158.62,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285313/z7_6713ef4a14.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z7_6713ef4a14\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:28:37',
+    '2021-08-06 21:28:37'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    28,
+    'z8.jpg',
+    '',
+    '',
+    633,
+    952,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z8.jpg\",\"hash\":\"thumbnail_z8_a5b2f1a5a3\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.75,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285370/thumbnail_z8_a5b2f1a5a3.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z8_a5b2f1a5a3\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z8.jpg\",\"hash\":\"medium_z8_a5b2f1a5a3\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":499,\"height\":750,\"size\":63.13,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285371/medium_z8_a5b2f1a5a3.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z8_a5b2f1a5a3\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z8.jpg\",\"hash\":\"small_z8_a5b2f1a5a3\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":332,\"height\":500,\"size\":29.79,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285372/small_z8_a5b2f1a5a3.jpg\",\"provider_metadata\":{\"public_id\":\"small_z8_a5b2f1a5a3\",\"resource_type\":\"image\"}}}',
+    'z8_a5b2f1a5a3',
+    '.jpg',
+    'image/jpeg',
+    100.74,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285369/z8_a5b2f1a5a3.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z8_a5b2f1a5a3\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:29:33',
+    '2021-08-06 21:29:33'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    29,
+    'z9.jpg',
+    '',
+    '',
+    1050,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z9.jpg\",\"hash\":\"thumbnail_z9_deb898e409\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":4.97,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285428/thumbnail_z9_deb898e409.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z9_deb898e409\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z9.jpg\",\"hash\":\"large_z9_deb898e409\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":70.83,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285428/large_z9_deb898e409.jpg\",\"provider_metadata\":{\"public_id\":\"large_z9_deb898e409\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z9.jpg\",\"hash\":\"medium_z9_deb898e409\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":40.93,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285429/medium_z9_deb898e409.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z9_deb898e409\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z9.jpg\",\"hash\":\"small_z9_deb898e409\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":17.99,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285430/small_z9_deb898e409.jpg\",\"provider_metadata\":{\"public_id\":\"small_z9_deb898e409\",\"resource_type\":\"image\"}}}',
+    'z9_deb898e409',
+    '.jpg',
+    'image/jpeg',
+    79.65,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285427/z9_deb898e409.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z9_deb898e409\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:30:31',
+    '2021-08-06 21:30:31'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    30,
+    'z10.jpg',
+    '',
+    '',
+    1051,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z10.jpg\",\"hash\":\"thumbnail_z10_55265417d9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":4.63,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285543/thumbnail_z10_55265417d9.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z10_55265417d9\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z10.jpg\",\"hash\":\"large_z10_55265417d9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":666,\"size\":43.68,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285544/large_z10_55265417d9.jpg\",\"provider_metadata\":{\"public_id\":\"large_z10_55265417d9\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z10.jpg\",\"hash\":\"medium_z10_55265417d9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":28.43,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285545/medium_z10_55265417d9.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z10_55265417d9\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z10.jpg\",\"hash\":\"small_z10_55265417d9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":14.8,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285546/small_z10_55265417d9.jpg\",\"provider_metadata\":{\"public_id\":\"small_z10_55265417d9\",\"resource_type\":\"image\"}}}',
+    'z10_55265417d9',
+    '.jpg',
+    'image/jpeg',
+    46.16,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285542/z10_55265417d9.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z10_55265417d9\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:32:26',
+    '2021-08-06 21:32:26'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    31,
+    'z11.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z11.jpg\",\"hash\":\"thumbnail_z11_27a6cc21ca\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":4.48,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285589/thumbnail_z11_27a6cc21ca.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z11_27a6cc21ca\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z11.jpg\",\"hash\":\"medium_z11_27a6cc21ca\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":95.82,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285590/medium_z11_27a6cc21ca.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z11_27a6cc21ca\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z11.jpg\",\"hash\":\"small_z11_27a6cc21ca\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":44.56,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285591/small_z11_27a6cc21ca.jpg\",\"provider_metadata\":{\"public_id\":\"small_z11_27a6cc21ca\",\"resource_type\":\"image\"}}}',
+    'z11_27a6cc21ca',
+    '.jpg',
+    'image/jpeg',
+    146.70,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628285588/z11_27a6cc21ca.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z11_27a6cc21ca\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:33:12',
+    '2021-08-06 21:33:12'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    32,
+    'z12.jpg',
+    '',
+    '',
+    634,
+    950,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z12.jpg\",\"hash\":\"thumbnail_z12_e46b0dd01d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.42,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286076/thumbnail_z12_e46b0dd01d.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z12_e46b0dd01d\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z12.jpg\",\"hash\":\"medium_z12_e46b0dd01d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":501,\"height\":750,\"size\":96.3,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286077/medium_z12_e46b0dd01d.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z12_e46b0dd01d\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z12.jpg\",\"hash\":\"small_z12_e46b0dd01d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":334,\"height\":500,\"size\":39.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286077/small_z12_e46b0dd01d.jpg\",\"provider_metadata\":{\"public_id\":\"small_z12_e46b0dd01d\",\"resource_type\":\"image\"}}}',
+    'z12_e46b0dd01d',
+    '.jpg',
+    'image/jpeg',
+    157.71,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286075/z12_e46b0dd01d.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z12_e46b0dd01d\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:41:18',
+    '2021-08-06 21:41:18'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    33,
+    'z13.jpg',
+    '',
+    '',
+    634,
+    500,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z13.jpg\",\"hash\":\"thumbnail_z13_33e24df5b9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":198,\"height\":156,\"size\":7.01,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286210/thumbnail_z13_33e24df5b9.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z13_33e24df5b9\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z13.jpg\",\"hash\":\"small_z13_33e24df5b9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":394,\"size\":27.45,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286211/small_z13_33e24df5b9.jpg\",\"provider_metadata\":{\"public_id\":\"small_z13_33e24df5b9\",\"resource_type\":\"image\"}}}',
+    'z13_33e24df5b9',
+    '.jpg',
+    'image/jpeg',
+    39.43,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286209/z13_33e24df5b9.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z13_33e24df5b9\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:43:32',
+    '2021-08-06 21:43:32'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    34,
+    'z14.jpg',
+    '',
+    '',
+    634,
+    950,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z14.jpg\",\"hash\":\"thumbnail_z14_224d2a947c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":2.91,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286326/thumbnail_z14_224d2a947c.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_z14_224d2a947c\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z14.jpg\",\"hash\":\"medium_z14_224d2a947c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":501,\"height\":750,\"size\":35.56,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286326/medium_z14_224d2a947c.jpg\",\"provider_metadata\":{\"public_id\":\"medium_z14_224d2a947c\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z14.jpg\",\"hash\":\"small_z14_224d2a947c\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":334,\"height\":500,\"size\":18.96,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286327/small_z14_224d2a947c.jpg\",\"provider_metadata\":{\"public_id\":\"small_z14_224d2a947c\",\"resource_type\":\"image\"}}}',
+    'z14_224d2a947c',
+    '.jpg',
+    'image/jpeg',
+    50.44,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286325/z14_224d2a947c.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z14_224d2a947c\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:45:28',
+    '2021-08-06 21:45:28'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    35,
+    '15.jpg',
+    '',
+    '',
+    634,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_15.jpg\",\"hash\":\"thumbnail_15_bac5879a81\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":4.28,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286449/thumbnail_15_bac5879a81.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_15_bac5879a81\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_15.jpg\",\"hash\":\"medium_15_bac5879a81\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":57.79,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286450/medium_15_bac5879a81.jpg\",\"provider_metadata\":{\"public_id\":\"medium_15_bac5879a81\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_15.jpg\",\"hash\":\"small_15_bac5879a81\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":28.61,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286451/small_15_bac5879a81.jpg\",\"provider_metadata\":{\"public_id\":\"small_15_bac5879a81\",\"resource_type\":\"image\"}}}',
+    '15_bac5879a81',
+    '.jpg',
+    'image/jpeg',
+    86.49,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1628286447/15_bac5879a81.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"15_bac5879a81\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-06 21:47:31',
+    '2021-08-06 21:47:31'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -4913,6 +5921,222 @@ VALUES
     6,
     'components_page_localized_heads',
     'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    207,
+    12,
+    7,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    208,
+    33,
+    11,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    209,
+    22,
+    12,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    210,
+    35,
+    14,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    211,
+    23,
+    13,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    212,
+    25,
+    15,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    213,
+    26,
+    16,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    214,
+    27,
+    17,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    215,
+    29,
+    19,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    216,
+    28,
+    18,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    217,
+    32,
+    21,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    218,
+    34,
+    20,
+    'components_creative_component_creative_items',
+    'image',
     1
   );
 

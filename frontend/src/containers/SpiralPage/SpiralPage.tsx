@@ -15,12 +15,15 @@ export default function SpiralPage(props: PageProps) {
     if (!rendererWrapperEl.current) {
       return () => {};
     }
-    const myApp = new App(rendererWrapperEl.current);
+    const myApp = new App(
+      rendererWrapperEl.current,
+      props.projectData.creativeItems,
+    );
 
     return () => {
       myApp.destroy();
     };
-  }, []);
+  }, [props.projectData.creativeItems]);
 
   return (
     <>
