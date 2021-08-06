@@ -11,9 +11,9 @@ void main(){
     vec3 position2Copy = position2;
 
     //initial random animation
-    position2Copy.x += 2.*sin(uTime * 0.0005 * aRandom);
-    position2Copy.y += 2.*cos(uTime * 0.0005 * aRandom);
-    position2Copy.z += 2.*cos(uTime * 0.0005 * aRandom);
+    position2Copy.x += 3.*sin(uTime * 0.001 * aRandom);
+    position2Copy.y += 3.*cos(uTime * 0.001 * aRandom);
+    position2Copy.z += 3.*cos(uTime * 0.001 * aRandom);
 
     vec3 stablePosition = mix(position, position2Copy, 1. - uProgress);
 
@@ -23,12 +23,12 @@ void main(){
 
     // Cursor animation
     float dist = distance(position.xy, uMouse3D.xy);
-    float area = 1.- smoothstep(0., 30., dist);
+    float area = 1.- smoothstep(0., 50., dist);
     stablePosition.z += dist * 0.1;
 
-    stablePosition.x += 5.*sin(uTime * 0.004 * aRandom) * area;
-    stablePosition.y += 5.*cos(uTime * 0.004 * aRandom) * area;
-    stablePosition.z += 4.*cos(uTime * 0.001 * aRandom) * area;
+    stablePosition.x += 3.*sin(uTime * 0.001 * aRandom) * area;
+    stablePosition.y += 3.*cos(uTime * 0.001 * aRandom) * area;
+    stablePosition.z += 3.*cos(uTime * 0.001 * aRandom) * area;
     
     vec4 modelPosition = modelMatrix * vec4(stablePosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
