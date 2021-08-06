@@ -13,9 +13,9 @@ import { useState } from 'react';
 export default function SpiralPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
-  const [hoveredItem, setHoveredItem] = useState<StoryItem3D>(null);
+  const [hoveredItem, setHoveredItem] = useState<StoryItem3D | null>(null);
 
-  const myApp = useRef<App>(null);
+  const myApp = useRef<App | null>(null);
 
   useEffect(() => {
     if (!rendererWrapperEl.current) {
@@ -29,12 +29,12 @@ export default function SpiralPage(props: PageProps) {
     );
 
     return () => {
-      myApp.current.destroy();
+      myApp.current && myApp.current.destroy();
     };
   }, [props.projectData.creativeItems]);
 
   useEffect(() => {
-    myApp.current.setHoveredItem(hoveredItem);
+    myApp.current && myApp.current.setHoveredItem(null);
   }, [hoveredItem]);
 
   return (

@@ -26,7 +26,7 @@ export class App {
   constructor(
     rendererWrapperEl: HTMLDivElement,
     items: CreativeItem[],
-    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>,
+    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D | null>>,
   ) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
@@ -123,7 +123,7 @@ export class App {
     }
   }
 
-  setHoveredItem(item: StoryItem3D) {
+  setHoveredItem(item: StoryItem3D | null) {
     if (this._spiralScene) {
       this._spiralScene.hoveredStoryItem = item;
     }

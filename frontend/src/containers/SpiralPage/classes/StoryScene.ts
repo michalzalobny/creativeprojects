@@ -8,12 +8,12 @@ import { MouseMove } from './MouseMove/MouseMove';
 export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem3D[] = [];
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>;
+  _setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D | null>>;
 
   constructor(
     camera: THREE.PerspectiveCamera,
     mouseMove: MouseMove,
-    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D>>,
+    setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D | null>>,
   ) {
     super(camera, mouseMove);
     this._setHoveredItem = setHoveredItem;
