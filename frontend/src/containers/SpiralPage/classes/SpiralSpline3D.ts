@@ -112,7 +112,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
     }
 
     this._progressTween = new TWEEN.Tween({ progress: this._progress })
-      .to({ progress: destination }, 3000)
+      .to({ progress: destination }, 3500)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         if (!this._mesh) {

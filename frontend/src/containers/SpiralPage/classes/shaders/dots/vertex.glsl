@@ -11,9 +11,9 @@ void main(){
     vec3 position2Copy = position2;
 
     //initial random animation
-    position2Copy.x += 2.*sin(uTime * 0.001 * aRandom);
-    position2Copy.y += 2.*cos(uTime * 0.001 * aRandom);
-    position2Copy.z += 2.*cos(uTime * 0.001 * aRandom);
+    position2Copy.x += 2.*sin(uTime * 0.0005 * aRandom);
+    position2Copy.y += 2.*cos(uTime * 0.0005 * aRandom);
+    position2Copy.z += 2.*cos(uTime * 0.0005 * aRandom);
 
     vec3 stablePosition = mix(position, position2Copy, 1. - uProgress);
 
