@@ -98,10 +98,9 @@ export class StoryItem3D extends InteractiveObject3D {
 
   _updateOpacity() {
     if (this._mesh) {
-      const computedOpacity = Math.min(
-        this._masterOpacity * this._tweenOpacity + this._offsetOpacity,
-        1,
-      );
+      const computedOpacity =
+        Math.min(this._masterOpacity, 1) * this._tweenOpacity;
+
       this._mesh.material.uniforms.uOpacity.value = computedOpacity;
       this._isVisible = computedOpacity > 0;
     }
@@ -148,7 +147,7 @@ export class StoryItem3D extends InteractiveObject3D {
     }
 
     this._opacityTween = new TWEEN.Tween({ progress: this._tweenOpacity })
-      .to({ progress: destination }, 850)
+      .to({ progress: destination }, 500)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         if (!this._mesh) {
@@ -163,16 +162,18 @@ export class StoryItem3D extends InteractiveObject3D {
 
   onMouseOver() {
     if (this._isVisible) {
-      document.body.style.cursor = 'pointer';
       super.onMouseOver();
+      document.body.style.cursor = 'pointer';
+      this.dispatchEvent({ type: 'pointerover' });
     }
-    this.dispatchEvent({ type: 'pointerover' });
   }
 
   onMouseOut() {
-    super.onMouseOut();
-    document.body.style.cursor = 'initial';
-    this.dispatchEvent({ type: 'pointerleft' });
+    if (this._isVisible) {
+      super.onMouseOut();
+      document.body.style.cursor = 'initial';
+      this.dispatchEvent({ type: 'pointerleft' });
+    }
   }
 
   onClick() {
