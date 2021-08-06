@@ -1,9 +1,11 @@
 import * as THREE from 'three';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import { UpdateInfo, Bounds } from './types';
 import fragmentShader from './shaders/dots/fragment.glsl';
 import vertexShader from './shaders/dots/vertex.glsl';
 import { InteractiveObject3D } from './InteractiveObject3D';
+import { getRandFloat } from './utils/getRand';
 
 export class SpiralSpline3D extends InteractiveObject3D {
   _mesh: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial> | null = null;
@@ -14,6 +16,8 @@ export class SpiralSpline3D extends InteractiveObject3D {
   _density: number;
   _intersectPoint: THREE.Vector3 | null = null;
   _rendererBounds: Bounds = { height: 100, width: 100 };
+  _progressTween: Tween<{ progress: number }> | null = null;
+  _progress = 0;
   depth: number;
 
   constructor(radius = 100, loops = 5, density = 1, depth = 50) {
@@ -23,6 +27,9 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._density = density;
     this.depth = depth;
     this._drawSpiral();
+    setTimeout(() => {
+      this._animateProgress(1);
+    }, 1500);
   }
 
   _drawSpiral() {
@@ -41,6 +48,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
     }
     let i = 0;
     const positionArray = new Float32Array(particlesAmount * 3);
+    const positionArray2 = new Float32Array(particlesAmount * 3);
     const randomArray = new Float32Array(particlesAmount);
 
     for (let theta = this._density; theta <= thetaMax; ) {
@@ -52,7 +60,11 @@ export class SpiralSpline3D extends InteractiveObject3D {
       positionArray[i * 3 + 0] = x;
       positionArray[i * 3 + 1] = y;
       positionArray[i * 3 + 2] = -this.depth;
-      randomArray[i] = Math.random();
+      randomArray[i] = getRandFloat(-2, 2);
+
+      positionArray2[i * 3 + 0] = Math.random() * x * 3;
+      positionArray2[i * 3 + 1] = Math.random() * y * 3;
+      positionArray2[i * 3 + 2] = -this.depth;
 
       theta += chord / away;
       i += 1;
@@ -63,6 +75,11 @@ export class SpiralSpline3D extends InteractiveObject3D {
       new THREE.BufferAttribute(positionArray, 3),
     );
 
+    this._geometry.setAttribute(
+      'position2',
+      new THREE.BufferAttribute(positionArray2, 3),
+    );
+
     this._material = new THREE.ShaderMaterial({
       depthWrite: false,
       depthTest: false,
@@ -71,6 +88,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
         uPixelRatio: { value: 1 },
         uSize: { value: 350 },
         uTime: { value: 0 },
+        uProgress: { value: this._progress },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
       },
       fragmentShader: fragmentShader,
@@ -86,6 +104,25 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._mesh.renderOrder = -1;
 
     this.add(this._mesh);
+  }
+
+  _animateProgress(destination: number) {
+    if (this._progressTween) {
+      this._progressTween.stop();
+    }
+
+    this._progressTween = new TWEEN.Tween({ progress: this._progress })
+      .to({ progress: destination }, 3000)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onUpdate(obj => {
+        if (!this._mesh) {
+          return;
+        }
+        this._progress = obj.progress;
+        this._mesh.material.uniforms.uProgress.value = this._progress;
+      });
+
+    this._progressTween.start();
   }
 
   static getPointPosition(

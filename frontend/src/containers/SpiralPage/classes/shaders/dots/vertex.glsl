@@ -2,13 +2,22 @@ uniform float uSize;
 uniform float uTime;
 uniform float uPixelRatio;
 uniform vec3 uMouse3D;
+uniform float uProgress;
 
 attribute float aRandom;
+attribute vec3 position2;
 
 void main(){
-    vec3 stablePosition = position;
-    
-    //Parallax mouse animation
+    vec3 position2Copy = position2;
+
+    //initial random animation
+    position2Copy.x += 2.*sin(uTime * 0.001 * aRandom);
+    position2Copy.y += 2.*cos(uTime * 0.001 * aRandom);
+    position2Copy.z += 2.*cos(uTime * 0.001 * aRandom);
+
+    vec3 stablePosition = mix(position, position2Copy, 1. - uProgress);
+
+     //Parallax mouse animation
     stablePosition.x -= uMouse3D.x * 0.004;
     stablePosition.y -= uMouse3D.y * 0.004;
 
@@ -21,7 +30,6 @@ void main(){
     stablePosition.y += 5.*cos(uTime * 0.004 * aRandom) * area;
     stablePosition.z += 4.*cos(uTime * 0.001 * aRandom) * area;
     
-
     vec4 modelPosition = modelMatrix * vec4(stablePosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 newPosition = viewPosition;
