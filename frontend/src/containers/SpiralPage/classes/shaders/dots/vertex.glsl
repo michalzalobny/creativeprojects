@@ -18,8 +18,8 @@ void main(){
     vec3 stablePosition = mix(position, position2Copy, 1. - uProgress);
 
      //Parallax mouse animation
-    stablePosition.x -= uMouse3D.x * 0.004;
-    stablePosition.y -= uMouse3D.y * 0.004;
+    stablePosition.x -= uMouse3D.x * 0.008;
+    stablePosition.y -= uMouse3D.y * 0.008;
 
     // Cursor animation
     float dist = distance(position.xy, uMouse3D.xy);
