@@ -1,0 +1,186 @@
+/* eslint-disable node/no-unpublished-import */
+import * as THREE from 'three';
+import {
+  GLTFLoader,
+  GLTF,
+} from '../../../../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from '../../../../node_modules/three/examples/jsm/loaders/DRACOLoader.js';
+import { MeshSurfaceSampler } from '../../../../node_modules/three/examples/jsm/math/MeshSurfaceSampler';
+
+import { UpdateInfo, Bounds } from './types';
+import fragmentShader from './shaders/dots/fragment.glsl';
+import vertexShader from './shaders/dots/vertex.glsl';
+import { InteractiveObject3D } from './InteractiveObject3D';
+import dragonSrc from '../assets/dragon.glb';
+
+export class SpiralSpline3D extends InteractiveObject3D {
+  _mesh: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial> | null = null;
+  _material: THREE.ShaderMaterial | null = null;
+  _geometry: THREE.BufferGeometry | null = null;
+  _radius: number;
+  _loops: number;
+  _density: number;
+  _intersectPoint: THREE.Vector3 | null = null;
+  _rendererBounds: Bounds = { height: 100, width: 100 };
+  _loader: GLTFLoader;
+  _dracoLoader: DRACOLoader;
+  depth: number;
+
+  constructor(radius = 100, loops = 5, density = 1, depth = 50) {
+    super();
+    this._radius = radius;
+    this._loops = loops;
+    this._density = density;
+    this.depth = depth;
+
+    this._loader = new GLTFLoader();
+    this._dracoLoader = new DRACOLoader();
+    this._dracoLoader.setDecoderPath('/draco/');
+    this._loader.setDRACOLoader(this._dracoLoader);
+
+    this._loadModels();
+
+    // this._drawSpiral();
+  }
+
+  _loadModels() {
+    this._loader.load(dragonSrc, (gltf: GLTF) => {
+      // console.log(gltf);
+      gltf.scene.scale.set(10, 10, 10);
+      const mesh = gltf.scene.children[0];
+      // this.add(mesh);
+
+      const sampler = new MeshSurfaceSampler(mesh).build();
+      this._drawSpiral(sampler);
+    });
+  }
+
+  _drawSpiral(sampler) {
+    this._geometry = new THREE.BufferGeometry();
+
+    const rotation = 2 * Math.PI;
+    const thetaMax = this._loops * rotation;
+    const awayStep = this._radius / thetaMax;
+    const chord = this._density;
+    let particlesAmount = 0;
+
+    for (let theta = this._density; theta <= thetaMax; ) {
+      const away = awayStep * theta;
+      particlesAmount++;
+      theta += chord / away;
+    }
+    let i = 0;
+    const positionArray1 = new Float32Array(particlesAmount * 3);
+    const positionArray2 = new Float32Array(particlesAmount * 3);
+    const randomArray = new Float32Array(particlesAmount);
+
+    for (let t = 0; t < particlesAmount; t++) {
+      const newPosition = new THREE.Vector3();
+      sampler.sample(newPosition);
+      positionArray2.set([newPosition.x, newPosition.y, newPosition.z], t * 3);
+    }
+
+    this._geometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(positionArray2, 3),
+    );
+
+    for (let theta = this._density; theta <= thetaMax; ) {
+      const away = awayStep * theta;
+
+      const x = Math.sin(theta + rotation) * away;
+      const y = Math.cos(theta + rotation) * away;
+
+      positionArray1[i * 3 + 0] = x;
+      positionArray1[i * 3 + 1] = y;
+      positionArray1[i * 3 + 2] = -this.depth;
+      randomArray[i] = Math.random();
+
+      theta += chord / away;
+      i += 1;
+    }
+
+    // this._geometry.setAttribute(
+    //   'position',
+    //   new THREE.BufferAttribute(positionArray1, 3),
+    // );
+
+    this._material = new THREE.ShaderMaterial({
+      depthWrite: false,
+      depthTest: false,
+      transparent: true,
+      uniforms: {
+        uPixelRatio: { value: 1 },
+        uSize: { value: 350 },
+        uTime: { value: 0 },
+        uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
+      },
+      fragmentShader: fragmentShader,
+      vertexShader: vertexShader,
+    });
+
+    this._geometry.setAttribute(
+      'aRandom',
+      new THREE.BufferAttribute(randomArray, 1),
+    );
+
+    this._mesh = new THREE.Points(this._geometry, this._material);
+    this._mesh.renderOrder = -1;
+
+    this.add(this._mesh);
+  }
+
+  static getPointPosition(
+    progress: number,
+    radius: number,
+    loops: number,
+    depth: number,
+  ) {
+    return {
+      x: Math.sin(progress * loops * Math.PI * 2) * radius * progress,
+      y: Math.cos(progress * loops * Math.PI * 2) * radius * progress,
+      z: -depth,
+    };
+  }
+
+  getPointPosition(progress: number) {
+    return SpiralSpline3D.getPointPosition(
+      progress,
+      this._radius,
+      this._loops,
+      this.depth,
+    );
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    this._rendererBounds = bounds;
+    if (this._material) {
+      this._material.uniforms.uPixelRatio.value =
+        (Math.min(2, window.devicePixelRatio) * this._rendererBounds.height) /
+        1080;
+    }
+  }
+
+  set intersectPoint(point: THREE.Vector3) {
+    this._intersectPoint = point;
+  }
+
+  update(updateInfo: UpdateInfo) {
+    super.update(updateInfo);
+    if (this._mesh) {
+      this._mesh.material.uniforms.uTime.value = updateInfo.time;
+    }
+    if (this._intersectPoint && this._mesh) {
+      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
+    }
+  }
+
+  destroy() {
+    super.destroy();
+    this._geometry?.dispose();
+    this._material?.dispose();
+    if (this._mesh) {
+      this.remove(this._mesh);
+    }
+  }
+}
