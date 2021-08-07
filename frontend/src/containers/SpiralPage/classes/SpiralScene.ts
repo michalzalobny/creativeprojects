@@ -147,6 +147,12 @@ export class SpiralScene extends StoryScene {
     );
   }
 
+  _onSpiralLoaded() {
+    super._onSpiralLoaded();
+    this._animateSpiralIn(0);
+    this._spiralSpline.animateProgress(1);
+  }
+
   set targetIndex(target: number) {
     this._targetIndexFloat = target;
   }

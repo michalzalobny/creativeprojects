@@ -27,7 +27,6 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this._density = density;
     this.depth = depth;
     this._drawSpiral();
-    this._animateProgress(1);
   }
 
   _drawSpiral() {
@@ -104,25 +103,6 @@ export class SpiralSpline3D extends InteractiveObject3D {
     this.add(this._mesh);
   }
 
-  _animateProgress(destination: number) {
-    if (this._progressTween) {
-      this._progressTween.stop();
-    }
-
-    this._progressTween = new TWEEN.Tween({ progress: this._progress })
-      .to({ progress: destination }, 3500)
-      .easing(TWEEN.Easing.Exponential.InOut)
-      .onUpdate(obj => {
-        if (!this._mesh) {
-          return;
-        }
-        this._progress = obj.progress;
-        this._mesh.material.uniforms.uProgress.value = this._progress;
-      });
-
-    this._progressTween.start();
-  }
-
   static getPointPosition(
     progress: number,
     radius: number,
@@ -156,6 +136,25 @@ export class SpiralSpline3D extends InteractiveObject3D {
 
   set intersectPoint(point: THREE.Vector3) {
     this._intersectPoint = point;
+  }
+
+  animateProgress(destination: number) {
+    if (this._progressTween) {
+      this._progressTween.stop();
+    }
+
+    this._progressTween = new TWEEN.Tween({ progress: this._progress })
+      .to({ progress: destination }, 4000)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onUpdate(obj => {
+        if (!this._mesh) {
+          return;
+        }
+        this._progress = obj.progress;
+        this._mesh.material.uniforms.uProgress.value = this._progress;
+      });
+
+    this._progressTween.start();
   }
 
   update(updateInfo: UpdateInfo) {

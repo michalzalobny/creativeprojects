@@ -34,9 +34,12 @@ export class StoryScene extends InteractiveScene {
       this._storyItems.forEach(item => {
         item.init();
       });
-      this._animateSpiralIn(0);
+
+      this._onSpiralLoaded();
     }
   };
+
+  _onSpiralLoaded() {}
 
   _onItemClick = (e: THREE.Event) => {
     const targetIndex = (e.target as StoryItem3D).key;
