@@ -47,7 +47,7 @@ export class App {
     );
 
     this._spiralScene.items = Array.from(items).map((item, key) => {
-      return { number: key, item: item };
+      return { number: items.length - key, item: item };
     });
 
     this._onResize();

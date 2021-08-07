@@ -78,6 +78,7 @@ export class StoryItem3D extends InteractiveObject3D {
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
+    this._mesh.renderOrder = this.storyItem.number;
     this.add(this._mesh);
     this.setColliderName('storyItem');
   }
