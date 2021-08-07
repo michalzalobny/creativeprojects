@@ -33,17 +33,18 @@ export class App {
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
 
+    this._renderer = new THREE.WebGLRenderer({
+      canvas: this._canvas,
+      antialias: true,
+      alpha: true,
+    });
+
     this._spiralScene = new SpiralScene(
       this._camera,
       this._scroll,
       this._mouseMove,
       setHoveredItem,
     );
-    this._renderer = new THREE.WebGLRenderer({
-      canvas: this._canvas,
-      antialias: true,
-      alpha: true,
-    });
 
     this._spiralScene.items = Array.from(items).map((item, key) => {
       return { number: key, item: item };
