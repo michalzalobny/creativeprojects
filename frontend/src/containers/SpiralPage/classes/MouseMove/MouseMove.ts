@@ -12,6 +12,7 @@ export class MouseMove extends EventDispatcher {
   _mouseLast: Mouse = { x: 0, y: 0 };
   _isTouching = false;
   _ease = 0.06;
+  _clickStart: Mouse = { x: 0, y: 0 };
   mouse: Mouse = { x: 0, y: 0 };
   mouseLerp: Mouse = { x: 0, y: 0 };
   strength = 0;
@@ -52,6 +53,9 @@ export class MouseMove extends EventDispatcher {
     this.mouse.x = this._mouseLast.x;
     this.mouse.y = this._mouseLast.y;
 
+    this._clickStart.x = this.mouse.x;
+    this._clickStart.y = this.mouse.y;
+
     this.dispatchEvent({ type: 'down' });
   };
 
@@ -81,7 +85,12 @@ export class MouseMove extends EventDispatcher {
   _onMouseLeave = () => {};
 
   _onClick = () => {
-    this.dispatchEvent({ type: 'clicked' });
+    if (
+      this._clickStart.x === this.mouse.x &&
+      this._clickStart.y === this.mouse.y
+    ) {
+      this.dispatchEvent({ type: 'clicked' });
+    }
   };
 
   _addEvents() {
