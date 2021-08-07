@@ -192,8 +192,8 @@ export class StoryItem3D extends InteractiveObject3D {
       const sizeY = isVertical ? 50 : 30;
 
       this._material.uniforms.uPlaneSizes.value = [sizeX, sizeY];
-      this._mesh.scale.x = sizeX;
-      this._mesh.scale.y = sizeY;
+      this._mesh.scale.x = sizeX * 0.88;
+      this._mesh.scale.y = sizeY * 0.88;
 
       this.isInit = true;
 
