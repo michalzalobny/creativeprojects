@@ -17,7 +17,7 @@ export const LinksWrapper = styled(motion.div)<Props>`
   justify-content: center;
   height: 100%;
   overflow: hidden;
-  padding: ${props => props.offsetPadding}px;
+  padding: 0 ${props => props.offsetPadding / 2}px;
 `;
 
 LinksWrapper.defaultProps = {

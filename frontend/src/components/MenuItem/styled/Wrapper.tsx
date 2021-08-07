@@ -13,22 +13,22 @@ export const Wrapper = styled(motion.div)<Props>`
   cursor: pointer;
   position: relative;
 
-  padding: 8vw 0;
+  padding: 3vw 0;
 
   ${media.tablet} {
     padding-top: ${computeValue({
-      pixelValue: 30,
+      pixelValue: 20,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
 
     padding-bottom: ${computeValue({
-      pixelValue: 30,
+      pixelValue: 20,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    padding: 30px 0;
+    padding: 20px 0;
   }
 `;
 
