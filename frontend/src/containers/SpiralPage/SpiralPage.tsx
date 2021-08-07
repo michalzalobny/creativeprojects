@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
 import { SlideItemWithKey } from 'components/Animations/SlideItemWithKey/SlideItemWithKey';
+import { useBreakpoint } from 'hooks/useBreakpoint';
+import { breakpoints } from 'utils/responsive';
 
 import { StoryItem3D } from './classes/StoryItem3D';
 import { CanvasWrapper } from './styled/CanvasWrapper';
@@ -17,6 +19,20 @@ export default function SpiralPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   const [hoveredItem, setHoveredItem] = useState<StoryItem3D | null>(null);
+
+  const isTablet = useBreakpoint(breakpoints.tablet);
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const myTimeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+
+    return () => {
+      clearTimeout(myTimeout);
+    };
+  }, []);
 
   const myApp = useRef<App | null>(null);
 
@@ -45,18 +61,24 @@ export default function SpiralPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
 
-      <HeadingWrapper>
+      <HeadingWrapper animate={isVisible ? 'animate' : 'initial'}>
         <SmallText text="the spiral" />
 
         <SlideItemWithKey
           itemKey={
-            hoveredItem ? hoveredItem.storyItem.item.name : 'scroll to discover'
+            isTablet
+              ? hoveredItem
+                ? hoveredItem.storyItem.item.name
+                : 'scroll to discover'
+              : 'nochange'
           }
         >
           <Text
             text={
-              hoveredItem
-                ? hoveredItem.storyItem.item.name
+              isTablet
+                ? hoveredItem
+                  ? hoveredItem.storyItem.item.name
+                  : '<span>scr</span>oll'
                 : '<span>scr</span>oll'
             }
           />

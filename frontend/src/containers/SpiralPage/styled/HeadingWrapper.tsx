@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+import { tween } from 'components/Animations/framerTransitions';
+
 interface Props {}
 
 export const HeadingWrapper = styled(motion.div)<Props>`
@@ -16,3 +18,18 @@ export const HeadingWrapper = styled(motion.div)<Props>`
   display: flex;
   flex-direction: column;
 `;
+
+HeadingWrapper.defaultProps = {
+  variants: {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+    },
+  },
+  initial: 'initial',
+  transition: {
+    ...tween,
+  },
+};
