@@ -36,9 +36,7 @@ export class StoryItem3D extends InteractiveObject3D {
   }
 
   _onImageLoad = () => {
-    setTimeout(() => {
-      this.dispatchEvent({ type: 'loaded' });
-    }, 2000);
+    this.dispatchEvent({ type: 'loaded' });
   };
 
   _createMesh(imageSrc: string) {
