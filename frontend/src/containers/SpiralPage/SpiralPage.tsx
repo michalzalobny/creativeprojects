@@ -5,6 +5,7 @@ import { Layout } from 'components/Layout/Layout';
 import { SlideItemWithKey } from 'components/Animations/SlideItemWithKey/SlideItemWithKey';
 import { useBreakpoint } from 'hooks/useBreakpoint';
 import { breakpoints } from 'utils/responsive';
+import { RevealItem } from 'components/Animations/RevealItem/RevealItem';
 
 import { StoryItem3D } from './classes/StoryItem3D';
 import { CanvasWrapper } from './styled/CanvasWrapper';
@@ -27,7 +28,7 @@ export default function SpiralPage(props: PageProps) {
   useEffect(() => {
     const myTimeout = setTimeout(() => {
       setIsVisible(true);
-    }, 2000);
+    }, 1500);
 
     return () => {
       clearTimeout(myTimeout);
@@ -62,27 +63,31 @@ export default function SpiralPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
 
       <HeadingWrapper animate={isVisible ? 'animate' : 'initial'}>
-        <SmallText text="the spiral" />
+        <RevealItem>
+          <SmallText text="the spiral" />
+        </RevealItem>
 
-        <SlideItemWithKey
-          itemKey={
-            isTablet
-              ? hoveredItem
-                ? hoveredItem.storyItem.item.name
-                : 'scroll to discover'
-              : 'nochange'
-          }
-        >
-          <Text
-            text={
+        <RevealItem>
+          <SlideItemWithKey
+            itemKey={
               isTablet
                 ? hoveredItem
                   ? hoveredItem.storyItem.item.name
-                  : '<span>scr</span>oll'
-                : '<span>scr</span>oll'
+                  : 'scroll to discover'
+                : 'nochange'
             }
-          />
-        </SlideItemWithKey>
+          >
+            <Text
+              text={
+                isTablet
+                  ? hoveredItem
+                    ? hoveredItem.storyItem.item.name
+                    : '<span>scr</span>oll'
+                  : '<span>scr</span>oll'
+              }
+            />
+          </SlideItemWithKey>
+        </RevealItem>
       </HeadingWrapper>
 
       <Wrapper>
