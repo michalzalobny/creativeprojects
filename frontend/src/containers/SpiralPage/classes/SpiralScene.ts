@@ -106,7 +106,9 @@ export class SpiralScene extends StoryScene {
       });
     } else {
       this._storyItems.forEach(item => {
-        item.animateOpacity(1);
+        if (item.isInit) {
+          item.animateOpacity(1);
+        }
       });
     }
   }

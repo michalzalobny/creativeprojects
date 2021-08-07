@@ -9,6 +9,7 @@ export class StoryScene extends InteractiveScene {
   _storyItems: StoryItem3D[] = [];
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _setHoveredItem: React.Dispatch<React.SetStateAction<StoryItem3D | null>>;
+  _loadedAmount = 0;
 
   constructor(
     camera: THREE.PerspectiveCamera,
@@ -26,14 +27,26 @@ export class StoryScene extends InteractiveScene {
     this._setHoveredItem(null);
   };
 
+  _onItemLoaded = (e: THREE.Event) => {
+    this._loadedAmount += 1;
+
+    if (this._loadedAmount === this._storyItems.length) {
+      this._storyItems.forEach(item => {
+        item.init();
+      });
+    }
+  };
+
   _destroyItems() {
     this._storyItems.forEach(item => {
       item.destroy();
       this.remove(item);
       item.removeEventListener('pointerover', this._onItemOver);
       item.removeEventListener('pointerleft', this._onItemLeft);
+      item.removeEventListener('loaded', this._onItemLoaded);
     });
     this._storyItems = [];
+    this._loadedAmount = 0;
   }
 
   set items(items: StoryItemProps[]) {
@@ -49,6 +62,7 @@ export class StoryScene extends InteractiveScene {
     this._storyItems.forEach(storyItem => {
       storyItem.addEventListener('pointerover', this._onItemOver);
       storyItem.addEventListener('pointerleft', this._onItemLeft);
+      storyItem.addEventListener('loaded', this._onItemLoaded);
     });
   }
 

@@ -26,6 +26,7 @@ export class StoryItem3D extends InteractiveObject3D {
   _currentHoverValue = 0;
   _destinationHoverValue = 0;
   _storyItem: StoryItemProps;
+  isInit = false;
 
   constructor(geometry: THREE.PlaneGeometry, storyItem: StoryItemProps) {
     super();
@@ -35,28 +36,9 @@ export class StoryItem3D extends InteractiveObject3D {
   }
 
   _onImageLoad = () => {
-    this._texture = new THREE.Texture();
-    this._texture.image = this._image;
-    this._texture.needsUpdate = true;
-    if (this._material && this._mesh && this._image) {
-      this._material.uniforms.tMap.value = this._texture;
-
-      this._material.uniforms.uImageSizes.value = [
-        this._image.naturalWidth,
-        this._image.naturalHeight,
-      ];
-
-      const isVertical = this._image.naturalHeight >= this._image.naturalWidth;
-
-      const sizeX = isVertical ? 40 : 50;
-      const sizeY = isVertical ? 50 : 30;
-
-      this._material.uniforms.uPlaneSizes.value = [sizeX, sizeY];
-      this._mesh.scale.x = sizeX;
-      this._mesh.scale.y = sizeY;
-
-      this.animateOpacity(1);
-    }
+    setTimeout(() => {
+      this.dispatchEvent({ type: 'loaded' });
+    }, 2000);
   };
 
   _createMesh(imageSrc: string) {
@@ -67,6 +49,7 @@ export class StoryItem3D extends InteractiveObject3D {
     if (this._image.complete) {
       this._onImageLoad();
     }
+
     this._image.addEventListener('load', this._onImageLoad);
 
     this._material = new THREE.ShaderMaterial({
@@ -92,8 +75,8 @@ export class StoryItem3D extends InteractiveObject3D {
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
-    this.setColliderName('storyItem');
     this.add(this._mesh);
+    this.setColliderName('storyItem');
   }
 
   _updateOpacity() {
@@ -186,6 +169,33 @@ export class StoryItem3D extends InteractiveObject3D {
     if (this._mesh) {
       const strength = scroll.currentStrength.y / this._rendererBounds.height;
       this._mesh.material.uniforms.uStrength.value = strength * 20;
+    }
+  }
+
+  init() {
+    this._texture = new THREE.Texture();
+    this._texture.image = this._image;
+    this._texture.needsUpdate = true;
+    if (this._material && this._mesh && this._image) {
+      this._material.uniforms.tMap.value = this._texture;
+
+      this._material.uniforms.uImageSizes.value = [
+        this._image.naturalWidth,
+        this._image.naturalHeight,
+      ];
+
+      const isVertical = this._image.naturalHeight >= this._image.naturalWidth;
+
+      const sizeX = isVertical ? 40 : 50;
+      const sizeY = isVertical ? 50 : 30;
+
+      this._material.uniforms.uPlaneSizes.value = [sizeX, sizeY];
+      this._mesh.scale.x = sizeX;
+      this._mesh.scale.y = sizeY;
+
+      this.isInit = true;
+
+      this.animateOpacity(1);
     }
   }
 
