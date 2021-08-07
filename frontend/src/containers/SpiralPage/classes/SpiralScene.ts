@@ -21,6 +21,9 @@ export class SpiralScene extends StoryScene {
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetIndexFloat = 0;
+  _lastIndexFloat = 0;
+  _currentStrength = 0;
+  _targetStrength = 0;
   _animateSpiralInTween: Tween<{ progress: number }> | null = null;
   _animateToIndexTween: Tween<{ progress: number }> | null = null;
 
@@ -83,7 +86,8 @@ export class SpiralScene extends StoryScene {
 
   _animateSpiralIn(targetIndex: number) {
     super._animateSpiralIn(targetIndex);
-    const startIndex = Math.min(this._storyItems.length - 1, 100);
+    const itemsToScroll = this._storyItems.length - 1;
+    const startIndex = Math.min(itemsToScroll, 100);
 
     this._currentIndexFloat = startIndex;
     this._targetIndexFloat = startIndex;
@@ -95,7 +99,7 @@ export class SpiralScene extends StoryScene {
     this._animateSpiralInTween = new TWEEN.Tween({
       progress: this._targetIndexFloat,
     })
-      .to({ progress: targetIndex }, 2500)
+      .to({ progress: targetIndex }, 3000)
       .delay(0)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
@@ -140,9 +144,19 @@ export class SpiralScene extends StoryScene {
   };
 
   _updateIndex(updateInfo: UpdateInfo) {
+    this._lastIndexFloat = this._currentIndexFloat;
+
     this._currentIndexFloat = lerp(
       this._currentIndexFloat,
       this._targetIndexFloat,
+      SpiralScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    this._targetStrength = this._currentIndexFloat - this._lastIndexFloat;
+
+    this._currentStrength = lerp(
+      this._currentStrength,
+      this._targetStrength,
       SpiralScene.lerpEase * updateInfo.slowDownFactor,
     );
   }
@@ -151,10 +165,6 @@ export class SpiralScene extends StoryScene {
     super._onSpiralLoaded();
     this._animateSpiralIn(0);
     this._spiralSpline.animateProgress(1);
-  }
-
-  set targetIndex(target: number) {
-    this._targetIndexFloat = target;
   }
 
   set hoveredStoryItem(hoveredItem: StoryItem3D | null) {
@@ -186,7 +196,7 @@ export class SpiralScene extends StoryScene {
     this._updateIndex(updateInfo);
 
     this._storyItems.forEach(item => {
-      item.updateScrollStrength(this._scroll);
+      item.updateScrollStrength(this._currentStrength * 100);
     });
   }
 

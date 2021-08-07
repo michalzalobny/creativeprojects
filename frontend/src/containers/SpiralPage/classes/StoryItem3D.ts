@@ -6,7 +6,6 @@ import { StoryItemProps } from './types';
 import fragmentShader from './shaders/storyItem/fragment.glsl';
 import vertexShader from './shaders/storyItem/vertex.glsl';
 import { UpdateInfo, Bounds } from './types';
-import { Scroll } from './Scroll/Scroll';
 import { InteractiveObject3D } from './InteractiveObject3D';
 import { lerp } from './utils/lerp';
 
@@ -169,10 +168,10 @@ export class StoryItem3D extends InteractiveObject3D {
     }
   }
 
-  updateScrollStrength(scroll: Scroll) {
+  updateScrollStrength(strength: number) {
     if (this._mesh) {
-      const strength = scroll.currentStrength.y / this._rendererBounds.height;
-      this._mesh.material.uniforms.uStrength.value = strength * 20;
+      const newStrength = strength / this._rendererBounds.height;
+      this._mesh.material.uniforms.uStrength.value = newStrength * 20;
     }
   }
 
