@@ -15,6 +15,7 @@ export class InteractiveScene extends THREE.Scene {
   _intersectPoint = new THREE.Vector3(0);
   _intersectPointLerp = new THREE.Vector3(0);
   _hoveredObject: InteractiveObject3D | null = null;
+  _canHoverObject = true;
   _intersectiveBackground3D = new IntersectiveBackground3D();
 
   constructor(camera: THREE.PerspectiveCamera, mouseMove: MouseMove) {
@@ -93,7 +94,7 @@ export class InteractiveScene extends THREE.Scene {
       'storyItem',
     );
 
-    if (objects.length > 0) {
+    if (objects.length > 0 && this._canHoverObject) {
       const hoveredObject = objects[0];
       if (hoveredObject !== this._hoveredObject) {
         if (this._hoveredObject) {

@@ -28,7 +28,7 @@ export default function SpiralPage(props: PageProps) {
   useEffect(() => {
     const myTimeout = setTimeout(() => {
       setIsVisible(true);
-    }, 1500);
+    }, 1200);
 
     return () => {
       clearTimeout(myTimeout);

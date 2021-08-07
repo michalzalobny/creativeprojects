@@ -86,6 +86,7 @@ export class SpiralScene extends StoryScene {
 
   _animateSpiralIn(targetIndex: number) {
     super._animateSpiralIn(targetIndex);
+    this._canHoverObject = false;
     const itemsToScroll = this._storyItems.length - 1;
     const startIndex = Math.min(itemsToScroll, 100);
 
@@ -99,19 +100,22 @@ export class SpiralScene extends StoryScene {
     this._animateSpiralInTween = new TWEEN.Tween({
       progress: this._targetIndexFloat,
     })
-      .to({ progress: targetIndex }, 3000)
+      .to({ progress: targetIndex }, 2500)
       .delay(0)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         this._targetIndexFloat = obj.progress;
       })
-      .onComplete(() => {});
+      .onComplete(() => {
+        this._canHoverObject = true;
+      });
 
     this._animateSpiralInTween.start();
   }
 
   _animateToIndex(targetIndex: number) {
     super._animateToIndex(targetIndex);
+    this._canHoverObject = false;
 
     if (this._animateToIndexTween) {
       this._animateToIndexTween.stop();
@@ -128,7 +132,9 @@ export class SpiralScene extends StoryScene {
       .onUpdate(obj => {
         this._targetIndexFloat = obj.progress;
       })
-      .onComplete(() => {});
+      .onComplete(() => {
+        this._canHoverObject = true;
+      });
 
     this._animateToIndexTween.start();
   }
