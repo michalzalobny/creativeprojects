@@ -27,11 +27,17 @@ export class StoryItem3D extends InteractiveObject3D {
   _destinationHoverValue = 0;
   _storyItem: StoryItemProps;
   isInit = false;
+  key: number;
 
-  constructor(geometry: THREE.PlaneGeometry, storyItem: StoryItemProps) {
+  constructor(
+    geometry: THREE.PlaneGeometry,
+    storyItem: StoryItemProps,
+    key: number,
+  ) {
     super();
     this._geometry = geometry;
     this._storyItem = storyItem;
+    this.key = key;
     this._createMesh(this._storyItem.item.image.url);
   }
 

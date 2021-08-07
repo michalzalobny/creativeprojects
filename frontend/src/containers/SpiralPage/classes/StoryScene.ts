@@ -34,7 +34,13 @@ export class StoryScene extends InteractiveScene {
       this._storyItems.forEach(item => {
         item.init();
       });
+      this._animateSpiralIn(0);
     }
+  };
+
+  _onItemClick = (e: THREE.Event) => {
+    const targetIndex = (e.target as StoryItem3D).key;
+    this._animateToIndex(targetIndex);
   };
 
   _destroyItems() {
@@ -44,6 +50,7 @@ export class StoryScene extends InteractiveScene {
       item.removeEventListener('pointerover', this._onItemOver);
       item.removeEventListener('pointerleft', this._onItemLeft);
       item.removeEventListener('loaded', this._onItemLoaded);
+      item.removeEventListener('click', this._onItemClick);
     });
     this._storyItems = [];
     this._loadedAmount = 0;
@@ -53,8 +60,8 @@ export class StoryScene extends InteractiveScene {
     this._destroyItems();
 
     items &&
-      items.forEach(item => {
-        const item3D = new StoryItem3D(this._planeGeometry, item);
+      items.forEach((item, key) => {
+        const item3D = new StoryItem3D(this._planeGeometry, item, key);
         this._storyItems.push(item3D);
         this.add(item3D);
       });
@@ -63,6 +70,7 @@ export class StoryScene extends InteractiveScene {
       storyItem.addEventListener('pointerover', this._onItemOver);
       storyItem.addEventListener('pointerleft', this._onItemLeft);
       storyItem.addEventListener('loaded', this._onItemLoaded);
+      storyItem.addEventListener('click', this._onItemClick);
     });
   }
 
@@ -72,6 +80,10 @@ export class StoryScene extends InteractiveScene {
       item.rendererBounds = bounds;
     });
   }
+
+  _animateSpiralIn(targetIndex: number) {}
+
+  _animateToIndex(targetIndex: number) {}
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);

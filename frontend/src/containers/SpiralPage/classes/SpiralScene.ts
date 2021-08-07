@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
+
 import { StoryScene } from './StoryScene';
 import { SpiralSpline3D } from './SpiralSpline3D';
 import { UpdateInfo, Bounds } from './types';
@@ -10,7 +12,7 @@ import { StoryItem3D } from './StoryItem3D';
 export class SpiralScene extends StoryScene {
   static lerpEase = 0.05;
   static scrollYMultiplier = 0.008;
-  static zeroProgressOffset = 0.46;
+  static zeroProgressOffset = 0.452;
   static itemSpacing = 0.056;
   static opacityAppearStart = 0.3;
   static opacityDistance = 15;
@@ -18,8 +20,9 @@ export class SpiralScene extends StoryScene {
   _spiralSpline = new SpiralSpline3D(100, 5, 1, 50);
   _scroll: Scroll;
   _currentIndexFloat = 0;
-  _targetYScroll = 0;
-  _currentYScroll = 0;
+  _targetIndexFloat = 0;
+  _animateSpiralInTween: Tween<{ progress: number }> | null = null;
+  _animateToIndexTween: Tween<{ progress: number }> | null = null;
 
   constructor(
     camera: THREE.PerspectiveCamera,
@@ -39,8 +42,6 @@ export class SpiralScene extends StoryScene {
   }
 
   _positionItems = (updateInfo: UpdateInfo) => {
-    this._currentIndexFloat = this._currentYScroll;
-
     this._storyItems.forEach((item, index) => {
       const dIndex = -(index - this._currentIndexFloat);
       const dProgress = dIndex * SpiralScene.itemSpacing;
@@ -62,23 +63,6 @@ export class SpiralScene extends StoryScene {
     });
   };
 
-  _onScrollApplied = (e: THREE.Event) => {
-    const newTarget = this._targetYScroll - e.y * SpiralScene.scrollYMultiplier;
-
-    this._targetYScroll = Math.min(
-      Math.max(0, newTarget),
-      this._storyItems.length - 1,
-    );
-  };
-
-  _lerpValues(updateInfo: UpdateInfo) {
-    this._currentYScroll = lerp(
-      this._currentYScroll,
-      this._targetYScroll,
-      SpiralScene.lerpEase * updateInfo.slowDownFactor,
-    );
-  }
-
   _addListeners() {
     super._addListeners();
     this._scroll.addEventListener('appliedscroll', this._onScrollApplied);
@@ -95,6 +79,76 @@ export class SpiralScene extends StoryScene {
     this._storyItems.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
+  }
+
+  _animateSpiralIn(targetIndex: number) {
+    super._animateSpiralIn(targetIndex);
+    const startIndex = Math.min(this._storyItems.length - 1, 100);
+
+    this._currentIndexFloat = startIndex;
+    this._targetIndexFloat = startIndex;
+
+    if (this._animateSpiralInTween) {
+      this._animateSpiralInTween.stop();
+    }
+
+    this._animateSpiralInTween = new TWEEN.Tween({
+      progress: this._targetIndexFloat,
+    })
+      .to({ progress: targetIndex }, 2500)
+      .delay(0)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onUpdate(obj => {
+        this._targetIndexFloat = obj.progress;
+      })
+      .onComplete(() => {});
+
+    this._animateSpiralInTween.start();
+  }
+
+  _animateToIndex(targetIndex: number) {
+    super._animateToIndex(targetIndex);
+
+    if (this._animateToIndexTween) {
+      this._animateToIndexTween.stop();
+    }
+
+    const distance = Math.abs(this._targetIndexFloat - targetIndex);
+
+    this._animateToIndexTween = new TWEEN.Tween({
+      progress: this._targetIndexFloat,
+    })
+      .to({ progress: targetIndex }, 200 * distance)
+      .delay(0)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
+      .onUpdate(obj => {
+        this._targetIndexFloat = obj.progress;
+      })
+      .onComplete(() => {});
+
+    this._animateToIndexTween.start();
+  }
+
+  _onScrollApplied = (e: THREE.Event) => {
+    const newTarget =
+      this._targetIndexFloat - e.y * SpiralScene.scrollYMultiplier;
+
+    this._targetIndexFloat = Math.min(
+      Math.max(0, newTarget),
+      this._storyItems.length - 1,
+    );
+  };
+
+  _updateIndex(updateInfo: UpdateInfo) {
+    this._currentIndexFloat = lerp(
+      this._currentIndexFloat,
+      this._targetIndexFloat,
+      SpiralScene.lerpEase * updateInfo.slowDownFactor,
+    );
+  }
+
+  set targetIndex(target: number) {
+    this._targetIndexFloat = target;
   }
 
   set hoveredStoryItem(hoveredItem: StoryItem3D | null) {
@@ -121,9 +175,9 @@ export class SpiralScene extends StoryScene {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._positionItems(updateInfo);
-    this._lerpValues(updateInfo);
     this._spiralSpline.update(updateInfo);
     this._passIntersectPoint();
+    this._updateIndex(updateInfo);
 
     this._storyItems.forEach(item => {
       item.updateScrollStrength(this._scroll);
