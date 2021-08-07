@@ -11,6 +11,8 @@ export interface RichTextProps {
   variants?: Variants;
   transition?: Transition;
   renderAs?: RenderAsType;
+  animate?: string;
+  initial?: string;
 }
 
 export const RichText = memo(

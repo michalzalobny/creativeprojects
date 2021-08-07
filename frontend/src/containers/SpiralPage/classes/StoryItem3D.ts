@@ -24,7 +24,7 @@ export class StoryItem3D extends InteractiveObject3D {
   _opacityTween: Tween<{ progress: number }> | null = null;
   _currentHoverValue = 0;
   _destinationHoverValue = 0;
-  _storyItem: StoryItemProps;
+  storyItem: StoryItemProps;
   isInit = false;
   key: number;
 
@@ -35,9 +35,9 @@ export class StoryItem3D extends InteractiveObject3D {
   ) {
     super();
     this._geometry = geometry;
-    this._storyItem = storyItem;
+    this.storyItem = storyItem;
     this.key = key;
-    this._createMesh(this._storyItem.item.image.url);
+    this._createMesh(this.storyItem.item.image.url);
   }
 
   _onImageLoad = () => {
