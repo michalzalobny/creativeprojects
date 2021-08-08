@@ -2,7 +2,7 @@ export const stagger = {
   backgroundStripes: 0.2,
   normal: 0.15,
   scenePlayers: 0.1,
-  menuItems: 0.1,
+  menuItems: 0.05,
   defaultButton: 0.18,
 };
 

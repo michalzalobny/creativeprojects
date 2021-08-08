@@ -10,6 +10,7 @@ import { LinksWrapper } from './styled/LinksWrapper';
 import { BurgerIconComp } from './styled/BurgerIconComp';
 import { BackgroundComp } from './styled/BackgroundComp';
 import { MenuItemComp } from './styled/MenuItemComp';
+import { SocialsBoxComp } from './styled/SocialsBoxComp';
 
 export interface ToggleMenuProps {
   links: MenuItem[];
@@ -73,6 +74,10 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
                 scale: (windowHeight / MENU_SIZE) * 2.3,
               },
             }}
+          />
+          <SocialsBoxComp
+            offsetPadding={MENU_POS + MENU_SIZE}
+            animate={showMenu ? 'animate' : 'initial'}
           />
         </LinksWrapper>
       </Wrapper>

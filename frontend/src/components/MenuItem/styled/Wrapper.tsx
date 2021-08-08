@@ -9,13 +9,14 @@ import { sharedValues } from 'utils/sharedValues';
 interface Props {}
 
 export const Wrapper = styled(motion.div)<Props>`
-  min-width: 25vw;
+  min-width: 60vw;
   cursor: pointer;
   position: relative;
 
   padding: 3vw 0;
 
   ${media.tablet} {
+    min-width: 25vw;
     padding-top: ${computeValue({
       pixelValue: 20,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
