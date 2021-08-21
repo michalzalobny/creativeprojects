@@ -24,7 +24,7 @@ export default function IndexPage(props: IndexPageProps) {
           <LinkWrapper>Stack tower</LinkWrapper>
         </Link>
         <Link passHref href={'/spiral'}>
-          <LinkWrapper>Spiral</LinkWrapper>
+          <LinkWrapper>Spiral page</LinkWrapper>
         </Link>
       </Wrapper>
     </>
