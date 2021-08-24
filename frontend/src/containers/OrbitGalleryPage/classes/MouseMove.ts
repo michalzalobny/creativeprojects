@@ -51,8 +51,6 @@ export class MouseMove extends EventDispatcher {
 
     this._clickStart.x = this.mouse.x;
     this._clickStart.y = this.mouse.y;
-
-    this.dispatchEvent({ type: 'down' });
   };
 
   _onTouchMove = (event: TouchEvent | MouseEvent) => {
@@ -75,7 +73,6 @@ export class MouseMove extends EventDispatcher {
 
   _onTouchUp = () => {
     this._isTouching = false;
-    this.dispatchEvent({ type: 'up' });
   };
 
   _onMouseLeave = () => {};
@@ -87,7 +84,7 @@ export class MouseMove extends EventDispatcher {
 
     //Make sure that the user's click is held between certain boundaries
     if (xDiff <= clickBounds && yDiff <= clickBounds) {
-      this.dispatchEvent({ type: 'clicked' });
+      this.dispatchEvent({ type: 'click' });
     }
   };
 
@@ -105,7 +102,7 @@ export class MouseMove extends EventDispatcher {
   }
 
   update(updateInfo: UpdateInfo) {
-    this.dispatchEvent({ type: 'mousemoved' });
+    this.dispatchEvent({ type: 'mousemove' });
     const { mouse, _mouseLast } = this;
 
     _mouseLast.x = mouse.x;

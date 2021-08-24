@@ -139,13 +139,13 @@ export class InteractiveScene extends THREE.Scene {
   };
 
   _addListeners() {
-    this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
-    this._mouseMove.addEventListener('clicked', this._onClick);
+    this._mouseMove.addEventListener('mousemove', this._onMouseMove);
+    this._mouseMove.addEventListener('click', this._onClick);
   }
 
   _removeListeners() {
-    this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
-    this._mouseMove.removeEventListener('clicked', this._onClick);
+    this._mouseMove.removeEventListener('mousemove', this._onMouseMove);
+    this._mouseMove.removeEventListener('click', this._onClick);
   }
 
   set rendererBounds(bounds: Bounds) {
