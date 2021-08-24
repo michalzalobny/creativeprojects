@@ -5,7 +5,6 @@ import { Scroll } from '../Singletons/Scroll';
 import { MediaScene } from './MediaScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
-
 interface Constructor {
   camera: THREE.PerspectiveCamera;
   scroll: Scroll;

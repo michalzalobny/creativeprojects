@@ -4,6 +4,7 @@ import { UpdateInfo, GalleryItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
+import { Textures } from '../types';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -13,6 +14,7 @@ interface Constructor {
 export class MediaScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _galleryItems: GalleryItem3D[] = [];
+  _textures: Textures = {};
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -55,6 +57,10 @@ export class MediaScene extends InteractiveScene {
 
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
+  }
+
+  set textures(textures: Textures) {
+    this._textures = textures;
   }
 
   update(updateInfo: UpdateInfo) {

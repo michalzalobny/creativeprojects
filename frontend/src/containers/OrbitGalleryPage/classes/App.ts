@@ -7,6 +7,7 @@ import { GalleryItem3D } from './Components/GalleryItem3D';
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
 import { GalleryScene } from './Scenes/GalleryScene';
+import { Preloader } from './Singletons/Preloader';
 
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;
@@ -21,6 +22,7 @@ export class App {
   _renderer: THREE.WebGLRenderer;
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
+  _preloader = new Preloader();
   _galleryScene: GalleryScene;
 
   constructor(rendererWrapperEl: HTMLDivElement, items: CreativeItem[]) {
@@ -48,6 +50,10 @@ export class App {
     this._onResize();
     this._addListeners();
     this._resumeAppFrame();
+
+    this._preloader.images = items.map(item => {
+      return item.image.url;
+    });
   }
 
   _onResize = () => {
@@ -77,14 +83,20 @@ export class App {
     }
   };
 
+  _onAssetsLoaded = (e: THREE.Event) => {
+    this._galleryScene.textures = (e.target as Preloader).textures;
+  };
+
   _addListeners() {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('visibilitychange', this._onVisibilityChange);
+    this._preloader.addEventListener('loaded', this._onAssetsLoaded);
   }
 
   _removeListeners() {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
+    this._preloader.removeEventListener('loaded', this._onAssetsLoaded);
   }
 
   _resumeAppFrame() {
