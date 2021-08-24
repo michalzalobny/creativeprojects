@@ -16,7 +16,6 @@ export class MouseMove extends EventDispatcher {
 
   static _instance: MouseMove | null;
   static _canCreate = false;
-
   static getInstance() {
     if (!MouseMove._instance) {
       MouseMove._canCreate = true;

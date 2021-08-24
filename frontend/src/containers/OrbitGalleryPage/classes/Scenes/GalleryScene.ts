@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { UpdateInfo } from '../types';
-import { Scroll } from '../Scroll/Scroll';
+import { Scroll } from '../Scroll';
 import { MediaScene } from './MediaScene';
 import { MouseMove } from '../MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
