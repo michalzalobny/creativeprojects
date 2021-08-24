@@ -20,3 +20,8 @@ export interface Coords {
   x: number;
   y: number;
 }
+
+export interface Mouse {
+  current: Coords;
+  target: Coords;
+}

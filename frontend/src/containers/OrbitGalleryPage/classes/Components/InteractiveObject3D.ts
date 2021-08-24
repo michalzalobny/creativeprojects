@@ -16,14 +16,14 @@ export class InteractiveObject3D extends THREE.Object3D {
     this.colliderName = name;
   }
 
-  onMouseOver() {
+  onMouseEnter() {
     this._isHovered = true;
-    this.dispatchEvent({ type: 'mouseover' });
+    this.dispatchEvent({ type: 'mouseenter' });
   }
 
-  onMouseOut() {
+  onMouseLeave() {
     this._isHovered = false;
-    this.dispatchEvent({ type: 'mouseout' });
+    this.dispatchEvent({ type: 'mouseleave' });
   }
 
   onClick() {

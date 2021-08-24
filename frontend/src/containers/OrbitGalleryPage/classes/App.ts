@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { GalleryItem3D } from './Components/GalleryItem3D';
 
-import { MouseMove } from './MouseMove/MouseMove';
+import { MouseMove } from './MouseMove';
 import { Scroll } from './Scroll/Scroll';
 import { GalleryScene } from './Scenes/GalleryScene';
 

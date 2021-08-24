@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { UpdateInfo, GalleryItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
-import { MouseMove } from '../MouseMove/MouseMove';
+import { MouseMove } from '../MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
 
 interface Constructor {

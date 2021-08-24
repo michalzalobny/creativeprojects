@@ -1,25 +1,47 @@
 import * as THREE from 'three';
 
-import { MouseMove } from '../MouseMove/MouseMove';
-import { Bounds, UpdateInfo, Coords } from '../types';
+import { MouseMove } from '../MouseMove';
+import { Bounds, UpdateInfo, Mouse } from '../types';
 import {
   InteractiveObject3D,
   ColliderName,
 } from '../Components/InteractiveObject3D';
 import { IntersectiveBackground3D } from '../Components/IntersectiveBackground3D';
+import { lerp } from '../utils/lerp';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
   mouseMove: MouseMove;
 }
 
+interface PerformRaycast {
+  x: number;
+  y: number;
+  colliderName?: ColliderName;
+  fnToCallIfHit?: string;
+}
+
 export class InteractiveScene extends THREE.Scene {
+  static lerpEase = 0.06;
+
   _raycaster = new THREE.Raycaster();
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _camera: THREE.PerspectiveCamera;
   _mouseMove: MouseMove;
-  _mouse3D: Coords = { x: 0, y: 0 };
-  _mouse3DLerp: Coords = { x: 0, y: 0 };
+
+  _mouse2D: Mouse = {
+    current: { x: 0, y: 0 },
+    target: { x: 0, y: 0 },
+  };
+  _mouse3D: Mouse = {
+    current: { x: 0, y: 0 },
+    target: { x: 0, y: 0 },
+  };
+  _mouseStrength = {
+    current: 0,
+    target: 0,
+  };
+
   _intersectPoint = new THREE.Vector3(0);
   _intersectPointLerp = new THREE.Vector3(0);
   _hoveredObject: InteractiveObject3D | null = null;
@@ -34,12 +56,7 @@ export class InteractiveScene extends THREE.Scene {
     this.add(this._intersectiveBackground3D);
   }
 
-  _performRaycast(
-    x: number,
-    y: number,
-    colliderName: ColliderName,
-    fnToCallIfHit?: string,
-  ) {
+  _performRaycast({ x, y, colliderName, fnToCallIfHit }: PerformRaycast) {
     this._raycaster.setFromCamera({ x, y }, this._camera);
     const intersects = this._raycaster.intersectObjects(this.children, true);
     const intersectingObjects: InteractiveObject3D[] = [];
@@ -47,13 +64,15 @@ export class InteractiveScene extends THREE.Scene {
     for (let i = 0; i < intersects.length; ++i) {
       const interactiveObject = intersects[i].object
         .parent as InteractiveObject3D;
-      if (interactiveObject.colliderName === colliderName) {
-        if (fnToCallIfHit) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
-          interactiveObject[fnToCallIfHit]();
-        }
+      if (interactiveObject.colliderName) {
         intersectingObjects.push(interactiveObject);
+        if (fnToCallIfHit) {
+          if (interactiveObject.colliderName === colliderName) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            interactiveObject[fnToCallIfHit]();
+          }
+        }
         break;
       }
     }
@@ -62,21 +81,20 @@ export class InteractiveScene extends THREE.Scene {
   }
 
   _onMouseMove = (e: THREE.Event) => {
+    this._mouseStrength.target = (e.target as MouseMove).strength;
+
     const mouseX = (e.target as MouseMove).mouse.x;
     const mouseY = (e.target as MouseMove).mouse.y;
 
-    this._mouse3D.x = (mouseX / this._rendererBounds.width) * 2 - 1;
-    this._mouse3D.y = -(mouseY / this._rendererBounds.height) * 2 + 1;
+    this._mouse2D.target.x = mouseX;
+    this._mouse2D.target.y = mouseY;
 
-    const mouseLerpX = (e.target as MouseMove).mouseLerp.x;
-    const mouseLerpY = (e.target as MouseMove).mouseLerp.y;
-
-    this._mouse3DLerp.x = (mouseLerpX / this._rendererBounds.width) * 2 - 1;
-    this._mouse3DLerp.y = -(mouseLerpY / this._rendererBounds.height) * 2 + 1;
+    this._mouse3D.target.x = (mouseX / this._rendererBounds.width) * 2 - 1;
+    this._mouse3D.target.y = -(mouseY / this._rendererBounds.height) * 2 + 1;
 
     const intersectPoint = this._intersectiveBackground3D.getIntersectPoint(
-      this._mouse3D.x,
-      this._mouse3D.y,
+      this._mouse3D.target.x,
+      this._mouse3D.target.y,
       this._raycaster,
       this._camera,
     );
@@ -85,34 +103,22 @@ export class InteractiveScene extends THREE.Scene {
       this._intersectPoint = intersectPoint;
     }
 
-    const intersectPointLerp = this._intersectiveBackground3D.getIntersectPoint(
-      this._mouse3DLerp.x,
-      this._mouse3DLerp.y,
-      this._raycaster,
-      this._camera,
-    );
-
-    if (intersectPointLerp) {
-      this._intersectPointLerp = intersectPointLerp;
-    }
-
-    const objects = this._performRaycast(
-      this._mouse3D.x,
-      this._mouse3D.y,
-      'galleryItem',
-    );
+    const objects = this._performRaycast({
+      x: this._mouse3D.target.x,
+      y: this._mouse3D.target.y,
+    });
 
     if (objects.length > 0 && this._canHoverObject) {
       const hoveredObject = objects[0];
       if (hoveredObject !== this._hoveredObject) {
         if (this._hoveredObject) {
-          this._hoveredObject.onMouseOut();
+          this._hoveredObject.onMouseLeave();
         }
         this._hoveredObject = hoveredObject;
-        this._hoveredObject.onMouseOver();
+        this._hoveredObject.onMouseEnter();
       }
     } else if (this._hoveredObject) {
-      this._hoveredObject.onMouseOut();
+      this._hoveredObject.onMouseLeave();
       this._hoveredObject = null;
     }
   };
@@ -124,7 +130,12 @@ export class InteractiveScene extends THREE.Scene {
     const mouse3DX = (mouseX / this._rendererBounds.width) * 2 - 1;
     const mouse3DY = -(mouseY / this._rendererBounds.height) * 2 + 1;
 
-    this._performRaycast(mouse3DX, mouse3DY, 'galleryItem', 'onClick');
+    this._performRaycast({
+      x: mouse3DX,
+      y: mouse3DY,
+      colliderName: 'galleryItem',
+      fnToCallIfHit: 'onClick',
+    });
   };
 
   _addListeners() {
@@ -141,7 +152,63 @@ export class InteractiveScene extends THREE.Scene {
     this._rendererBounds = bounds;
   }
 
-  update(updateInfo: UpdateInfo) {}
+  update(updateInfo: UpdateInfo) {
+    //Lerp mouse move strength
+    this._mouseStrength.current = lerp(
+      this._mouseStrength.current,
+      this._mouseStrength.target,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    //Lerp 2D mouse coords
+    this._mouse2D.current.x = lerp(
+      this._mouse2D.current.x,
+      this._mouse2D.target.x,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+    this._mouse2D.current.y = lerp(
+      this._mouse2D.current.y,
+      this._mouse2D.target.y,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    //Lerp 3D mouse coords
+    this._mouse3D.current.x = lerp(
+      this._mouse3D.current.x,
+      this._mouse3D.target.x,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+    this._mouse3D.current.y = lerp(
+      this._mouse3D.current.y,
+      this._mouse3D.target.y,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    //Lerp intersect 3D point
+    const intersectLerpX = lerp(
+      this._intersectPointLerp.x,
+      this._intersectPoint.x,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    const intersectLerpY = lerp(
+      this._intersectPointLerp.y,
+      this._intersectPoint.y,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    const intersectLerpZ = lerp(
+      this._intersectPointLerp.z,
+      this._intersectPoint.z,
+      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    this._intersectPointLerp.set(
+      intersectLerpX,
+      intersectLerpY,
+      intersectLerpZ,
+    );
+  }
 
   destroy() {
     this._removeListeners();

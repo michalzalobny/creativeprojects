@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { UpdateInfo } from '../types';
 import { Scroll } from '../Scroll/Scroll';
 import { MediaScene } from './MediaScene';
-import { MouseMove } from '../MouseMove/MouseMove';
+import { MouseMove } from '../MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
 
 interface Constructor {

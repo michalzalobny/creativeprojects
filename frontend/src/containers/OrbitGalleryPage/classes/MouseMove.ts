@@ -1,7 +1,6 @@
 import { EventDispatcher } from 'three';
 
-import { UpdateInfo } from '../types';
-import { lerp } from './utils/lerp';
+import { UpdateInfo } from './types';
 
 interface Mouse {
   x: number;
@@ -11,12 +10,9 @@ interface Mouse {
 export class MouseMove extends EventDispatcher {
   _mouseLast: Mouse = { x: 0, y: 0 };
   _isTouching = false;
-  _ease = 0.06;
   _clickStart: Mouse = { x: 0, y: 0 };
   mouse: Mouse = { x: 0, y: 0 };
-  mouseLerp: Mouse = { x: 0, y: 0 };
   strength = 0;
-  strengthLerp = 0;
 
   static _instance: MouseMove | null;
   static _canCreate = false;
@@ -85,10 +81,12 @@ export class MouseMove extends EventDispatcher {
   _onMouseLeave = () => {};
 
   _onClick = () => {
-    if (
-      this._clickStart.x === this.mouse.x &&
-      this._clickStart.y === this.mouse.y
-    ) {
+    const clickBounds = 10;
+    const xDiff = Math.abs(this._clickStart.x - this.mouse.x);
+    const yDiff = Math.abs(this._clickStart.y - this.mouse.y);
+
+    //Make sure that the user's click is held between certain boundaries
+    if (xDiff <= clickBounds && yDiff <= clickBounds) {
       this.dispatchEvent({ type: 'clicked' });
     }
   };
@@ -108,19 +106,9 @@ export class MouseMove extends EventDispatcher {
 
   update(updateInfo: UpdateInfo) {
     this.dispatchEvent({ type: 'mousemoved' });
-    const { _ease, mouse, _mouseLast, mouseLerp } = this;
+    const { mouse, _mouseLast } = this;
 
     _mouseLast.x = mouse.x;
     _mouseLast.y = mouse.y;
-
-    mouseLerp.x = lerp(mouseLerp.x, mouse.x, _ease * updateInfo.slowDownFactor);
-    mouseLerp.y = lerp(mouseLerp.y, mouse.y, _ease * updateInfo.slowDownFactor);
-
-    //Update strengthLerp
-    this.strengthLerp = lerp(
-      this.strengthLerp,
-      this.strength,
-      _ease * updateInfo.slowDownFactor,
-    );
   }
 }
