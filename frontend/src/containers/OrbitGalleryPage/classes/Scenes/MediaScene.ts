@@ -32,11 +32,17 @@ export class MediaScene extends InteractiveScene {
   set items(items: GalleryItemProps[]) {
     this._destroyItems();
 
+    //Fetch elements DOM representations
+    const elements = Array.from(
+      document.querySelectorAll("[data-gallery='entry']"),
+    ) as HTMLElement[];
+
     items &&
       items.forEach((item, key) => {
         const item3D = new GalleryItem3D({
           geometry: this._planeGeometry,
           galleryItem: item,
+          domEl: elements[key],
         });
         this._galleryItems.push(item3D);
         this.add(item3D);
