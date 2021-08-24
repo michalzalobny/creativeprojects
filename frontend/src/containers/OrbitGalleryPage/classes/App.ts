@@ -84,7 +84,7 @@ export class App {
   };
 
   _onAssetsLoaded = (e: THREE.Event) => {
-    this._galleryScene.textures = (e.target as Preloader).textures;
+    this._galleryScene.textureItems = (e.target as Preloader).textureItems;
   };
 
   _addListeners() {

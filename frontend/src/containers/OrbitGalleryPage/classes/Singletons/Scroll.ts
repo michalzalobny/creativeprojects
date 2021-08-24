@@ -95,7 +95,7 @@ export class Scroll extends EventDispatcher {
     const { pixelY } = normalizeWheel(event);
 
     this._applyScrollXY({
-      x: -pixelY * Scroll.mouseScrollMultiplier,
+      x: 0,
       y: -pixelY * Scroll.mouseScrollMultiplier,
     });
   };

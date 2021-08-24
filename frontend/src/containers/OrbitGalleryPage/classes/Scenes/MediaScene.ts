@@ -4,7 +4,7 @@ import { UpdateInfo, GalleryItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
-import { Textures } from '../types';
+import { TextureItems } from '../types';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -14,7 +14,7 @@ interface Constructor {
 export class MediaScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _galleryItems: GalleryItem3D[] = [];
-  _textures: Textures = {};
+  _textureItems: TextureItems = {};
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -29,6 +29,24 @@ export class MediaScene extends InteractiveScene {
       item.removeEventListener('click', this._onItemClick);
     });
     this._galleryItems = [];
+  }
+
+  _onResize = () => {
+    if (this._galleryItems) {
+      this._galleryItems.forEach(item => {
+        item.onResize();
+      });
+    }
+  };
+
+  _addListeners() {
+    super._addListeners();
+    window.addEventListener('resize', this._onResize);
+  }
+
+  _removeListeners() {
+    super._removeListeners();
+    window.removeEventListener('resize', this._onResize);
   }
 
   set items(items: GalleryItemProps[]) {
@@ -57,10 +75,18 @@ export class MediaScene extends InteractiveScene {
 
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
+
+    this._galleryItems.forEach(item => {
+      item.rendererBounds = this._rendererBounds;
+    });
   }
 
-  set textures(textures: Textures) {
-    this._textures = textures;
+  set textureItems(textureItems: TextureItems) {
+    this._textureItems = textureItems;
+
+    this._galleryItems.forEach(item => {
+      item.textureItem = this._textureItems[item.galleryItem.item.image.url];
+    });
   }
 
   update(updateInfo: UpdateInfo) {

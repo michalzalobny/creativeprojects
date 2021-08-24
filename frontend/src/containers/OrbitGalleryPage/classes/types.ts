@@ -1,7 +1,13 @@
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import * as THREE from 'three';
 
-export type Textures = Record<string, THREE.Texture>;
+export interface TextureItem {
+  texture: THREE.Texture;
+  naturalWidth: number;
+  naturalHeight: number;
+}
+export type TextureItems = Record<string, TextureItem>;
+
 export interface UpdateInfo {
   slowDownFactor: number;
   delta: number;

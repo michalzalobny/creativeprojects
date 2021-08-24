@@ -11,7 +11,9 @@ export const GalleryWrapper = styled(motion.div)<Props>`
   height: 100%;
   overflow: hidden;
 
-  grid-gap: 20px;
+  grid-gap: 2vw;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+
+  opacity: 0.1;
 `;

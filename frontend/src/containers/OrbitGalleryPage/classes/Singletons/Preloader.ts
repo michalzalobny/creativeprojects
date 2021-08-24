@@ -1,12 +1,12 @@
 import { EventDispatcher } from 'three';
 import * as THREE from 'three';
 
-import { Textures } from '../types';
+import { TextureItems } from '../types';
 
 export class Preloader extends EventDispatcher {
   _assetsLoaded = 0;
   _images: string[] = [];
-  textures: Textures = {};
+  textureItems: TextureItems = {};
 
   constructor() {
     super();
@@ -15,12 +15,17 @@ export class Preloader extends EventDispatcher {
   _preloadTextures() {
     this._images.forEach(item => {
       const texture = new THREE.Texture();
-      const media = new window.Image();
-      media.crossOrigin = 'anonymous';
-      media.src = item;
-      media.onload = () => {
-        texture.image = media;
-        this.textures[item] = texture;
+      const image = new window.Image();
+      image.crossOrigin = 'anonymous';
+      image.src = item;
+      image.onload = () => {
+        texture.image = image;
+        texture.needsUpdate = true;
+        this.textureItems[item] = {
+          texture,
+          naturalWidth: image.naturalWidth,
+          naturalHeight: image.naturalHeight,
+        };
         this._onAssetLoaded();
       };
     });
