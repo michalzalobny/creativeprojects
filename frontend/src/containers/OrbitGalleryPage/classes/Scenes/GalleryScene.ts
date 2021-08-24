@@ -30,7 +30,10 @@ interface ScrollValues {
     x: DirectionX;
     y: DirectionY;
   };
-  strength: number;
+  strength: {
+    current: number;
+    target: number;
+  };
   scrollSpeed: {
     x: number;
     y: number;
@@ -46,7 +49,10 @@ export class GalleryScene extends MediaScene {
     target: { x: 0, y: 0 },
     last: { x: 0, y: 0 },
     direction: { x: 'left', y: 'up' },
-    strength: 0,
+    strength: {
+      current: 0,
+      target: 0,
+    },
     scrollSpeed: { x: 0, y: 0 },
   };
 
@@ -97,7 +103,16 @@ export class GalleryScene extends MediaScene {
     //Update scroll strength
     const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
     const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
-    this._scrollValues.strength = deltaX * deltaX + deltaY * deltaY;
+
+    this._scrollValues.strength.target = Math.sqrt(
+      deltaX * deltaX + deltaY * deltaY,
+    );
+
+    this._scrollValues.strength.current = lerp(
+      this._scrollValues.strength.current,
+      this._scrollValues.strength.target,
+      GalleryScene.lerpEase * updateInfo.slowDownFactor,
+    );
 
     this._scrollValues.last.x = this._scrollValues.current.x;
     this._scrollValues.last.y = this._scrollValues.current.y;
@@ -120,7 +135,7 @@ export class GalleryScene extends MediaScene {
       item.scrollValues = {
         x: this._scrollValues.current.x,
         y: this._scrollValues.current.y,
-        strength: this._scrollValues.strength,
+        strength: this._scrollValues.strength.current,
         direction: {
           x: this._scrollValues.direction.x,
           y: this._scrollValues.direction.y,
