@@ -6,8 +6,9 @@ interface Props {}
 export const GalleryItem = styled(motion.figure)<Props>`
   background-color: red;
   width: 100%;
-  height: 40vw;
+  height: 45vw;
   position: relative;
+  transform: scale(0.9);
 
   /* &:nth-child(2) {
     margin-top:30px;
