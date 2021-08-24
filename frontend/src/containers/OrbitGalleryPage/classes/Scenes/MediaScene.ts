@@ -18,16 +18,12 @@ export class MediaScene extends InteractiveScene {
     super({ camera, mouseMove });
   }
 
-  _onItemOver = (e: THREE.Event) => {};
-  _onItemLeft = (e: THREE.Event) => {};
   _onItemClick = (e: THREE.Event) => {};
 
   _destroyItems() {
     this._galleryItems.forEach(item => {
       item.destroy();
       this.remove(item);
-      item.removeEventListener('pointerover', this._onItemOver);
-      item.removeEventListener('pointerleft', this._onItemLeft);
       item.removeEventListener('click', this._onItemClick);
     });
     this._galleryItems = [];
@@ -47,8 +43,6 @@ export class MediaScene extends InteractiveScene {
       });
 
     this._galleryItems.forEach(item => {
-      item.addEventListener('pointerover', this._onItemOver);
-      item.addEventListener('pointerleft', this._onItemLeft);
       item.addEventListener('click', this._onItemClick);
     });
   }
