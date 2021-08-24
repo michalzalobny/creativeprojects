@@ -140,8 +140,8 @@ export class GalleryItem3D extends MediaObject3D {
 
   onResize() {
     super.onResize();
-    this._updateBounds();
     this._resetPosition();
+    this._updateBounds();
   }
 
   update(updateInfo: UpdateInfo) {
