@@ -83,6 +83,8 @@ export class GalleryScene extends MediaScene {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
+    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+
     //Update scroll direction
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
       this._scrollValues.direction.x = 'left';
@@ -97,7 +99,7 @@ export class GalleryScene extends MediaScene {
       this._scrollValues.scrollSpeed.y = GalleryScene.scrollSpeed;
     } else {
       this._scrollValues.direction.y = 'down';
-      this._scrollValues.scrollSpeed.x = -GalleryScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.y = -GalleryScene.scrollSpeed;
     }
 
     //Update scroll strength
