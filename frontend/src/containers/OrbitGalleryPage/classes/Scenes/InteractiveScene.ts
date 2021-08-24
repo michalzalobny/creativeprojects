@@ -22,7 +22,7 @@ interface PerformRaycast {
 }
 
 export class InteractiveScene extends THREE.Scene {
-  static lerpEase = 0.95;
+  static lerpEase = 0.09;
 
   _raycaster = new THREE.Raycaster();
   _rendererBounds: Bounds = { height: 100, width: 100 };
