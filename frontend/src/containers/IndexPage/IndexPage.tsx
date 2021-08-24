@@ -14,6 +14,9 @@ export default function IndexPage(props: IndexPageProps) {
     <>
       <Head {...pageData.head} />
       <Wrapper>
+        <Link passHref href={'/test'}>
+          <LinkWrapper>Test</LinkWrapper>
+        </Link>
         <Link passHref href={'/bubbles'}>
           <LinkWrapper>Bubbles</LinkWrapper>
         </Link>
@@ -26,6 +29,7 @@ export default function IndexPage(props: IndexPageProps) {
         <Link passHref href={'/spiral'}>
           <LinkWrapper>Spiral page</LinkWrapper>
         </Link>
+        <div style={{ width: '100%', height: '150vh', background: 'grey' }} />
       </Wrapper>
     </>
   );
