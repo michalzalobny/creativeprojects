@@ -18,7 +18,6 @@ export class GalleryScene extends MediaScene {
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
-    this._camera.position.z = 5;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
   }
