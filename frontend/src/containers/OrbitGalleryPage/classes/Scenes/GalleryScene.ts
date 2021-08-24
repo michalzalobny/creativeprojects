@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
-import { UpdateInfo } from './types';
-import { Scroll } from './Scroll/Scroll';
+import { UpdateInfo } from '../types';
+import { Scroll } from '../Scroll/Scroll';
 import { MediaScene } from './MediaScene';
-import { MouseMove } from './MouseMove/MouseMove';
-import { GalleryItem3D } from './GalleryItem3D';
+import { MouseMove } from '../MouseMove/MouseMove';
+import { GalleryItem3D } from '../Components/GalleryItem3D';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;

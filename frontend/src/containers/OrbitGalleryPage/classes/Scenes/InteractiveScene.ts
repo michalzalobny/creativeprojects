@@ -1,9 +1,12 @@
 import * as THREE from 'three';
 
-import { MouseMove } from './MouseMove/MouseMove';
-import { Bounds, UpdateInfo, Coords } from './types';
-import { InteractiveObject3D, ColliderName } from './InteractiveObject3D';
-import { IntersectiveBackground3D } from './IntersectiveBackground3D';
+import { MouseMove } from '../MouseMove/MouseMove';
+import { Bounds, UpdateInfo, Coords } from '../types';
+import {
+  InteractiveObject3D,
+  ColliderName,
+} from '../Components/InteractiveObject3D';
+import { IntersectiveBackground3D } from '../Components/IntersectiveBackground3D';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;

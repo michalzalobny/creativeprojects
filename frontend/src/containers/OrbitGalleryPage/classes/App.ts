@@ -2,11 +2,11 @@ import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
-import { GalleryItem3D } from './GalleryItem3D';
+import { GalleryItem3D } from './Components/GalleryItem3D';
 
 import { MouseMove } from './MouseMove/MouseMove';
 import { Scroll } from './Scroll/Scroll';
-import { GalleryScene } from './GalleryScene';
+import { GalleryScene } from './Scenes/GalleryScene';
 
 export const DEFALUT_FPS = 60;
 const DT_FPS = 1000 / DEFALUT_FPS;

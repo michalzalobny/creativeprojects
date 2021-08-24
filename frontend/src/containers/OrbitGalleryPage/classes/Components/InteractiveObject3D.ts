@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo } from './types';
+import { UpdateInfo } from '../types';
 
 export type ColliderName = 'galleryItem';
 

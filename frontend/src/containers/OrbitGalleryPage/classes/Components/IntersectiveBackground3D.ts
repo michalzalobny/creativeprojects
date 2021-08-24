@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo } from './types';
+import { UpdateInfo } from '../types';
 import { InteractiveObject3D } from './InteractiveObject3D';
 
 export class IntersectiveBackground3D extends InteractiveObject3D {

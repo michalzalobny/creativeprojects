@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { GalleryItemProps } from './types';
+import { GalleryItemProps } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 
 interface Constructor {
