@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
 import { UpdateInfo } from '../types';
-import { Scroll } from '../Scroll';
+import { Scroll } from '../Singletons/Scroll';
 import { MediaScene } from './MediaScene';
-import { MouseMove } from '../MouseMove';
+import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
 
 interface Constructor {

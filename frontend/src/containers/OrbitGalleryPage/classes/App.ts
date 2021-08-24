@@ -4,8 +4,8 @@ import * as THREE from 'three';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { GalleryItem3D } from './Components/GalleryItem3D';
 
-import { MouseMove } from './MouseMove';
-import { Scroll } from './Scroll';
+import { MouseMove } from './Singletons/MouseMove';
+import { Scroll } from './Singletons/Scroll';
 import { GalleryScene } from './Scenes/GalleryScene';
 
 export const DEFALUT_FPS = 60;

@@ -1,7 +1,7 @@
 import { EventDispatcher } from 'three';
 import normalizeWheel from 'normalize-wheel';
 
-import { UpdateInfo } from './types';
+import { UpdateInfo } from '../types';
 
 interface ApplyScrollXY {
   x: number;

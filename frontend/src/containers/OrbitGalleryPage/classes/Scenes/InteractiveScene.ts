@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { MouseMove } from '../MouseMove';
+import { MouseMove } from '../Singletons/MouseMove';
 import { Bounds, UpdateInfo, Mouse } from '../types';
 import {
   InteractiveObject3D,

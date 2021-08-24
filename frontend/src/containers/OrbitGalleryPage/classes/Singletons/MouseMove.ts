@@ -1,6 +1,6 @@
 import { EventDispatcher } from 'three';
 
-import { UpdateInfo } from './types';
+import { UpdateInfo } from '../types';
 
 interface Mouse {
   x: number;
