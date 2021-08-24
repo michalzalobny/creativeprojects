@@ -81,7 +81,7 @@ export class GalleryScene extends MediaScene {
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
       this._scrollValues.direction.x = 'left';
       this._scrollValues.scrollSpeed.x = GalleryScene.scrollSpeed;
-    } else if (this._scrollValues.current.x < this._scrollValues.last.x) {
+    } else {
       this._scrollValues.direction.x = 'right';
       this._scrollValues.scrollSpeed.x = -GalleryScene.scrollSpeed;
     }
@@ -89,7 +89,7 @@ export class GalleryScene extends MediaScene {
     if (this._scrollValues.current.y > this._scrollValues.last.y) {
       this._scrollValues.direction.y = 'up';
       this._scrollValues.scrollSpeed.y = GalleryScene.scrollSpeed;
-    } else if (this._scrollValues.current.y < this._scrollValues.last.y) {
+    } else {
       this._scrollValues.direction.y = 'down';
       this._scrollValues.scrollSpeed.x = -GalleryScene.scrollSpeed;
     }
