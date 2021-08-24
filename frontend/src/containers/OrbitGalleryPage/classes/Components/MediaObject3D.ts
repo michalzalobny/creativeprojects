@@ -7,24 +7,22 @@ import { Bounds, TextureItem, UpdateInfo } from '../types';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
-  domEl: HTMLElement;
 }
 
 export class MediaObject3D extends InteractiveObject3D {
   _geometry: THREE.PlaneGeometry;
   _material: THREE.ShaderMaterial | null = null;
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
-  _domEl: HTMLElement;
+
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _windowBounds: Bounds = { height: 100, width: 100 };
-  _domElBounds: DOMRect | null = null;
+
   _textureItem: TextureItem | null = null;
   _extra = { x: 0, y: 0 };
 
-  constructor({ geometry, domEl }: Constructor) {
+  constructor({ geometry }: Constructor) {
     super();
     this._geometry = geometry;
-    this._domEl = domEl;
     this._createMesh();
   }
 
@@ -68,6 +66,13 @@ export class MediaObject3D extends InteractiveObject3D {
 
   set rendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
+
+    if (this._mesh) {
+      this._mesh.material.uniforms.uViewportSizes.value = [
+        this._rendererBounds.width,
+        this._rendererBounds.height,
+      ];
+    }
   }
 
   set textureItem(textureItem: TextureItem) {

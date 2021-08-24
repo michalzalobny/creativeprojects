@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo } from '../types';
+import { UpdateInfo, DirectionX, DirectionY } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { MediaScene } from './MediaScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -13,13 +13,41 @@ interface Constructor {
   mouseMove: MouseMove;
 }
 
+interface ScrollValues {
+  current: {
+    x: number;
+    y: number;
+  };
+  target: {
+    x: number;
+    y: number;
+  };
+  last: {
+    x: number;
+    y: number;
+  };
+  direction: {
+    x: DirectionX;
+    y: DirectionY;
+  };
+  strength: number;
+  scrollSpeed: {
+    x: number;
+    y: number;
+  };
+}
+
 export class GalleryScene extends MediaScene {
+  static scrollSpeed = 1.2;
+
   _scroll: Scroll;
-  _scrollValues = {
+  _scrollValues: ScrollValues = {
     current: { x: 0, y: 0 },
     target: { x: 0, y: 0 },
     last: { x: 0, y: 0 },
+    direction: { x: 'left', y: 'up' },
     strength: 0,
+    scrollSpeed: { x: 0, y: 0 },
   };
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -49,6 +77,23 @@ export class GalleryScene extends MediaScene {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
+    //Update scroll direction
+    if (this._scrollValues.current.x > this._scrollValues.last.x) {
+      this._scrollValues.direction.x = 'left';
+      this._scrollValues.scrollSpeed.x = GalleryScene.scrollSpeed;
+    } else if (this._scrollValues.current.x < this._scrollValues.last.x) {
+      this._scrollValues.direction.x = 'right';
+      this._scrollValues.scrollSpeed.x = -GalleryScene.scrollSpeed;
+    }
+
+    if (this._scrollValues.current.y > this._scrollValues.last.y) {
+      this._scrollValues.direction.y = 'up';
+      this._scrollValues.scrollSpeed.y = GalleryScene.scrollSpeed;
+    } else if (this._scrollValues.current.y < this._scrollValues.last.y) {
+      this._scrollValues.direction.y = 'down';
+      this._scrollValues.scrollSpeed.x = -GalleryScene.scrollSpeed;
+    }
+
     //Update scroll strength
     const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
     const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
@@ -76,6 +121,14 @@ export class GalleryScene extends MediaScene {
         x: this._scrollValues.current.x,
         y: this._scrollValues.current.y,
         strength: this._scrollValues.strength,
+        direction: {
+          x: this._scrollValues.direction.x,
+          y: this._scrollValues.direction.y,
+        },
+        scrollSpeed: {
+          x: this._scrollValues.scrollSpeed.x,
+          y: this._scrollValues.scrollSpeed.y,
+        },
       };
     });
   }

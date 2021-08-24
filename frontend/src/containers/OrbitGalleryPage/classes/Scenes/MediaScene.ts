@@ -57,12 +57,17 @@ export class MediaScene extends InteractiveScene {
       document.querySelectorAll("[data-gallery='entry']"),
     ) as HTMLElement[];
 
+    const galleryWrapper = Array.from(
+      document.querySelectorAll("[data-gallery='wrapper']"),
+    )[0] as HTMLElement;
+
     items &&
       items.forEach((item, key) => {
         const item3D = new GalleryItem3D({
           geometry: this._planeGeometry,
           galleryItem: item,
           domEl: elements[key],
+          galleryWrapperDomEl: galleryWrapper,
         });
         this._galleryItems.push(item3D);
         this.add(item3D);

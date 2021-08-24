@@ -37,7 +37,7 @@ export default function OrbitGalleryPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
 
       <Wrapper>
-        <GalleryWrapper>
+        <GalleryWrapper data-gallery="wrapper">
           {props.projectData.creativeItems.map(item => {
             return (
               <GalleryItem data-gallery="entry" key={item.image.url}>

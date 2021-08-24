@@ -6,6 +6,7 @@ export interface TextureItem {
   naturalWidth: number;
   naturalHeight: number;
 }
+
 export type TextureItems = Record<string, TextureItem>;
 
 export interface UpdateInfo {
@@ -33,3 +34,6 @@ export interface Mouse {
   current: Coords;
   target: Coords;
 }
+
+export type DirectionX = 'left' | 'right';
+export type DirectionY = 'up' | 'down';
