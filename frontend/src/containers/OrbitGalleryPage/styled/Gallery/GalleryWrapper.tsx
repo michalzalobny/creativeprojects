@@ -9,7 +9,7 @@ export const GalleryWrapper = styled(motion.div)<Props>`
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 100%;
+  width: 150%;
 
   display: grid;
   grid-template-columns: repeat(5, 1fr);

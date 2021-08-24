@@ -150,8 +150,8 @@ export class GalleryItem3D extends MediaObject3D {
     this._updateY(this._scrollValues.y);
     this._handleInfinityScroll();
 
-    // if (this._mesh) {
-    //   this._mesh.material.uniforms.uStrength.value = this._scrollValues.strength;
-    // }
+    if (this._mesh) {
+      this._mesh.material.uniforms.uStrength.value = this._scrollValues.strength;
+    }
   }
 }
