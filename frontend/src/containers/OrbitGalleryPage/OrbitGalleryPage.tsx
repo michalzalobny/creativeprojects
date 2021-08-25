@@ -63,17 +63,26 @@ export default function OrbitGalleryPage(props: PageProps) {
     [props.projectData.creativeItems],
   );
 
+  const imagesToPreload = useMemo(
+    () => props.projectData.creativeItems.map(item => item.image.url),
+    [props.projectData.creativeItems],
+  );
+
   useEffect(() => {
     if (!rendererWrapperEl.current) {
       return () => {};
     }
 
-    myApp.current = new App(rendererWrapperEl.current, creativeItems);
+    myApp.current = new App(
+      rendererWrapperEl.current,
+      creativeItems,
+      imagesToPreload,
+    );
 
     return () => {
       myApp.current && myApp.current.destroy();
     };
-  }, [creativeItems]);
+  }, [creativeItems, imagesToPreload]);
 
   return (
     <>

@@ -25,7 +25,11 @@ export class App {
   _preloader = new Preloader();
   _galleryScene: GalleryScene;
 
-  constructor(rendererWrapperEl: HTMLDivElement, items: CreativeItem[]) {
+  constructor(
+    rendererWrapperEl: HTMLDivElement,
+    items: CreativeItem[],
+    imagesToPreload: string[],
+  ) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -51,9 +55,7 @@ export class App {
     this._addListeners();
     this._resumeAppFrame();
 
-    this._preloader.images = items.map(item => {
-      return item.image.url;
-    });
+    this._preloader.images = imagesToPreload;
   }
 
   _onResize = () => {
