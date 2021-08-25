@@ -16,6 +16,7 @@ export class MediaObject3D extends InteractiveObject3D {
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _textureItem: TextureItem | null = null;
   _extra = { x: 0, y: 0 };
+  _intersectPoint: THREE.Vector3 | null = null;
 
   constructor({ geometry }: Constructor) {
     super();
@@ -61,6 +62,10 @@ export class MediaObject3D extends InteractiveObject3D {
     }
   }
 
+  set intersectPoint(point: THREE.Vector3) {
+    this._intersectPoint = point;
+  }
+
   set rendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
 
@@ -82,6 +87,10 @@ export class MediaObject3D extends InteractiveObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
+
+    if (this._intersectPoint && this._mesh) {
+      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
+    }
   }
 
   destroy() {

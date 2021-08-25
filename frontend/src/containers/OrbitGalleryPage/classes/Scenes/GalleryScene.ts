@@ -14,7 +14,7 @@ interface Constructor {
 }
 
 export class GalleryScene extends MediaScene {
-  static scrollSpeed = 1.2;
+  static scrollSpeed = 1;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
@@ -73,6 +73,12 @@ export class GalleryScene extends MediaScene {
     this._scroll.removeEventListener('applyscroll', this._onScroll);
   }
 
+  _passIntersectPoint() {
+    this._galleryItems.forEach(item => {
+      item.intersectPoint = this._intersectPointLerp;
+    });
+  }
+
   set items(items: GalleryItemProps[]) {
     super.items = items;
 
@@ -84,6 +90,8 @@ export class GalleryScene extends MediaScene {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
+
+    this._passIntersectPoint();
 
     this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
 
