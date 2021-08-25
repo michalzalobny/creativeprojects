@@ -11,6 +11,8 @@ export const GalleryItem = styled(motion.figure)<Props>`
   position: relative;
   transform: scale(1);
   height: 60vw;
+  opacity: 0;
+  visibility: hidden;
 
   ${props =>
     props.groupNumber &&
