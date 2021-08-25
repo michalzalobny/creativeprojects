@@ -1,15 +1,7 @@
 import * as THREE from 'three';
 
-import { GalleryItemProps, UpdateInfo, DirectionX, DirectionY } from '../types';
+import { GalleryItemProps, UpdateInfo, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
-
-interface ScrollValues {
-  x: number;
-  y: number;
-  strength: number;
-  direction: { x: DirectionX; y: DirectionY };
-  scrollSpeed: { x: number; y: number };
-}
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -24,13 +16,7 @@ export class GalleryItem3D extends MediaObject3D {
   _galleryWrapperDomElBounds: DOMRect | null = null;
   _domEl: HTMLElement;
   _domElBounds: DOMRect | null = null;
-  _scrollValues: ScrollValues = {
-    x: 0,
-    y: 0,
-    strength: 0,
-    direction: { x: 'left', y: 'up' },
-    scrollSpeed: { x: 0, y: 0 },
-  };
+  _scrollValues: ScrollValues | null = null;
   _isBefore = false;
   _isAfter = false;
 
@@ -53,8 +39,10 @@ export class GalleryItem3D extends MediaObject3D {
     this._domElBounds = this._domEl.getBoundingClientRect();
     this._galleryWrapperDomElBounds = this._galleryWrapperDomEl.getBoundingClientRect();
     this._updateScale();
-    this._updateX(this._scrollValues.x);
-    this._updateY(this._scrollValues.y);
+    if (this._scrollValues) {
+      this._updateX(this._scrollValues.current.x);
+      this._updateY(this._scrollValues.current.y);
+    }
 
     if (this._mesh) {
       this._mesh.material.uniforms.uPlaneSizes.value = [
@@ -94,7 +82,7 @@ export class GalleryItem3D extends MediaObject3D {
   }
 
   _handleInfinityScroll() {
-    if (this._mesh && this._galleryWrapperDomElBounds) {
+    if (this._mesh && this._galleryWrapperDomElBounds && this._scrollValues) {
       // x axis
       const scaleX = this._mesh.scale.x / 2;
       if (this._scrollValues.direction.x === 'left') {
@@ -146,12 +134,15 @@ export class GalleryItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this._updateX(this._scrollValues.x);
-    this._updateY(this._scrollValues.y);
+    if (this._scrollValues) {
+      this._updateX(this._scrollValues.current.x);
+      this._updateY(this._scrollValues.current.y);
+    }
+
     this._handleInfinityScroll();
 
-    if (this._mesh) {
-      this._mesh.material.uniforms.uStrength.value = this._scrollValues.strength;
+    if (this._mesh && this._scrollValues) {
+      this._mesh.material.uniforms.uStrength.value = this._scrollValues.strength.current;
     }
   }
 }
