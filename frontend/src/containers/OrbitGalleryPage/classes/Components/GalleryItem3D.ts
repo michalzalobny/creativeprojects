@@ -22,7 +22,11 @@ export class GalleryItem3D extends MediaObject3D {
   _scrollValues: ScrollValues | null = null;
   _isBefore = false;
   _isAfter = false;
-  _animateInTween: Tween<{ x: number; y: number }> | null = null;
+  _animateInTween: Tween<{
+    x: number;
+    y: number;
+    opacity: number;
+  }> | null = null;
 
   constructor({
     geometry,
@@ -158,14 +162,16 @@ export class GalleryItem3D extends MediaObject3D {
     this._animateInTween = new TWEEN.Tween({
       x: startX,
       y: startY,
+      opacity: this._mesh.material.uniforms.uOpacity.value,
     })
-      .to({ x: this._mesh.scale.x, y: this._mesh.scale.y }, 2500)
+      .to({ x: this._mesh.scale.x, y: this._mesh.scale.y, opacity: 1 }, 2800)
       .delay(delay)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         if (this._mesh) {
           this._mesh.scale.x = obj.x;
           this._mesh.scale.y = obj.y;
+          this._mesh.material.uniforms.uOpacity.value = obj.opacity;
         }
       })
       .onComplete(() => {});

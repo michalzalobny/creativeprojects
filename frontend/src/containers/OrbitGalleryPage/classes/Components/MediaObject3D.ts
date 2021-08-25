@@ -41,7 +41,7 @@ export class MediaObject3D extends InteractiveObject3D {
           value: [this._rendererBounds.width, this._rendererBounds.height],
         },
         uStrength: { value: 0 },
-        uOpacity: { value: 1 },
+        uOpacity: { value: 0 },
       },
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
