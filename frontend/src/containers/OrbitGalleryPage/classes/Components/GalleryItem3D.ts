@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import { GalleryItemProps, UpdateInfo, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
@@ -21,6 +22,7 @@ export class GalleryItem3D extends MediaObject3D {
   _scrollValues: ScrollValues | null = null;
   _isBefore = false;
   _isAfter = false;
+  _animateInTween: Tween<{ x: number; y: number }> | null = null;
 
   constructor({
     geometry,
@@ -138,6 +140,37 @@ export class GalleryItem3D extends MediaObject3D {
 
   set scrollValues(scrollValues: ScrollValues) {
     this._scrollValues = scrollValues;
+  }
+
+  animateIn(delay: number) {
+    if (!this._mesh) {
+      return;
+    }
+
+    if (this._animateInTween) {
+      this._animateInTween.stop();
+    }
+
+    const startX = this._mesh.scale.x * 1.5;
+
+    const startY = this._mesh.scale.y * 1.5;
+
+    this._animateInTween = new TWEEN.Tween({
+      x: startX,
+      y: startY,
+    })
+      .to({ x: this._mesh.scale.x, y: this._mesh.scale.y }, 2500)
+      .delay(delay)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onUpdate(obj => {
+        if (this._mesh) {
+          this._mesh.scale.x = obj.x;
+          this._mesh.scale.y = obj.y;
+        }
+      })
+      .onComplete(() => {});
+
+    this._animateInTween.start();
   }
 
   onResize() {

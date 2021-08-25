@@ -5,6 +5,7 @@ import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
 import { TextureItems } from '../types';
+import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -96,8 +97,10 @@ export class MediaScene extends InteractiveScene {
   set textureItems(textureItems: TextureItems) {
     this._textureItems = textureItems;
 
-    this._galleryItems.forEach(item => {
+    this._galleryItems.forEach((item, key) => {
       item.textureItem = this._textureItems[item.galleryItem.item.image.url];
+
+      item.animateIn(getRandFloat(0, 300) + key * 10);
     });
   }
 
