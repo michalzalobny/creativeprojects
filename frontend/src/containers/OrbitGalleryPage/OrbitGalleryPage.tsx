@@ -22,26 +22,20 @@ export default function OrbitGalleryPage(props: PageProps) {
 
   const myApp = useRef<App | null>(null);
 
-  //Doubled so there is always enough of images
-  const doubled = useMemo(
-    () => [
-      ...props.projectData.creativeItems,
-      ...props.projectData.creativeItems,
-    ],
-    [props.projectData.creativeItems],
-  );
-
   useEffect(() => {
     if (!rendererWrapperEl.current) {
       return () => {};
     }
 
-    myApp.current = new App(rendererWrapperEl.current, doubled);
+    myApp.current = new App(
+      rendererWrapperEl.current,
+      props.projectData.creativeItems,
+    );
 
     return () => {
       myApp.current && myApp.current.destroy();
     };
-  }, [doubled]);
+  }, [props.projectData.creativeItems]);
 
   return (
     <>
@@ -50,7 +44,7 @@ export default function OrbitGalleryPage(props: PageProps) {
 
       <Wrapper>
         <GalleryWrapper columnsCount={COLUMNS_COUNT} data-gallery="wrapper">
-          {doubled.map((item, key) => {
+          {props.projectData.creativeItems.map((item, key) => {
             let groupNumber = 0;
 
             for (let i = 1; i <= COLUMNS_COUNT; i++) {
@@ -63,6 +57,29 @@ export default function OrbitGalleryPage(props: PageProps) {
             return (
               <GalleryItem
                 groupNumber={groupNumber}
+                data-copy="1"
+                data-gallery="entry"
+                key={item.image.url + key}
+              >
+                <Image src={item.image.url} />
+              </GalleryItem>
+            );
+          })}
+
+          {props.projectData.creativeItems.map((item, key) => {
+            let groupNumber = 0;
+
+            for (let i = 1; i <= COLUMNS_COUNT; i++) {
+              if ((key + 1 - i) % COLUMNS_COUNT === 0) {
+                groupNumber = i;
+                break;
+              }
+            }
+
+            return (
+              <GalleryItem
+                groupNumber={groupNumber}
+                data-copy="2"
                 data-gallery="entry"
                 key={item.image.url + key}
               >
