@@ -100,7 +100,7 @@ export class MediaScene extends InteractiveScene {
     this._galleryItems.forEach((item, key) => {
       item.textureItem = this._textureItems[item.galleryItem.item.image.url];
 
-      item.animateIn(getRandFloat(0, 2000) + key * 20);
+      item.animateIn(getRandFloat(0, 1500) + key * 20);
     });
   }
 
