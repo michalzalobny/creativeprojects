@@ -16,7 +16,7 @@ import { Image } from './styled/Gallery/Image';
 export default function OrbitGalleryPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
 
-  const COLUMNS_COUNT = isTablet ? 7 : 3;
+  const COLUMNS_COUNT = useMemo(() => (isTablet ? 7 : 3), [isTablet]);
 
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
