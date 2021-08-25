@@ -1,10 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 import { media } from 'utils/responsive';
 
 interface Props {
-  spacingMobile: number;
-  spacingTablet: number;
+  groupNumber: number;
 }
 
 export const GalleryItem = styled(motion.figure)<Props>`
@@ -12,10 +11,14 @@ export const GalleryItem = styled(motion.figure)<Props>`
   position: relative;
   transform: scale(1);
   height: 60vw;
-  margin-top: ${props => props.spacingMobile}vw;
+
+  ${props =>
+    props.groupNumber &&
+    css`
+      transform: ${`translateY(-${props.groupNumber * 20}vw)`};
+    `}
 
   ${media.tablet} {
     height: 22vw;
-    margin-top: ${props => props.spacingTablet}vw;
   }
 `;

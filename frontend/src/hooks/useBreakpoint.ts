@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
 export const useBreakpoint = (breakpoint: number) => {
+  const [isBreakpoint, setIsBreakpoint] = useState(false);
+
   const testBreakpoint = React.useCallback(() => {
     return typeof window === 'undefined'
       ? false
       : window.innerWidth >= breakpoint;
   }, [breakpoint]);
 
-  const [isBreakpoint, setIsBreakpoint] = useState(testBreakpoint());
-
-  const onResize = React.useCallback(() => {
-    setIsBreakpoint(testBreakpoint());
-  }, [testBreakpoint]);
-
   useEffect(() => {
+    const onResize = () => {
+      setIsBreakpoint(testBreakpoint());
+    };
     window.addEventListener('resize', onResize);
+    onResize();
     return () => {
       window.removeEventListener('resize', onResize);
     };
-  }, [onResize]);
+  }, [testBreakpoint]);
 
   return isBreakpoint;
 };
