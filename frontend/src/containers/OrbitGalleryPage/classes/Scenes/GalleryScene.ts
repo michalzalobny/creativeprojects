@@ -43,6 +43,26 @@ export class GalleryScene extends MediaScene {
     this._scrollValues.target.y += e.y;
   };
 
+  _resetValues() {
+    super._resetValues();
+
+    //Reset scroll values
+    this._scrollValues.current.x = 0;
+    this._scrollValues.current.y = 0;
+
+    this._scrollValues.target.x = 0;
+    this._scrollValues.target.y = 0;
+
+    this._scrollValues.last.x = 0;
+    this._scrollValues.last.y = 0;
+
+    this._scrollValues.strength.current = 0;
+    this._scrollValues.strength.target = 0;
+
+    this._scrollValues.scrollSpeed.x = 0;
+    this._scrollValues.scrollSpeed.y = 0;
+  }
+
   _addListeners() {
     super._addListeners();
     this._scroll.addEventListener('applyscroll', this._onScroll);

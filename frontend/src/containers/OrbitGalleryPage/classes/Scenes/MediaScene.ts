@@ -37,7 +37,10 @@ export class MediaScene extends InteractiveScene {
         item.onResize();
       });
     }
+    this._resetValues();
   };
+
+  _resetValues() {}
 
   _addListeners() {
     super._addListeners();
