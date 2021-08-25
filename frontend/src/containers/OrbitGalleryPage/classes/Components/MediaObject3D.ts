@@ -13,10 +13,7 @@ export class MediaObject3D extends InteractiveObject3D {
   _geometry: THREE.PlaneGeometry;
   _material: THREE.ShaderMaterial | null = null;
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
-
   _rendererBounds: Bounds = { height: 100, width: 100 };
-  _windowBounds: Bounds = { height: 100, width: 100 };
-
   _textureItem: TextureItem | null = null;
   _extra = { x: 0, y: 0 };
 
