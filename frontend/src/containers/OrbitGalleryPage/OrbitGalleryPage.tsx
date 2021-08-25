@@ -4,6 +4,7 @@ import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
 import { useBreakpoint } from 'hooks/useBreakpoint';
 import { breakpoints } from 'utils/responsive';
+import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -12,6 +13,38 @@ import { PageProps } from './data';
 import { GalleryItem } from './styled/Gallery/GalleryItem';
 import { GalleryWrapper } from './styled/Gallery/GalleryWrapper';
 import { Image } from './styled/Gallery/Image';
+
+interface GalleryComp {
+  items: CreativeItem[];
+  columnsCount: number;
+}
+
+const GalleryComp = ({ items, columnsCount }: GalleryComp) => {
+  return (
+    <>
+      {items.map((item, key) => {
+        let groupNumber = 0;
+
+        for (let i = 1; i <= columnsCount; i++) {
+          if ((key + 1 - i) % columnsCount === 0) {
+            groupNumber = i;
+            break;
+          }
+        }
+
+        return (
+          <GalleryItem
+            groupNumber={groupNumber}
+            data-gallery="entry"
+            key={item.image.url + key}
+          >
+            <Image src={item.image.url} />
+          </GalleryItem>
+        );
+      })}
+    </>
+  );
+};
 
 export default function OrbitGalleryPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
@@ -44,49 +77,14 @@ export default function OrbitGalleryPage(props: PageProps) {
 
       <Wrapper>
         <GalleryWrapper columnsCount={COLUMNS_COUNT} data-gallery="wrapper">
-          {props.projectData.creativeItems.map((item, key) => {
-            let groupNumber = 0;
-
-            for (let i = 1; i <= COLUMNS_COUNT; i++) {
-              if ((key + 1 - i) % COLUMNS_COUNT === 0) {
-                groupNumber = i;
-                break;
-              }
-            }
-
-            return (
-              <GalleryItem
-                groupNumber={groupNumber}
-                data-copy="1"
-                data-gallery="entry"
-                key={item.image.url + key}
-              >
-                <Image src={item.image.url} />
-              </GalleryItem>
-            );
-          })}
-
-          {props.projectData.creativeItems.map((item, key) => {
-            let groupNumber = 0;
-
-            for (let i = 1; i <= COLUMNS_COUNT; i++) {
-              if ((key + 1 - i) % COLUMNS_COUNT === 0) {
-                groupNumber = i;
-                break;
-              }
-            }
-
-            return (
-              <GalleryItem
-                groupNumber={groupNumber}
-                data-copy="2"
-                data-gallery="entry"
-                key={item.image.url + key}
-              >
-                <Image src={item.image.url} />
-              </GalleryItem>
-            );
-          })}
+          <GalleryComp
+            items={props.projectData.creativeItems}
+            columnsCount={COLUMNS_COUNT}
+          />
+          <GalleryComp
+            items={props.projectData.creativeItems}
+            columnsCount={COLUMNS_COUNT}
+          />
         </GalleryWrapper>
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
