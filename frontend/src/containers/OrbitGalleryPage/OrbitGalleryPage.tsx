@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import chunk from 'lodash/chunk';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
@@ -10,6 +11,7 @@ import { PageProps } from './data';
 import { GalleryItem } from './styled/Gallery/GalleryItem';
 import { GalleryWrapper } from './styled/Gallery/GalleryWrapper';
 import { Image } from './styled/Gallery/Image';
+import { GalleryGroup } from './styled/Gallery/GalleryGroup';
 
 export default function OrbitGalleryPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -31,6 +33,20 @@ export default function OrbitGalleryPage(props: PageProps) {
     };
   }, [props.projectData.creativeItems]);
 
+  const galleryComponents = props.projectData.creativeItems.map(item => {
+    return (
+      <GalleryItem
+        data-src={`${item.image.url}`}
+        data-gallery="entry"
+        key={item.image.url}
+      >
+        <Image src={item.image.url} />
+      </GalleryItem>
+    );
+  });
+
+  const groupedGalleryComponents = chunk(galleryComponents, 3);
+
   return (
     <>
       <Head {...props.head} />
@@ -38,11 +54,14 @@ export default function OrbitGalleryPage(props: PageProps) {
 
       <Wrapper>
         <GalleryWrapper data-gallery="wrapper">
-          {props.projectData.creativeItems.map(item => {
+          {groupedGalleryComponents.map((group, key) => {
             return (
-              <GalleryItem data-gallery="entry" key={item.image.url}>
-                <Image src={item.image.url} />
-              </GalleryItem>
+              <GalleryGroup
+                translation={key * key * 20}
+                key={group[0].key + group[0].props}
+              >
+                {group}
+              </GalleryGroup>
             );
           })}
         </GalleryWrapper>

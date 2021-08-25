@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 40 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 43 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 50 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 56 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 284 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 327 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -586,6 +586,18 @@ INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
   (39, 't18', 'desc');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (40, '19', 'desc');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (41, '20', 'desc');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (42, '21', 'desc');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -1931,7 +1943,7 @@ VALUES
     1,
     1,
     '2021-08-25 09:30:18',
-    '2021-08-25 10:52:59'
+    '2021-08-25 11:39:55'
   );
 
 # ------------------------------------------------------------
@@ -2800,6 +2812,60 @@ VALUES
     18,
     'components_creative_component_creative_items',
     39,
+    8
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    50,
+    'creativeItems',
+    19,
+    'components_creative_component_creative_items',
+    40,
+    8
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    51,
+    'creativeItems',
+    20,
+    'components_creative_component_creative_items',
+    41,
+    8
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    52,
+    'creativeItems',
+    21,
+    'components_creative_component_creative_items',
+    42,
     8
   );
 
@@ -6942,6 +7008,138 @@ VALUES
     '2021-08-25 10:43:09',
     '2021-08-25 10:43:09'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    56,
+    '20.jpg',
+    '',
+    '',
+    633,
+    951,
+    '{\"thumbnail\":{\"name\":\"thumbnail_20.jpg\",\"hash\":\"thumbnail_20_1356a61417\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":3.46,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890326/thumbnail_20_1356a61417.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_20_1356a61417\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_20.jpg\",\"hash\":\"medium_20_1356a61417\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":499,\"height\":750,\"size\":41.19,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890327/medium_20_1356a61417.jpg\",\"provider_metadata\":{\"public_id\":\"medium_20_1356a61417\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_20.jpg\",\"hash\":\"small_20_1356a61417\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":21.75,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890329/small_20_1356a61417.jpg\",\"provider_metadata\":{\"public_id\":\"small_20_1356a61417\",\"resource_type\":\"image\"}}}',
+    '20_1356a61417',
+    '.jpg',
+    'image/jpeg',
+    59.38,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890325/20_1356a61417.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"20_1356a61417\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-25 11:18:50',
+    '2021-08-25 11:18:50'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    57,
+    '19.jpg',
+    '',
+    '',
+    1050,
+    700,
+    '{\"thumbnail\":{\"name\":\"thumbnail_19.jpg\",\"hash\":\"thumbnail_19_2dd0db12ec\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":11.16,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890328/thumbnail_19_2dd0db12ec.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_19_2dd0db12ec\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_19.jpg\",\"hash\":\"large_19_2dd0db12ec\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":170.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890329/large_19_2dd0db12ec.jpg\",\"provider_metadata\":{\"public_id\":\"large_19_2dd0db12ec\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_19.jpg\",\"hash\":\"medium_19_2dd0db12ec\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":104.13,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890331/medium_19_2dd0db12ec.jpg\",\"provider_metadata\":{\"public_id\":\"medium_19_2dd0db12ec\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_19.jpg\",\"hash\":\"small_19_2dd0db12ec\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":46.75,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890332/small_19_2dd0db12ec.jpg\",\"provider_metadata\":{\"public_id\":\"small_19_2dd0db12ec\",\"resource_type\":\"image\"}}}',
+    '19_2dd0db12ec',
+    '.jpg',
+    'image/jpeg',
+    186.28,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1629890327/19_2dd0db12ec.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"19_2dd0db12ec\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-25 11:18:53',
+    '2021-08-25 11:18:53'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    58,
+    '21.jpg',
+    '',
+    '',
+    634,
+    950,
+    '{\"thumbnail\":{\"name\":\"thumbnail_21.jpg\",\"hash\":\"thumbnail_21_1cc05e45dc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":4.98,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629891586/thumbnail_21_1cc05e45dc.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_21_1cc05e45dc\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_21.jpg\",\"hash\":\"medium_21_1cc05e45dc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":501,\"height\":750,\"size\":68.58,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629891587/medium_21_1cc05e45dc.jpg\",\"provider_metadata\":{\"public_id\":\"medium_21_1cc05e45dc\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_21.jpg\",\"hash\":\"small_21_1cc05e45dc\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":334,\"height\":500,\"size\":35.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629891588/small_21_1cc05e45dc.jpg\",\"provider_metadata\":{\"public_id\":\"small_21_1cc05e45dc\",\"resource_type\":\"image\"}}}',
+    '21_1cc05e45dc',
+    '.jpg',
+    'image/jpeg',
+    100.71,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1629891585/21_1cc05e45dc.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"21_1cc05e45dc\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-25 11:39:49',
+    '2021-08-25 11:39:49'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -7532,7 +7730,7 @@ INSERT INTO
   )
 VALUES
   (
-    265,
+    305,
     29,
     8,
     'components_page_localized_heads',
@@ -7550,9 +7748,9 @@ INSERT INTO
   )
 VALUES
   (
-    266,
+    306,
+    58,
     42,
-    37,
     'components_creative_component_creative_items',
     'image',
     1
@@ -7568,43 +7766,7 @@ INSERT INTO
   )
 VALUES
   (
-    267,
-    51,
-    38,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    268,
-    50,
-    39,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    269,
+    307,
     38,
     22,
     'components_creative_component_creative_items',
@@ -7622,7 +7784,7 @@ INSERT INTO
   )
 VALUES
   (
-    270,
+    308,
     39,
     23,
     'components_creative_component_creative_items',
@@ -7640,7 +7802,7 @@ INSERT INTO
   )
 VALUES
   (
-    271,
+    309,
     53,
     24,
     'components_creative_component_creative_items',
@@ -7658,7 +7820,7 @@ INSERT INTO
   )
 VALUES
   (
-    272,
+    310,
     54,
     25,
     'components_creative_component_creative_items',
@@ -7676,7 +7838,7 @@ INSERT INTO
   )
 VALUES
   (
-    273,
+    311,
     55,
     26,
     'components_creative_component_creative_items',
@@ -7694,7 +7856,7 @@ INSERT INTO
   )
 VALUES
   (
-    274,
+    312,
     52,
     27,
     'components_creative_component_creative_items',
@@ -7712,7 +7874,7 @@ INSERT INTO
   )
 VALUES
   (
-    275,
+    313,
     46,
     28,
     'components_creative_component_creative_items',
@@ -7730,7 +7892,7 @@ INSERT INTO
   )
 VALUES
   (
-    276,
+    314,
     48,
     29,
     'components_creative_component_creative_items',
@@ -7748,7 +7910,7 @@ INSERT INTO
   )
 VALUES
   (
-    277,
+    315,
     47,
     30,
     'components_creative_component_creative_items',
@@ -7766,7 +7928,7 @@ INSERT INTO
   )
 VALUES
   (
-    278,
+    316,
     43,
     31,
     'components_creative_component_creative_items',
@@ -7784,7 +7946,7 @@ INSERT INTO
   )
 VALUES
   (
-    279,
+    317,
     44,
     32,
     'components_creative_component_creative_items',
@@ -7802,7 +7964,7 @@ INSERT INTO
   )
 VALUES
   (
-    280,
+    318,
     49,
     33,
     'components_creative_component_creative_items',
@@ -7820,7 +7982,7 @@ INSERT INTO
   )
 VALUES
   (
-    281,
+    319,
     40,
     34,
     'components_creative_component_creative_items',
@@ -7838,7 +8000,7 @@ INSERT INTO
   )
 VALUES
   (
-    282,
+    320,
     41,
     35,
     'components_creative_component_creative_items',
@@ -7856,9 +8018,99 @@ INSERT INTO
   )
 VALUES
   (
-    283,
+    321,
     45,
     36,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    322,
+    42,
+    37,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    323,
+    51,
+    38,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    324,
+    50,
+    39,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    325,
+    56,
+    40,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    326,
+    57,
+    41,
     'components_creative_component_creative_items',
     'image',
     1

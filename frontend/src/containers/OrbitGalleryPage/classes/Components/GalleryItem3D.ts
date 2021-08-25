@@ -11,6 +11,8 @@ interface Constructor {
 }
 
 export class GalleryItem3D extends MediaObject3D {
+  static disappearOffset = 1.3; //Prevents from image disappearing too fast
+
   galleryItem: GalleryItemProps;
   _galleryWrapperDomEl: HTMLElement;
   _galleryWrapperDomElBounds: DOMRect | null = null;
@@ -88,13 +90,19 @@ export class GalleryItem3D extends MediaObject3D {
       if (this._scrollValues.direction.x === 'left') {
         const x = this._mesh.position.x + scaleX;
 
-        if (x < -this._rendererBounds.width / 2) {
+        if (
+          x <
+          (-this._rendererBounds.width / 2) * GalleryItem3D.disappearOffset
+        ) {
           this._extra.x -= this._galleryWrapperDomElBounds.width;
         }
       } else if (this._scrollValues.direction.x === 'right') {
         const x = this._mesh.position.x - scaleX;
 
-        if (x > this._rendererBounds.width / 2) {
+        if (
+          x >
+          (this._rendererBounds.width / 2) * GalleryItem3D.disappearOffset
+        ) {
           this._extra.x += this._galleryWrapperDomElBounds.width;
         }
       }
@@ -104,13 +112,19 @@ export class GalleryItem3D extends MediaObject3D {
       if (this._scrollValues.direction.y === 'up') {
         const y = this._mesh.position.y + scaleY;
 
-        if (y < -this._rendererBounds.height / 2) {
+        if (
+          y <
+          (-this._rendererBounds.height / 2) * GalleryItem3D.disappearOffset
+        ) {
           this._extra.y -= this._galleryWrapperDomElBounds.height;
         }
       } else if (this._scrollValues.direction.y === 'down') {
         const y = this._mesh.position.y - scaleY;
 
-        if (y > this._rendererBounds.height / 2) {
+        if (
+          y >
+          (this._rendererBounds.height / 2) * GalleryItem3D.disappearOffset
+        ) {
           this._extra.y += this._galleryWrapperDomElBounds.height;
         }
       }
