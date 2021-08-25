@@ -16,8 +16,9 @@ export class Scroll extends EventDispatcher {
 
   static momentumCarry = 0.2;
   static momentumDamping = 0.58;
-  static mouseSwipeMultiplier = 1;
-  static mouseScrollMultiplier = 1;
+  static mouseSwipeMultiplier = 2.4;
+  static touchSwipeMultiplier = 2.4;
+  static mouseScrollMultiplier = 1.5;
   static _instance: Scroll;
   static _canCreate = false;
   static getInstance() {
@@ -67,10 +68,14 @@ export class Scroll extends EventDispatcher {
 
     const deltaX =
       (touchX - this._lastTouch.x) *
-      ('touches' in event ? 1 : Scroll.mouseSwipeMultiplier);
+      ('touches' in event
+        ? Scroll.touchSwipeMultiplier
+        : Scroll.mouseSwipeMultiplier);
     const deltaY =
       (touchY - this._lastTouch.y) *
-      ('touches' in event ? 1 : Scroll.mouseSwipeMultiplier);
+      ('touches' in event
+        ? Scroll.touchSwipeMultiplier
+        : Scroll.mouseSwipeMultiplier);
 
     this._lastTouch.x = touchX;
     this._lastTouch.y = touchY;
