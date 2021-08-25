@@ -14,6 +14,9 @@ import { Image } from './styled/Gallery/Image';
 import { GalleryGroup } from './styled/Gallery/GalleryGroup';
 
 export default function OrbitGalleryPage(props: PageProps) {
+  const SPACING_MOBILE = 3;
+  const SPACING_TABLET = 6;
+
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   const myApp = useRef<App | null>(null);
@@ -36,6 +39,8 @@ export default function OrbitGalleryPage(props: PageProps) {
   const galleryComponents = props.projectData.creativeItems.map(item => {
     return (
       <GalleryItem
+        spacingMobile={SPACING_MOBILE}
+        spacingTablet={SPACING_TABLET}
         data-src={`${item.image.url}`}
         data-gallery="entry"
         key={item.image.url}
@@ -57,7 +62,9 @@ export default function OrbitGalleryPage(props: PageProps) {
           {groupedGalleryComponents.map((group, key) => {
             return (
               <GalleryGroup
-                translation={key * key * 20}
+                spacingMobile={SPACING_MOBILE}
+                spacingTablet={SPACING_TABLET}
+                translation={key * 20}
                 key={group[0].key + group[0].props}
               >
                 {group}
