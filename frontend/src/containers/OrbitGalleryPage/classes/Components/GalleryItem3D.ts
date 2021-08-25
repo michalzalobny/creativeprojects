@@ -11,7 +11,7 @@ interface Constructor {
 }
 
 export class GalleryItem3D extends MediaObject3D {
-  static disappearOffset = 1; //Prevents from image disappearing too fast
+  static disappearOffset = 1.3; //Prevents from image disappearing too fast
 
   galleryItem: GalleryItemProps;
   _galleryWrapperDomEl: HTMLElement;

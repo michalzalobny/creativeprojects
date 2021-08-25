@@ -63,14 +63,14 @@ export class MediaScene extends InteractiveScene {
 
     items &&
       items.forEach((item, key) => {
-        const matchingFigure = elements.filter(
-          el => el.getAttribute('data-src') === item.item.image.url,
-        );
+        // const matchingFigure = elements.filter(
+        //   el => el.getAttribute('data-src') === item.item.image.url,
+        // );
 
         const item3D = new GalleryItem3D({
           geometry: this._planeGeometry,
           galleryItem: item,
-          domEl: matchingFigure[0],
+          domEl: elements[key],
           galleryWrapperDomEl: galleryWrapper,
         });
         this._galleryItems.push(item3D);

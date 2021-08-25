@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
@@ -22,20 +22,26 @@ export default function OrbitGalleryPage(props: PageProps) {
 
   const myApp = useRef<App | null>(null);
 
+  //Doubled so there is always enough of images
+  const doubled = useMemo(
+    () => [
+      ...props.projectData.creativeItems,
+      ...props.projectData.creativeItems,
+    ],
+    [props.projectData.creativeItems],
+  );
+
   useEffect(() => {
     if (!rendererWrapperEl.current) {
       return () => {};
     }
 
-    myApp.current = new App(
-      rendererWrapperEl.current,
-      props.projectData.creativeItems,
-    );
+    myApp.current = new App(rendererWrapperEl.current, doubled);
 
     return () => {
       myApp.current && myApp.current.destroy();
     };
-  }, [props.projectData.creativeItems]);
+  }, [doubled]);
 
   return (
     <>
@@ -44,7 +50,7 @@ export default function OrbitGalleryPage(props: PageProps) {
 
       <Wrapper>
         <GalleryWrapper columnsCount={COLUMNS_COUNT} data-gallery="wrapper">
-          {props.projectData.creativeItems.map((item, key) => {
+          {doubled.map((item, key) => {
             let groupNumber = 0;
 
             for (let i = 1; i <= COLUMNS_COUNT; i++) {
@@ -57,9 +63,8 @@ export default function OrbitGalleryPage(props: PageProps) {
             return (
               <GalleryItem
                 groupNumber={groupNumber}
-                data-src={`${item.image.url}`}
                 data-gallery="entry"
-                key={item.image.url}
+                key={item.image.url + key}
               >
                 <Image src={item.image.url} />
               </GalleryItem>

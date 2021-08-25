@@ -7,14 +7,14 @@ interface Props {
   columnsCount: number;
 }
 
-const MOBILE_GAP = 5;
-const TABLET_GAP = 10;
+const MOBILE_GAP = 6;
+const TABLET_GAP = 9;
 
 export const GalleryWrapper = styled(motion.div)<Props>`
   position: absolute;
   top: 0;
   left: 50%;
-  width: 150%;
+  width: 240%;
   transform: translateX(-50%);
   display: grid;
   grid-template-columns: ${props => `repeat(${props.columnsCount}, 1fr)`};
