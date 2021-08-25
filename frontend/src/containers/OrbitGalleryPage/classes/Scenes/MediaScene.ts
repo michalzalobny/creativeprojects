@@ -78,16 +78,6 @@ export class MediaScene extends InteractiveScene {
         });
         this._galleryItems.push(item3D);
         this.add(item3D);
-
-        //Copy is created because we have added double amount of elements in DOM
-        const item3DCopy = new GalleryItem3D({
-          geometry: this._planeGeometry,
-          galleryItem: item,
-          domEl: elements[key + items.length],
-          galleryWrapperDomEl: galleryWrapper,
-        });
-        this._galleryItems.push(item3DCopy);
-        this.add(item3DCopy);
       });
 
     this._galleryItems.forEach(item => {

@@ -55,20 +55,25 @@ export default function OrbitGalleryPage(props: PageProps) {
 
   const myApp = useRef<App | null>(null);
 
+  const creativeItems = useMemo(
+    () => [
+      ...props.projectData.creativeItems,
+      ...props.projectData.creativeItems,
+    ],
+    [props.projectData.creativeItems],
+  );
+
   useEffect(() => {
     if (!rendererWrapperEl.current) {
       return () => {};
     }
 
-    myApp.current = new App(
-      rendererWrapperEl.current,
-      props.projectData.creativeItems,
-    );
+    myApp.current = new App(rendererWrapperEl.current, creativeItems);
 
     return () => {
       myApp.current && myApp.current.destroy();
     };
-  }, [props.projectData.creativeItems]);
+  }, [creativeItems]);
 
   return (
     <>
@@ -77,14 +82,7 @@ export default function OrbitGalleryPage(props: PageProps) {
 
       <Wrapper>
         <GalleryWrapper columnsCount={COLUMNS_COUNT} data-gallery="wrapper">
-          <GalleryComp
-            items={props.projectData.creativeItems}
-            columnsCount={COLUMNS_COUNT}
-          />
-          <GalleryComp
-            items={props.projectData.creativeItems}
-            columnsCount={COLUMNS_COUNT}
-          />
+          <GalleryComp items={creativeItems} columnsCount={COLUMNS_COUNT} />
         </GalleryWrapper>
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
