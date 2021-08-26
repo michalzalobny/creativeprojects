@@ -155,9 +155,9 @@ export class GalleryItem3D extends MediaObject3D {
       this._animateInTween.stop();
     }
 
-    const startX = this._mesh.scale.x * 1.5;
+    const startX = this._mesh.scale.x * 1.8;
 
-    const startY = this._mesh.scale.y * 1.5;
+    const startY = this._mesh.scale.y * 1.8;
 
     this._animateInTween = new TWEEN.Tween({
       x: startX,
