@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { sharedValues } from 'utils/sharedValues';
-import { media, computeValue } from 'utils/responsive';
+import { media } from 'utils/responsive';
 
 interface Props {}
 

@@ -41,7 +41,7 @@ export class InfinityScrollHtmlEl extends EventDispatcher {
 
   update(updateInfo: UpdateInfo) {
     if (this._parentBounds && this._elBounds) {
-      const newTranslate = this._scrollValues.current.y * 1.5;
+      const newTranslate = this._scrollValues.current.y * 1.2;
       const positionY = this._elBounds.y;
       const height = this._elBounds.height;
       const wrapperHeight = this._parentBounds.height;
