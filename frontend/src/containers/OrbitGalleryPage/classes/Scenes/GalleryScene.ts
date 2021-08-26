@@ -12,6 +12,7 @@ interface Constructor {
   camera: THREE.PerspectiveCamera;
   scroll: Scroll;
   mouseMove: MouseMove;
+  setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class GalleryScene extends MediaScene {
@@ -30,13 +31,15 @@ export class GalleryScene extends MediaScene {
     scrollSpeed: { x: 0, y: 0 },
   };
   _infinityScrollHtmlElements: InfinityScrollHtmlEl[] = [];
+  _setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 
-  constructor({ camera, mouseMove, scroll }: Constructor) {
+  constructor({ setIsPanning, camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
     this._initHtmlElements();
+    this._setIsPanning = setIsPanning;
   }
 
   set hoveredStoryItem(hoveredItem: GalleryItem3D | null) {}
@@ -64,14 +67,26 @@ export class GalleryScene extends MediaScene {
     this._scrollValues.scrollSpeed.y = 0;
   }
 
+  _onScrollTouchDown = () => {
+    this._setIsPanning(true);
+  };
+
+  _onScrollTouchUp = () => {
+    this._setIsPanning(false);
+  };
+
   _addListeners() {
     super._addListeners();
     this._scroll.addEventListener('applyscroll', this._onScroll);
+    this._scroll.addEventListener('touchdown', this._onScrollTouchDown);
+    this._scroll.addEventListener('touchup', this._onScrollTouchUp);
   }
 
   _removeListeners() {
     super._removeListeners();
     this._scroll.removeEventListener('applyscroll', this._onScroll);
+    this._scroll.removeEventListener('touchdown', this._onScrollTouchDown);
+    this._scroll.removeEventListener('touchup', this._onScrollTouchUp);
   }
 
   _passIntersectPoint() {

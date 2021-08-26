@@ -49,6 +49,7 @@ export class Scroll extends EventDispatcher {
 
   _onTouchDown = (event: TouchEvent | MouseEvent) => {
     this._isTouching = true;
+    this.dispatchEvent({ type: 'touchdown' });
     this._useMomentum = false;
     this._lastTouch.x =
       'touches' in event ? event.touches[0].clientX : event.clientX;
@@ -91,6 +92,7 @@ export class Scroll extends EventDispatcher {
 
   _onTouchUp = () => {
     this._isTouching = false;
+    this.dispatchEvent({ type: 'touchup' });
     this._useMomentum = true;
   };
 

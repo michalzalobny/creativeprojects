@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
 import { useBreakpoint } from 'hooks/useBreakpoint';
 import { breakpoints } from 'utils/responsive';
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
+import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -50,6 +51,7 @@ const GalleryComp = ({ items, columnsCount }: GalleryComp) => {
 };
 
 export default function OrbitGalleryPage(props: PageProps) {
+  const [isPanning, setIsPanning] = useState(false);
   const isTablet = useBreakpoint(breakpoints.tablet);
 
   const COLUMNS_COUNT = useMemo(() => (isTablet ? 7 : 3), [isTablet]);
@@ -80,6 +82,7 @@ export default function OrbitGalleryPage(props: PageProps) {
       rendererWrapperEl.current,
       creativeItems,
       imagesToPreload,
+      setIsPanning,
     );
 
     return () => {
@@ -97,14 +100,29 @@ export default function OrbitGalleryPage(props: PageProps) {
           <GalleryComp items={creativeItems} columnsCount={COLUMNS_COUNT} />
         </GalleryWrapper>
         <TextsContainer data-updatecss="texts-container">
-          <TextWrapper>
-            <Text>Swipe</Text>
+          <TextWrapper isPanning={isPanning}>
+            <Text>
+              <RevealButterflyString
+                shouldAnimate={!isPanning}
+                text={'Swipe'}
+              />
+            </Text>
           </TextWrapper>
-          <TextWrapper>
-            <Text>Discover</Text>
+          <TextWrapper isPanning={isPanning}>
+            <Text>
+              <RevealButterflyString
+                shouldAnimate={!isPanning}
+                text={'Discover'}
+              />
+            </Text>
           </TextWrapper>
-          <TextWrapper>
-            <Text>Culture</Text>
+          <TextWrapper isPanning={isPanning}>
+            <Text>
+              <RevealButterflyString
+                shouldAnimate={!isPanning}
+                text={'Culture'}
+              />
+            </Text>
           </TextWrapper>
         </TextsContainer>
         <CanvasWrapper ref={rendererWrapperEl} />

@@ -29,6 +29,7 @@ export class App {
     rendererWrapperEl: HTMLDivElement,
     items: CreativeItem[],
     imagesToPreload: string[],
+    setIsPanning: React.Dispatch<React.SetStateAction<boolean>>,
   ) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
@@ -45,6 +46,7 @@ export class App {
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
+      setIsPanning,
     });
 
     this._galleryScene.items = Array.from(items).map((item, key) => {

@@ -1,7 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
-interface Props {}
+interface Props {
+  isPanning: boolean;
+}
 
 const SPACING = 8;
 const SIZE = 1.5;
@@ -14,11 +16,20 @@ export const TextWrapper = styled(motion.div)<Props>`
     content: '';
     position: absolute;
     right: ${SPACING / 2 - SIZE / 2}vh;
-    top: 60%;
+    top: 50%;
     width: ${SIZE}vh;
     height: ${SIZE}vh;
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(1);
     background: #ffffff;
     border-radius: 50%;
+    transition: all 0.45s;
+    transition-delay: 0.6s;
+
+    ${props =>
+      props.isPanning &&
+      css`
+        transform: translateY(-50%) scale(0);
+        transition-delay: 0s;
+      `}
   }
 `;
