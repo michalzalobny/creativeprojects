@@ -17,6 +17,9 @@ export class MediaObject3D extends InteractiveObject3D {
   _textureItem: TextureItem | null = null;
   _extra = { x: 0, y: 0 };
   _intersectPoint: THREE.Vector3 | null = null;
+  _masterOpacity = 1;
+  _tweenOpacity = 0;
+  _isVisible = false;
 
   constructor({ geometry }: Constructor) {
     super();
@@ -62,6 +65,20 @@ export class MediaObject3D extends InteractiveObject3D {
     }
   }
 
+  set opacity(value: number) {
+    this._masterOpacity = value;
+  }
+
+  _updateOpacity() {
+    if (this._mesh) {
+      const computedOpacity =
+        Math.min(this._masterOpacity, 1) * this._tweenOpacity;
+
+      this._mesh.material.uniforms.uOpacity.value = computedOpacity;
+      this._isVisible = computedOpacity > 0;
+    }
+  }
+
   set intersectPoint(point: THREE.Vector3) {
     this._intersectPoint = point;
   }
@@ -87,6 +104,8 @@ export class MediaObject3D extends InteractiveObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
+
+    this._updateOpacity();
 
     if (this._intersectPoint && this._mesh) {
       this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
