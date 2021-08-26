@@ -16,10 +16,12 @@ interface AnimateOpacity {
   duration: number;
   delay: number;
   destination: number;
+  easing?: (amount: number) => number;
 }
 
 export class GalleryItem3D extends MediaObject3D {
   static disappearOffset = 1.3; //Prevents from image disappearing too fast
+  static defaultOpacity = 0.65;
 
   galleryItem: GalleryItemProps;
   _galleryWrapperDomEl: HTMLElement;
@@ -34,6 +36,7 @@ export class GalleryItem3D extends MediaObject3D {
     y: number;
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
+  isAnimatedIn = false;
 
   constructor({
     geometry,
@@ -163,7 +166,12 @@ export class GalleryItem3D extends MediaObject3D {
     this._scrollValues = scrollValues;
   }
 
-  animateOpacity({ destination, duration, delay }: AnimateOpacity) {
+  animateOpacity({
+    destination,
+    duration,
+    delay,
+    easing = TWEEN.Easing.Linear.None,
+  }: AnimateOpacity) {
     if (this._opacityTween) {
       this._opacityTween.stop();
     }
@@ -171,7 +179,7 @@ export class GalleryItem3D extends MediaObject3D {
     this._opacityTween = new TWEEN.Tween({ progress: this._tweenOpacity })
       .to({ progress: destination }, duration)
       .delay(delay)
-      .easing(TWEEN.Easing.Exponential.InOut)
+      .easing(easing)
       .onUpdate(obj => {
         if (!this._mesh) {
           return;
@@ -199,7 +207,12 @@ export class GalleryItem3D extends MediaObject3D {
 
     const duration = 2800;
 
-    this.animateOpacity({ destination: 1, duration, delay });
+    this.animateOpacity({
+      destination: GalleryItem3D.defaultOpacity,
+      duration,
+      delay,
+      easing: TWEEN.Easing.Exponential.InOut,
+    });
 
     this._animateInTween = new TWEEN.Tween({
       x: startX,
@@ -214,7 +227,9 @@ export class GalleryItem3D extends MediaObject3D {
           this._mesh.scale.y = obj.y;
         }
       })
-      .onComplete(() => {});
+      .onComplete(() => {
+        this.isAnimatedIn = true;
+      });
 
     this._animateInTween.start();
   }

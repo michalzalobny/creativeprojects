@@ -69,10 +69,24 @@ export class GalleryScene extends MediaScene {
 
   _onScrollTouchDown = () => {
     this._setIsPanning(true);
+    this._galleryItems.forEach(item => {
+      if (item.isAnimatedIn) {
+        item.animateOpacity({ delay: 0, duration: 500, destination: 1 });
+      }
+    });
   };
 
   _onScrollTouchUp = () => {
     this._setIsPanning(false);
+    this._galleryItems.forEach(item => {
+      if (item.isAnimatedIn) {
+        item.animateOpacity({
+          delay: 0,
+          duration: 500,
+          destination: GalleryItem3D.defaultOpacity,
+        });
+      }
+    });
   };
 
   _addListeners() {
