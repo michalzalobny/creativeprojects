@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 59 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 327 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 349 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1943,7 +1943,7 @@ VALUES
     1,
     1,
     '2021-08-25 09:30:18',
-    '2021-08-25 11:39:55'
+    '2021-08-26 10:24:32'
   );
 
 # ------------------------------------------------------------
@@ -2893,7 +2893,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$Xpq1Segi/kppwkpEnVee4OlZCHnjQCZrBQ6IhFXJJBXsjKygwg9P2',
+    '$2b$10$gFND5WiehOYr3Q7fGvEtruIdX.bp3uWaDgjRr1FPX8MMKJzJwQOoW',
     NULL,
     NULL,
     1,
@@ -7140,6 +7140,50 @@ VALUES
     '2021-08-25 11:39:49',
     '2021-08-25 11:39:49'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    60,
+    'ppppp.JPG',
+    '',
+    '',
+    1804,
+    950,
+    '{\"thumbnail\":{\"name\":\"thumbnail_ppppp.JPG\",\"hash\":\"thumbnail_ppppp_f4a65c1f29\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":129,\"size\":6.67,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629973453/thumbnail_ppppp_f4a65c1f29.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_ppppp_f4a65c1f29\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_ppppp.JPG\",\"hash\":\"large_ppppp_f4a65c1f29\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":527,\"size\":58.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629973454/large_ppppp_f4a65c1f29.jpg\",\"provider_metadata\":{\"public_id\":\"large_ppppp_f4a65c1f29\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_ppppp.JPG\",\"hash\":\"medium_ppppp_f4a65c1f29\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":395,\"size\":36.87,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629973455/medium_ppppp_f4a65c1f29.jpg\",\"provider_metadata\":{\"public_id\":\"medium_ppppp_f4a65c1f29\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_ppppp.JPG\",\"hash\":\"small_ppppp_f4a65c1f29\",\"ext\":\".JPG\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":263,\"size\":20.05,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1629973455/small_ppppp_f4a65c1f29.jpg\",\"provider_metadata\":{\"public_id\":\"small_ppppp_f4a65c1f29\",\"resource_type\":\"image\"}}}',
+    'ppppp_f4a65c1f29',
+    '.JPG',
+    'image/jpeg',
+    139.00,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1629973452/ppppp_f4a65c1f29.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"ppppp_f4a65c1f29\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-26 10:24:16',
+    '2021-08-26 10:24:16'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -7730,8 +7774,8 @@ INSERT INTO
   )
 VALUES
   (
-    305,
-    29,
+    327,
+    60,
     8,
     'components_page_localized_heads',
     'ogImage',
@@ -7748,25 +7792,7 @@ INSERT INTO
   )
 VALUES
   (
-    306,
-    58,
-    42,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    307,
+    328,
     38,
     22,
     'components_creative_component_creative_items',
@@ -7784,7 +7810,7 @@ INSERT INTO
   )
 VALUES
   (
-    308,
+    329,
     39,
     23,
     'components_creative_component_creative_items',
@@ -7802,7 +7828,7 @@ INSERT INTO
   )
 VALUES
   (
-    309,
+    330,
     53,
     24,
     'components_creative_component_creative_items',
@@ -7820,7 +7846,7 @@ INSERT INTO
   )
 VALUES
   (
-    310,
+    331,
     54,
     25,
     'components_creative_component_creative_items',
@@ -7838,7 +7864,7 @@ INSERT INTO
   )
 VALUES
   (
-    311,
+    332,
     55,
     26,
     'components_creative_component_creative_items',
@@ -7856,7 +7882,7 @@ INSERT INTO
   )
 VALUES
   (
-    312,
+    333,
     52,
     27,
     'components_creative_component_creative_items',
@@ -7874,7 +7900,7 @@ INSERT INTO
   )
 VALUES
   (
-    313,
+    334,
     46,
     28,
     'components_creative_component_creative_items',
@@ -7892,7 +7918,7 @@ INSERT INTO
   )
 VALUES
   (
-    314,
+    335,
     48,
     29,
     'components_creative_component_creative_items',
@@ -7910,7 +7936,7 @@ INSERT INTO
   )
 VALUES
   (
-    315,
+    336,
     47,
     30,
     'components_creative_component_creative_items',
@@ -7928,7 +7954,7 @@ INSERT INTO
   )
 VALUES
   (
-    316,
+    337,
     43,
     31,
     'components_creative_component_creative_items',
@@ -7946,7 +7972,7 @@ INSERT INTO
   )
 VALUES
   (
-    317,
+    338,
     44,
     32,
     'components_creative_component_creative_items',
@@ -7964,7 +7990,7 @@ INSERT INTO
   )
 VALUES
   (
-    318,
+    339,
     49,
     33,
     'components_creative_component_creative_items',
@@ -7982,7 +8008,7 @@ INSERT INTO
   )
 VALUES
   (
-    319,
+    340,
     40,
     34,
     'components_creative_component_creative_items',
@@ -8000,7 +8026,7 @@ INSERT INTO
   )
 VALUES
   (
-    320,
+    341,
     41,
     35,
     'components_creative_component_creative_items',
@@ -8018,7 +8044,7 @@ INSERT INTO
   )
 VALUES
   (
-    321,
+    342,
     45,
     36,
     'components_creative_component_creative_items',
@@ -8036,7 +8062,7 @@ INSERT INTO
   )
 VALUES
   (
-    322,
+    343,
     42,
     37,
     'components_creative_component_creative_items',
@@ -8054,7 +8080,7 @@ INSERT INTO
   )
 VALUES
   (
-    323,
+    344,
     51,
     38,
     'components_creative_component_creative_items',
@@ -8072,7 +8098,7 @@ INSERT INTO
   )
 VALUES
   (
-    324,
+    345,
     50,
     39,
     'components_creative_component_creative_items',
@@ -8090,7 +8116,7 @@ INSERT INTO
   )
 VALUES
   (
-    325,
+    346,
     56,
     40,
     'components_creative_component_creative_items',
@@ -8108,9 +8134,27 @@ INSERT INTO
   )
 VALUES
   (
-    326,
+    347,
     57,
     41,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    348,
+    58,
+    42,
     'components_creative_component_creative_items',
     'image',
     1
