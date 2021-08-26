@@ -3,6 +3,7 @@ import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import { GalleryItemProps, UpdateInfo, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
+import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -89,6 +90,12 @@ export class GalleryItem3D extends MediaObject3D {
     }
   }
 
+  _rotateMeshRandomly() {
+    if (this._mesh) {
+      this._mesh.rotation.z = getRandFloat(-Math.PI, Math.PI) * 0.03;
+    }
+  }
+
   _handleInfinityScroll() {
     if (this._mesh && this._galleryWrapperDomElBounds && this._scrollValues) {
       // x axis
@@ -101,6 +108,7 @@ export class GalleryItem3D extends MediaObject3D {
           (-this._rendererBounds.width / 2) * GalleryItem3D.disappearOffset
         ) {
           this._extra.x -= this._galleryWrapperDomElBounds.width;
+          this._rotateMeshRandomly();
         }
       } else if (this._scrollValues.direction.x === 'right') {
         const x = this._mesh.position.x - scaleX;
@@ -110,6 +118,7 @@ export class GalleryItem3D extends MediaObject3D {
           (this._rendererBounds.width / 2) * GalleryItem3D.disappearOffset
         ) {
           this._extra.x += this._galleryWrapperDomElBounds.width;
+          this._rotateMeshRandomly();
         }
       }
 
@@ -123,6 +132,7 @@ export class GalleryItem3D extends MediaObject3D {
           (-this._rendererBounds.height / 2) * GalleryItem3D.disappearOffset
         ) {
           this._extra.y -= this._galleryWrapperDomElBounds.height;
+          this._rotateMeshRandomly();
         }
       } else if (this._scrollValues.direction.y === 'down') {
         const y = this._mesh.position.y - scaleY;
@@ -132,6 +142,7 @@ export class GalleryItem3D extends MediaObject3D {
           (this._rendererBounds.height / 2) * GalleryItem3D.disappearOffset
         ) {
           this._extra.y += this._galleryWrapperDomElBounds.height;
+          this._rotateMeshRandomly();
         }
       }
     }
@@ -155,9 +166,11 @@ export class GalleryItem3D extends MediaObject3D {
       this._animateInTween.stop();
     }
 
-    const startX = this._mesh.scale.x * 1.8;
+    this._rotateMeshRandomly();
 
-    const startY = this._mesh.scale.y * 1.8;
+    const startX = this._mesh.scale.x * 1.9;
+
+    const startY = this._mesh.scale.y * 1.9;
 
     this._animateInTween = new TWEEN.Tween({
       x: startX,
