@@ -13,6 +13,9 @@ import { PageProps } from './data';
 import { GalleryItem } from './styled/Gallery/GalleryItem';
 import { GalleryWrapper } from './styled/Gallery/GalleryWrapper';
 import { Image } from './styled/Gallery/Image';
+import { Text } from './styled/Gallery/Text';
+import { TextWrapper } from './styled/Gallery/TextWrapper';
+import { TextsContainer } from './styled/Gallery/TextsContainer';
 
 interface GalleryComp {
   items: CreativeItem[];
@@ -93,6 +96,17 @@ export default function OrbitGalleryPage(props: PageProps) {
         <GalleryWrapper columnsCount={COLUMNS_COUNT} data-gallery="wrapper">
           <GalleryComp items={creativeItems} columnsCount={COLUMNS_COUNT} />
         </GalleryWrapper>
+        <TextsContainer data-updatecss="texts-container">
+          <TextWrapper>
+            <Text>Swipe</Text>
+          </TextWrapper>
+          <TextWrapper>
+            <Text>Discover</Text>
+          </TextWrapper>
+          <TextWrapper>
+            <Text>Culture</Text>
+          </TextWrapper>
+        </TextsContainer>
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
     </>

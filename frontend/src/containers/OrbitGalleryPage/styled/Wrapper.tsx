@@ -17,11 +17,11 @@ export const Wrapper = styled(motion.div)<Props>`
     content: '';
     display: block;
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     top: 0;
     left: 0;
     width: 100%;
-    height: 12vh;
+    height: 15vh;
     background: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0) 0%,
@@ -33,11 +33,11 @@ export const Wrapper = styled(motion.div)<Props>`
     content: '';
     display: block;
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 12vh;
+    height: 15vh;
     background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0) 0%,

@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, ScrollValues, GalleryItemProps } from '../types';
+import { UpdateInfo, ScrollValues, GalleryItemProps, Bounds } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { MediaScene } from './MediaScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
 import { lerp } from '../utils/lerp';
+import { InfinityScrollHtmlEl } from '../Components/InfinityScrollHtmlEl';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -28,12 +29,14 @@ export class GalleryScene extends MediaScene {
     },
     scrollSpeed: { x: 0, y: 0 },
   };
+  _infinityScrollHtmlElements: InfinityScrollHtmlEl[] = [];
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
+    this._initHtmlElements();
   }
 
   set hoveredStoryItem(hoveredItem: GalleryItem3D | null) {}
@@ -43,9 +46,7 @@ export class GalleryScene extends MediaScene {
     this._scrollValues.target.y += e.y;
   };
 
-  _resetValues() {
-    super._resetValues();
-
+  _resetScrollValues() {
     //Reset scroll values
     this._scrollValues.current.x = 0;
     this._scrollValues.current.y = 0;
@@ -79,6 +80,35 @@ export class GalleryScene extends MediaScene {
     });
   }
 
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+
+    this._infinityScrollHtmlElements.forEach(el => {
+      el.rendererBounds = this._rendererBounds;
+    });
+
+    this._resetScrollValues();
+  }
+
+  _initHtmlElements() {
+    const textsContainer = Array.from(
+      document.querySelectorAll("[data-updatecss='texts-container']"),
+    )[0] as HTMLElement;
+
+    const textsContainerChildren = Array.from(
+      textsContainer.children,
+    ) as HTMLDivElement[];
+
+    textsContainerChildren.forEach(el => {
+      this._infinityScrollHtmlElements.push(
+        new InfinityScrollHtmlEl({
+          domEl: el,
+          scrollValues: this._scrollValues,
+        }),
+      );
+    });
+  }
+
   set items(items: GalleryItemProps[]) {
     super.items = items;
 
@@ -92,6 +122,10 @@ export class GalleryScene extends MediaScene {
     super.update(updateInfo);
 
     this._passIntersectPoint();
+
+    this._infinityScrollHtmlElements.forEach(el => {
+      el.update(updateInfo);
+    });
 
     this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
 
