@@ -70,6 +70,7 @@ export class GalleryScene extends MediaScene {
   _onScrollTouchDown = () => {
     this._setIsPanning(true);
     this._galleryItems.forEach(item => {
+      item.animatePan(1);
       if (item.isAnimatedIn) {
         item.animateOpacity({ delay: 0, duration: 500, destination: 1 });
       }
@@ -79,6 +80,7 @@ export class GalleryScene extends MediaScene {
   _onScrollTouchUp = () => {
     this._setIsPanning(false);
     this._galleryItems.forEach(item => {
+      item.animatePan(0);
       if (item.isAnimatedIn) {
         item.animateOpacity({
           delay: 0,

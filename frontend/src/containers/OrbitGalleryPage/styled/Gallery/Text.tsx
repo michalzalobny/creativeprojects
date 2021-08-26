@@ -16,6 +16,6 @@ export const Text = styled(motion.h1)<Props>`
   white-space: nowrap;
 
   ${media.tablet} {
-    font-size: 8vw;
+    font-size: 7vw;
   }
 `;

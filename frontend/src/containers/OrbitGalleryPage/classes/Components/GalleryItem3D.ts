@@ -36,7 +36,9 @@ export class GalleryItem3D extends MediaObject3D {
     y: number;
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
+  _panTween: Tween<{ progress: number }> | null = null;
   isAnimatedIn = false;
+  _panMultiplier = 0;
 
   constructor({
     geometry,
@@ -166,6 +168,21 @@ export class GalleryItem3D extends MediaObject3D {
     this._scrollValues = scrollValues;
   }
 
+  animatePan(destination: number) {
+    if (this._panTween) {
+      this._panTween.stop();
+    }
+
+    this._panTween = new TWEEN.Tween({ progress: this._panMultiplier })
+      .to({ progress: destination }, 500)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
+      .onUpdate(obj => {
+        this._panMultiplier = obj.progress;
+      });
+
+    this._panTween.start();
+  }
+
   animateOpacity({
     destination,
     duration,
@@ -250,7 +267,8 @@ export class GalleryItem3D extends MediaObject3D {
     this._handleInfinityScroll();
 
     if (this._mesh && this._scrollValues) {
-      this._mesh.material.uniforms.uStrength.value = this._scrollValues.strength.current;
+      this._mesh.material.uniforms.uStrength.value =
+        this._scrollValues.strength.current + 20 * this._panMultiplier;
     }
   }
 }
