@@ -197,13 +197,15 @@ export class GalleryItem3D extends MediaObject3D {
     const startX = this._mesh.scale.x * 1.9;
     const startY = this._mesh.scale.y * 1.9;
 
-    this.animateOpacity({ destination: 1, duration: 2800, delay });
+    const duration = 2800;
+
+    this.animateOpacity({ destination: 1, duration, delay });
 
     this._animateInTween = new TWEEN.Tween({
       x: startX,
       y: startY,
     })
-      .to({ x: this._mesh.scale.x, y: this._mesh.scale.y }, 2800)
+      .to({ x: this._mesh.scale.x, y: this._mesh.scale.y }, duration)
       .delay(delay)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
