@@ -7,7 +7,7 @@ interface Props {
   columnsCount: number;
 }
 
-const MOBILE_GAP = 12;
+const MOBILE_GAP = 20;
 const TABLET_GAP = 10;
 
 export const GalleryWrapper = styled(motion.div)<Props>`

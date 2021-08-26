@@ -10,7 +10,7 @@ export const GalleryItem = styled(motion.figure)<Props>`
   width: 100%;
   position: relative;
   transform: scale(1);
-  height: 60vw;
+  height: 50vw;
   opacity: 0;
   visibility: hidden;
 
