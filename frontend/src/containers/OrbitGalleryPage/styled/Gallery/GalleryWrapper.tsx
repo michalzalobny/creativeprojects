@@ -8,14 +8,14 @@ interface Props {
 }
 
 const MOBILE_GAP = 12;
-const TABLET_GAP = 9;
+const TABLET_GAP = 10;
 
 export const GalleryWrapper = styled(motion.div)<Props>`
   position: absolute;
   z-index: 10;
   top: 0;
   left: 50%;
-  width: 200%;
+  width: 180%;
   transform: translateX(-50%);
   display: grid;
   grid-template-columns: ${props => `repeat(${props.columnsCount}, 1fr)`};
@@ -23,7 +23,7 @@ export const GalleryWrapper = styled(motion.div)<Props>`
   padding: ${MOBILE_GAP / 2}vw;
 
   ${media.tablet} {
-    width: 180%;
+    width: 165%;
     grid-gap: ${TABLET_GAP}vw;
     padding: ${TABLET_GAP / 2}vw;
   }

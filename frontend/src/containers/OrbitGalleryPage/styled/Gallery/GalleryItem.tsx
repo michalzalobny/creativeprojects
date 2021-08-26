@@ -21,6 +21,6 @@ export const GalleryItem = styled(motion.figure)<Props>`
     `}
 
   ${media.tablet} {
-    height: 22vw;
+    height: 18vw;
   }
 `;
