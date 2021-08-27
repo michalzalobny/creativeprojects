@@ -20,7 +20,7 @@ export class TitlesWrapper extends HTMLComponent {
     super({ domEl });
     this._scrollValues = scrollValues; //Passed as a reference obj for better performance
     this._initTitles();
-    this._domEl.style.transform = `translate(-50%, -50%) rotate(-90deg) scale(${this._scaleMultiplier})`;
+    this._domEl.style.transform = `translate(-51%, -50%) rotate(-90deg) scale(${this._scaleMultiplier})`;
     this.animateScale(1);
   }
 
@@ -56,7 +56,7 @@ export class TitlesWrapper extends HTMLComponent {
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         this._scaleMultiplier = obj.progress;
-        this._domEl.style.transform = `translate(-50%, -50%) rotate(-90deg) scale(${this._scaleMultiplier})`;
+        this._domEl.style.transform = `translate(-51%, -50%) rotate(-90deg) scale(${this._scaleMultiplier})`;
 
         this._titles.forEach(el => {
           el.parentScale = this._scaleMultiplier;

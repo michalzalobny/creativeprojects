@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
+import { media } from 'utils/responsive';
+
 interface Props {
   isPanning: boolean;
 }
@@ -19,7 +21,7 @@ export const TextWrapper = styled(motion.div)<Props>`
     top: 50%;
     width: ${SIZE}vh;
     height: ${SIZE}vh;
-    transform: translateY(-50%) scale(1);
+    transform: translateY(20%) scale(1);
     background: #ffffff;
     border-radius: 50%;
     transition: all 0.45s;
@@ -28,8 +30,20 @@ export const TextWrapper = styled(motion.div)<Props>`
     ${props =>
       props.isPanning &&
       css`
-        transform: translateY(-50%) scale(0);
+        transform: translateY(20%) scale(0);
         transition-delay: 0s;
       `}
+  }
+
+  ${media.tablet} {
+    &:before {
+      transform: translateY(-80%) scale(1);
+
+      ${props =>
+        props.isPanning &&
+        css`
+          transform: translateY(-80%) scale(0);
+        `}
+    }
   }
 `;

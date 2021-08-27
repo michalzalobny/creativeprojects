@@ -11,7 +11,7 @@ export const TextsContainer = styled(motion.div)<Props>`
   z-index: 2;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
+  transform: translate(-51%, -50%) rotate(-90deg);
 `;
 
 TextsContainer.defaultProps = {
