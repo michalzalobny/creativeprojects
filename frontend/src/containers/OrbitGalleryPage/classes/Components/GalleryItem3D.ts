@@ -268,7 +268,7 @@ export class GalleryItem3D extends MediaObject3D {
 
     if (this._mesh && this._scrollValues) {
       this._mesh.material.uniforms.uStrength.value =
-        this._scrollValues.strength.current * 0.8 + 10 * this._panMultiplier;
+        this._scrollValues.strength.current * 0.7 + 8 * this._panMultiplier;
     }
   }
 }

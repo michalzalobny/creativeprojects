@@ -6,7 +6,8 @@ import { MediaScene } from './MediaScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
 import { lerp } from '../utils/lerp';
-import { InfinityScrollHtmlEl } from '../Components/InfinityScrollHtmlEl';
+import { TitlesWrapper } from '../HTMLComponents/TitlesWrapper';
+import { HTMLComponent } from '../HTMLComponents/HTMLComponent';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -30,7 +31,8 @@ export class GalleryScene extends MediaScene {
     },
     scrollSpeed: { x: 0, y: 0 },
   };
-  _infinityScrollHtmlElements: InfinityScrollHtmlEl[] = [];
+  _HTMLComponents: HTMLComponent[] = [];
+  _titlesWrapper: TitlesWrapper | null = null;
   _setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor({ setIsPanning, camera, mouseMove, scroll }: Constructor) {
@@ -114,7 +116,7 @@ export class GalleryScene extends MediaScene {
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
 
-    this._infinityScrollHtmlElements.forEach(el => {
+    this._HTMLComponents.forEach(el => {
       el.rendererBounds = this._rendererBounds;
     });
 
@@ -126,18 +128,12 @@ export class GalleryScene extends MediaScene {
       document.querySelectorAll("[data-updatecss='texts-container']"),
     )[0] as HTMLElement;
 
-    const textsContainerChildren = Array.from(
-      textsContainer.children,
-    ) as HTMLDivElement[];
-
-    textsContainerChildren.forEach(el => {
-      this._infinityScrollHtmlElements.push(
-        new InfinityScrollHtmlEl({
-          domEl: el,
-          scrollValues: this._scrollValues,
-        }),
-      );
+    this._titlesWrapper = new TitlesWrapper({
+      domEl: textsContainer,
+      scrollValues: this._scrollValues,
     });
+
+    this._HTMLComponents.push(this._titlesWrapper);
   }
 
   set items(items: GalleryItemProps[]) {
@@ -154,7 +150,7 @@ export class GalleryScene extends MediaScene {
 
     this._passIntersectPoint();
 
-    this._infinityScrollHtmlElements.forEach(el => {
+    this._HTMLComponents.forEach(el => {
       el.update(updateInfo);
     });
 

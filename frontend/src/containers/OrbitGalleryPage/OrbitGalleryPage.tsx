@@ -108,11 +108,12 @@ export default function OrbitGalleryPage(props: PageProps) {
               />
             </Text>
           </TextWrapper>
+
           <TextWrapper isPanning={isPanning}>
             <Text>
               <RevealButterflyString
                 shouldAnimate={!isPanning}
-                text={'Discover'}
+                text={'Culture'}
               />
             </Text>
           </TextWrapper>
@@ -120,7 +121,7 @@ export default function OrbitGalleryPage(props: PageProps) {
             <Text>
               <RevealButterflyString
                 shouldAnimate={!isPanning}
-                text={'Culture'}
+                text={'Discover'}
               />
             </Text>
           </TextWrapper>
