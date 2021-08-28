@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import fragmentShader from '../shaders/storyItem/fragment.glsl';
-import vertexShader from '../shaders/storyItem/vertex.glsl';
+import fragmentShader from '../shaders/media/fragment.glsl';
+import vertexShader from '../shaders/media/vertex.glsl';
 
 import { InteractiveObject3D } from './InteractiveObject3D';
 import { Bounds, TextureItem, UpdateInfo } from '../types';

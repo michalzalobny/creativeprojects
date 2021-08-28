@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, ScrollValues, GalleryItemProps, Bounds } from '../types';
+import { UpdateInfo, ScrollValues, RecipieItemProps, Bounds } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { RecipeScene } from './RecipeScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -116,7 +116,7 @@ export class StackScene extends RecipeScene {
     this._resetScrollValues();
   }
 
-  set items(items: GalleryItemProps[]) {
+  set items(items: RecipieItemProps[]) {
     super.items = items;
 
     //Pass scrollValues to gallery elements (as a reference value, better performance)

@@ -20,7 +20,7 @@ export interface Bounds {
   height: number;
 }
 
-export interface GalleryItemProps {
+export interface RecipieItemProps {
   key: number;
   item: CreativeItem;
 }

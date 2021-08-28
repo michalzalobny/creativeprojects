@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, GalleryItemProps, Bounds } from '../types';
+import { UpdateInfo, RecipieItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { RecipeItem3D } from '../Components/RecipeItem3D';
@@ -50,7 +50,7 @@ export class RecipeScene extends InteractiveScene {
     window.removeEventListener('resize', this._onResize);
   }
 
-  set items(items: GalleryItemProps[]) {
+  set items(items: RecipieItemProps[]) {
     this._destroyItems();
 
     //Fetch elements DOM representations
@@ -62,7 +62,7 @@ export class RecipeScene extends InteractiveScene {
       items.forEach((item, key) => {
         const item3D = new RecipeItem3D({
           geometry: this._planeGeometry,
-          galleryItem: item,
+          recipieItem: item,
           domEl: element,
         });
         this._galleryItems.push(item3D);
@@ -86,7 +86,7 @@ export class RecipeScene extends InteractiveScene {
     this._textureItems = textureItems;
 
     this._galleryItems.forEach((item, key) => {
-      item.textureItem = this._textureItems[item.galleryItem.item.image.url];
+      item.textureItem = this._textureItems[item.recipieItem.item.image.url];
 
       item.animateIn(getRandFloat(0, 1500) + 1500);
     });

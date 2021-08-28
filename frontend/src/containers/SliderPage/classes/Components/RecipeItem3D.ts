@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { GalleryItemProps, UpdateInfo, ScrollValues } from '../types';
+import { RecipieItemProps, UpdateInfo, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
-  galleryItem: GalleryItemProps;
+  recipieItem: RecipieItemProps;
   domEl: HTMLElement;
 }
 
@@ -22,7 +22,7 @@ export class RecipeItem3D extends MediaObject3D {
   static disappearOffset = 1.3; //Prevents from image disappearing too fast
   static defaultOpacity = 0.65;
 
-  galleryItem: GalleryItemProps;
+  recipieItem: RecipieItemProps;
   _domEl: HTMLElement;
   _domElBounds: DOMRect | null = null;
   _scrollValues: ScrollValues | null = null;
@@ -37,10 +37,10 @@ export class RecipeItem3D extends MediaObject3D {
   isAnimatedIn = false;
   _panMultiplier = 0;
 
-  constructor({ geometry, galleryItem, domEl }: Constructor) {
+  constructor({ geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
 
-    this.galleryItem = galleryItem;
+    this.recipieItem = recipieItem;
     this._domEl = domEl;
 
     this.setColliderName('recipeItem');
