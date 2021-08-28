@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { UpdateInfo, GalleryItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
-import { GalleryItem3D } from '../Components/GalleryItem3D';
+import { RecipeItem3D } from '../Components/RecipeItem3D';
 import { TextureItems } from '../types';
 import { getRandFloat } from '../utils/getRand';
 
@@ -12,9 +12,9 @@ interface Constructor {
   mouseMove: MouseMove;
 }
 
-export class GalleryScene extends InteractiveScene {
+export class RecipeScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _galleryItems: GalleryItem3D[] = [];
+  _galleryItems: RecipeItem3D[] = [];
   _textureItems: TextureItems = {};
 
   constructor({ camera, mouseMove }: Constructor) {
@@ -54,25 +54,16 @@ export class GalleryScene extends InteractiveScene {
     this._destroyItems();
 
     //Fetch elements DOM representations
-    const elements = Array.from(
-      document.querySelectorAll("[data-gallery='entry']"),
-    ) as HTMLElement[];
-
-    const galleryWrapper = Array.from(
-      document.querySelectorAll("[data-gallery='wrapper']"),
+    const element = Array.from(
+      document.querySelectorAll("[data-recipe='entry']"),
     )[0] as HTMLElement;
 
     items &&
       items.forEach((item, key) => {
-        // const matchingFigure = elements.filter(
-        //   el => el.getAttribute('data-src') === item.item.image.url,
-        // );
-
-        const item3D = new GalleryItem3D({
+        const item3D = new RecipeItem3D({
           geometry: this._planeGeometry,
           galleryItem: item,
-          domEl: elements[key],
-          galleryWrapperDomEl: galleryWrapper,
+          domEl: element,
         });
         this._galleryItems.push(item3D);
         this.add(item3D);

@@ -2,21 +2,19 @@ import * as THREE from 'three';
 
 import { UpdateInfo, ScrollValues, GalleryItemProps, Bounds } from '../types';
 import { Scroll } from '../Singletons/Scroll';
-import { GalleryScene } from './GalleryScene';
+import { RecipeScene } from './RecipeScene';
 import { MouseMove } from '../Singletons/MouseMove';
-import { GalleryItem3D } from '../Components/GalleryItem3D';
+import { RecipeItem3D } from '../Components/RecipeItem3D';
 import { lerp } from '../utils/lerp';
-import { TitlesWrapper } from '../HTMLComponents/TitlesWrapper';
 import { HTMLComponent } from '../HTMLComponents/HTMLComponent';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
   scroll: Scroll;
   mouseMove: MouseMove;
-  setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export class OrbitScene extends GalleryScene {
+export class StackScene extends RecipeScene {
   static scrollSpeed = 1;
 
   _scroll: Scroll;
@@ -32,16 +30,13 @@ export class OrbitScene extends GalleryScene {
     scrollSpeed: { x: 0, y: 0 },
   };
   _HTMLComponents: HTMLComponent[] = [];
-  _titlesWrapper: TitlesWrapper | null = null;
-  _setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 
-  constructor({ setIsPanning, camera, mouseMove, scroll }: Constructor) {
+  constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
-    this._initHtmlElements();
-    this._setIsPanning = setIsPanning;
+    this._initHtmlComponents();
   }
 
   _onScroll = (e: THREE.Event) => {
@@ -68,7 +63,6 @@ export class OrbitScene extends GalleryScene {
   }
 
   _onScrollTouchDown = () => {
-    this._setIsPanning(true);
     this._galleryItems.forEach(item => {
       item.animatePan(1);
       if (item.isAnimatedIn) {
@@ -78,14 +72,13 @@ export class OrbitScene extends GalleryScene {
   };
 
   _onScrollTouchUp = () => {
-    this._setIsPanning(false);
     this._galleryItems.forEach(item => {
       item.animatePan(0);
       if (item.isAnimatedIn) {
         item.animateOpacity({
           delay: 0,
           duration: 500,
-          destination: GalleryItem3D.defaultOpacity,
+          destination: RecipeItem3D.defaultOpacity,
         });
       }
     });
@@ -111,18 +104,7 @@ export class OrbitScene extends GalleryScene {
     });
   }
 
-  _initHtmlElements() {
-    const textsContainer = Array.from(
-      document.querySelectorAll("[data-updatecss='texts-container']"),
-    )[0] as HTMLElement;
-
-    this._titlesWrapper = new TitlesWrapper({
-      domEl: textsContainer,
-      scrollValues: this._scrollValues,
-    });
-
-    this._HTMLComponents.push(this._titlesWrapper);
-  }
+  _initHtmlComponents() {}
 
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
@@ -149,18 +131,18 @@ export class OrbitScene extends GalleryScene {
     //Update scroll direction
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
       this._scrollValues.direction.x = 'left';
-      this._scrollValues.scrollSpeed.x = OrbitScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.x = StackScene.scrollSpeed;
     } else {
       this._scrollValues.direction.x = 'right';
-      this._scrollValues.scrollSpeed.x = -OrbitScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.x = -StackScene.scrollSpeed;
     }
 
     if (this._scrollValues.current.y > this._scrollValues.last.y) {
       this._scrollValues.direction.y = 'up';
-      this._scrollValues.scrollSpeed.y = OrbitScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.y = StackScene.scrollSpeed;
     } else {
       this._scrollValues.direction.y = 'down';
-      this._scrollValues.scrollSpeed.y = -OrbitScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.y = -StackScene.scrollSpeed;
     }
 
     //Update scroll strength
@@ -174,7 +156,7 @@ export class OrbitScene extends GalleryScene {
     this._scrollValues.strength.current = lerp(
       this._scrollValues.strength.current,
       this._scrollValues.strength.target,
-      OrbitScene.lerpEase * updateInfo.slowDownFactor,
+      StackScene.lerpEase * updateInfo.slowDownFactor,
     );
 
     this._scrollValues.last.x = this._scrollValues.current.x;
@@ -184,13 +166,13 @@ export class OrbitScene extends GalleryScene {
     this._scrollValues.current.x = lerp(
       this._scrollValues.current.x,
       this._scrollValues.target.x,
-      OrbitScene.lerpEase * updateInfo.slowDownFactor,
+      StackScene.lerpEase * updateInfo.slowDownFactor,
     );
 
     this._scrollValues.current.y = lerp(
       this._scrollValues.current.y,
       this._scrollValues.target.y,
-      OrbitScene.lerpEase * updateInfo.slowDownFactor,
+      StackScene.lerpEase * updateInfo.slowDownFactor,
     );
   }
 

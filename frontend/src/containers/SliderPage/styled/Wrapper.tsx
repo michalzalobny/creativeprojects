@@ -7,7 +7,7 @@ export const Wrapper = styled(motion.div)<Props>`
   position: relative;
   min-width: 100%;
   height: 100%;
-  background-color: #000000;
+  background-color: #f2e8dd;
   /* background-color: #d4d4d4; */
   user-select: none;
   pointer-events: none;
@@ -24,8 +24,8 @@ export const Wrapper = styled(motion.div)<Props>`
     height: 10vh;
     background: linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 1) 80%
+      rgba(242, 232, 221, 0) 0%,
+      rgba(242, 232, 221, 1) 80%
     );
   }
 
@@ -40,8 +40,8 @@ export const Wrapper = styled(motion.div)<Props>`
     height: 10vh;
     background: linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 1) 80%
+      rgba(242, 232, 221, 0) 0%,
+      rgba(242, 232, 221, 1) 80%
     );
   }
 `;

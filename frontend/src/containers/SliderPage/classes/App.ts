@@ -5,14 +5,13 @@ import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
-import { OrbitScene } from './Scenes/OrbitScene';
+import { StackScene } from './Scenes/StackScene';
 import { Preloader } from './Utility/Preloader';
 
 interface Constructor {
   rendererWrapperEl: HTMLDivElement;
   items: CreativeItem[];
   imagesToPreload: string[];
-  setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class App {
@@ -29,14 +28,9 @@ export class App {
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
-  _orbitScene: OrbitScene;
+  _stackScene: StackScene;
 
-  constructor({
-    imagesToPreload,
-    items,
-    rendererWrapperEl,
-    setIsPanning,
-  }: Constructor) {
+  constructor({ imagesToPreload, items, rendererWrapperEl }: Constructor) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -48,14 +42,13 @@ export class App {
       alpha: true,
     });
 
-    this._orbitScene = new OrbitScene({
+    this._stackScene = new StackScene({
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
-      setIsPanning,
     });
 
-    this._orbitScene.items = Array.from(items).map((item, key) => {
+    this._stackScene.items = Array.from(items).map((item, key) => {
       return { key, item };
     });
 
@@ -82,7 +75,7 @@ export class App {
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this._camera.updateProjectionMatrix();
 
-    this._orbitScene.rendererBounds = rendererBounds;
+    this._stackScene.rendererBounds = rendererBounds;
   };
 
   _onVisibilityChange = () => {
@@ -94,7 +87,7 @@ export class App {
   };
 
   _onAssetsLoaded = (e: THREE.Event) => {
-    this._orbitScene.textureItems = (e.target as Preloader).textureItems;
+    this._stackScene.textureItems = (e.target as Preloader).textureItems;
   };
 
   _addListeners() {
@@ -138,9 +131,9 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
-    this._orbitScene.update({ delta, slowDownFactor, time });
+    this._stackScene.update({ delta, slowDownFactor, time });
 
-    this._renderer.render(this._orbitScene, this._camera);
+    this._renderer.render(this._stackScene, this._camera);
   };
 
   _stopAppFrame() {
@@ -156,7 +149,7 @@ export class App {
     this._stopAppFrame();
     this._removeListeners();
 
-    this._orbitScene.destroy();
+    this._stackScene.destroy();
     this._preloader.destroy();
   }
 }
