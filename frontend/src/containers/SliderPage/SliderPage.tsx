@@ -11,6 +11,7 @@ import { App } from './classes/App';
 import { PageProps } from './data';
 import { SliderItem } from './styled/Slider/SliderItem';
 import { SliderWrapper } from './styled/Slider/SliderWrapper';
+import { SliderItemChild } from './styled/Slider/SliderItemChild';
 
 export default function SliderPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
@@ -52,7 +53,9 @@ export default function SliderPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
 
       <SliderWrapper>
-        <SliderItem data-recipe="entry" />
+        <SliderItem data-recipe="entry">
+          <SliderItemChild />
+        </SliderItem>
       </SliderWrapper>
 
       <Wrapper>

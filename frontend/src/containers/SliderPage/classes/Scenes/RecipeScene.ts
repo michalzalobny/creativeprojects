@@ -62,6 +62,7 @@ export class RecipeScene extends InteractiveScene {
       items.forEach((item, key) => {
         const item3D = new RecipeItem3D({
           geometry: this._planeGeometry,
+
           recipieItem: item,
           domEl: element,
         });

@@ -23,8 +23,11 @@ export class RecipeItem3D extends MediaObject3D {
   static defaultOpacity = 0.65;
 
   recipieItem: RecipieItemProps;
+  _geometryGroup: THREE.Group;
   _domEl: HTMLElement;
-  _domElBounds: DOMRect | null = null;
+  _domElBounds: DOMRect;
+  _childEl: HTMLElement;
+  _childElBounds: DOMRect;
   _scrollValues: ScrollValues | null = null;
   _isBefore = false;
   _isAfter = false;
@@ -40,14 +43,27 @@ export class RecipeItem3D extends MediaObject3D {
   constructor({ geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
 
+    this._geometryGroup = new THREE.Group();
+
+    if (this._mesh) {
+      this._geometryGroup.add(this._mesh);
+    }
+
+    this.add(this._geometryGroup);
+
     this.recipieItem = recipieItem;
     this._domEl = domEl;
+    this._domElBounds = this._domEl.getBoundingClientRect();
+
+    this._childEl = this._domEl.children[0] as HTMLElement;
+    this._childElBounds = this._childEl.getBoundingClientRect();
 
     this.setColliderName('recipeItem');
   }
 
   _updateBounds() {
     this._domElBounds = this._domEl.getBoundingClientRect();
+    this._childElBounds = this._childEl.getBoundingClientRect();
     this._updateScale();
     if (this._scrollValues) {
       this._updateX(this._scrollValues.current.x);
@@ -63,14 +79,19 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   _updateScale() {
-    if (this._mesh && this._domElBounds) {
+    if (this._mesh) {
       this._mesh.scale.x = this._domElBounds.width;
       this._mesh.scale.y = this._domElBounds.height;
+      this._mesh.position.set(
+        -this._mesh.scale.x / 2.0,
+        -this._mesh.scale.y / 2.0,
+        0.0,
+      );
     }
   }
 
   _updateX(x: number) {
-    if (this._mesh && this._domElBounds) {
+    if (this._mesh) {
       this._mesh.position.x =
         -x +
         this._domElBounds.left -
@@ -81,7 +102,7 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   _updateY(y: number) {
-    if (this._mesh && this._domElBounds) {
+    if (this._mesh) {
       this._mesh.position.y =
         -y -
         this._domElBounds.top +
@@ -93,7 +114,7 @@ export class RecipeItem3D extends MediaObject3D {
 
   _rotateMeshRandomly() {
     if (this._mesh) {
-      this._mesh.rotation.z = getRandFloat(-Math.PI, Math.PI) * 0.03;
+      this._mesh.rotation.z = getRandFloat(-Math.PI, Math.PI) * 0.06;
     }
   }
 
@@ -157,8 +178,8 @@ export class RecipeItem3D extends MediaObject3D {
 
     this._rotateMeshRandomly();
 
-    const startX = this._mesh.scale.x * 1.9;
-    const startY = this._mesh.scale.y * 1.9;
+    const startX = 2;
+    const startY = 2;
 
     const duration = 2800;
 
@@ -173,14 +194,12 @@ export class RecipeItem3D extends MediaObject3D {
       x: startX,
       y: startY,
     })
-      .to({ x: this._mesh.scale.x, y: this._mesh.scale.y }, duration)
+      .to({ x: 1, y: 1 }, duration)
       .delay(delay)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
-        if (this._mesh) {
-          this._mesh.scale.x = obj.x;
-          this._mesh.scale.y = obj.y;
-        }
+        this._geometryGroup.scale.x = obj.x;
+        this._geometryGroup.scale.y = obj.y;
       })
       .onComplete(() => {
         this.isAnimatedIn = true;

@@ -44,13 +44,14 @@ export class MediaObject3D extends InteractiveObject3D {
           value: [this._rendererBounds.width, this._rendererBounds.height],
         },
         uStrength: { value: 0 },
-        uOpacity: { value: 0 },
+        uOpacity: { value: this._tweenOpacity },
       },
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
     });
 
     this._mesh = new THREE.Mesh(this._geometry, this._material);
+
     this.add(this._mesh);
   }
 
