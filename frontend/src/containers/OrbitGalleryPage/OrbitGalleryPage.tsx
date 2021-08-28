@@ -81,12 +81,12 @@ export default function OrbitGalleryPage(props: PageProps) {
 
     appTimeout.current = setTimeout(() => {
       if (rendererWrapperEl.current) {
-        myApp.current = new App(
-          rendererWrapperEl.current,
-          creativeItems,
+        myApp.current = new App({
+          rendererWrapperEl: rendererWrapperEl.current,
+          items: creativeItems,
           imagesToPreload,
           setIsPanning,
-        );
+        });
       }
     }, 1);
 

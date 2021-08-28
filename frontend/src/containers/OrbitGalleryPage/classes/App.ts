@@ -2,17 +2,23 @@ import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
-import { GalleryItem3D } from './Components/GalleryItem3D';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
 import { GalleryScene } from './Scenes/GalleryScene';
-import { Preloader } from './Singletons/Preloader';
+import { Preloader } from './Utility/Preloader';
 
-export const DEFALUT_FPS = 60;
-const DT_FPS = 1000 / DEFALUT_FPS;
+interface Constructor {
+  rendererWrapperEl: HTMLDivElement;
+  items: CreativeItem[];
+  imagesToPreload: string[];
+  setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export class App {
+  static defaultFps = 60;
+  static dtFps = 1000 / App.defaultFps;
+
   _rendererWrapperEl: HTMLDivElement;
   _rafId: number | null = null;
   _isResumed = true;
@@ -25,12 +31,12 @@ export class App {
   _preloader = new Preloader();
   _galleryScene: GalleryScene;
 
-  constructor(
-    rendererWrapperEl: HTMLDivElement,
-    items: CreativeItem[],
-    imagesToPreload: string[],
-    setIsPanning: React.Dispatch<React.SetStateAction<boolean>>,
-  ) {
+  constructor({
+    imagesToPreload,
+    items,
+    rendererWrapperEl,
+    setIsPanning,
+  }: Constructor) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -120,7 +126,7 @@ export class App {
     TWEEN.update(time);
 
     const delta = time - this._lastFrameTime;
-    let slowDownFactor = delta / DT_FPS;
+    let slowDownFactor = delta / App.dtFps;
 
     //Rounded slowDown factor to the nearest integer reduces physics lags
     const slowDownFactorRounded = Math.round(slowDownFactor);
@@ -143,17 +149,14 @@ export class App {
     }
   }
 
-  setHoveredItem(item: GalleryItem3D | null) {
-    if (this._galleryScene) {
-      this._galleryScene.hoveredStoryItem = item;
-    }
-  }
-
   destroy() {
     if (this._canvas.parentNode) {
       this._canvas.parentNode.removeChild(this._canvas);
     }
     this._stopAppFrame();
     this._removeListeners();
+
+    this._galleryScene.destroy();
+    this._preloader.destroy();
   }
 }

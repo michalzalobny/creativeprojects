@@ -49,4 +49,6 @@ export class Preloader extends EventDispatcher {
     this._images = images;
     this._preloadTextures();
   }
+
+  destroy() {}
 }

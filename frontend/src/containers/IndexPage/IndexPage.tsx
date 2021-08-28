@@ -32,7 +32,10 @@ export default function IndexPage(props: IndexPageProps) {
         <Link passHref href={'/orbit-gallery'}>
           <LinkWrapper>Orbit Gallery page</LinkWrapper>
         </Link>
-        <div style={{ width: '100%', height: '150vh', background: 'grey' }} />
+        <Link passHref href={'/slider'}>
+          <LinkWrapper>Slider</LinkWrapper>
+        </Link>
+        <div style={{ width: '100%', height: '50vh', background: '#d5edf1' }} />
       </Wrapper>
     </>
   );
