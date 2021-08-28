@@ -9,9 +9,11 @@ Wrapper.defaultProps = {
   variants: {
     initial: {
       pointerEvents: 'none',
+      userSelect: 'none',
     },
     animate: {
       pointerEvents: 'initial',
+      userSelect: 'initial',
     },
   },
   initial: 'initial',

@@ -16,7 +16,7 @@ LinkWrapper.defaultProps = {
       opacity: 0.6,
     },
     animate: {
-      x: '-30px',
+      x: '-15px',
       opacity: 1,
     },
   },
