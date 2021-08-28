@@ -5,7 +5,7 @@ import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
-import { GalleryScene } from './Scenes/GalleryScene';
+import { OrbitScene } from './Scenes/OrbitScene';
 import { Preloader } from './Utility/Preloader';
 
 interface Constructor {
@@ -29,7 +29,7 @@ export class App {
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
-  _galleryScene: GalleryScene;
+  _orbitScene: OrbitScene;
 
   constructor({
     imagesToPreload,
@@ -48,14 +48,14 @@ export class App {
       alpha: true,
     });
 
-    this._galleryScene = new GalleryScene({
+    this._orbitScene = new OrbitScene({
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
       setIsPanning,
     });
 
-    this._galleryScene.items = Array.from(items).map((item, key) => {
+    this._orbitScene.items = Array.from(items).map((item, key) => {
       return { key, item };
     });
 
@@ -82,7 +82,7 @@ export class App {
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this._camera.updateProjectionMatrix();
 
-    this._galleryScene.rendererBounds = rendererBounds;
+    this._orbitScene.rendererBounds = rendererBounds;
   };
 
   _onVisibilityChange = () => {
@@ -94,7 +94,7 @@ export class App {
   };
 
   _onAssetsLoaded = (e: THREE.Event) => {
-    this._galleryScene.textureItems = (e.target as Preloader).textureItems;
+    this._orbitScene.textureItems = (e.target as Preloader).textureItems;
   };
 
   _addListeners() {
@@ -138,9 +138,9 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
-    this._galleryScene.update({ delta, slowDownFactor, time });
+    this._orbitScene.update({ delta, slowDownFactor, time });
 
-    this._renderer.render(this._galleryScene, this._camera);
+    this._renderer.render(this._orbitScene, this._camera);
   };
 
   _stopAppFrame() {
@@ -156,7 +156,7 @@ export class App {
     this._stopAppFrame();
     this._removeListeners();
 
-    this._galleryScene.destroy();
+    this._orbitScene.destroy();
     this._preloader.destroy();
   }
 }

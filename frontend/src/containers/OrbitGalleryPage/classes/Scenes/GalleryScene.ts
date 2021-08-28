@@ -1,214 +1,116 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, ScrollValues, GalleryItemProps, Bounds } from '../types';
-import { Scroll } from '../Singletons/Scroll';
-import { MediaScene } from './MediaScene';
+import { UpdateInfo, GalleryItemProps, Bounds } from '../types';
+import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { GalleryItem3D } from '../Components/GalleryItem3D';
-import { lerp } from '../utils/lerp';
-import { TitlesWrapper } from '../HTMLComponents/TitlesWrapper';
-import { HTMLComponent } from '../HTMLComponents/HTMLComponent';
+import { TextureItems } from '../types';
+import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
-  scroll: Scroll;
   mouseMove: MouseMove;
-  setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export class GalleryScene extends MediaScene {
-  static scrollSpeed = 1;
+export class GalleryScene extends InteractiveScene {
+  _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
+  _galleryItems: GalleryItem3D[] = [];
+  _textureItems: TextureItems = {};
 
-  _scroll: Scroll;
-  _scrollValues: ScrollValues = {
-    current: { x: 0, y: 0 },
-    target: { x: 0, y: 0 },
-    last: { x: 0, y: 0 },
-    direction: { x: 'left', y: 'up' },
-    strength: {
-      current: 0,
-      target: 0,
-    },
-    scrollSpeed: { x: 0, y: 0 },
-  };
-  _HTMLComponents: HTMLComponent[] = [];
-  _titlesWrapper: TitlesWrapper | null = null;
-  _setIsPanning: React.Dispatch<React.SetStateAction<boolean>>;
-
-  constructor({ setIsPanning, camera, mouseMove, scroll }: Constructor) {
+  constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
-    this._scroll = scroll;
-    this._addListeners();
-    this._intersectiveBackground3D.setPlaneDepth(0);
-    this._initHtmlElements();
-    this._setIsPanning = setIsPanning;
   }
 
-  set hoveredStoryItem(hoveredItem: GalleryItem3D | null) {}
+  _onItemClick = (e: THREE.Event) => {};
 
-  _onScroll = (e: THREE.Event) => {
-    this._scrollValues.target.x -= e.x;
-    this._scrollValues.target.y += e.y;
-  };
-
-  _resetScrollValues() {
-    //Reset scroll values
-    this._scrollValues.current.x = 0;
-    this._scrollValues.current.y = 0;
-
-    this._scrollValues.target.x = 0;
-    this._scrollValues.target.y = 0;
-
-    this._scrollValues.last.x = 0;
-    this._scrollValues.last.y = 0;
-
-    this._scrollValues.strength.current = 0;
-    this._scrollValues.strength.target = 0;
-
-    this._scrollValues.scrollSpeed.x = 0;
-    this._scrollValues.scrollSpeed.y = 0;
+  _destroyItems() {
+    this._galleryItems.forEach(item => {
+      item.destroy();
+      this.remove(item);
+      item.removeEventListener('click', this._onItemClick);
+    });
+    this._galleryItems = [];
   }
 
-  _onScrollTouchDown = () => {
-    this._setIsPanning(true);
-    this._galleryItems.forEach(item => {
-      item.animatePan(1);
-      if (item.isAnimatedIn) {
-        item.animateOpacity({ delay: 0, duration: 500, destination: 1 });
-      }
-    });
-  };
-
-  _onScrollTouchUp = () => {
-    this._setIsPanning(false);
-    this._galleryItems.forEach(item => {
-      item.animatePan(0);
-      if (item.isAnimatedIn) {
-        item.animateOpacity({
-          delay: 0,
-          duration: 500,
-          destination: GalleryItem3D.defaultOpacity,
-        });
-      }
-    });
+  _onResize = () => {
+    if (this._galleryItems) {
+      this._galleryItems.forEach(item => {
+        item.onResize();
+      });
+    }
   };
 
   _addListeners() {
     super._addListeners();
-    this._scroll.addEventListener('applyscroll', this._onScroll);
-    this._scroll.addEventListener('touchdown', this._onScrollTouchDown);
-    this._scroll.addEventListener('touchup', this._onScrollTouchUp);
+    window.addEventListener('resize', this._onResize);
   }
 
   _removeListeners() {
     super._removeListeners();
-    this._scroll.removeEventListener('applyscroll', this._onScroll);
-    this._scroll.removeEventListener('touchdown', this._onScrollTouchDown);
-    this._scroll.removeEventListener('touchup', this._onScrollTouchUp);
+    window.removeEventListener('resize', this._onResize);
   }
 
-  _passIntersectPoint() {
+  set items(items: GalleryItemProps[]) {
+    this._destroyItems();
+
+    //Fetch elements DOM representations
+    const elements = Array.from(
+      document.querySelectorAll("[data-gallery='entry']"),
+    ) as HTMLElement[];
+
+    const galleryWrapper = Array.from(
+      document.querySelectorAll("[data-gallery='wrapper']"),
+    )[0] as HTMLElement;
+
+    items &&
+      items.forEach((item, key) => {
+        // const matchingFigure = elements.filter(
+        //   el => el.getAttribute('data-src') === item.item.image.url,
+        // );
+
+        const item3D = new GalleryItem3D({
+          geometry: this._planeGeometry,
+          galleryItem: item,
+          domEl: elements[key],
+          galleryWrapperDomEl: galleryWrapper,
+        });
+        this._galleryItems.push(item3D);
+        this.add(item3D);
+      });
+
     this._galleryItems.forEach(item => {
-      item.intersectPoint = this._intersectPointLerp;
+      item.addEventListener('click', this._onItemClick);
     });
   }
 
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
 
-    this._HTMLComponents.forEach(el => {
-      el.rendererBounds = this._rendererBounds;
-    });
-
-    this._resetScrollValues();
-  }
-
-  _initHtmlElements() {
-    const textsContainer = Array.from(
-      document.querySelectorAll("[data-updatecss='texts-container']"),
-    )[0] as HTMLElement;
-
-    this._titlesWrapper = new TitlesWrapper({
-      domEl: textsContainer,
-      scrollValues: this._scrollValues,
-    });
-
-    this._HTMLComponents.push(this._titlesWrapper);
-  }
-
-  set items(items: GalleryItemProps[]) {
-    super.items = items;
-
-    //Pass scrollValues to gallery elements (as a reference value, better performance)
     this._galleryItems.forEach(item => {
-      item.scrollValues = this._scrollValues;
+      item.rendererBounds = this._rendererBounds;
+    });
+  }
+
+  set textureItems(textureItems: TextureItems) {
+    this._textureItems = textureItems;
+
+    this._galleryItems.forEach((item, key) => {
+      item.textureItem = this._textureItems[item.galleryItem.item.image.url];
+
+      item.animateIn(getRandFloat(0, 1500) + 1500);
     });
   }
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-
-    this._passIntersectPoint();
-
-    this._HTMLComponents.forEach(el => {
-      el.update(updateInfo);
+    this._galleryItems.forEach(item => {
+      item.update(updateInfo);
     });
-
-    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
-
-    //Update scroll direction
-    if (this._scrollValues.current.x > this._scrollValues.last.x) {
-      this._scrollValues.direction.x = 'left';
-      this._scrollValues.scrollSpeed.x = GalleryScene.scrollSpeed;
-    } else {
-      this._scrollValues.direction.x = 'right';
-      this._scrollValues.scrollSpeed.x = -GalleryScene.scrollSpeed;
-    }
-
-    if (this._scrollValues.current.y > this._scrollValues.last.y) {
-      this._scrollValues.direction.y = 'up';
-      this._scrollValues.scrollSpeed.y = GalleryScene.scrollSpeed;
-    } else {
-      this._scrollValues.direction.y = 'down';
-      this._scrollValues.scrollSpeed.y = -GalleryScene.scrollSpeed;
-    }
-
-    //Update scroll strength
-    const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
-    const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
-
-    this._scrollValues.strength.target = Math.sqrt(
-      deltaX * deltaX + deltaY * deltaY,
-    );
-
-    this._scrollValues.strength.current = lerp(
-      this._scrollValues.strength.current,
-      this._scrollValues.strength.target,
-      GalleryScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.last.x = this._scrollValues.current.x;
-    this._scrollValues.last.y = this._scrollValues.current.y;
-
-    //lerp scroll
-    this._scrollValues.current.x = lerp(
-      this._scrollValues.current.x,
-      this._scrollValues.target.x,
-      GalleryScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.current.y = lerp(
-      this._scrollValues.current.y,
-      this._scrollValues.target.y,
-      GalleryScene.lerpEase * updateInfo.slowDownFactor,
-    );
   }
 
   destroy() {
     super.destroy();
-
-    this._HTMLComponents.forEach(el => {
-      el.destroy();
-    });
+    this._destroyItems();
+    this._planeGeometry.dispose();
   }
 }
