@@ -88,7 +88,7 @@ export class RecipeScene extends InteractiveScene {
     this._galleryItems.forEach((item, key) => {
       item.textureItem = this._textureItems[item.recipieItem.item.image.url];
 
-      item.animateIn(getRandFloat(0, 1500) + 1500);
+      item.animateIn(getRandFloat(0, 500));
     });
   }
 
