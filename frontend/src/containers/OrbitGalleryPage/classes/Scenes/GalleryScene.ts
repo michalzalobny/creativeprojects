@@ -206,5 +206,9 @@ export class GalleryScene extends MediaScene {
 
   destroy() {
     super.destroy();
+
+    this._HTMLComponents.forEach(el => {
+      el.destroy();
+    });
   }
 }
