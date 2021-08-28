@@ -27,7 +27,7 @@ TextsContainer.defaultProps = {
   animate: 'animate',
 
   transition: {
-    delay: 0.5,
+    delay: 0.7,
     duration: 1,
     type: 'tween',
   },

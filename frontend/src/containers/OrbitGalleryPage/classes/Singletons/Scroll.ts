@@ -16,9 +16,9 @@ export class Scroll extends EventDispatcher {
 
   static momentumCarry = 0.2;
   static momentumDamping = 0.58;
-  static mouseSwipeMultiplier = 2.4;
+  static mouseSwipeMultiplier = 1.8;
   static touchSwipeMultiplier = 2.4;
-  static mouseScrollMultiplier = 1.5;
+  static mouseScrollMultiplier = 1;
   static _instance: Scroll;
   static _canCreate = false;
   static getInstance() {
