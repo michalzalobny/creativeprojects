@@ -50,7 +50,8 @@ export class RecipeItem3D extends MediaObject3D {
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
   _lerpEase: number;
-  _lerpFirst = 0.5;
+  _lerpFirst = 0.1;
+  _lerpQuotient = 0.88;
   _lerpLast = 20;
 
   constructor({ geometry, recipieItem, domEl }: Constructor) {
@@ -66,10 +67,12 @@ export class RecipeItem3D extends MediaObject3D {
     this.setColliderName('recipeItem');
 
     this._lerpEase =
-      (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
-      this._lerpFirst;
+      this._lerpFirst * Math.pow(this._lerpQuotient, this.recipieItem.key - 1);
 
-    this._lerpEase *= 0.01; //Fixes approximation issue (We could specify 0.22 and 0.01 in _lerpFirst/_lerpLast)
+    // this._lerpEase =
+    //   (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
+    //   this._lerpFirst;
+    // this._lerpEase *= 0.01; //Fixes approximation issue (We could specify 0.22 and 0.01 in _lerpFirst/_lerpLast)
   }
 
   _updateBounds() {
