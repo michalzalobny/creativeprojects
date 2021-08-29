@@ -19,8 +19,7 @@ interface AnimateOpacity {
 }
 
 export class RecipeItem3D extends MediaObject3D {
-  static disappearOffset = 1.3; //Prevents from image disappearing too fast
-  static defaultOpacity = 0.65;
+  static defaultOpacity = 1;
 
   recipieItem: RecipieItemProps;
   _domEl: HTMLElement;
