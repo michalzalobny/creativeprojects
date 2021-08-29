@@ -21,7 +21,7 @@ interface ApplyScrollValues {
 }
 
 export class StackScene extends RecipeScene {
-  static scrollSpeed = 1;
+  static autoScrollSpeed = 0;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
@@ -146,23 +146,23 @@ export class StackScene extends RecipeScene {
   }
 
   _updateScrollValues(updateInfo: UpdateInfo) {
-    // this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
 
     //Update scroll direction
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
       this._scrollValues.direction.x = 'left';
-      this._scrollValues.scrollSpeed.x = StackScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.x = StackScene.autoScrollSpeed;
     } else {
       this._scrollValues.direction.x = 'right';
-      this._scrollValues.scrollSpeed.x = -StackScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.x = -StackScene.autoScrollSpeed;
     }
 
     if (this._scrollValues.current.y > this._scrollValues.last.y) {
       this._scrollValues.direction.y = 'up';
-      this._scrollValues.scrollSpeed.y = StackScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.y = StackScene.autoScrollSpeed;
     } else {
       this._scrollValues.direction.y = 'down';
-      this._scrollValues.scrollSpeed.y = -StackScene.scrollSpeed;
+      this._scrollValues.scrollSpeed.y = -StackScene.autoScrollSpeed;
     }
 
     //Update scroll strength
