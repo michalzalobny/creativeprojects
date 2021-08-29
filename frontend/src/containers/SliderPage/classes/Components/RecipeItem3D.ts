@@ -79,6 +79,10 @@ export class RecipeItem3D extends MediaObject3D {
     this._lerpEase =
       this._lerpFirst * Math.pow(this._lerpQuotient, keyPosition - 1);
 
+    if (this._mesh) {
+      this._mesh.position.z = -keyPosition * 2;
+    }
+
     // this._lerpEase =
     //   (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
     //   this._lerpFirst;
