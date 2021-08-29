@@ -39,11 +39,6 @@ export class StackScene extends RecipeScene {
     this._initHtmlComponents();
   }
 
-  _onScroll = (e: THREE.Event) => {
-    this._scrollValues.target.x -= e.x;
-    this._scrollValues.target.y += e.y;
-  };
-
   _resetScrollValues() {
     //Reset scroll values
     this._scrollValues.current.x = 0;
@@ -82,16 +77,35 @@ export class StackScene extends RecipeScene {
     });
   };
 
+  _onScrollTouch = (e: THREE.Event) => {
+    this._scrollValues.target.x -= e.x;
+    this._scrollValues.target.y += e.y;
+  };
+
+  _onScrollWheel = (e: THREE.Event) => {
+    this._scrollValues.target.x -= e.x * 2;
+    this._scrollValues.target.y += e.y * 2;
+  };
+
+  _onScrollMouse = (e: THREE.Event) => {
+    this._scrollValues.target.x -= e.x * 5;
+    this._scrollValues.target.y += e.y * 5;
+  };
+
   _addListeners() {
     super._addListeners();
-    this._scroll.addEventListener('applyscroll', this._onScroll);
+    this._scroll.addEventListener('touch', this._onScrollTouch);
+    this._scroll.addEventListener('mouse', this._onScrollMouse);
+    this._scroll.addEventListener('wheel', this._onScrollWheel);
     this._scroll.addEventListener('touchdown', this._onScrollTouchDown);
     this._scroll.addEventListener('touchup', this._onScrollTouchUp);
   }
 
   _removeListeners() {
     super._removeListeners();
-    this._scroll.removeEventListener('applyscroll', this._onScroll);
+    this._scroll.removeEventListener('touch', this._onScrollTouch);
+    this._scroll.removeEventListener('mouse', this._onScrollMouse);
+    this._scroll.removeEventListener('wheel', this._onScrollWheel);
     this._scroll.removeEventListener('touchdown', this._onScrollTouchDown);
     this._scroll.removeEventListener('touchup', this._onScrollTouchUp);
   }

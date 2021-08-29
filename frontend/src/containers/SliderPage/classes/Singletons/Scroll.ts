@@ -6,6 +6,7 @@ import { UpdateInfo } from '../types';
 interface ApplyScrollXY {
   x: number;
   y: number;
+  type: 'touchmove' | 'mousemove' | 'wheel';
 }
 
 export class Scroll extends EventDispatcher {
@@ -16,9 +17,6 @@ export class Scroll extends EventDispatcher {
 
   static momentumCarry = 0.2;
   static momentumDamping = 0.58;
-  static mouseSwipeMultiplier = 1.8;
-  static touchSwipeMultiplier = 2.4;
-  static mouseScrollMultiplier = 1;
   static _instance: Scroll;
   static _canCreate = false;
   static getInstance() {
@@ -43,8 +41,20 @@ export class Scroll extends EventDispatcher {
     Scroll._instance = this;
   }
 
-  _applyScrollXY({ x, y }: ApplyScrollXY) {
-    this.dispatchEvent({ type: 'applyscroll', x, y });
+  _applyScrollXY({ x, y, type }: ApplyScrollXY) {
+    switch (type) {
+      case 'mousemove':
+        this.dispatchEvent({ type: 'mouse', x, y });
+        break;
+      case 'touchmove':
+        this.dispatchEvent({ type: 'touch', x, y });
+        break;
+      case 'wheel':
+        this.dispatchEvent({ type: 'wheel', x, y });
+        break;
+      default:
+        break;
+    }
   }
 
   _onTouchDown = (event: TouchEvent | MouseEvent) => {
@@ -67,16 +77,8 @@ export class Scroll extends EventDispatcher {
     const touchY =
       'touches' in event ? event.touches[0].clientY : event.clientY;
 
-    const deltaX =
-      (touchX - this._lastTouch.x) *
-      ('touches' in event
-        ? Scroll.touchSwipeMultiplier
-        : Scroll.mouseSwipeMultiplier);
-    const deltaY =
-      (touchY - this._lastTouch.y) *
-      ('touches' in event
-        ? Scroll.touchSwipeMultiplier
-        : Scroll.mouseSwipeMultiplier);
+    const deltaX = touchX - this._lastTouch.x;
+    const deltaY = touchY - this._lastTouch.y;
 
     this._lastTouch.x = touchX;
     this._lastTouch.y = touchY;
@@ -87,7 +89,9 @@ export class Scroll extends EventDispatcher {
     this._touchMomentum.y += deltaY;
     this._touchMomentum.x += deltaX;
 
-    this._applyScrollXY({ x: deltaX, y: deltaY });
+    const type = 'touches' in event ? 'touchmove' : 'mousemove';
+
+    this._applyScrollXY({ x: deltaX, y: deltaY, type });
   };
 
   _onTouchUp = () => {
@@ -103,7 +107,8 @@ export class Scroll extends EventDispatcher {
 
     this._applyScrollXY({
       x: 0,
-      y: -pixelY * Scroll.mouseScrollMultiplier,
+      y: -pixelY,
+      type: 'wheel',
     });
   };
 
@@ -144,6 +149,7 @@ export class Scroll extends EventDispatcher {
       this._applyScrollXY({
         y: 0,
         x: this._touchMomentum.x,
+        type: 'touchmove',
       });
     }
 
@@ -151,6 +157,7 @@ export class Scroll extends EventDispatcher {
       this._applyScrollXY({
         y: this._touchMomentum.y,
         x: 0,
+        type: 'touchmove',
       });
     }
   }
