@@ -13,8 +13,11 @@ interface Constructor {
 }
 
 export class StackScene extends RecipeScene {
-  _scroll: Scroll;
+  static respawnTimeout = 50; //ms
 
+  _scroll: Scroll;
+  _lastAddedTime = 0;
+  _canAddItems = false;
   _HTMLComponents: HTMLComponent[] = [];
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -31,12 +34,28 @@ export class StackScene extends RecipeScene {
     });
   }
 
+  _onMouseDown = (e: THREE.Event) => {
+    if (this._canAddItems) {
+      this._canAddItems = false;
+      this._recipeItems.forEach(item => {
+        item.animateOut();
+      });
+      this._trackKeyArray = [];
+    } else {
+      this._canAddItems = true;
+    }
+  };
+
   _addListeners() {
     super._addListeners();
+
+    this._mouseMove.addEventListener('down', this._onMouseDown);
   }
 
   _removeListeners() {
     super._removeListeners();
+
+    this._mouseMove.removeEventListener('down', this._onMouseDown);
   }
 
   _passIntersectPoint() {
@@ -46,6 +65,20 @@ export class StackScene extends RecipeScene {
   }
 
   _initHtmlComponents() {}
+
+  _addItems() {
+    if (!this._canAddItems) {
+      return;
+    }
+
+    const currentTime = window.performance.now();
+    const timeDifference = currentTime - this._lastAddedTime; //in ms
+
+    if (timeDifference > StackScene.respawnTimeout) {
+      super.addItem();
+      this._lastAddedTime = window.performance.now();
+    }
+  }
 
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
@@ -63,6 +96,8 @@ export class StackScene extends RecipeScene {
     super.update(updateInfo);
 
     this._passIntersectPoint();
+
+    this._addItems();
 
     this._HTMLComponents.forEach(el => {
       el.update(updateInfo);

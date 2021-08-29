@@ -10,6 +10,7 @@ interface Constructor {
   geometry: THREE.PlaneGeometry;
   recipieItem: RecipieItemProps;
   domEl: HTMLElement;
+  keyPosition: number;
 }
 
 interface AnimateOpacity {
@@ -42,6 +43,7 @@ export class RecipeItem3D extends MediaObject3D {
       y: 0,
     },
   };
+  _isInit = false;
   _isBefore = false;
   _isAfter = false;
   _animateInTween: Tween<{
@@ -53,16 +55,16 @@ export class RecipeItem3D extends MediaObject3D {
     y: number;
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
-  isAnimatedIn = false;
+
   _isAnimatingOut = false;
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
   _lerpEase: number;
-  _lerpFirst = 0.1;
-  _lerpQuotient = 0.88;
+  _lerpFirst = 0.2;
+  _lerpQuotient = 0.8;
   _lerpLast = 20;
 
-  constructor({ geometry, recipieItem, domEl }: Constructor) {
+  constructor({ keyPosition, geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
 
     this.recipieItem = recipieItem;
@@ -75,11 +77,7 @@ export class RecipeItem3D extends MediaObject3D {
     this.setColliderName('recipeItem');
 
     this._lerpEase =
-      this._lerpFirst * Math.pow(this._lerpQuotient, this.recipieItem.key - 1);
-
-    setTimeout(() => {
-      this.animateOut();
-    }, 4000);
+      this._lerpFirst * Math.pow(this._lerpQuotient, keyPosition - 1);
 
     // this._lerpEase =
     //   (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
@@ -223,15 +221,13 @@ export class RecipeItem3D extends MediaObject3D {
     }
   }
 
-  _updateScrollValues(updateInfo: UpdateInfo) {
-    if (!this._mouseValues) {
+  _updateMouseValues(updateInfo: UpdateInfo) {
+    if (!this._mouseValues || !this._isInit) {
       return;
     }
 
-    if (this._isAnimatingOut) {
-      this._mouseValues.target.y += this._mouseValues.autoSpeed.y;
-      this._mouseValues.target.x += this._mouseValues.autoSpeed.x;
-    }
+    this._mouseValues.target.y += this._mouseValues.autoSpeed.y;
+    this._mouseValues.target.x += this._mouseValues.autoSpeed.x;
 
     //Update scroll direction
     if (this._mouseValues.current.x > this._mouseValues.last.x) {
@@ -244,11 +240,6 @@ export class RecipeItem3D extends MediaObject3D {
       this._mouseValues.direction.y = 'up';
     } else {
       this._mouseValues.direction.y = 'down';
-    }
-
-    if (this._isAnimatingOut) {
-      this._mouseValues.direction.y = 'down';
-      this._mouseValues.autoSpeed.y = -15;
     }
 
     //Update strength value
@@ -281,10 +272,39 @@ export class RecipeItem3D extends MediaObject3D {
     );
   }
 
+  _stopTweens() {
+    if (this._opacityTween) {
+      this._opacityTween.stop();
+    }
+    if (this._animateInTween) {
+      this._animateInTween.stop();
+    }
+    if (this._animateOutTween) {
+      this._animateOutTween.stop();
+    }
+  }
+
   set targetMouse({ x, y }: Coords) {
     if (this._isAnimatingOut) {
       return;
     }
+
+    if (!this._isInit) {
+      this._mouseValues.target.x =
+        -x - (-this._domElBounds.left - this._domElBounds.width * 0.5);
+      this._mouseValues.target.y =
+        y - this._domElBounds.top - this._domElBounds.height * 0.5;
+
+      this._mouseValues.current.x = this._mouseValues.target.x;
+      this._mouseValues.current.y = this._mouseValues.target.y;
+
+      this._mouseValues.last.x = this._mouseValues.target.x;
+      this._mouseValues.last.y = this._mouseValues.target.y;
+
+      this._isInit = true;
+      return;
+    }
+
     this._mouseValues.target.x =
       -x - (-this._domElBounds.left - this._domElBounds.width * 0.5);
     this._mouseValues.target.y =
@@ -321,25 +341,22 @@ export class RecipeItem3D extends MediaObject3D {
       return;
     }
 
-    if (this._animateOutTween) {
-      this._animateOutTween.stop();
-    }
+    this._stopTweens();
 
     this._isAnimatingOut = true;
 
     const startX = this._mesh.scale.x;
     const startY = this._mesh.scale.y;
 
-    const destinationX = this._mesh.scale.x * 0.5;
-    const destinationY = this._mesh.scale.y * 0.5;
+    const destinationX = this._childElBounds.width;
+    const destinationY = this._childElBounds.height;
 
-    const opacityDelay = 500;
-    const duration = 2500;
+    const duration = 700;
 
     this.animateOpacity({
       destination: 0,
-      duration: (duration - opacityDelay) * 0.8,
-      delay: opacityDelay,
+      duration,
+      delay: 0,
       easing: TWEEN.Easing.Exponential.InOut,
     });
 
@@ -352,6 +369,9 @@ export class RecipeItem3D extends MediaObject3D {
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         if (this._mesh) {
+          this._extraScale.x = -(this._domElBounds.width - obj.x) / 2;
+          this._extraScale.y = (this._domElBounds.height - obj.y) / 2;
+
           this._mesh.scale.x = obj.x;
           this._mesh.scale.y = obj.y;
         }
@@ -363,7 +383,7 @@ export class RecipeItem3D extends MediaObject3D {
     this._animateOutTween.start();
   }
 
-  animateIn(delay: number) {
+  animateIn() {
     if (!this._mesh) {
       return;
     }
@@ -384,8 +404,8 @@ export class RecipeItem3D extends MediaObject3D {
 
     this.animateOpacity({
       destination: RecipeItem3D.defaultOpacity,
-      duration,
-      delay,
+      duration: duration * 0.9,
+      delay: 0,
       easing: TWEEN.Easing.Exponential.InOut,
     });
 
@@ -394,7 +414,6 @@ export class RecipeItem3D extends MediaObject3D {
       y: startY,
     })
       .to({ x: destinationX, y: destinationY }, duration)
-      .delay(delay)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         if (this._mesh) {
@@ -405,11 +424,14 @@ export class RecipeItem3D extends MediaObject3D {
           this._mesh.scale.y = obj.y;
         }
       })
-      .onComplete(() => {
-        this.isAnimatedIn = true;
-      });
+      .onComplete(() => {});
 
     this._animateInTween.start();
+  }
+
+  destroy() {
+    super.destroy();
+    this.dispatchEvent({ type: 'destroyed' });
   }
 
   onResize() {
@@ -421,11 +443,9 @@ export class RecipeItem3D extends MediaObject3D {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
-    this._updateScrollValues(updateInfo);
-
+    this._updateMouseValues(updateInfo);
     this._updateX(this._mouseValues.current.x);
     this._updateY(this._mouseValues.current.y);
-
     this._handleInfinityScroll();
 
     if (this._mesh) {
