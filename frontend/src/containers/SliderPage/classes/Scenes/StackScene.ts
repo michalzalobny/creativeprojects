@@ -63,7 +63,7 @@ export class StackScene extends RecipeScene {
   }
 
   _onScrollTouchDown = () => {
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       if (item.isAnimatedIn) {
         item.animateOpacity({ delay: 0, duration: 500, destination: 1 });
       }
@@ -71,7 +71,7 @@ export class StackScene extends RecipeScene {
   };
 
   _onScrollTouchUp = () => {
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       if (item.isAnimatedIn) {
         item.animateOpacity({
           delay: 0,
@@ -97,7 +97,7 @@ export class StackScene extends RecipeScene {
   }
 
   _passIntersectPoint() {
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
   }
@@ -118,7 +118,7 @@ export class StackScene extends RecipeScene {
     super.items = items;
 
     //Pass scrollValues to gallery elements (as a reference value, better performance)
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       item.scrollValues = this._scrollValues;
     });
   }

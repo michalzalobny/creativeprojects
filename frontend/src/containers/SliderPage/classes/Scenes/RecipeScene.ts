@@ -14,7 +14,7 @@ interface Constructor {
 
 export class RecipeScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _galleryItems: RecipeItem3D[] = [];
+  _recipeItems: RecipeItem3D[] = [];
   _textureItems: TextureItems = {};
 
   constructor({ camera, mouseMove }: Constructor) {
@@ -24,17 +24,17 @@ export class RecipeScene extends InteractiveScene {
   _onItemClick = (e: THREE.Event) => {};
 
   _destroyItems() {
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       item.destroy();
       this.remove(item);
       item.removeEventListener('click', this._onItemClick);
     });
-    this._galleryItems = [];
+    this._recipeItems = [];
   }
 
   _onResize = () => {
-    if (this._galleryItems) {
-      this._galleryItems.forEach(item => {
+    if (this._recipeItems) {
+      this._recipeItems.forEach(item => {
         item.onResize();
       });
     }
@@ -66,11 +66,11 @@ export class RecipeScene extends InteractiveScene {
           recipieItem: item,
           domEl: element,
         });
-        this._galleryItems.push(item3D);
+        this._recipeItems.push(item3D);
         this.add(item3D);
       });
 
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       item.addEventListener('click', this._onItemClick);
     });
   }
@@ -78,7 +78,7 @@ export class RecipeScene extends InteractiveScene {
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
 
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       item.rendererBounds = this._rendererBounds;
     });
   }
@@ -86,7 +86,7 @@ export class RecipeScene extends InteractiveScene {
   set textureItems(textureItems: TextureItems) {
     this._textureItems = textureItems;
 
-    this._galleryItems.forEach((item, key) => {
+    this._recipeItems.forEach((item, key) => {
       item.textureItem = this._textureItems[item.recipieItem.item.image.url];
 
       item.animateIn(getRandFloat(0, 500));
@@ -95,7 +95,7 @@ export class RecipeScene extends InteractiveScene {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this._galleryItems.forEach(item => {
+    this._recipeItems.forEach(item => {
       item.update(updateInfo);
     });
   }
