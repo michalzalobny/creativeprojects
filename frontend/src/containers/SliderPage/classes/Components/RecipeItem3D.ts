@@ -58,7 +58,7 @@ export class RecipeItem3D extends MediaObject3D {
   _dropOutTween: Tween<{ progress: number; rotation: number }> | null = null;
 
   _isAnimatingOut = false;
-
+  _isDroppingOut = false;
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
   _lerpEase: number;
@@ -168,7 +168,7 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   _handleInfinityScroll() {
-    if (this._mesh && this._mouseValues) {
+    if (this._mesh && this._mouseValues && !this._isDroppingOut) {
       // x axis
       const scaleX = this._mesh.scale.x / 2;
       if (this._mouseValues.direction.x === 'left') {
@@ -343,13 +343,15 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   animateDropOut(delay: number) {
-    if (!this._mesh) {
+    if (!this._mesh || this._isDroppingOut) {
       return;
     }
 
     if (this._dropOutTween) {
       this._dropOutTween.stop();
     }
+
+    this._isDroppingOut = true;
 
     const start = this._mesh.rotation.z;
     const destination = Math.PI * 2 + start;
@@ -371,6 +373,7 @@ export class RecipeItem3D extends MediaObject3D {
         if (this._mesh) {
           this._mesh.rotation.z = start;
         }
+        this._isDroppingOut = false;
       });
 
     this._dropOutTween.start();
