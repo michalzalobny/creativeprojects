@@ -39,6 +39,8 @@ export class GalleryItem3D extends MediaObject3D {
   _panTween: Tween<{ progress: number }> | null = null;
   isAnimatedIn = false;
   _panMultiplier = 0;
+  _extra = { x: 0, y: 0 };
+  _extraScale = { x: 0, y: 0 };
 
   constructor({
     geometry,
@@ -86,7 +88,8 @@ export class GalleryItem3D extends MediaObject3D {
         this._domElBounds.left -
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
-        this._extra.x;
+        this._extra.x -
+        this._extraScale.x;
     }
   }
 
@@ -97,7 +100,8 @@ export class GalleryItem3D extends MediaObject3D {
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
-        this._extra.y;
+        this._extra.y -
+        this._extraScale.y;
     }
   }
 
@@ -219,8 +223,11 @@ export class GalleryItem3D extends MediaObject3D {
 
     this._rotateMeshRandomly();
 
-    const startX = this._mesh.scale.x * 1.9;
-    const startY = this._mesh.scale.y * 1.9;
+    const startX = this._mesh.scale.x * 2;
+    const startY = this._mesh.scale.y * 2;
+
+    const destinationX = this._mesh.scale.x;
+    const destinationY = this._mesh.scale.y;
 
     const duration = 2800;
 
@@ -240,6 +247,10 @@ export class GalleryItem3D extends MediaObject3D {
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         if (this._mesh) {
+          //Centers the image while scaling
+          this._extraScale.x = -(destinationX - obj.x) / 2;
+          this._extraScale.y = (destinationY - obj.y) / 2;
+
           this._mesh.scale.x = obj.x;
           this._mesh.scale.y = obj.y;
         }
