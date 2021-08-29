@@ -8,8 +8,8 @@ export const SliderItemChild = styled(motion.div)<Props>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150%;
-  height: 150%;
-  background: green;
-  opacity: 0;
+  width: 200%;
+  height: 200%;
+  background: #568b80;
+  opacity: 0.5;
 `;

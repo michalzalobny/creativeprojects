@@ -23,7 +23,6 @@ export class RecipeItem3D extends MediaObject3D {
   static defaultOpacity = 0.65;
 
   recipieItem: RecipieItemProps;
-  _geometryGroup: THREE.Group;
   _domEl: HTMLElement;
   _domElBounds: DOMRect;
   _childEl: HTMLElement;
@@ -36,20 +35,12 @@ export class RecipeItem3D extends MediaObject3D {
     y: number;
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
-  _panTween: Tween<{ progress: number }> | null = null;
   isAnimatedIn = false;
-  _panMultiplier = 0;
+  _extra = { x: 0, y: 0 };
+  _extraScale = { x: 0, y: 0 };
 
   constructor({ geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
-
-    this._geometryGroup = new THREE.Group();
-
-    if (this._mesh) {
-      this._geometryGroup.add(this._mesh);
-    }
-
-    this.add(this._geometryGroup);
 
     this.recipieItem = recipieItem;
     this._domEl = domEl;
@@ -82,11 +73,6 @@ export class RecipeItem3D extends MediaObject3D {
     if (this._mesh) {
       this._mesh.scale.x = this._domElBounds.width;
       this._mesh.scale.y = this._domElBounds.height;
-      this._mesh.position.set(
-        -this._mesh.scale.x / 2.0,
-        -this._mesh.scale.y / 2.0,
-        0.0,
-      );
     }
   }
 
@@ -97,7 +83,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._domElBounds.left -
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
-        this._extra.x;
+        this._extra.x -
+        this._extraScale.x;
     }
   }
 
@@ -108,13 +95,14 @@ export class RecipeItem3D extends MediaObject3D {
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
-        this._extra.y;
+        this._extra.y -
+        this._extraScale.y;
     }
   }
 
   _rotateMeshRandomly() {
     if (this._mesh) {
-      this._mesh.rotation.z = getRandFloat(-Math.PI, Math.PI) * 0.06;
+      this._mesh.rotation.z = getRandFloat(-Math.PI, Math.PI) * 0.03;
     }
   }
 
@@ -125,21 +113,6 @@ export class RecipeItem3D extends MediaObject3D {
 
   set scrollValues(scrollValues: ScrollValues) {
     this._scrollValues = scrollValues;
-  }
-
-  animatePan(destination: number) {
-    if (this._panTween) {
-      this._panTween.stop();
-    }
-
-    this._panTween = new TWEEN.Tween({ progress: this._panMultiplier })
-      .to({ progress: destination }, 500)
-      .easing(TWEEN.Easing.Sinusoidal.InOut)
-      .onUpdate(obj => {
-        this._panMultiplier = obj.progress;
-      });
-
-    this._panTween.start();
   }
 
   animateOpacity({
@@ -178,8 +151,11 @@ export class RecipeItem3D extends MediaObject3D {
 
     this._rotateMeshRandomly();
 
-    const startX = 2;
-    const startY = 2;
+    const startX = this._childElBounds.width;
+    const startY = this._childElBounds.height;
+
+    const destinationX = this._mesh.scale.x;
+    const destinationY = this._mesh.scale.y;
 
     const duration = 2800;
 
@@ -194,12 +170,17 @@ export class RecipeItem3D extends MediaObject3D {
       x: startX,
       y: startY,
     })
-      .to({ x: 1, y: 1 }, duration)
+      .to({ x: destinationX, y: destinationY }, duration)
       .delay(delay)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
-        this._geometryGroup.scale.x = obj.x;
-        this._geometryGroup.scale.y = obj.y;
+        if (this._mesh) {
+          this._extraScale.x = -(destinationX - obj.x) / 2;
+          this._extraScale.y = (destinationY - obj.y) / 2;
+
+          this._mesh.scale.x = obj.x;
+          this._mesh.scale.y = obj.y;
+        }
       })
       .onComplete(() => {
         this.isAnimatedIn = true;
@@ -223,7 +204,7 @@ export class RecipeItem3D extends MediaObject3D {
 
     if (this._mesh && this._scrollValues) {
       this._mesh.material.uniforms.uStrength.value =
-        this._scrollValues.strength.current * 0.7 + 8 * this._panMultiplier;
+        this._scrollValues.strength.current * 0.7;
     }
   }
 }

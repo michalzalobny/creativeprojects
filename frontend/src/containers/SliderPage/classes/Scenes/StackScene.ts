@@ -64,7 +64,6 @@ export class StackScene extends RecipeScene {
 
   _onScrollTouchDown = () => {
     this._galleryItems.forEach(item => {
-      item.animatePan(1);
       if (item.isAnimatedIn) {
         item.animateOpacity({ delay: 0, duration: 500, destination: 1 });
       }
@@ -73,7 +72,6 @@ export class StackScene extends RecipeScene {
 
   _onScrollTouchUp = () => {
     this._galleryItems.forEach(item => {
-      item.animatePan(0);
       if (item.isAnimatedIn) {
         item.animateOpacity({
           delay: 0,

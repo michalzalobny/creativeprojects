@@ -5,8 +5,9 @@ interface Props {}
 
 export const SliderItem = styled(motion.div)<Props>`
   width: 15vw;
-  background: #b8b8b8;
+  background: #f86b6b;
   position: relative;
+  transform: translateX(20vw);
 
   &:before {
     content: '';
