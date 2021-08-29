@@ -80,11 +80,15 @@ export class InteractiveScene extends THREE.Scene {
     return intersectingObjects;
   }
 
+  _passMouseValues(x: number, y: number) {}
+
   _onMouseMove = (e: THREE.Event) => {
     this._mouseStrength.target = (e.target as MouseMove).strength;
 
     const mouseX = (e.target as MouseMove).mouse.x;
     const mouseY = (e.target as MouseMove).mouse.y;
+
+    this._passMouseValues(mouseX, mouseY);
 
     this._mouse2D.target.x = mouseX;
     this._mouse2D.target.y = mouseY;

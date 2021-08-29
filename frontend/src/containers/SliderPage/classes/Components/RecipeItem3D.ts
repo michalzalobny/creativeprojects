@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { RecipieItemProps, UpdateInfo, ScrollValues, Coords } from '../types';
+import { RecipieItemProps, UpdateInfo, MouseValues, Coords } from '../types';
 import { lerp } from '../utils/lerp';
 import { MediaObject3D } from './MediaObject3D';
 import { getRandFloat } from '../utils/getRand';
@@ -28,7 +28,7 @@ export class RecipeItem3D extends MediaObject3D {
   _domElBounds: DOMRect;
   _childEl: HTMLElement;
   _childElBounds: DOMRect;
-  _scrollValues: ScrollValues = {
+  _mouseValues: MouseValues = {
     current: { x: 0, y: 0 },
     target: { x: 0, y: 0 },
     last: { x: 0, y: 0 },
@@ -37,7 +37,6 @@ export class RecipeItem3D extends MediaObject3D {
       current: 0,
       target: 0,
     },
-    scrollSpeed: { x: 0, y: 0 },
   };
   _isBefore = false;
   _isAfter = false;
@@ -79,9 +78,9 @@ export class RecipeItem3D extends MediaObject3D {
     this._domElBounds = this._domEl.getBoundingClientRect();
     this._childElBounds = this._childEl.getBoundingClientRect();
     this._updateScale();
-    if (this._scrollValues) {
-      this._updateX(this._scrollValues.current.x);
-      this._updateY(this._scrollValues.current.y);
+    if (this._mouseValues) {
+      this._updateX(this._mouseValues.current.x);
+      this._updateY(this._mouseValues.current.y);
     }
 
     if (this._mesh) {
@@ -136,27 +135,24 @@ export class RecipeItem3D extends MediaObject3D {
 
   _resetScrollValues() {
     //Reset scroll values
-    this._scrollValues.current.x = 0;
-    this._scrollValues.current.y = 0;
+    this._mouseValues.current.x = 0;
+    this._mouseValues.current.y = 0;
 
-    this._scrollValues.target.x = 0;
-    this._scrollValues.target.y = 0;
+    this._mouseValues.target.x = 0;
+    this._mouseValues.target.y = 0;
 
-    this._scrollValues.last.x = 0;
-    this._scrollValues.last.y = 0;
+    this._mouseValues.last.x = 0;
+    this._mouseValues.last.y = 0;
 
-    this._scrollValues.strength.current = 0;
-    this._scrollValues.strength.target = 0;
-
-    this._scrollValues.scrollSpeed.x = 0;
-    this._scrollValues.scrollSpeed.y = 0;
+    this._mouseValues.strength.current = 0;
+    this._mouseValues.strength.target = 0;
   }
 
   _handleInfinityScroll() {
-    if (this._mesh && this._scrollValues) {
+    if (this._mesh && this._mouseValues) {
       // x axis
       const scaleX = this._mesh.scale.x / 2;
-      if (this._scrollValues.direction.x === 'left') {
+      if (this._mouseValues.direction.x === 'left') {
         const x = this._mesh.position.x + scaleX;
 
         if (
@@ -168,7 +164,7 @@ export class RecipeItem3D extends MediaObject3D {
             RecipeItem3D.disappearOffset;
           this._rotateMeshRandomly();
         }
-      } else if (this._scrollValues.direction.x === 'right') {
+      } else if (this._mouseValues.direction.x === 'right') {
         const x = this._mesh.position.x - scaleX;
 
         if (
@@ -184,7 +180,7 @@ export class RecipeItem3D extends MediaObject3D {
 
       // y axis
       const scaleY = this._mesh.scale.y / 2;
-      if (this._scrollValues.direction.y === 'up') {
+      if (this._mouseValues.direction.y === 'up') {
         const y = this._mesh.position.y + scaleY;
 
         if (
@@ -196,7 +192,7 @@ export class RecipeItem3D extends MediaObject3D {
             RecipeItem3D.disappearOffset;
           this._rotateMeshRandomly();
         }
-      } else if (this._scrollValues.direction.y === 'down') {
+      } else if (this._mouseValues.direction.y === 'down') {
         const y = this._mesh.position.y - scaleY;
 
         if (
@@ -213,63 +209,57 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   _updateScrollValues(updateInfo: UpdateInfo) {
-    if (!this._scrollValues) {
+    if (!this._mouseValues) {
       return;
     }
 
     //Update scroll direction
-    if (this._scrollValues.current.x > this._scrollValues.last.x) {
-      this._scrollValues.direction.x = 'left';
-      this._scrollValues.scrollSpeed.x = 0;
+    if (this._mouseValues.current.x > this._mouseValues.last.x) {
+      this._mouseValues.direction.x = 'left';
     } else {
-      this._scrollValues.direction.x = 'right';
-      this._scrollValues.scrollSpeed.x = -0;
+      this._mouseValues.direction.x = 'right';
     }
 
-    if (this._scrollValues.current.y > this._scrollValues.last.y) {
-      this._scrollValues.direction.y = 'up';
-      this._scrollValues.scrollSpeed.y = 0;
+    if (this._mouseValues.current.y > this._mouseValues.last.y) {
+      this._mouseValues.direction.y = 'up';
     } else {
-      this._scrollValues.direction.y = 'down';
-      this._scrollValues.scrollSpeed.y = -0;
+      this._mouseValues.direction.y = 'down';
     }
 
-    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+    //Update strength value
+    this._mouseValues.strength.current = lerp(
+      this._mouseValues.strength.current,
+      this._mouseValues.strength.target,
+      this._lerpEase * updateInfo.slowDownFactor,
+    );
 
-    //Update scroll strength
-    const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
-    const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
-
-    this._scrollValues.strength.target = Math.sqrt(
+    const deltaX = this._mouseValues.current.x - this._mouseValues.last.x;
+    const deltaY = this._mouseValues.current.y - this._mouseValues.last.y;
+    this._mouseValues.strength.target = Math.sqrt(
       deltaX * deltaX + deltaY * deltaY,
     );
 
-    this._scrollValues.strength.current = lerp(
-      this._scrollValues.strength.current,
-      this._scrollValues.strength.target,
+    this._mouseValues.last.x = this._mouseValues.current.x;
+    this._mouseValues.last.y = this._mouseValues.current.y;
+
+    //Lerp 2D mouse coords
+    this._mouseValues.current.x = lerp(
+      this._mouseValues.current.x,
+      this._mouseValues.target.x,
       this._lerpEase * updateInfo.slowDownFactor,
     );
-
-    this._scrollValues.last.x = this._scrollValues.current.x;
-    this._scrollValues.last.y = this._scrollValues.current.y;
-
-    //lerp scroll
-    this._scrollValues.current.x = lerp(
-      this._scrollValues.current.x,
-      this._scrollValues.target.x,
-      this._lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.current.y = lerp(
-      this._scrollValues.current.y,
-      this._scrollValues.target.y,
+    this._mouseValues.current.y = lerp(
+      this._mouseValues.current.y,
+      this._mouseValues.target.y,
       this._lerpEase * updateInfo.slowDownFactor,
     );
   }
 
-  set targetScroll({ x, y }: Coords) {
-    this._scrollValues.target.x -= x;
-    this._scrollValues.target.y += y;
+  set targetMouse({ x, y }: Coords) {
+    this._mouseValues.target.x =
+      -x - (-this._domElBounds.left - this._domElBounds.width * 0.5);
+    this._mouseValues.target.y =
+      y - this._domElBounds.top - this._domElBounds.height * 0.5;
   }
 
   animateOpacity({
@@ -357,14 +347,14 @@ export class RecipeItem3D extends MediaObject3D {
 
     this._updateScrollValues(updateInfo);
 
-    this._updateX(this._scrollValues.current.x);
-    this._updateY(this._scrollValues.current.y);
+    this._updateX(this._mouseValues.current.x);
+    this._updateY(this._mouseValues.current.y);
 
     this._handleInfinityScroll();
 
     if (this._mesh) {
       this._mesh.material.uniforms.uStrength.value =
-        this._scrollValues.strength.current * 0.7;
+        this._mouseValues.strength.current * 0.7;
     }
   }
 }
