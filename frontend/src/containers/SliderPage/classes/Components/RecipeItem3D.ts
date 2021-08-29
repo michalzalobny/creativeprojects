@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { RecipieItemProps, UpdateInfo, ScrollValues } from '../types';
+import { RecipieItemProps, UpdateInfo, ScrollValues, Coords } from '../types';
+import { lerp } from '../utils/lerp';
 import { MediaObject3D } from './MediaObject3D';
 import { getRandFloat } from '../utils/getRand';
 
@@ -19,6 +20,7 @@ interface AnimateOpacity {
 }
 
 export class RecipeItem3D extends MediaObject3D {
+  static disappearOffset = 1.03;
   static defaultOpacity = 1;
 
   recipieItem: RecipieItemProps;
@@ -26,7 +28,17 @@ export class RecipeItem3D extends MediaObject3D {
   _domElBounds: DOMRect;
   _childEl: HTMLElement;
   _childElBounds: DOMRect;
-  _scrollValues: ScrollValues | null = null;
+  _scrollValues: ScrollValues = {
+    current: { x: 0, y: 0 },
+    target: { x: 0, y: 0 },
+    last: { x: 0, y: 0 },
+    direction: { x: 'left', y: 'up' },
+    strength: {
+      current: 0,
+      target: 0,
+    },
+    scrollSpeed: { x: 0, y: 0 },
+  };
   _isBefore = false;
   _isAfter = false;
   _animateInTween: Tween<{
@@ -37,6 +49,9 @@ export class RecipeItem3D extends MediaObject3D {
   isAnimatedIn = false;
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
+  _lerpEase: number;
+  _lerpFirst = 0.5;
+  _lerpLast = 20;
 
   constructor({ geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
@@ -49,6 +64,12 @@ export class RecipeItem3D extends MediaObject3D {
     this._childElBounds = this._childEl.getBoundingClientRect();
 
     this.setColliderName('recipeItem');
+
+    this._lerpEase =
+      (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
+      this._lerpFirst;
+
+    this._lerpEase *= 0.01; //Fixes approximation issue (We could specify 0.22 and 0.01 in _lerpFirst/_lerpLast)
   }
 
   _updateBounds() {
@@ -110,8 +131,142 @@ export class RecipeItem3D extends MediaObject3D {
     this._extra.y = 0;
   }
 
-  set scrollValues(scrollValues: ScrollValues) {
-    this._scrollValues = scrollValues;
+  _resetScrollValues() {
+    //Reset scroll values
+    this._scrollValues.current.x = 0;
+    this._scrollValues.current.y = 0;
+
+    this._scrollValues.target.x = 0;
+    this._scrollValues.target.y = 0;
+
+    this._scrollValues.last.x = 0;
+    this._scrollValues.last.y = 0;
+
+    this._scrollValues.strength.current = 0;
+    this._scrollValues.strength.target = 0;
+
+    this._scrollValues.scrollSpeed.x = 0;
+    this._scrollValues.scrollSpeed.y = 0;
+  }
+
+  _handleInfinityScroll() {
+    if (this._mesh && this._scrollValues) {
+      // x axis
+      const scaleX = this._mesh.scale.x / 2;
+      if (this._scrollValues.direction.x === 'left') {
+        const x = this._mesh.position.x + scaleX;
+
+        if (
+          x <
+          (-this._rendererBounds.width / 2) * RecipeItem3D.disappearOffset
+        ) {
+          this._extra.x -=
+            (this._rendererBounds.width + scaleX * 2) *
+            RecipeItem3D.disappearOffset;
+          this._rotateMeshRandomly();
+        }
+      } else if (this._scrollValues.direction.x === 'right') {
+        const x = this._mesh.position.x - scaleX;
+
+        if (
+          x >
+          (this._rendererBounds.width / 2) * RecipeItem3D.disappearOffset
+        ) {
+          this._extra.x +=
+            (this._rendererBounds.width + scaleX * 2) *
+            RecipeItem3D.disappearOffset;
+          this._rotateMeshRandomly();
+        }
+      }
+
+      // y axis
+      const scaleY = this._mesh.scale.y / 2;
+      if (this._scrollValues.direction.y === 'up') {
+        const y = this._mesh.position.y + scaleY;
+
+        if (
+          y <
+          (-this._rendererBounds.height / 2) * RecipeItem3D.disappearOffset
+        ) {
+          this._extra.y -=
+            (this._rendererBounds.height + scaleY * 2) *
+            RecipeItem3D.disappearOffset;
+          this._rotateMeshRandomly();
+        }
+      } else if (this._scrollValues.direction.y === 'down') {
+        const y = this._mesh.position.y - scaleY;
+
+        if (
+          y >
+          (this._rendererBounds.height / 2) * RecipeItem3D.disappearOffset
+        ) {
+          this._extra.y +=
+            (this._rendererBounds.height + scaleY * 2) *
+            RecipeItem3D.disappearOffset;
+          this._rotateMeshRandomly();
+        }
+      }
+    }
+  }
+
+  _updateScrollValues(updateInfo: UpdateInfo) {
+    if (!this._scrollValues) {
+      return;
+    }
+
+    //Update scroll direction
+    if (this._scrollValues.current.x > this._scrollValues.last.x) {
+      this._scrollValues.direction.x = 'left';
+      this._scrollValues.scrollSpeed.x = 0;
+    } else {
+      this._scrollValues.direction.x = 'right';
+      this._scrollValues.scrollSpeed.x = -0;
+    }
+
+    if (this._scrollValues.current.y > this._scrollValues.last.y) {
+      this._scrollValues.direction.y = 'up';
+      this._scrollValues.scrollSpeed.y = 0;
+    } else {
+      this._scrollValues.direction.y = 'down';
+      this._scrollValues.scrollSpeed.y = -0;
+    }
+
+    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+
+    //Update scroll strength
+    const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
+    const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
+
+    this._scrollValues.strength.target = Math.sqrt(
+      deltaX * deltaX + deltaY * deltaY,
+    );
+
+    this._scrollValues.strength.current = lerp(
+      this._scrollValues.strength.current,
+      this._scrollValues.strength.target,
+      this._lerpEase * updateInfo.slowDownFactor,
+    );
+
+    this._scrollValues.last.x = this._scrollValues.current.x;
+    this._scrollValues.last.y = this._scrollValues.current.y;
+
+    //lerp scroll
+    this._scrollValues.current.x = lerp(
+      this._scrollValues.current.x,
+      this._scrollValues.target.x,
+      this._lerpEase * updateInfo.slowDownFactor,
+    );
+
+    this._scrollValues.current.y = lerp(
+      this._scrollValues.current.y,
+      this._scrollValues.target.y,
+      this._lerpEase * updateInfo.slowDownFactor,
+    );
+  }
+
+  set targetScroll({ x, y }: Coords) {
+    this._scrollValues.target.x -= x;
+    this._scrollValues.target.y += y;
   }
 
   animateOpacity({
@@ -196,12 +351,15 @@ export class RecipeItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    if (this._scrollValues) {
-      this._updateX(this._scrollValues.current.x);
-      this._updateY(this._scrollValues.current.y);
-    }
 
-    if (this._mesh && this._scrollValues) {
+    this._updateScrollValues(updateInfo);
+
+    this._updateX(this._scrollValues.current.x);
+    this._updateY(this._scrollValues.current.y);
+
+    this._handleInfinityScroll();
+
+    if (this._mesh) {
       this._mesh.material.uniforms.uStrength.value =
         this._scrollValues.strength.current * 0.7;
     }

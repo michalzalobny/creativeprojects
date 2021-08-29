@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 interface Props {}
 
 export const SliderWrapper = styled(motion.div)<Props>`
-  margin: 20vh 0;
+  margin: 25vh 0;
   display: flex;
   flex-direction: column;
   align-items: center;
