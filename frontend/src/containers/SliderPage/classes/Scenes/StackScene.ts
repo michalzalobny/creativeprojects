@@ -14,6 +14,12 @@ interface Constructor {
   mouseMove: MouseMove;
 }
 
+interface ApplyScrollValues {
+  x: number;
+  y: number;
+  multiplier?: number;
+}
+
 export class StackScene extends RecipeScene {
   static scrollSpeed = 1;
 
@@ -77,19 +83,21 @@ export class StackScene extends RecipeScene {
     });
   };
 
+  _applyScrollValues({ x, y, multiplier = 1 }: ApplyScrollValues) {
+    this._scrollValues.target.x -= x * multiplier;
+    this._scrollValues.target.y += y * multiplier;
+  }
+
   _onScrollTouch = (e: THREE.Event) => {
-    this._scrollValues.target.x -= e.x;
-    this._scrollValues.target.y += e.y;
+    this._applyScrollValues({ x: e.x, y: e.y });
   };
 
   _onScrollWheel = (e: THREE.Event) => {
-    this._scrollValues.target.x -= e.x * 2;
-    this._scrollValues.target.y += e.y * 2;
+    this._applyScrollValues({ x: e.x, y: e.y });
   };
 
   _onScrollMouse = (e: THREE.Event) => {
-    this._scrollValues.target.x -= e.x * 5;
-    this._scrollValues.target.y += e.y * 5;
+    this._applyScrollValues({ x: e.x, y: e.y, multiplier: 2 });
   };
 
   _addListeners() {
