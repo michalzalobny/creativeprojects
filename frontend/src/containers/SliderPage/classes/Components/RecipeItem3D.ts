@@ -131,6 +131,8 @@ export class RecipeItem3D extends MediaObject3D {
   _resetPosition() {
     this._extra.x = 0;
     this._extra.y = 0;
+    this._extraScale.x = 0;
+    this._extraScale.y = 0;
   }
 
   _resetScrollValues() {
