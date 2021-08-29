@@ -50,4 +50,5 @@ export interface MouseValues {
     current: number;
     target: number;
   };
+  autoSpeed: Coords;
 }

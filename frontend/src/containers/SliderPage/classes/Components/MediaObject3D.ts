@@ -114,7 +114,6 @@ export class MediaObject3D extends InteractiveObject3D {
 
   destroy() {
     super.destroy();
-    this._geometry?.dispose();
     this._material?.dispose();
     if (this._mesh) {
       this.remove(this._mesh);
