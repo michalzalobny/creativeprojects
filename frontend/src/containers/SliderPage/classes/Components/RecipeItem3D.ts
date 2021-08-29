@@ -55,8 +55,10 @@ export class RecipeItem3D extends MediaObject3D {
     y: number;
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
+  _dropOutTween: Tween<{ progress: number; rotation: number }> | null = null;
 
   _isAnimatingOut = false;
+
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
   _lerpEase: number;
@@ -338,6 +340,40 @@ export class RecipeItem3D extends MediaObject3D {
       });
 
     this._opacityTween.start();
+  }
+
+  animateDropOut(delay: number) {
+    if (!this._mesh) {
+      return;
+    }
+
+    if (this._dropOutTween) {
+      this._dropOutTween.stop();
+    }
+
+    const start = this._mesh.rotation.z;
+    const destination = Math.PI * 2 + start;
+
+    this._dropOutTween = new TWEEN.Tween({ rotation: start, progress: 0 })
+      .to({ rotation: destination, progress: 1 }, 1600)
+
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .delay(delay)
+      .onUpdate(obj => {
+        this._extraScale.y =
+          -Math.sin(obj.progress * Math.PI) * this._domElBounds.height * 1.3;
+
+        if (this._mesh) {
+          this._mesh.rotation.z = obj.rotation;
+        }
+      })
+      .onComplete(() => {
+        if (this._mesh) {
+          this._mesh.rotation.z = start;
+        }
+      });
+
+    this._dropOutTween.start();
   }
 
   animateOut() {

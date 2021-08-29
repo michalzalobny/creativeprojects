@@ -5,7 +5,7 @@ interface Props {}
 
 export const SliderItem = styled(motion.div)<Props>`
   width: 15vw;
-  background: #f86b6b;
+  background: #dbdbdb;
   position: relative;
   transform: translateX(20vw);
 

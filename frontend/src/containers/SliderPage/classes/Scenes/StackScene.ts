@@ -37,10 +37,12 @@ export class StackScene extends RecipeScene {
   _onMouseDown = (e: THREE.Event) => {
     if (this._canAddItems) {
       this._canAddItems = false;
-      this._recipeItems.forEach(item => {
-        item.animateOut();
+      this._recipeItems.forEach((item, key) => {
+        item.animateDropOut(key * 50);
+
+        // item.animateOut();
       });
-      this._trackKeyArray = [];
+      // this._trackKeyArray = [];
     } else {
       this._canAddItems = true;
     }
