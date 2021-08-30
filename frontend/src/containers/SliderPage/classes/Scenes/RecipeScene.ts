@@ -88,6 +88,7 @@ export class RecipeScene extends InteractiveScene {
 
   addItem() {
     const maxAmount = this._items.length;
+    // const maxAmount = 1;
 
     const itemKey = this._trackKeyArray.length;
 

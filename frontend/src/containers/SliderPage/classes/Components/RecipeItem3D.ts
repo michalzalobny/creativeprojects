@@ -21,7 +21,7 @@ interface AnimateOpacity {
 }
 
 export class RecipeItem3D extends MediaObject3D {
-  static disappearOffset = 1.03;
+  static disappearOffset = 1.05;
   static defaultOpacity = 1;
 
   recipieItem: RecipieItemProps;
@@ -50,23 +50,25 @@ export class RecipeItem3D extends MediaObject3D {
     y: number;
     progress: number;
   }> | null = null;
-  _animateOutTween: Tween<{
+  _scaleItemTween: Tween<{
     x: number;
     y: number;
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
+  _followTween: Tween<{ progress: number }> | null = null;
   _dropOutTween: Tween<{ progress: number; rotation: number }> | null = null;
 
-  _isAnimatingOut = false;
   _isDroppingOut = false;
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
   _extraTranslate = { x: 0, y: 0 };
-  _lerpEase: number;
+  _lerpEase = { current: 0.01, target: 0.01 };
   _lerpFirst = 0.2;
-  _lerpQuotient = 0.8;
-  _lerpLast = 20;
-  _shouldFollow = false;
+  _lerpQuotient = 0.85;
+  _lerpLast = 0.1;
+  _shouldFollow = true;
+  _followProgress = 0;
+  _keyPosition: number;
 
   constructor({ keyPosition, geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
@@ -80,11 +82,13 @@ export class RecipeItem3D extends MediaObject3D {
 
     this.setColliderName('recipeItem');
 
-    this._lerpEase =
-      this._lerpFirst * Math.pow(this._lerpQuotient, keyPosition - 1);
+    this._keyPosition = keyPosition;
+
+    // this._lerpEase =
+    //   this._lerpFirst * Math.pow(this._lerpQuotient, this._keyPosition - 1);
 
     if (this._mesh) {
-      this._mesh.position.z = -keyPosition * 0.1;
+      this._mesh.position.z = -this._keyPosition * 0.1;
     }
 
     // this._lerpEase =
@@ -157,7 +161,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._mesh.scale.x / 2 -
         this._extra.x -
         this._extraScale.x -
-        this._extraTranslate.x;
+        this._extraTranslate.x * (1 - this._followProgress) +
+        this._mouseValues.current.x * (1 - this._followProgress);
     }
   }
 
@@ -170,7 +175,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._mesh.scale.y / 2 -
         this._extra.y -
         this._extraScale.y -
-        this._extraTranslate.y;
+        this._extraTranslate.y * (1 - this._followProgress) +
+        this._mouseValues.current.y * (1 - this._followProgress);
     }
   }
 
@@ -268,8 +274,8 @@ export class RecipeItem3D extends MediaObject3D {
       return;
     }
 
-    this._mouseValues.target.y += this._mouseValues.autoSpeed.y;
-    this._mouseValues.target.x += this._mouseValues.autoSpeed.x;
+    // this._mouseValues.target.y += this._mouseValues.autoSpeed.y;
+    // this._mouseValues.target.x += this._mouseValues.autoSpeed.x;
 
     //Update scroll direction
     if (this._mouseValues.current.x > this._mouseValues.last.x) {
@@ -288,7 +294,7 @@ export class RecipeItem3D extends MediaObject3D {
     this._mouseValues.strength.current = lerp(
       this._mouseValues.strength.current,
       this._mouseValues.strength.target,
-      this._lerpEase * updateInfo.slowDownFactor,
+      this._lerpEase.current * updateInfo.slowDownFactor,
     );
 
     const deltaX = this._mouseValues.current.x - this._mouseValues.last.x;
@@ -305,12 +311,12 @@ export class RecipeItem3D extends MediaObject3D {
     this._mouseValues.current.x = lerp(
       this._mouseValues.current.x,
       this._mouseValues.target.x,
-      this._lerpEase * updateInfo.slowDownFactor,
+      this._lerpEase.current * updateInfo.slowDownFactor,
     );
     this._mouseValues.current.y = lerp(
       this._mouseValues.current.y,
       this._mouseValues.target.y,
-      this._lerpEase * updateInfo.slowDownFactor,
+      this._lerpEase.current * updateInfo.slowDownFactor,
     );
   }
 
@@ -321,13 +327,13 @@ export class RecipeItem3D extends MediaObject3D {
     if (this._animateInTween) {
       this._animateInTween.stop();
     }
-    if (this._animateOutTween) {
-      this._animateOutTween.stop();
+    if (this._scaleItemTween) {
+      this._scaleItemTween.stop();
     }
   }
 
   set targetMouse({ x, y }: Coords) {
-    if (this._isAnimatingOut || !this._shouldFollow) {
+    if (!this._shouldFollow) {
       return;
     }
 
@@ -362,6 +368,47 @@ export class RecipeItem3D extends MediaObject3D {
     this._opacityTween.start();
   }
 
+  animateFollow(destination: number, delay: number, duration: number) {
+    if (this._followTween) {
+      this._followTween.stop();
+    }
+
+    const isReverted = destination === 0;
+
+    this._followTween = new TWEEN.Tween({ progress: this._followProgress })
+      .to({ progress: destination }, duration)
+
+      .easing(
+        isReverted
+          ? TWEEN.Easing.Exponential.InOut
+          : TWEEN.Easing.Sinusoidal.InOut,
+      )
+      .delay(delay)
+      .onUpdate(obj => {
+        if (destination === 0) {
+          // if (obj.progress < 0.3) {
+          this._shouldFollow = false;
+          // }
+        } else {
+          this._shouldFollow = true;
+        }
+
+        // if (destination === 0) {
+        //   this._extraFollowTranslate.x =
+        //     this._mouseValues.current.x * obj.progress;
+        //   this._extraFollowTranslate.y =
+        //     -this._mouseValues.current.y * obj.progress;
+        // }
+
+        this._followProgress = obj.progress;
+      })
+      .onComplete(() => {
+        this._shouldFollow = true;
+      });
+
+    this._followTween.start();
+  }
+
   animateDropOut(delay: number) {
     if (!this._mesh || this._isDroppingOut) {
       return;
@@ -377,13 +424,13 @@ export class RecipeItem3D extends MediaObject3D {
     const destination = Math.PI * 2 + start;
 
     this._dropOutTween = new TWEEN.Tween({ rotation: start, progress: 0 })
-      .to({ rotation: destination, progress: 1 }, 1600)
+      .to({ rotation: destination, progress: 1 }, 700)
 
-      .easing(TWEEN.Easing.Exponential.InOut)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
       .delay(delay)
       .onUpdate(obj => {
-        this._extraScale.y =
-          -Math.sin(obj.progress * Math.PI) * this._domElBounds.height * 1.3;
+        // this._extraScale.y =
+        //   -Math.sin(obj.progress * Math.PI) * this._domElBounds.height * 1.3;
 
         if (this._mesh) {
           this._mesh.rotation.z = obj.rotation;
@@ -399,37 +446,28 @@ export class RecipeItem3D extends MediaObject3D {
     this._dropOutTween.start();
   }
 
-  animateOut() {
+  scaleItem(
+    destinationX: number,
+    destinationY: number,
+    delay: number,
+    duration: number,
+  ) {
     if (!this._mesh) {
       return;
     }
 
     this._stopTweens();
 
-    this._isAnimatingOut = true;
-
     const startX = this._mesh.scale.x;
     const startY = this._mesh.scale.y;
 
-    const destinationX = this._childElBounds.width;
-    const destinationY = this._childElBounds.height;
-
-    const duration = 700;
-
-    this.animateOpacity({
-      destination: 0,
-      duration,
-      delay: 0,
-      easing: TWEEN.Easing.Exponential.InOut,
-    });
-
-    this._animateOutTween = new TWEEN.Tween({
+    this._scaleItemTween = new TWEEN.Tween({
       x: startX,
       y: startY,
     })
       .to({ x: destinationX, y: destinationY }, duration)
-      .delay(0)
-      .easing(TWEEN.Easing.Exponential.InOut)
+      .delay(delay)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
       .onUpdate(obj => {
         if (this._mesh) {
           this._extraScale.x = -(this._domElBounds.width - obj.x) / 2;
@@ -439,11 +477,9 @@ export class RecipeItem3D extends MediaObject3D {
           this._mesh.scale.y = obj.y;
         }
       })
-      .onComplete(() => {
-        this.destroy();
-      });
+      .onComplete(() => {});
 
-    this._animateOutTween.start();
+    this._scaleItemTween.start();
   }
 
   animateIn() {
@@ -500,6 +536,35 @@ export class RecipeItem3D extends MediaObject3D {
     this._animateInTween.start();
   }
 
+  toggleFollowing(value: boolean) {
+    if (value) {
+      this._lerpEase.target =
+        this._lerpFirst * Math.pow(this._lerpQuotient, this._keyPosition - 1);
+
+      this.scaleItem(
+        this._domElBounds.width * 2,
+        this._domElBounds.height * 2,
+        this._keyPosition * 5,
+        1000,
+      );
+      this.animateFollow(1, this._keyPosition * 5, 1000);
+    } else {
+      this._lerpEase.target = 0.01;
+      this._mouseValues.target.x = this._mouseValues.current.x;
+      this._mouseValues.target.y = this._mouseValues.current.y;
+      this._mouseValues.last.x = this._mouseValues.current.x;
+      this._mouseValues.last.y = this._mouseValues.current.y;
+
+      this.scaleItem(
+        this._domElBounds.width,
+        this._domElBounds.height,
+        this._keyPosition * 20,
+        1300,
+      );
+      this.animateFollow(0, this._keyPosition * 20, 1600);
+    }
+  }
+
   destroy() {
     super.destroy();
     this.dispatchEvent({ type: 'destroyed' });
@@ -519,9 +584,16 @@ export class RecipeItem3D extends MediaObject3D {
     this._updateY(this._mouseValues.current.y);
     this._handleInfinityScroll();
 
+    //Animate lerp
+    this._lerpEase.current = lerp(
+      this._lerpEase.current,
+      this._lerpEase.target,
+      0.01 * updateInfo.slowDownFactor,
+    );
+
     if (this._mesh) {
       this._mesh.material.uniforms.uStrength.value =
-        this._mouseValues.strength.current * 0.7;
+        this._mouseValues.strength.current * this._followProgress;
     }
   }
 }

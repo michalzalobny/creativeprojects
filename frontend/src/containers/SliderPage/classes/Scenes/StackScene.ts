@@ -37,27 +37,36 @@ export class StackScene extends RecipeScene {
   _onMouseDown = (e: THREE.Event) => {
     if (this._canAddItems) {
       this._canAddItems = false;
-      this._recipeItems.forEach((item, key) => {
-        item.animateDropOut(key * 50);
-
-        // item.animateOut();
-      });
-      // this._trackKeyArray = [];
     } else {
       this._canAddItems = true;
     }
+    this._recipeItems.forEach((item, key) => {
+      // item.animateDropOut(key * 50);
+      item.toggleFollowing(true);
+
+      // item.animateOut();
+    });
+    // this._trackKeyArray = [];
+  };
+
+  _onMouseUp = (e: THREE.Event) => {
+    this._recipeItems.forEach((item, key) => {
+      item.toggleFollowing(false);
+    });
   };
 
   _addListeners() {
     super._addListeners();
 
     this._mouseMove.addEventListener('down', this._onMouseDown);
+    this._mouseMove.addEventListener('up', this._onMouseUp);
   }
 
   _removeListeners() {
     super._removeListeners();
 
     this._mouseMove.removeEventListener('down', this._onMouseDown);
+    this._mouseMove.removeEventListener('up', this._onMouseUp);
   }
 
   _passIntersectPoint() {
