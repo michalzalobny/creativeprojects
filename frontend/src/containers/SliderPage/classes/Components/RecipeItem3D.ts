@@ -470,7 +470,7 @@ export class RecipeItem3D extends MediaObject3D {
       this.scaleItem(
         this._domElBounds.width * 2.4,
         this._domElBounds.height * 2.4,
-        600 + this._keyPosition * 5,
+        this._keyPosition * 5,
         1200,
         TWEEN.Easing.Exponential.InOut,
       );
@@ -487,8 +487,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._domElBounds.width,
         this._domElBounds.height,
         this._keyPosition * 20,
-        1300,
-        TWEEN.Easing.Sinusoidal.InOut,
+        1600,
+        TWEEN.Easing.Exponential.InOut,
       );
 
       this.animateFollow(0, this._keyPosition * 20, 1600);
