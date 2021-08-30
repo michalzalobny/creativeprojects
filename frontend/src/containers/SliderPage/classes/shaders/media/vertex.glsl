@@ -8,6 +8,8 @@ uniform vec2 uViewportSizes;
 uniform vec2 uPlaneSizes;
 uniform vec3 uMouse3D;
 
+uniform float uRandom;
+
 varying vec2 vUv;
 
 void main() {
@@ -15,13 +17,13 @@ void main() {
   vec3 stablePosition = position;
   
   //Parallax mouse animation
-  // stablePosition.x -= uMouse3D.x * 0.0009;
-  // stablePosition.y -= uMouse3D.y * 0.0009;
+  stablePosition.x -= uMouse3D.x * 0.0003 * (2.5 * uRandom +1.);
+  stablePosition.y -= uMouse3D.y * 0.0003 * (2.5 * uRandom +1.);
 
   // Cursor animation
   // float dist = distance(position.xy, uMouse3D.xy);
-  // float area = 1.- smoothstep(0., 30., dist);
-  // stablePosition.z += dist * 0.1;
+  // float area = 1.- smoothstep(0., 50., dist);
+  // stablePosition.z += dist * 0.0005;
 
   vec4 newPosition = modelViewMatrix * vec4(stablePosition, 1.0);
 

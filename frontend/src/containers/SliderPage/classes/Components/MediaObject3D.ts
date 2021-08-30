@@ -37,6 +37,7 @@ export class MediaObject3D extends InteractiveObject3D {
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
         uTime: { value: 0 },
+        uRandom: { value: Math.random() },
         uHovered: { value: 0 },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
         uViewportSizes: {

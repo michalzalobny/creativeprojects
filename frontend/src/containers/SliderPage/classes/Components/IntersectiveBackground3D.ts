@@ -14,7 +14,7 @@ export class IntersectiveBackground3D extends InteractiveObject3D {
   }
 
   _drawRaycasterPlane() {
-    this._geometry = new THREE.PlaneBufferGeometry(1000, 1000);
+    this._geometry = new THREE.PlaneBufferGeometry(5000, 5000);
     this._material = new THREE.MeshBasicMaterial({
       transparent: true,
       depthWrite: false,

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import TWEEN, { Tween } from '@tweenjs/tween.js';
+import TWEEN, { Tween, Easing } from '@tweenjs/tween.js';
 
 import { RecipieItemProps, UpdateInfo, MouseValues, Coords } from '../types';
 import { lerp } from '../utils/lerp';
@@ -451,6 +451,7 @@ export class RecipeItem3D extends MediaObject3D {
     destinationY: number,
     delay: number,
     duration: number,
+    easing: (amount: number) => number,
   ) {
     if (!this._mesh) {
       return;
@@ -467,7 +468,7 @@ export class RecipeItem3D extends MediaObject3D {
     })
       .to({ x: destinationX, y: destinationY }, duration)
       .delay(delay)
-      .easing(TWEEN.Easing.Sinusoidal.InOut)
+      .easing(easing)
       .onUpdate(obj => {
         if (this._mesh) {
           this._extraScale.x = -(this._domElBounds.width - obj.x) / 2;
@@ -542,10 +543,11 @@ export class RecipeItem3D extends MediaObject3D {
         this._lerpFirst * Math.pow(this._lerpQuotient, this._keyPosition - 1);
 
       this.scaleItem(
-        this._domElBounds.width * 2,
-        this._domElBounds.height * 2,
+        this._domElBounds.width * 2.4,
+        this._domElBounds.height * 2.4,
         this._keyPosition * 5,
-        1000,
+        1300,
+        TWEEN.Easing.Exponential.InOut,
       );
       this.animateFollow(1, this._keyPosition * 5, 1000);
     } else {
@@ -560,6 +562,7 @@ export class RecipeItem3D extends MediaObject3D {
         this._domElBounds.height,
         this._keyPosition * 20,
         1300,
+        TWEEN.Easing.Sinusoidal.InOut,
       );
       this.animateFollow(0, this._keyPosition * 20, 1600);
     }
