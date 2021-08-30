@@ -18,7 +18,10 @@ export class StackScene extends RecipeScene {
   _scroll: Scroll;
   _lastAddedTime = 0;
   _canAddItems = false;
+  _lastRotateTime = 0;
+  _canRotateItems = false;
   _HTMLComponents: HTMLComponent[] = [];
+  _rotateRespawn = 15000;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -35,21 +38,19 @@ export class StackScene extends RecipeScene {
   }
 
   _onMouseDown = (e: THREE.Event) => {
+    this._canRotateItems = true;
     if (this._canAddItems) {
       this._canAddItems = false;
     } else {
       this._canAddItems = true;
     }
     this._recipeItems.forEach((item, key) => {
-      // item.animateDropOut(key * 50);
       item.toggleFollowing(true);
-
-      // item.animateOut();
     });
-    // this._trackKeyArray = [];
   };
 
   _onMouseUp = (e: THREE.Event) => {
+    this._canRotateItems = false;
     this._recipeItems.forEach((item, key) => {
       item.toggleFollowing(false);
     });
@@ -91,6 +92,23 @@ export class StackScene extends RecipeScene {
     }
   }
 
+  _rotateItems() {
+    if (!this._canRotateItems) {
+      return;
+    }
+
+    const currentTime = window.performance.now();
+    const timeDifference = currentTime - this._lastRotateTime; //in ms
+
+    if (timeDifference > this._rotateRespawn) {
+      this._recipeItems.forEach((item, key) => {
+        item.animateDropOut(key * 50);
+      });
+
+      this._lastRotateTime = window.performance.now();
+    }
+  }
+
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
 
@@ -109,6 +127,7 @@ export class StackScene extends RecipeScene {
     this._passIntersectPoint();
 
     this._addItems();
+    this._rotateItems();
 
     this._HTMLComponents.forEach(el => {
       el.update(updateInfo);
