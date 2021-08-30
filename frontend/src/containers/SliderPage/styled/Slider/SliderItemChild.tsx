@@ -11,5 +11,5 @@ export const SliderItemChild = styled(motion.div)<Props>`
   width: 180%;
   height: 180%;
   background: #568b80;
-  opacity: 0.5;
+  opacity: 0;
 `;

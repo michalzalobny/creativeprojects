@@ -53,9 +53,13 @@ export default function SliderPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
 
       <SliderWrapper>
-        <SliderItem data-recipe="entry">
-          <SliderItemChild />
-        </SliderItem>
+        {props.projectData.creativeItems.map((item, key) => {
+          return (
+            <SliderItem key={item.image.url} data-recipe="entry">
+              <SliderItemChild />
+            </SliderItem>
+          );
+        })}
       </SliderWrapper>
 
       <Wrapper>

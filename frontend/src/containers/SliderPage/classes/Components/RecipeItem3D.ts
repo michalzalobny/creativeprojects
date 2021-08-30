@@ -43,12 +43,12 @@ export class RecipeItem3D extends MediaObject3D {
       y: 0,
     },
   };
-  _isInit = false;
   _isBefore = false;
   _isAfter = false;
   _animateInTween: Tween<{
     x: number;
     y: number;
+    progress: number;
   }> | null = null;
   _animateOutTween: Tween<{
     x: number;
@@ -61,10 +61,12 @@ export class RecipeItem3D extends MediaObject3D {
   _isDroppingOut = false;
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
+  _extraTranslate = { x: 0, y: 0 };
   _lerpEase: number;
   _lerpFirst = 0.2;
   _lerpQuotient = 0.8;
   _lerpLast = 20;
+  _shouldFollow = false;
 
   constructor({ keyPosition, geometry, recipieItem, domEl }: Constructor) {
     super({ geometry });
@@ -82,13 +84,46 @@ export class RecipeItem3D extends MediaObject3D {
       this._lerpFirst * Math.pow(this._lerpQuotient, keyPosition - 1);
 
     if (this._mesh) {
-      this._mesh.position.z = -keyPosition * 2;
+      this._mesh.position.z = -keyPosition * 0.1;
     }
 
     // this._lerpEase =
     //   (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
     //   this._lerpFirst;
     // this._lerpEase *= 0.01; //Fixes approximation issue (We could specify 0.22 and 0.01 in _lerpFirst/_lerpLast)
+  }
+
+  _positionRandomly() {
+    const position = this._getRandomPosition();
+
+    this._extraTranslate.x = position.x;
+    this._extraTranslate.y = position.y;
+  }
+
+  _getRandomPosition(): { x: number; y: number } {
+    const randomValueX = getRandFloat(-1, 1);
+    const signX = randomValueX > 0 ? 1 : -1;
+
+    const randomValueY = getRandFloat(-1, 1);
+    const signY = randomValueY > 0 ? 1 : -1;
+
+    const x =
+      (randomValueX * this._rendererBounds.width) / 2 -
+      this._domElBounds.width * signX;
+    const y =
+      (randomValueY * this._rendererBounds.height) / 2 -
+      this._domElBounds.height * signY;
+
+    // console.log(y);
+
+    if (
+      Math.abs(x) <= this._rendererBounds.width / 5 &&
+      Math.abs(y) <= this._rendererBounds.height / 9
+    ) {
+      return this._getRandomPosition();
+    }
+
+    return { x, y };
   }
 
   _updateBounds() {
@@ -123,7 +158,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
         this._extra.x -
-        this._extraScale.x;
+        this._extraScale.x -
+        this._extraTranslate.x;
     }
   }
 
@@ -135,7 +171,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
         this._extra.y -
-        this._extraScale.y;
+        this._extraScale.y -
+        this._extraTranslate.y;
     }
   }
 
@@ -150,6 +187,7 @@ export class RecipeItem3D extends MediaObject3D {
     this._extra.y = 0;
     this._extraScale.x = 0;
     this._extraScale.y = 0;
+    this._positionRandomly();
   }
 
   _resetScrollValues() {
@@ -228,7 +266,7 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   _updateMouseValues(updateInfo: UpdateInfo) {
-    if (!this._mouseValues || !this._isInit) {
+    if (!this._mouseValues) {
       return;
     }
 
@@ -291,23 +329,7 @@ export class RecipeItem3D extends MediaObject3D {
   }
 
   set targetMouse({ x, y }: Coords) {
-    if (this._isAnimatingOut) {
-      return;
-    }
-
-    if (!this._isInit) {
-      this._mouseValues.target.x =
-        -x - (-this._domElBounds.left - this._domElBounds.width * 0.5);
-      this._mouseValues.target.y =
-        y - this._domElBounds.top - this._domElBounds.height * 0.5;
-
-      this._mouseValues.current.x = this._mouseValues.target.x;
-      this._mouseValues.current.y = this._mouseValues.target.y;
-
-      this._mouseValues.last.x = this._mouseValues.target.x;
-      this._mouseValues.last.y = this._mouseValues.target.y;
-
-      this._isInit = true;
+    if (this._isAnimatingOut || !this._shouldFollow) {
       return;
     }
 
@@ -437,6 +459,10 @@ export class RecipeItem3D extends MediaObject3D {
 
     this._rotateMeshRandomly();
 
+    const progress = 0;
+
+    const positionStart = this._getRandomPosition();
+
     const startX = this._childElBounds.width;
     const startY = this._childElBounds.height;
 
@@ -455,13 +481,17 @@ export class RecipeItem3D extends MediaObject3D {
     this._animateInTween = new TWEEN.Tween({
       x: startX,
       y: startY,
+      progress,
     })
-      .to({ x: destinationX, y: destinationY }, duration)
+      .to({ x: destinationX, y: destinationY, progress: 1 }, duration)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         if (this._mesh) {
           this._extraScale.x = -(destinationX - obj.x) / 2;
           this._extraScale.y = (destinationY - obj.y) / 2;
+
+          this._extraTranslate.x = obj.progress * positionStart.x;
+          this._extraTranslate.y = obj.progress * positionStart.y;
 
           this._mesh.scale.x = obj.x;
           this._mesh.scale.y = obj.y;

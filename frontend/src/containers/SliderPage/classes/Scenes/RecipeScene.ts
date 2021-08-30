@@ -82,7 +82,7 @@ export class RecipeScene extends InteractiveScene {
   }
 
   addItem() {
-    const maxAmount = 10;
+    const maxAmount = this._items.length;
 
     const itemKey = this._trackKeyArray.length;
 
@@ -105,6 +105,7 @@ export class RecipeScene extends InteractiveScene {
     });
 
     item3D.textureItem = this._textureItems[item3D.recipieItem.item.image.url];
+
     item3D.rendererBounds = this._rendererBounds;
     item3D.addEventListener('destroyed', this._onItemDestroy);
     this._recipeItems.push(item3D);
