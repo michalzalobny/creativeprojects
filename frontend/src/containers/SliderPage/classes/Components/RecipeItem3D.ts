@@ -114,8 +114,6 @@ export class RecipeItem3D extends MediaObject3D {
       (randomValueY * this._rendererBounds.height) / 2 -
       this._domElBounds.height * signY;
 
-    // console.log(y);
-
     if (
       Math.abs(x) <= this._rendererBounds.width / 5 &&
       Math.abs(y) <= this._rendererBounds.height / 9
@@ -509,8 +507,8 @@ export class RecipeItem3D extends MediaObject3D {
 
   onResize() {
     super.onResize();
-    this._resetPosition();
     this._updateBounds();
+    this._resetPosition();
   }
 
   update(updateInfo: UpdateInfo) {

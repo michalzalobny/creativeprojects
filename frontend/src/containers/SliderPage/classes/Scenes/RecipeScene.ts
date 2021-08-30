@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import debounce from 'lodash/debounce';
 
 import { UpdateInfo, RecipieItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
@@ -45,24 +46,28 @@ export class RecipeScene extends InteractiveScene {
     this._recipeItems = [];
   }
 
-  _onResize = () => {
+  _onResizeDebounced = debounce(() => {
+    this._onResize();
+  }, 300);
+
+  _onResize() {
     if (this._recipeItems) {
       this._recipeItems.forEach(item => {
         item.onResize();
       });
     }
-  };
+  }
 
   _addListeners() {
     super._addListeners();
 
-    window.addEventListener('resize', this._onResize);
+    window.addEventListener('resize', this._onResizeDebounced);
   }
 
   _removeListeners() {
     super._removeListeners();
 
-    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('resize', this._onResizeDebounced);
   }
 
   set items(items: RecipieItemProps[]) {
