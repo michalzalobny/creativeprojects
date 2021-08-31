@@ -30,7 +30,7 @@ export class App {
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
-  _FollowScene: FollowScene;
+  _followScene: FollowScene;
 
   constructor({
     imagesToPreload,
@@ -50,7 +50,7 @@ export class App {
       alpha: true,
     });
 
-    this._FollowScene = new FollowScene({
+    this._followScene = new FollowScene({
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
@@ -58,8 +58,8 @@ export class App {
       setIsAnimatedIn,
     });
 
-    this._FollowScene.items = Array.from(items).map((item, key) => {
-      return { key: items.length - key, item };
+    this._followScene.items = Array.from(items).map((item, key) => {
+      return { key, item };
     });
 
     this._onResize();
@@ -85,7 +85,7 @@ export class App {
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this._camera.updateProjectionMatrix();
 
-    this._FollowScene.rendererBounds = rendererBounds;
+    this._followScene.rendererBounds = rendererBounds;
   };
 
   _onVisibilityChange = () => {
@@ -97,7 +97,7 @@ export class App {
   };
 
   _onAssetsLoaded = (e: THREE.Event) => {
-    this._FollowScene.textureItems = (e.target as Preloader).textureItems;
+    this._followScene.textureItems = (e.target as Preloader).textureItems;
   };
 
   _addListeners() {
@@ -141,9 +141,9 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
-    this._FollowScene.update({ delta, slowDownFactor, time });
+    this._followScene.update({ delta, slowDownFactor, time });
 
-    this._renderer.render(this._FollowScene, this._camera);
+    this._renderer.render(this._followScene, this._camera);
   };
 
   _stopAppFrame() {
@@ -159,7 +159,7 @@ export class App {
     this._stopAppFrame();
     this._removeListeners();
 
-    this._FollowScene.destroy();
+    this._followScene.destroy();
     this._preloader.destroy();
   }
 }
