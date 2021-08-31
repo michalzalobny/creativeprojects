@@ -66,10 +66,6 @@ export class MediaObject3D extends InteractiveObject3D {
     }
   }
 
-  set opacity(value: number) {
-    this._masterOpacity = value;
-  }
-
   _updateOpacity() {
     if (this._mesh) {
       const computedOpacity =
@@ -77,6 +73,26 @@ export class MediaObject3D extends InteractiveObject3D {
 
       this._mesh.material.uniforms.uOpacity.value = computedOpacity;
       this._isVisible = computedOpacity > 0;
+    }
+  }
+
+  onResize() {}
+
+  update(updateInfo: UpdateInfo) {
+    super.update(updateInfo);
+
+    this._updateOpacity();
+
+    if (this._intersectPoint && this._mesh) {
+      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
+    }
+  }
+
+  destroy() {
+    super.destroy();
+    this._material?.dispose();
+    if (this._mesh) {
+      this.remove(this._mesh);
     }
   }
 
@@ -101,23 +117,7 @@ export class MediaObject3D extends InteractiveObject3D {
     this.onResize();
   }
 
-  onResize() {}
-
-  update(updateInfo: UpdateInfo) {
-    super.update(updateInfo);
-
-    this._updateOpacity();
-
-    if (this._intersectPoint && this._mesh) {
-      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
-    }
-  }
-
-  destroy() {
-    super.destroy();
-    this._material?.dispose();
-    if (this._mesh) {
-      this.remove(this._mesh);
-    }
+  set opacity(value: number) {
+    this._masterOpacity = value;
   }
 }
