@@ -14,7 +14,7 @@ export const Wrapper = styled(motion.div)<Props>`
   overflow: hidden;
 
   &:before {
-    opacity: 0.5;
+    opacity: 0;
     content: '';
     display: block;
     position: absolute;
@@ -31,7 +31,7 @@ export const Wrapper = styled(motion.div)<Props>`
   }
 
   &:after {
-    opacity: 0.5;
+    opacity: 0;
     content: '';
     display: block;
     position: absolute;
