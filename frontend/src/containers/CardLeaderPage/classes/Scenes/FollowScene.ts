@@ -18,15 +18,12 @@ export class FollowScene extends CardScene {
   static respawnTimeout = 90; //ms
 
   _scroll: Scroll;
+  _HTMLComponents: HTMLComponent[] = [];
   _lastAddedTime = 0;
   _canAddItems = false;
-  _lastRotateTime = 0;
-  _canRotateItems = false;
-  _HTMLComponents: HTMLComponent[] = [];
-  _rotateRespawn = 15000;
+  _areItemsAnimatedIn = false;
   _setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
   _setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  _areItemsAnimatedIn = false;
 
   constructor({
     setIsAnimatedIn,
@@ -57,7 +54,7 @@ export class FollowScene extends CardScene {
     setTimeout(() => {
       this._areItemsAnimatedIn = true;
       this._setIsAnimatedIn(true);
-    }, FollowScene.respawnTimeout * (this._items.length + 1) + 1500);
+    }, FollowScene.respawnTimeout * this._items.length + 1500);
   }
 
   _onMouseDown = (e: THREE.Event) => {
@@ -65,7 +62,6 @@ export class FollowScene extends CardScene {
       return;
     }
 
-    this._canRotateItems = true;
     this._setIsFollowing(true);
 
     this._cardItems.forEach((item, key) => {
@@ -76,7 +72,6 @@ export class FollowScene extends CardScene {
   };
 
   _onMouseUp = (e: THREE.Event) => {
-    this._canRotateItems = false;
     this._setIsFollowing(false);
     this._cardItems.forEach((item, key) => {
       if (item.isAnimatedIn) {
@@ -118,23 +113,6 @@ export class FollowScene extends CardScene {
     if (timeDifference > FollowScene.respawnTimeout) {
       super.addItem();
       this._lastAddedTime = window.performance.now();
-    }
-  }
-
-  _rotateItems() {
-    if (!this._canRotateItems) {
-      return;
-    }
-
-    const currentTime = window.performance.now();
-    const timeDifference = currentTime - this._lastRotateTime; //in ms
-
-    if (timeDifference > this._rotateRespawn) {
-      this._cardItems.forEach((item, key) => {
-        item.animateDropOut(key * 50);
-      });
-
-      this._lastRotateTime = window.performance.now();
     }
   }
 
