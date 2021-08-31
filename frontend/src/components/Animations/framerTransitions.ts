@@ -23,8 +23,8 @@ export const springVerySlow = {
   stiffness: 300,
   damping: 70,
   mass: 2,
-  restDelta: 0.01,
-  restSpeed: 0.01,
+  restDelta: 0.001,
+  restSpeed: 0.001,
 };
 
 export const springSlow = {

@@ -12,6 +12,8 @@ import { PageProps } from './data';
 import { SliderItem } from './styled/Slider/SliderItem';
 import { SliderWrapper } from './styled/Slider/SliderWrapper';
 import { SliderItemChild } from './styled/Slider/SliderItemChild';
+import { SignWrapper } from './styled/Slider/SignWrapper';
+import { SignSvgComp } from './styled/Slider/SignSvgComp';
 
 export default function SliderPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
@@ -63,6 +65,10 @@ export default function SliderPage(props: PageProps) {
       </SliderWrapper>
 
       <Wrapper>
+        <SignWrapper>
+          <SignSvgComp />
+        </SignWrapper>
+
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
     </>

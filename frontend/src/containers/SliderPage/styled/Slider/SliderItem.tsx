@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 interface Props {}
 
 export const SliderItem = styled(motion.div)<Props>`
-  width: 5vw;
+  width: 5.5vw;
   background: #dbdbdb;
   position: relative;
   transform: translateX(20vw);
@@ -12,6 +12,7 @@ export const SliderItem = styled(motion.div)<Props>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  opacity: 0;
 
   &:before {
     content: '';
