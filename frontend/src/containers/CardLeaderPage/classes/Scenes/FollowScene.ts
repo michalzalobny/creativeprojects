@@ -22,6 +22,7 @@ export class FollowScene extends CardScene {
   _lastAddedTime = 0;
   _canAddItems = false;
   _areItemsAnimatedIn = false;
+  _updateAnimateTimeout: ReturnType<typeof setTimeout> | null = null;
   _setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
   _setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -51,7 +52,7 @@ export class FollowScene extends CardScene {
     super._animateInItems();
     this._canAddItems = true;
 
-    setTimeout(() => {
+    this._updateAnimateTimeout = setTimeout(() => {
       this._areItemsAnimatedIn = true;
       this._setIsAnimatedIn(true);
     }, FollowScene.respawnTimeout * this._items.length + 1500);
@@ -108,24 +109,12 @@ export class FollowScene extends CardScene {
     }
 
     const currentTime = window.performance.now();
-    const timeDifference = currentTime - this._lastAddedTime; //in ms
+    const timeDifference = currentTime - this._lastAddedTime;
 
     if (timeDifference > FollowScene.respawnTimeout) {
       super.addItem();
       this._lastAddedTime = window.performance.now();
     }
-  }
-
-  set rendererBounds(bounds: Bounds) {
-    super.rendererBounds = bounds;
-
-    this._HTMLComponents.forEach(el => {
-      el.rendererBounds = this._rendererBounds;
-    });
-  }
-
-  set items(items: FollowItemProps[]) {
-    super.items = items;
   }
 
   update(updateInfo: UpdateInfo) {
@@ -141,8 +130,24 @@ export class FollowScene extends CardScene {
   destroy() {
     super.destroy();
 
+    if (this._updateAnimateTimeout) {
+      clearTimeout(this._updateAnimateTimeout);
+    }
+
     this._HTMLComponents.forEach(el => {
       el.destroy();
     });
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+
+    this._HTMLComponents.forEach(el => {
+      el.rendererBounds = this._rendererBounds;
+    });
+  }
+
+  set items(items: FollowItemProps[]) {
+    super.items = items;
   }
 }
