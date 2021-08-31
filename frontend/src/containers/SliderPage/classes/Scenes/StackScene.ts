@@ -10,6 +10,7 @@ interface Constructor {
   camera: THREE.PerspectiveCamera;
   scroll: Scroll;
   mouseMove: MouseMove;
+  setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class StackScene extends RecipeScene {
@@ -22,13 +23,15 @@ export class StackScene extends RecipeScene {
   _canRotateItems = false;
   _HTMLComponents: HTMLComponent[] = [];
   _rotateRespawn = 15000;
+  _setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
 
-  constructor({ camera, mouseMove, scroll }: Constructor) {
+  constructor({ setIsFollowing, camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
     this._initHtmlComponents();
+    this._setIsFollowing = setIsFollowing;
   }
 
   _passMouseValues(x: number, y: number) {
@@ -44,6 +47,7 @@ export class StackScene extends RecipeScene {
 
   _onMouseDown = (e: THREE.Event) => {
     this._canRotateItems = true;
+    this._setIsFollowing(true);
 
     this._recipeItems.forEach((item, key) => {
       if (item.isAnimatedIn) {
@@ -54,6 +58,7 @@ export class StackScene extends RecipeScene {
 
   _onMouseUp = (e: THREE.Event) => {
     this._canRotateItems = false;
+    this._setIsFollowing(false);
     this._recipeItems.forEach((item, key) => {
       if (item.isAnimatedIn) {
         item.toggleFollowing(false);

@@ -12,6 +12,7 @@ interface Constructor {
   rendererWrapperEl: HTMLDivElement;
   items: CreativeItem[];
   imagesToPreload: string[];
+  setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class App {
@@ -30,7 +31,12 @@ export class App {
   _preloader = new Preloader();
   _stackScene: StackScene;
 
-  constructor({ imagesToPreload, items, rendererWrapperEl }: Constructor) {
+  constructor({
+    imagesToPreload,
+    items,
+    rendererWrapperEl,
+    setIsFollowing,
+  }: Constructor) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -46,6 +52,7 @@ export class App {
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
+      setIsFollowing,
     });
 
     this._stackScene.items = Array.from(items).map((item, key) => {

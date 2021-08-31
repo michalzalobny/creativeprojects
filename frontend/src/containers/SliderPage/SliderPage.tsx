@@ -14,11 +14,15 @@ import { SliderWrapper } from './styled/Slider/SliderWrapper';
 import { SliderItemChild } from './styled/Slider/SliderItemChild';
 import { SignWrapper } from './styled/Slider/SignWrapper';
 import { SignSvgComp } from './styled/Slider/SignSvgComp';
+import { useState } from 'react';
+import { SignContainer } from './styled/Slider/SignContainer';
 
 export default function SliderPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
 
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
+
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const myApp = useRef<App | null>(null);
   const appTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -39,6 +43,7 @@ export default function SliderPage(props: PageProps) {
           rendererWrapperEl: rendererWrapperEl.current,
           items: props.projectData.creativeItems,
           imagesToPreload,
+          setIsFollowing,
         });
       }
     }, 1);
@@ -65,9 +70,11 @@ export default function SliderPage(props: PageProps) {
       </SliderWrapper>
 
       <Wrapper>
-        <SignWrapper>
-          <SignSvgComp />
-        </SignWrapper>
+        <SignContainer animate={isFollowing ? 'animate' : 'initial'}>
+          <SignWrapper>
+            <SignSvgComp />
+          </SignWrapper>
+        </SignContainer>
 
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
