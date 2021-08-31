@@ -59,7 +59,7 @@ export class App {
     });
 
     this._followScene.items = Array.from(items).map((item, key) => {
-      return { key, item };
+      return { key: items.length - key, item };
     });
 
     this._onResize();

@@ -1,16 +1,15 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { RecipieItemProps, UpdateInfo, MouseValues, Coords } from '../types';
+import { FollowItemProps, UpdateInfo, MouseValues, Coords } from '../types';
 import { lerp } from '../utils/lerp';
 import { MediaObject3D } from './MediaObject3D';
 import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
-  recipieItem: RecipieItemProps;
+  followItem: FollowItemProps;
   domEl: HTMLElement;
-  keyPosition: number;
 }
 
 interface AnimateOpacity {
@@ -24,7 +23,7 @@ export class CardItem3D extends MediaObject3D {
   static disappearOffset = 1.05;
   static defaultOpacity = 1;
 
-  recipieItem: RecipieItemProps;
+  followItem: FollowItemProps;
   _domEl: HTMLElement;
   _domElBounds: DOMRect;
   _childEl: HTMLElement;
@@ -69,12 +68,11 @@ export class CardItem3D extends MediaObject3D {
   _shouldFollow = true;
   isAnimatedIn = false;
   _followProgress = 0;
-  _keyPosition: number;
 
-  constructor({ keyPosition, geometry, recipieItem, domEl }: Constructor) {
+  constructor({ geometry, followItem, domEl }: Constructor) {
     super({ geometry });
 
-    this.recipieItem = recipieItem;
+    this.followItem = followItem;
     this._domEl = domEl;
     this._domElBounds = this._domEl.getBoundingClientRect();
 
@@ -82,20 +80,6 @@ export class CardItem3D extends MediaObject3D {
     this._childElBounds = this._childEl.getBoundingClientRect();
 
     this.setColliderName('recipeItem');
-
-    this._keyPosition = keyPosition;
-
-    // this._lerpEase =
-    //   this._lerpFirst * Math.pow(this._lerpQuotient, this._keyPosition - 1);
-
-    if (this._mesh) {
-      this._mesh.position.z = -this._keyPosition * 0.1;
-    }
-
-    // this._lerpEase =
-    //   (this.recipieItem.key * (this._lerpLast - this._lerpFirst)) / 20 +
-    //   this._lerpFirst;
-    // this._lerpEase *= 0.01; //Fixes approximation issue (We could specify 0.22 and 0.01 in _lerpFirst/_lerpLast)
   }
 
   _positionRandomly() {
@@ -468,19 +452,19 @@ export class CardItem3D extends MediaObject3D {
   toggleFollowing(value: boolean) {
     if (value) {
       this._lerpEase.target =
-        this._lerpFirst * Math.pow(this._lerpQuotient, this._keyPosition - 1);
+        this._lerpFirst * Math.pow(this._lerpQuotient, this.followItem.key - 1);
 
       this.scaleItem(
         this._domElBounds.width * 1.8,
         this._domElBounds.height * 1.8,
-        this._keyPosition * 1,
+        this.followItem.key * 1,
         1100,
         TWEEN.Easing.Exponential.InOut,
       );
 
       // this.animateOpacity({ delay: 0, destination: 0.8, duration: 800 });
 
-      this.animateFollow(1, this._keyPosition * 1, 1100);
+      this.animateFollow(1, this.followItem.key * 1, 1100);
     } else {
       this._lerpEase.target = 0.01;
       this._mouseValues.target.x = this._mouseValues.current.x;
@@ -493,18 +477,17 @@ export class CardItem3D extends MediaObject3D {
       this.scaleItem(
         this._domElBounds.width,
         this._domElBounds.height,
-        this._keyPosition * 15,
+        this.followItem.key * 15,
         1400,
         TWEEN.Easing.Exponential.InOut,
       );
 
-      this.animateFollow(0, this._keyPosition * 15, 1400);
+      this.animateFollow(0, this.followItem.key * 15, 1400);
     }
   }
 
   destroy() {
     super.destroy();
-    this.dispatchEvent({ type: 'destroyed' });
   }
 
   onResize() {

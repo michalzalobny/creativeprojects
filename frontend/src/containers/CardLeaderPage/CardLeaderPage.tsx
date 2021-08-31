@@ -59,7 +59,7 @@ export default function CardLeaderPage(props: PageProps) {
       <SliderWrapper>
         {props.projectData.creativeItems.map((item, key) => {
           return (
-            <SliderItem key={item.image.url} data-recipe="entry">
+            <SliderItem key={item.image.url} data-follow="entry">
               <SliderItemChild>
                 <img
                   style={{
