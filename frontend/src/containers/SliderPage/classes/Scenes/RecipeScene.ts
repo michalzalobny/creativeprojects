@@ -48,7 +48,7 @@ export class RecipeScene extends InteractiveScene {
 
   _onResizeDebounced = debounce(() => {
     this._onResize();
-  }, 300);
+  }, 500);
 
   _onResize() {
     if (this._recipeItems) {

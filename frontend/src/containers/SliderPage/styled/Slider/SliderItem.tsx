@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+import { media } from 'utils/responsive';
+import { sharedValues } from 'utils/sharedValues';
+
 interface Props {}
 
 export const SliderItem = styled(motion.div)<Props>`
-  width: 5.5vw;
+  width: 15vw;
   background: #dbdbdb;
   position: relative;
   transform: translateX(20vw);
@@ -19,5 +22,9 @@ export const SliderItem = styled(motion.div)<Props>`
     display: block;
     width: 100%;
     padding-bottom: 155%;
+  }
+
+  ${media.tablet} {
+    width: 5.5vw;
   }
 `;

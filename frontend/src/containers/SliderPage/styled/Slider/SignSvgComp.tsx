@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 
 import { springVerySlow } from 'components/Animations/framerTransitions';
+import { media } from 'utils/responsive';
 
 import { SignSvg } from '../../svg/SignSvg';
 
 interface Props {}
 
 export const SignSvgComp = styled(SignSvg)<Props>`
-  height: 6vw;
+  height: 14vw;
   user-select: none;
   pointer-events: none;
+
+  ${media.tablet} {
+    height: 6vw;
+  }
 `;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
