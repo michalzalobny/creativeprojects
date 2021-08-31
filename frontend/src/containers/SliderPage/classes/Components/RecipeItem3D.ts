@@ -430,11 +430,11 @@ export class RecipeItem3D extends MediaObject3D {
     const destinationX = this._mesh.scale.x;
     const destinationY = this._mesh.scale.y;
 
-    const duration = 1400;
+    const duration = 1500;
 
     this.animateOpacity({
       destination: RecipeItem3D.defaultOpacity,
-      duration: duration * 0.9,
+      duration: duration,
       delay: 0,
       easing: TWEEN.Easing.Exponential.InOut,
     });

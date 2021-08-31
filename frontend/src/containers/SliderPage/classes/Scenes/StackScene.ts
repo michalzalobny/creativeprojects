@@ -50,9 +50,7 @@ export class StackScene extends RecipeScene {
   _onMouseDown = (e: THREE.Event) => {
     const timeDiff = window.performance.now() - this._animateItemsTime;
 
-    // const sum = (((this._items.length - 1) * 15) / 2) * this._items.length;
-
-    if (timeDiff < StackScene.respawnTimeout * this._items.length) {
+    if (timeDiff < StackScene.respawnTimeout * this._items.length + 1500) {
       return;
     }
 
