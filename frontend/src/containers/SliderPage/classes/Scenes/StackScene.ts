@@ -156,7 +156,7 @@ export class StackScene extends RecipeScene {
     this._passIntersectPoint();
 
     this._addItems();
-    this._rotateItems();
+    // this._rotateItems();
 
     this._HTMLComponents.forEach(el => {
       el.update(updateInfo);
