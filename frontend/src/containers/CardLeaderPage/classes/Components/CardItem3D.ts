@@ -55,7 +55,6 @@ export class CardItem3D extends MediaObject3D {
   }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
   _followTween: Tween<{ progress: number }> | null = null;
-  _dropOutTween: Tween<{ progress: number; rotation: number }> | null = null;
 
   _isDroppingOut = false;
   _extra = { x: 0, y: 0 };
@@ -254,17 +253,6 @@ export class CardItem3D extends MediaObject3D {
     }
   }
 
-  set targetMouse({ x, y }: Coords) {
-    if (!this._shouldFollow) {
-      return;
-    }
-
-    this._mouseValues.target.x =
-      -x - (-this._domElBounds.left - this._domElBounds.width * 0.5);
-    this._mouseValues.target.y =
-      y - this._domElBounds.top - this._domElBounds.height * 0.5;
-  }
-
   animateOpacity({
     destination,
     duration,
@@ -320,40 +308,6 @@ export class CardItem3D extends MediaObject3D {
       });
 
     this._followTween.start();
-  }
-
-  animateDropOut(delay: number) {
-    if (!this._mesh || this._isDroppingOut) {
-      return;
-    }
-
-    if (this._dropOutTween) {
-      this._dropOutTween.stop();
-    }
-
-    this._isDroppingOut = true;
-
-    const start = this._mesh.rotation.z;
-    const destination = Math.PI * 2 + start;
-
-    this._dropOutTween = new TWEEN.Tween({ rotation: start, progress: 0 })
-      .to({ rotation: destination, progress: 1 }, 2500)
-
-      .easing(TWEEN.Easing.Exponential.InOut)
-      .delay(delay)
-      .onUpdate(obj => {
-        if (this._mesh) {
-          this._mesh.rotation.z = obj.rotation;
-        }
-      })
-      .onComplete(() => {
-        if (this._mesh) {
-          this._mesh.rotation.z = start;
-        }
-        this._isDroppingOut = false;
-      });
-
-    this._dropOutTween.start();
   }
 
   scaleItem(
@@ -514,5 +468,16 @@ export class CardItem3D extends MediaObject3D {
       this._mesh.material.uniforms.uStrength.value =
         this._mouseValues.strength.current * this._followProgress;
     }
+  }
+
+  set targetMouse({ x, y }: Coords) {
+    if (!this._shouldFollow) {
+      return;
+    }
+
+    this._mouseValues.target.x =
+      -x - (-this._domElBounds.left - this._domElBounds.width * 0.5);
+    this._mouseValues.target.y =
+      y - this._domElBounds.top - this._domElBounds.height * 0.5;
   }
 }
