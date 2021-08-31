@@ -10,6 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration: none;
     border: 0;
     text-decoration: none;
+    user-select:none;
   }
 
   [data-js-focus-visible] :focus:not([data-focus-visible-added]) {
@@ -31,6 +32,7 @@ export const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size:62.5%; // 1rem = 10px;
+    
   }
 
   html,
@@ -39,6 +41,7 @@ export const GlobalStyles = createGlobalStyle`
     left:0;
     position: fixed;
     overflow: hidden;
+    user-select:none;
   }
 
 

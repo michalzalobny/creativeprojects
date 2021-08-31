@@ -5,6 +5,8 @@ interface Props {}
 
 export const SliderItemChild = styled(motion.div)<Props>`
   position: absolute;
+  user-select: none;
+  pointer-events: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

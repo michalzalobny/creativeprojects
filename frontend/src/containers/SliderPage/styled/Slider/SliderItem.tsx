@@ -7,6 +7,8 @@ import { sharedValues } from 'utils/sharedValues';
 interface Props {}
 
 export const SliderItem = styled(motion.div)<Props>`
+  user-select: none;
+  pointer-events: none;
   width: 15vw;
   background: #dbdbdb;
   position: relative;
