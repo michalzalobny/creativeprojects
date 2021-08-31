@@ -471,8 +471,8 @@ export class RecipeItem3D extends MediaObject3D {
         this._lerpFirst * Math.pow(this._lerpQuotient, this._keyPosition - 1);
 
       this.scaleItem(
-        this._domElBounds.width * 2.4,
-        this._domElBounds.height * 2.4,
+        this._domElBounds.width * 1.8,
+        this._domElBounds.height * 1.8,
         this._keyPosition * 1,
         1100,
         TWEEN.Easing.Exponential.InOut,
