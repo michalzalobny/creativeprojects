@@ -11,6 +11,7 @@ interface Constructor {
   scroll: Scroll;
   mouseMove: MouseMove;
   setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class StackScene extends RecipeScene {
@@ -23,16 +24,24 @@ export class StackScene extends RecipeScene {
   _canRotateItems = false;
   _HTMLComponents: HTMLComponent[] = [];
   _rotateRespawn = 15000;
-  _animateItemsTime = 0;
   _setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
+  _setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  _areItemsAnimatedIn = false;
 
-  constructor({ setIsFollowing, camera, mouseMove, scroll }: Constructor) {
+  constructor({
+    setIsAnimatedIn,
+    setIsFollowing,
+    camera,
+    mouseMove,
+    scroll,
+  }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
     this._initHtmlComponents();
     this._setIsFollowing = setIsFollowing;
+    this._setIsAnimatedIn = setIsAnimatedIn;
   }
 
   _passMouseValues(x: number, y: number) {
@@ -44,13 +53,15 @@ export class StackScene extends RecipeScene {
   _animateInItems() {
     super._animateInItems();
     this._canAddItems = true;
-    this._animateItemsTime = window.performance.now();
+
+    setTimeout(() => {
+      this._areItemsAnimatedIn = true;
+      this._setIsAnimatedIn(true);
+    }, StackScene.respawnTimeout * (this._items.length + 1) + 1500);
   }
 
   _onMouseDown = (e: THREE.Event) => {
-    const timeDiff = window.performance.now() - this._animateItemsTime;
-
-    if (timeDiff < StackScene.respawnTimeout * this._items.length + 1500) {
+    if (!this._areItemsAnimatedIn) {
       return;
     }
 

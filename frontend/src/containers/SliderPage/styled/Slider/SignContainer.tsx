@@ -25,7 +25,7 @@ SignContainer.defaultProps = {
     },
     animate: {
       opacity: 0,
-      scale: 1.5,
+      scale: 2,
       x: '-50%',
       y: '-50%',
     },

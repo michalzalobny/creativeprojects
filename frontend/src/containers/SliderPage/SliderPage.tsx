@@ -5,6 +5,7 @@ import { Layout } from 'components/Layout/Layout';
 import { useBreakpoint } from 'hooks/useBreakpoint';
 import { breakpoints } from 'utils/responsive';
 import { Parallax } from 'components/Animations/Parallax/Parallax';
+import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -17,6 +18,7 @@ import { SignWrapper } from './styled/Slider/SignWrapper';
 import { SignSvgComp } from './styled/Slider/SignSvgComp';
 import { useState } from 'react';
 import { SignContainer } from './styled/Slider/SignContainer';
+import { Text } from './styled/Slider/Text';
 
 export default function SliderPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
@@ -24,6 +26,7 @@ export default function SliderPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isAnimatedIn, setIsAnimatedIn] = useState(false);
 
   const myApp = useRef<App | null>(null);
   const appTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -45,6 +48,7 @@ export default function SliderPage(props: PageProps) {
           items: props.projectData.creativeItems,
           imagesToPreload,
           setIsFollowing,
+          setIsAnimatedIn,
         });
       }
     }, 1);
@@ -78,6 +82,13 @@ export default function SliderPage(props: PageProps) {
             </Parallax>
           </SignWrapper>
         </SignContainer>
+
+        <Text>
+          <RevealButterflyString
+            text={'HOLD MOUSE TO LEAD'}
+            shouldAnimate={!isFollowing && isAnimatedIn}
+          />
+        </Text>
 
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>

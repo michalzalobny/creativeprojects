@@ -8,6 +8,8 @@ interface Props {}
 
 export const SignSvgComp = styled(SignSvg)<Props>`
   height: 6vw;
+  user-select: none;
+  pointer-events: none;
 `;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -13,6 +13,7 @@ interface Constructor {
   items: CreativeItem[];
   imagesToPreload: string[];
   setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class App {
@@ -36,6 +37,7 @@ export class App {
     items,
     rendererWrapperEl,
     setIsFollowing,
+    setIsAnimatedIn,
   }: Constructor) {
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
@@ -53,6 +55,7 @@ export class App {
       scroll: this._scroll,
       mouseMove: this._mouseMove,
       setIsFollowing,
+      setIsAnimatedIn,
     });
 
     this._stackScene.items = Array.from(items).map((item, key) => {

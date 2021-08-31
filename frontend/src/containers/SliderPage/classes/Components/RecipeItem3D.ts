@@ -121,7 +121,7 @@ export class RecipeItem3D extends MediaObject3D {
 
     if (
       Math.abs(x) <= this._rendererBounds.width / 5 &&
-      Math.abs(y) <= this._rendererBounds.height / 9
+      Math.abs(y) <= this._rendererBounds.height / 4
     ) {
       return this._getRandomPosition();
     }

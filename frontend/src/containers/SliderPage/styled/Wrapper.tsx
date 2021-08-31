@@ -14,6 +14,7 @@ export const Wrapper = styled(motion.div)<Props>`
   overflow: hidden;
 
   &:before {
+    opacity: 0.5;
     content: '';
     display: block;
     position: absolute;
@@ -21,7 +22,7 @@ export const Wrapper = styled(motion.div)<Props>`
     top: 0;
     left: 0;
     width: 100%;
-    height: 20vh;
+    height: 10vh;
     background: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0) 0%,
@@ -30,6 +31,7 @@ export const Wrapper = styled(motion.div)<Props>`
   }
 
   &:after {
+    opacity: 0.5;
     content: '';
     display: block;
     position: absolute;
@@ -37,7 +39,7 @@ export const Wrapper = styled(motion.div)<Props>`
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 20vh;
+    height: 10vh;
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
