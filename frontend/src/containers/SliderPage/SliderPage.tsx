@@ -4,6 +4,7 @@ import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
 import { useBreakpoint } from 'hooks/useBreakpoint';
 import { breakpoints } from 'utils/responsive';
+import { Parallax } from 'components/Animations/Parallax/Parallax';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -72,7 +73,9 @@ export default function SliderPage(props: PageProps) {
       <Wrapper>
         <SignContainer animate={isFollowing ? 'animate' : 'initial'}>
           <SignWrapper>
-            <SignSvgComp />
+            <Parallax offsetXMultiplier={-0.05} offsetYMultiplier={-0.05}>
+              <SignSvgComp />
+            </Parallax>
           </SignWrapper>
         </SignContainer>
 

@@ -6,9 +6,11 @@ import { springVerySlow } from 'components/Animations/framerTransitions';
 interface Props {}
 
 export const SignContainer = styled(motion.div)<Props>`
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   user-select: none;
   pointer-events: none;
 `;
@@ -18,10 +20,14 @@ SignContainer.defaultProps = {
     initial: {
       opacity: 1,
       scale: 1,
+      x: '-50%',
+      y: '-50%',
     },
     animate: {
       opacity: 0,
       scale: 1.5,
+      x: '-50%',
+      y: '-50%',
     },
   },
   initial: 'initial',
