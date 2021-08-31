@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, RecipieItemProps, Bounds } from '../types';
+import { UpdateInfo, FollowItemProps, Bounds } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { CardScene } from './CardScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -146,17 +146,14 @@ export class FollowScene extends CardScene {
     });
   }
 
-  set items(items: RecipieItemProps[]) {
+  set items(items: FollowItemProps[]) {
     super.items = items;
   }
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-
     this._passIntersectPoint();
-
     this._addItems();
-    // this._rotateItems();
 
     this._HTMLComponents.forEach(el => {
       el.update(updateInfo);

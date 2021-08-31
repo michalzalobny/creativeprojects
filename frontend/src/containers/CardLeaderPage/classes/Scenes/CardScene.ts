@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import debounce from 'lodash/debounce';
 
-import { UpdateInfo, RecipieItemProps, Bounds } from '../types';
+import { UpdateInfo, FollowItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { CardItem3D } from '../Components/CardItem3D';
@@ -16,9 +16,9 @@ interface Constructor {
 export class CardScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _cardItems: CardItem3D[] = [];
+  _items: FollowItemProps[] = [];
   _trackKeyArray: number[] = [];
   _textureItems: TextureItems = {};
-  _items: RecipieItemProps[] = [];
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -72,7 +72,7 @@ export class CardScene extends InteractiveScene {
 
   _animateInItems() {}
 
-  set items(items: RecipieItemProps[]) {
+  set items(items: FollowItemProps[]) {
     this._items = items;
   }
 
