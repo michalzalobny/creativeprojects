@@ -10,5 +10,6 @@ export const Text = styled(motion.div)<Props>`
   transform: translateX(-50%);
   font-size: 16px;
   letter-spacing: 4px;
+  white-space: nowrap;
   color: black;
 `;
