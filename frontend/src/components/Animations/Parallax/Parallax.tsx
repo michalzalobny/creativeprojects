@@ -17,7 +17,7 @@ export interface ParallaxProps {
   shouldResetPosition?: boolean;
 }
 
-const LERP_EASE = 0.06;
+const LERP_EASE = 0.03;
 
 export const Parallax = React.memo<ParallaxProps>(props => {
   const {
