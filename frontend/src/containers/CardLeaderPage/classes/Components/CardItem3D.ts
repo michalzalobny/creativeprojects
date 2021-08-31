@@ -20,7 +20,6 @@ interface AnimateOpacity {
 }
 
 export class CardItem3D extends MediaObject3D {
-  static disappearOffset = 1.05;
   static defaultOpacity = 1;
 
   followItem: FollowItemProps;
@@ -42,8 +41,6 @@ export class CardItem3D extends MediaObject3D {
       y: 0,
     },
   };
-  _isBefore = false;
-  _isAfter = false;
   _animateInTween: Tween<{
     x: number;
     y: number;
@@ -56,14 +53,12 @@ export class CardItem3D extends MediaObject3D {
   _opacityTween: Tween<{ progress: number }> | null = null;
   _followTween: Tween<{ progress: number }> | null = null;
 
-  _isDroppingOut = false;
   _extra = { x: 0, y: 0 };
   _extraScale = { x: 0, y: 0 };
   _extraTranslate = { x: 0, y: 0 };
   _lerpEase = { current: 0.01, target: 0.01 };
   _lerpFirst = 0.2;
   _lerpQuotient = 0.85;
-  _lerpLast = 0.1;
   _shouldFollow = true;
   isAnimatedIn = false;
   _followProgress = 0;
@@ -176,21 +171,6 @@ export class CardItem3D extends MediaObject3D {
     this._extraScale.x = 0;
     this._extraScale.y = 0;
     this._positionRandomly();
-  }
-
-  _resetScrollValues() {
-    //Reset scroll values
-    this._mouseValues.current.x = 0;
-    this._mouseValues.current.y = 0;
-
-    this._mouseValues.target.x = 0;
-    this._mouseValues.target.y = 0;
-
-    this._mouseValues.last.x = 0;
-    this._mouseValues.last.y = 0;
-
-    this._mouseValues.strength.current = 0;
-    this._mouseValues.strength.target = 0;
   }
 
   _updateMouseValues(updateInfo: UpdateInfo) {
