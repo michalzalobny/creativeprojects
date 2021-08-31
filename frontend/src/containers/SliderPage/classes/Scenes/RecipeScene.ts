@@ -70,6 +70,8 @@ export class RecipeScene extends InteractiveScene {
     window.removeEventListener('resize', this._onResizeDebounced);
   }
 
+  _animateInItems() {}
+
   set items(items: RecipieItemProps[]) {
     this._items = items;
   }
@@ -84,6 +86,7 @@ export class RecipeScene extends InteractiveScene {
 
   set textureItems(textureItems: TextureItems) {
     this._textureItems = textureItems;
+    this._animateInItems();
   }
 
   addItem() {

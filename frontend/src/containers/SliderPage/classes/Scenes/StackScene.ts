@@ -37,22 +37,27 @@ export class StackScene extends RecipeScene {
     });
   }
 
+  _animateInItems() {
+    super._animateInItems();
+    this._canAddItems = true;
+  }
+
   _onMouseDown = (e: THREE.Event) => {
     this._canRotateItems = true;
-    if (this._canAddItems) {
-      this._canAddItems = false;
-    } else {
-      this._canAddItems = true;
-    }
+
     this._recipeItems.forEach((item, key) => {
-      item.toggleFollowing(true);
+      if (item.isAnimatedIn) {
+        item.toggleFollowing(true);
+      }
     });
   };
 
   _onMouseUp = (e: THREE.Event) => {
     this._canRotateItems = false;
     this._recipeItems.forEach((item, key) => {
-      item.toggleFollowing(false);
+      if (item.isAnimatedIn) {
+        item.toggleFollowing(false);
+      }
     });
   };
 

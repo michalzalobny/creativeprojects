@@ -67,6 +67,7 @@ export class RecipeItem3D extends MediaObject3D {
   _lerpQuotient = 0.85;
   _lerpLast = 0.1;
   _shouldFollow = true;
+  isAnimatedIn = false;
   _followProgress = 0;
   _keyPosition: number;
 
@@ -457,7 +458,9 @@ export class RecipeItem3D extends MediaObject3D {
           this._mesh.scale.y = obj.y;
         }
       })
-      .onComplete(() => {});
+      .onComplete(() => {
+        this.isAnimatedIn = true;
+      });
 
     this._animateInTween.start();
   }
