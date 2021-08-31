@@ -470,12 +470,14 @@ export class RecipeItem3D extends MediaObject3D {
       this.scaleItem(
         this._domElBounds.width * 2.4,
         this._domElBounds.height * 2.4,
-        this._keyPosition * 5,
-        1200,
+        this._keyPosition * 1,
+        1100,
         TWEEN.Easing.Exponential.InOut,
       );
 
-      this.animateFollow(1, this._keyPosition * 5, 1200);
+      // this.animateOpacity({ delay: 0, destination: 0.8, duration: 800 });
+
+      this.animateFollow(1, this._keyPosition * 1, 1100);
     } else {
       this._lerpEase.target = 0.01;
       this._mouseValues.target.x = this._mouseValues.current.x;
@@ -483,15 +485,17 @@ export class RecipeItem3D extends MediaObject3D {
       this._mouseValues.last.x = this._mouseValues.current.x;
       this._mouseValues.last.y = this._mouseValues.current.y;
 
+      // this.animateOpacity({ delay: 0, destination: 1, duration: 800 });
+
       this.scaleItem(
         this._domElBounds.width,
         this._domElBounds.height,
-        this._keyPosition * 20,
-        1600,
+        this._keyPosition * 15,
+        1400,
         TWEEN.Easing.Exponential.InOut,
       );
 
-      this.animateFollow(0, this._keyPosition * 20, 1600);
+      this.animateFollow(0, this._keyPosition * 15, 1400);
     }
   }
 
