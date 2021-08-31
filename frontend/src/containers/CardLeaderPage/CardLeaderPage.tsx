@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useMemo } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
-import { useBreakpoint } from 'hooks/useBreakpoint';
-import { breakpoints } from 'utils/responsive';
 import { Parallax } from 'components/Animations/Parallax/Parallax';
 import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
 
@@ -21,15 +19,12 @@ import { SignContainer } from './styled/Slider/SignContainer';
 import { Text } from './styled/Slider/Text';
 
 export default function CardLeaderPage(props: PageProps) {
-  const isTablet = useBreakpoint(breakpoints.tablet);
-
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [isAnimatedIn, setIsAnimatedIn] = useState(false);
 
   const myApp = useRef<App | null>(null);
-  const appTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const imagesToPreload = useMemo(
     () => props.projectData.creativeItems.map(item => item.image.url),
@@ -41,20 +36,17 @@ export default function CardLeaderPage(props: PageProps) {
       return () => {};
     }
 
-    appTimeout.current = setTimeout(() => {
-      if (rendererWrapperEl.current) {
-        myApp.current = new App({
-          rendererWrapperEl: rendererWrapperEl.current,
-          items: props.projectData.creativeItems,
-          imagesToPreload,
-          setIsFollowing,
-          setIsAnimatedIn,
-        });
-      }
-    }, 1);
+    if (rendererWrapperEl.current) {
+      myApp.current = new App({
+        rendererWrapperEl: rendererWrapperEl.current,
+        items: props.projectData.creativeItems,
+        imagesToPreload,
+        setIsFollowing,
+        setIsAnimatedIn,
+      });
+    }
 
     return () => {
-      appTimeout.current && clearTimeout(appTimeout.current);
       myApp.current && myApp.current.destroy();
     };
   }, [imagesToPreload, props.projectData.creativeItems]);
@@ -68,7 +60,20 @@ export default function CardLeaderPage(props: PageProps) {
         {props.projectData.creativeItems.map((item, key) => {
           return (
             <SliderItem key={item.image.url} data-recipe="entry">
-              <SliderItemChild />
+              <SliderItemChild>
+                <img
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                  src={item.image.url}
+                  alt=""
+                />
+              </SliderItemChild>
             </SliderItem>
           );
         })}

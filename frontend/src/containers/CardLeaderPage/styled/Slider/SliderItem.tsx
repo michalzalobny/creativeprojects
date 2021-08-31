@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { media } from 'utils/responsive';
-import { sharedValues } from 'utils/sharedValues';
 
 interface Props {}
 
@@ -17,6 +16,7 @@ export const SliderItem = styled(motion.div)<Props>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   opacity: 0;
 
   &:before {
