@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { UpdateInfo, RecipieItemProps, Bounds } from '../types';
 import { Scroll } from '../Singletons/Scroll';
-import { RecipeScene } from './RecipeScene';
+import { CardScene } from './CardScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { HTMLComponent } from '../HTMLComponents/HTMLComponent';
 
@@ -14,7 +14,7 @@ interface Constructor {
   setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export class StackScene extends RecipeScene {
+export class FollowScene extends CardScene {
   static respawnTimeout = 90; //ms
 
   _scroll: Scroll;
@@ -45,7 +45,7 @@ export class StackScene extends RecipeScene {
   }
 
   _passMouseValues(x: number, y: number) {
-    this._recipeItems.forEach(item => {
+    this._cardItems.forEach(item => {
       item.targetMouse = { x, y };
     });
   }
@@ -57,7 +57,7 @@ export class StackScene extends RecipeScene {
     setTimeout(() => {
       this._areItemsAnimatedIn = true;
       this._setIsAnimatedIn(true);
-    }, StackScene.respawnTimeout * (this._items.length + 1) + 1500);
+    }, FollowScene.respawnTimeout * (this._items.length + 1) + 1500);
   }
 
   _onMouseDown = (e: THREE.Event) => {
@@ -68,7 +68,7 @@ export class StackScene extends RecipeScene {
     this._canRotateItems = true;
     this._setIsFollowing(true);
 
-    this._recipeItems.forEach((item, key) => {
+    this._cardItems.forEach((item, key) => {
       if (item.isAnimatedIn) {
         item.toggleFollowing(true);
       }
@@ -78,7 +78,7 @@ export class StackScene extends RecipeScene {
   _onMouseUp = (e: THREE.Event) => {
     this._canRotateItems = false;
     this._setIsFollowing(false);
-    this._recipeItems.forEach((item, key) => {
+    this._cardItems.forEach((item, key) => {
       if (item.isAnimatedIn) {
         item.toggleFollowing(false);
       }
@@ -100,7 +100,7 @@ export class StackScene extends RecipeScene {
   }
 
   _passIntersectPoint() {
-    this._recipeItems.forEach(item => {
+    this._cardItems.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
   }
@@ -115,7 +115,7 @@ export class StackScene extends RecipeScene {
     const currentTime = window.performance.now();
     const timeDifference = currentTime - this._lastAddedTime; //in ms
 
-    if (timeDifference > StackScene.respawnTimeout) {
+    if (timeDifference > FollowScene.respawnTimeout) {
       super.addItem();
       this._lastAddedTime = window.performance.now();
     }
@@ -130,7 +130,7 @@ export class StackScene extends RecipeScene {
     const timeDifference = currentTime - this._lastRotateTime; //in ms
 
     if (timeDifference > this._rotateRespawn) {
-      this._recipeItems.forEach((item, key) => {
+      this._cardItems.forEach((item, key) => {
         item.animateDropOut(key * 50);
       });
 

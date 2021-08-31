@@ -20,7 +20,7 @@ interface AnimateOpacity {
   easing?: (amount: number) => number;
 }
 
-export class RecipeItem3D extends MediaObject3D {
+export class CardItem3D extends MediaObject3D {
   static disappearOffset = 1.05;
   static defaultOpacity = 1;
 
@@ -433,7 +433,7 @@ export class RecipeItem3D extends MediaObject3D {
     const duration = 1500;
 
     this.animateOpacity({
-      destination: RecipeItem3D.defaultOpacity,
+      destination: CardItem3D.defaultOpacity,
       duration: duration,
       delay: 0,
       easing: TWEEN.Easing.Exponential.InOut,

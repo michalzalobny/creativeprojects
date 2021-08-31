@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 43 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 67 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 61 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 393 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 431 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -598,6 +598,54 @@ INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
   (42, '21', 'desc');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (43, '4', '4');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (44, '1', '1');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (45, '2', '2');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (46, '3', '3');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (47, '5', '5');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (48, '6', '6');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (49, '7', '7');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (50, '8', '8');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (51, '9', '9');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (52, '10', '10');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (53, '11', '11');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (54, '12', '12');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -661,6 +709,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (8, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (9, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -954,6 +1006,42 @@ VALUES
     8,
     8
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    17,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    17,
+    9
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    18,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    9,
+    9
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -1011,6 +1099,14 @@ INSERT INTO
   `components_page_localized_long_texts` (`id`, `language`, `text`)
 VALUES
   (8, 1, 'Infinite orbit gallery made with THREE.js');
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (
+    9,
+    1,
+    'Mouse follow based page built with THREE.jj'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -1085,6 +1181,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (16, 'Orbit Gallery', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (17, 'Card Leader', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (18, 'Card Leader', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -1944,6 +2048,24 @@ VALUES
     1,
     '2021-08-25 09:30:18',
     '2021-08-30 22:40:40'
+  );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    9,
+    'card-leader',
+    1,
+    1,
+    '2021-08-31 19:28:39',
+    '2021-08-31 19:37:38'
   );
 
 # ------------------------------------------------------------
@@ -2868,6 +2990,258 @@ VALUES
     42,
     8
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    53,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    9,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    54,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    18,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    55,
+    'creativeItems',
+    1,
+    'components_creative_component_creative_items',
+    43,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    56,
+    'creativeItems',
+    2,
+    'components_creative_component_creative_items',
+    44,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    57,
+    'creativeItems',
+    3,
+    'components_creative_component_creative_items',
+    45,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    58,
+    'creativeItems',
+    4,
+    'components_creative_component_creative_items',
+    46,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    59,
+    'creativeItems',
+    5,
+    'components_creative_component_creative_items',
+    47,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    60,
+    'creativeItems',
+    6,
+    'components_creative_component_creative_items',
+    48,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    61,
+    'creativeItems',
+    7,
+    'components_creative_component_creative_items',
+    49,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    62,
+    'creativeItems',
+    8,
+    'components_creative_component_creative_items',
+    50,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    63,
+    'creativeItems',
+    9,
+    'components_creative_component_creative_items',
+    51,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    64,
+    'creativeItems',
+    10,
+    'components_creative_component_creative_items',
+    52,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    65,
+    'creativeItems',
+    11,
+    'components_creative_component_creative_items',
+    53,
+    9
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    66,
+    'creativeItems',
+    12,
+    'components_creative_component_creative_items',
+    54,
+    9
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -2893,7 +3267,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$eXbHX0UYhJRnZXAv/n74JeieC51Sk65HUTQZJzgVTs9lz608rVWDm',
+    '$2b$10$oXH8XqCTNCXvHZjgfGT2Lu49gzy763SWRLDAx3A8VfUxGz3d8sVZu',
     NULL,
     NULL,
     1,
@@ -7184,6 +7558,50 @@ VALUES
     '2021-08-26 10:24:16',
     '2021-08-26 10:24:16'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    61,
+    'zzzz.png',
+    '',
+    '',
+    1241,
+    611,
+    '{\"thumbnail\":{\"name\":\"thumbnail_zzzz.png\",\"hash\":\"thumbnail_zzzz_ef99fa0976\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":121,\"size\":16.93,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1630438650/thumbnail_zzzz_ef99fa0976.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_zzzz_ef99fa0976\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_zzzz.png\",\"hash\":\"large_zzzz_ef99fa0976\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":492,\"size\":198.55,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1630438651/large_zzzz_ef99fa0976.png\",\"provider_metadata\":{\"public_id\":\"large_zzzz_ef99fa0976\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_zzzz.png\",\"hash\":\"medium_zzzz_ef99fa0976\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":369,\"size\":118.34,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1630438652/medium_zzzz_ef99fa0976.png\",\"provider_metadata\":{\"public_id\":\"medium_zzzz_ef99fa0976\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_zzzz.png\",\"hash\":\"small_zzzz_ef99fa0976\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":246,\"size\":57.42,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1630438653/small_zzzz_ef99fa0976.png\",\"provider_metadata\":{\"public_id\":\"small_zzzz_ef99fa0976\",\"resource_type\":\"image\"}}}',
+    'zzzz_ef99fa0976',
+    '.png',
+    'image/png',
+    274.38,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1630438649/zzzz_ef99fa0976.png',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"zzzz_ef99fa0976\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-08-31 19:37:34',
+    '2021-08-31 19:37:34'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -8155,6 +8573,240 @@ VALUES
     392,
     58,
     42,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    418,
+    61,
+    9,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    419,
+    58,
+    43,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    420,
+    53,
+    44,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    421,
+    54,
+    45,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    422,
+    52,
+    46,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    423,
+    47,
+    47,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    424,
+    41,
+    48,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    425,
+    45,
+    49,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    426,
+    32,
+    50,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    427,
+    49,
+    51,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    428,
+    55,
+    52,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    429,
+    43,
+    53,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    430,
+    39,
+    54,
     'components_creative_component_creative_items',
     'image',
     1

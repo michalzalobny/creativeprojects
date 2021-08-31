@@ -5,7 +5,7 @@ import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
-import { StackScene } from './Scenes/StackScene';
+import { FollowScene } from './Scenes/FollowScene';
 import { Preloader } from './Utility/Preloader';
 
 interface Constructor {
@@ -30,7 +30,7 @@ export class App {
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
-  _stackScene: StackScene;
+  _FollowScene: FollowScene;
 
   constructor({
     imagesToPreload,
@@ -50,7 +50,7 @@ export class App {
       alpha: true,
     });
 
-    this._stackScene = new StackScene({
+    this._FollowScene = new FollowScene({
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
@@ -58,7 +58,7 @@ export class App {
       setIsAnimatedIn,
     });
 
-    this._stackScene.items = Array.from(items).map((item, key) => {
+    this._FollowScene.items = Array.from(items).map((item, key) => {
       return { key: items.length - key, item };
     });
 
@@ -85,7 +85,7 @@ export class App {
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this._camera.updateProjectionMatrix();
 
-    this._stackScene.rendererBounds = rendererBounds;
+    this._FollowScene.rendererBounds = rendererBounds;
   };
 
   _onVisibilityChange = () => {
@@ -97,7 +97,7 @@ export class App {
   };
 
   _onAssetsLoaded = (e: THREE.Event) => {
-    this._stackScene.textureItems = (e.target as Preloader).textureItems;
+    this._FollowScene.textureItems = (e.target as Preloader).textureItems;
   };
 
   _addListeners() {
@@ -141,9 +141,9 @@ export class App {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
-    this._stackScene.update({ delta, slowDownFactor, time });
+    this._FollowScene.update({ delta, slowDownFactor, time });
 
-    this._renderer.render(this._stackScene, this._camera);
+    this._renderer.render(this._FollowScene, this._camera);
   };
 
   _stopAppFrame() {
@@ -159,7 +159,7 @@ export class App {
     this._stopAppFrame();
     this._removeListeners();
 
-    this._stackScene.destroy();
+    this._FollowScene.destroy();
     this._preloader.destroy();
   }
 }

@@ -20,7 +20,7 @@ import { useState } from 'react';
 import { SignContainer } from './styled/Slider/SignContainer';
 import { Text } from './styled/Slider/Text';
 
-export default function SliderPage(props: PageProps) {
+export default function CardLeaderPage(props: PageProps) {
   const isTablet = useBreakpoint(breakpoints.tablet);
 
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
