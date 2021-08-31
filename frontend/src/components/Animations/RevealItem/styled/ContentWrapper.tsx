@@ -12,7 +12,7 @@ export const ContentWrapper = styled(motion.div)<Props>`
 ContentWrapper.defaultProps = {
   variants: {
     initial: {
-      y: '100%',
+      y: '105%',
     },
     animate: {
       y: '0%',
