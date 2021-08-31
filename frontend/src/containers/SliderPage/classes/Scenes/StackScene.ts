@@ -14,7 +14,7 @@ interface Constructor {
 }
 
 export class StackScene extends RecipeScene {
-  static respawnTimeout = 50; //ms
+  static respawnTimeout = 90; //ms
 
   _scroll: Scroll;
   _lastAddedTime = 0;
@@ -23,6 +23,7 @@ export class StackScene extends RecipeScene {
   _canRotateItems = false;
   _HTMLComponents: HTMLComponent[] = [];
   _rotateRespawn = 15000;
+  _animateItemsTime = 0;
   _setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor({ setIsFollowing, camera, mouseMove, scroll }: Constructor) {
@@ -43,9 +44,18 @@ export class StackScene extends RecipeScene {
   _animateInItems() {
     super._animateInItems();
     this._canAddItems = true;
+    this._animateItemsTime = window.performance.now();
   }
 
   _onMouseDown = (e: THREE.Event) => {
+    const timeDiff = window.performance.now() - this._animateItemsTime;
+
+    // const sum = (((this._items.length - 1) * 15) / 2) * this._items.length;
+
+    if (timeDiff < StackScene.respawnTimeout * this._items.length) {
+      return;
+    }
+
     this._canRotateItems = true;
     this._setIsFollowing(true);
 
