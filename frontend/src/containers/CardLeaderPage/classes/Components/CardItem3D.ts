@@ -4,6 +4,7 @@ import { FollowItemProps, UpdateInfo, MouseValues, Coords } from '../types';
 import { lerp } from '../utils/lerp';
 import { MediaObject3D } from './MediaObject3D';
 import { getRandFloat } from '../utils/getRand';
+import { CardItem3DAnimated } from './CardItem3DAnimated';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -22,7 +23,10 @@ export class CardItem3D extends MediaObject3D {
   _extra = { x: 0, y: 0 };
   _extraScaleTranslate = { x: 0, y: 0 };
   _extraTranslate = { x: 0, y: 0 };
-  _lerpEase = { current: 0.01, target: 0.01 };
+  _lerpEase = {
+    current: CardItem3DAnimated.defaultLerp,
+    target: CardItem3DAnimated.defaultLerp,
+  };
   _lerpFirst = 0.2;
   _lerpQuotient = 0.85;
   _shouldFollow = true;
@@ -221,7 +225,7 @@ export class CardItem3D extends MediaObject3D {
     this._lerpEase.current = lerp(
       this._lerpEase.current,
       this._lerpEase.target,
-      0.01 * updateInfo.slowDownFactor,
+      CardItem3DAnimated.defaultLerp * updateInfo.slowDownFactor,
     );
 
     if (this._mesh) {

@@ -18,6 +18,7 @@ interface AnimateProps {
 
 export class CardItem3DAnimated extends CardItem3D {
   static defaultDuration = 1450;
+  static defaultLerp = 0.01;
 
   _animateRandomPositionTween: Tween<{
     x: number;
@@ -204,7 +205,7 @@ export class CardItem3DAnimated extends CardItem3D {
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
     } else {
-      this._lerpEase.target = 0.01;
+      this._lerpEase.target = CardItem3DAnimated.defaultLerp;
       this._mouseValues.target.x = this._mouseValues.current.x;
       this._mouseValues.target.y = this._mouseValues.current.y;
       this._mouseValues.last.x = this._mouseValues.current.x;
