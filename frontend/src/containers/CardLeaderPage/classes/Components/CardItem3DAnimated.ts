@@ -12,19 +12,18 @@ interface Constructor {
 interface AnimateProps {
   duration: number;
   delay: number;
-  destination: number;
+  destination?: number;
   easing?: (amount: number) => number;
 }
 
 export class CardItem3DAnimated extends CardItem3D {
   static defaultDuration = 1450;
 
-  _animateInTween: Tween<{
+  _animateRandomPositionTween: Tween<{
     x: number;
     y: number;
-    progress: number;
   }> | null = null;
-  _scaleItemTween: Tween<{
+  _scaleTween: Tween<{
     x: number;
     y: number;
   }> | null = null;
@@ -52,10 +51,6 @@ export class CardItem3DAnimated extends CardItem3D {
       .delay(delay)
       .easing(easing)
       .onUpdate(obj => {
-        if (!this._mesh) {
-          return;
-        }
-
         this._tweenOpacity = obj.progress;
       });
 
@@ -69,20 +64,15 @@ export class CardItem3DAnimated extends CardItem3D {
       delay,
       easing = TWEEN.Easing.Exponential.InOut,
     } = props;
+
     if (this._followTween) {
       this._followTween.stop();
     }
 
-    const isReverted = destination === 0;
-
     this._followTween = new TWEEN.Tween({ progress: this._followProgress })
       .to({ progress: destination }, duration)
 
-      .easing(
-        isReverted
-          ? TWEEN.Easing.Exponential.InOut
-          : TWEEN.Easing.Exponential.InOut,
-      )
+      .easing(easing)
       .delay(delay)
       .onUpdate(obj => {
         if (destination === 0) {
@@ -100,20 +90,20 @@ export class CardItem3DAnimated extends CardItem3D {
     this._followTween.start();
   }
 
-  scaleItem(props: AnimateProps) {
+  animateScale(props: AnimateProps) {
     const {
       delay,
-      destination,
+      destination = 1,
       duration,
       easing = TWEEN.Easing.Exponential.InOut,
     } = props;
 
-    if (!this._mesh) {
-      return;
+    if (this._scaleTween) {
+      this._scaleTween.stop();
     }
 
-    if (this._scaleItemTween) {
-      this._scaleItemTween.stop();
+    if (!this._mesh) {
+      return;
     }
 
     const startX = this._mesh.scale.x;
@@ -122,7 +112,7 @@ export class CardItem3DAnimated extends CardItem3D {
     const destinationX = this._domElBounds.width * destination;
     const destinationY = this._domElBounds.height * destination;
 
-    this._scaleItemTween = new TWEEN.Tween({
+    this._scaleTween = new TWEEN.Tween({
       x: startX,
       y: startY,
     })
@@ -131,8 +121,8 @@ export class CardItem3DAnimated extends CardItem3D {
       .easing(easing)
       .onUpdate(obj => {
         if (this._mesh) {
-          this._extraScale.x = -(this._domElBounds.width - obj.x) / 2;
-          this._extraScale.y = (this._domElBounds.height - obj.y) / 2;
+          this._extraScaleTranslate.x = -(this._domElBounds.width - obj.x) / 2;
+          this._extraScaleTranslate.y = (this._domElBounds.height - obj.y) / 2;
 
           this._mesh.scale.x = obj.x;
           this._mesh.scale.y = obj.y;
@@ -140,29 +130,16 @@ export class CardItem3DAnimated extends CardItem3D {
       })
       .onComplete(() => {});
 
-    this._scaleItemTween.start();
+    this._scaleTween.start();
   }
 
   animateIn() {
-    if (!this._mesh) {
-      return;
-    }
-
-    if (this._animateInTween) {
-      this._animateInTween.stop();
+    if (this._mesh) {
+      this._mesh.scale.x = this._childElBounds.width;
+      this._mesh.scale.y = this._childElBounds.height;
     }
 
     this._rotateMeshRandomly();
-
-    const progress = 0;
-
-    const positionStart = this._getRandomPosition();
-
-    const startX = this._childElBounds.width;
-    const startY = this._childElBounds.height;
-
-    const destinationX = this._domElBounds.width;
-    const destinationY = this._domElBounds.height;
 
     this.animateOpacity({
       destination: CardItem3D.defaultOpacity,
@@ -171,33 +148,43 @@ export class CardItem3DAnimated extends CardItem3D {
       easing: TWEEN.Easing.Exponential.InOut,
     });
 
-    this._animateInTween = new TWEEN.Tween({
-      x: startX,
-      y: startY,
-      progress,
+    this.animateScale({
+      destination: 1,
+      duration: CardItem3DAnimated.defaultDuration,
+      delay: 0,
+      easing: TWEEN.Easing.Exponential.InOut,
+    });
+
+    this.animateRandomPosition({
+      delay: 0,
+      duration: CardItem3DAnimated.defaultDuration,
+    });
+  }
+
+  animateRandomPosition(props: AnimateProps) {
+    const { delay, duration, easing = TWEEN.Easing.Exponential.InOut } = props;
+
+    if (this._animateRandomPositionTween) {
+      this._animateRandomPositionTween.stop();
+    }
+
+    const destinationPosition = this._getRandomPosition();
+
+    this._animateRandomPositionTween = new TWEEN.Tween({
+      x: this._extraTranslate.x,
+      y: this._extraTranslate.y,
     })
-      .to(
-        { x: destinationX, y: destinationY, progress: 1 },
-        CardItem3DAnimated.defaultDuration,
-      )
-      .easing(TWEEN.Easing.Exponential.InOut)
+      .to({ x: destinationPosition.x, y: destinationPosition.y }, duration)
+      .easing(easing)
+      .delay(delay)
       .onUpdate(obj => {
         if (this._mesh) {
-          this._extraScale.x = -(destinationX - obj.x) / 2;
-          this._extraScale.y = (destinationY - obj.y) / 2;
-
-          this._extraTranslate.x = obj.progress * positionStart.x;
-          this._extraTranslate.y = obj.progress * positionStart.y;
-
-          this._mesh.scale.x = obj.x;
-          this._mesh.scale.y = obj.y;
+          this._extraTranslate.x = obj.x;
+          this._extraTranslate.y = obj.y;
         }
-      })
-      .onComplete(() => {
-        this.isAnimatedIn = true;
       });
 
-    this._animateInTween.start();
+    this._animateRandomPositionTween.start();
   }
 
   toggleFollowing(value: boolean) {
@@ -211,7 +198,7 @@ export class CardItem3DAnimated extends CardItem3D {
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
 
-      this.scaleItem({
+      this.animateScale({
         delay: this.followItem.key * 1,
         destination: 2,
         duration: CardItem3DAnimated.defaultDuration * 0.7,
@@ -229,7 +216,7 @@ export class CardItem3DAnimated extends CardItem3D {
         duration: CardItem3DAnimated.defaultDuration,
       });
 
-      this.scaleItem({
+      this.animateScale({
         delay: this.followItem.key * 15,
         destination: 1,
         duration: CardItem3DAnimated.defaultDuration,

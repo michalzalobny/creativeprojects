@@ -66,18 +66,14 @@ export class FollowScene extends CardScene {
     this._setIsFollowing(true);
 
     this._items3D.forEach((item, key) => {
-      if (item.isAnimatedIn) {
-        item.toggleFollowing(true);
-      }
+      item.toggleFollowing(true);
     });
   };
 
   _onMouseUp = (e: THREE.Event) => {
     this._setIsFollowing(false);
     this._items3D.forEach((item, key) => {
-      if (item.isAnimatedIn) {
-        item.toggleFollowing(false);
-      }
+      item.toggleFollowing(false);
     });
   };
 

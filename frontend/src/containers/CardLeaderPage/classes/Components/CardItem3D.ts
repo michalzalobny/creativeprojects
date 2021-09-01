@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import { FollowItemProps, UpdateInfo, MouseValues, Coords } from '../types';
 import { lerp } from '../utils/lerp';
@@ -20,6 +19,14 @@ export class CardItem3D extends MediaObject3D {
   _domElBounds: DOMRect;
   _childEl: HTMLElement;
   _childElBounds: DOMRect;
+  _extra = { x: 0, y: 0 };
+  _extraScaleTranslate = { x: 0, y: 0 };
+  _extraTranslate = { x: 0, y: 0 };
+  _lerpEase = { current: 0.01, target: 0.01 };
+  _lerpFirst = 0.2;
+  _lerpQuotient = 0.85;
+  _shouldFollow = true;
+  _followProgress = 0;
   _mouseValues: MouseValues = {
     current: { x: 0, y: 0 },
     target: { x: 0, y: 0 },
@@ -34,16 +41,6 @@ export class CardItem3D extends MediaObject3D {
       y: 0,
     },
   };
-
-  _extra = { x: 0, y: 0 };
-  _extraScale = { x: 0, y: 0 };
-  _extraTranslate = { x: 0, y: 0 };
-  _lerpEase = { current: 0.01, target: 0.01 };
-  _lerpFirst = 0.2;
-  _lerpQuotient = 0.85;
-  _shouldFollow = true;
-  isAnimatedIn = false;
-  _followProgress = 0;
 
   constructor({ geometry, followItem, domEl }: Constructor) {
     super({ geometry });
@@ -121,7 +118,7 @@ export class CardItem3D extends MediaObject3D {
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
         this._extra.x -
-        this._extraScale.x -
+        this._extraScaleTranslate.x -
         this._extraTranslate.x * (1 - this._followProgress) +
         this._mouseValues.current.x * (1 - this._followProgress);
     }
@@ -135,7 +132,7 @@ export class CardItem3D extends MediaObject3D {
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
         this._extra.y -
-        this._extraScale.y -
+        this._extraScaleTranslate.y -
         this._extraTranslate.y * (1 - this._followProgress) +
         this._mouseValues.current.y * (1 - this._followProgress);
     }
@@ -150,8 +147,8 @@ export class CardItem3D extends MediaObject3D {
   _resetPosition() {
     this._extra.x = 0;
     this._extra.y = 0;
-    this._extraScale.x = 0;
-    this._extraScale.y = 0;
+    this._extraScaleTranslate.x = 0;
+    this._extraScaleTranslate.y = 0;
     this._positionRandomly();
   }
 
