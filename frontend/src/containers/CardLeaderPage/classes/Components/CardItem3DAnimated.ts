@@ -161,8 +161,8 @@ export class CardItem3DAnimated extends CardItem3D {
     const startX = this._childElBounds.width;
     const startY = this._childElBounds.height;
 
-    const destinationX = this._mesh.scale.x;
-    const destinationY = this._mesh.scale.y;
+    const destinationX = this._domElBounds.width;
+    const destinationY = this._domElBounds.height;
 
     this.animateOpacity({
       destination: CardItem3D.defaultOpacity,
