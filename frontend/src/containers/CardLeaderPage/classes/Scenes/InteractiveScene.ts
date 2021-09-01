@@ -137,7 +137,7 @@ export class InteractiveScene extends THREE.Scene {
     this._performRaycast({
       x: mouse3DX,
       y: mouse3DY,
-      colliderName: 'recipeItem',
+      colliderName: 'cardItem',
       fnToCallIfHit: 'onClick',
     });
   };

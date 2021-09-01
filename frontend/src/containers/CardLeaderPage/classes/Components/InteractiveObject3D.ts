@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { UpdateInfo } from '../types';
 
-export type ColliderName = 'recipeItem';
+export type ColliderName = 'cardItem';
 
 export class InteractiveObject3D extends THREE.Object3D {
   colliderName: ColliderName | null = null;

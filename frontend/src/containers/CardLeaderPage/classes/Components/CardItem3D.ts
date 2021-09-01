@@ -56,12 +56,11 @@ export class CardItem3D extends MediaObject3D {
     this._childEl = this._domEl.children[0] as HTMLElement;
     this._childElBounds = this._childEl.getBoundingClientRect();
 
-    this.setColliderName('recipeItem');
+    this.setColliderName('cardItem');
   }
 
   _positionRandomly() {
     const position = this._getRandomPosition();
-
     this._extraTranslate.x = position.x;
     this._extraTranslate.y = position.y;
   }
