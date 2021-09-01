@@ -43,7 +43,7 @@ export class FollowScene extends CardScene {
   }
 
   _passMouseValues(x: number, y: number) {
-    this._cardItems.forEach(item => {
+    this._items3D.forEach(item => {
       item.targetMouse = { x, y };
     });
   }
@@ -65,7 +65,7 @@ export class FollowScene extends CardScene {
 
     this._setIsFollowing(true);
 
-    this._cardItems.forEach((item, key) => {
+    this._items3D.forEach((item, key) => {
       if (item.isAnimatedIn) {
         item.toggleFollowing(true);
       }
@@ -74,7 +74,7 @@ export class FollowScene extends CardScene {
 
   _onMouseUp = (e: THREE.Event) => {
     this._setIsFollowing(false);
-    this._cardItems.forEach((item, key) => {
+    this._items3D.forEach((item, key) => {
       if (item.isAnimatedIn) {
         item.toggleFollowing(false);
       }
@@ -96,7 +96,7 @@ export class FollowScene extends CardScene {
   }
 
   _passIntersectPoint() {
-    this._cardItems.forEach(item => {
+    this._items3D.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
   }

@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import { UpdateInfo, FollowItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
-import { CardItem3D } from '../Components/CardItem3D';
+import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 import { TextureItems } from '../types';
 
 interface Constructor {
@@ -14,7 +14,7 @@ interface Constructor {
 
 export class CardScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _cardItems: CardItem3D[] = [];
+  _items3D: CardItem3DAnimated[] = [];
   _items: FollowItemProps[] = [];
   _textureItems: TextureItems = {};
 
@@ -23,10 +23,10 @@ export class CardScene extends InteractiveScene {
   }
 
   _destroyItems() {
-    this._cardItems.forEach(item => {
+    this._items3D.forEach(item => {
       item.destroy();
     });
-    this._cardItems = [];
+    this._items3D = [];
   }
 
   _onResizeDebounced = debounce(() => {
@@ -34,8 +34,8 @@ export class CardScene extends InteractiveScene {
   }, 500);
 
   _onResize() {
-    if (this._cardItems) {
-      this._cardItems.forEach(item => {
+    if (this._items3D) {
+      this._items3D.forEach(item => {
         item.onResize();
       });
     }
@@ -55,7 +55,7 @@ export class CardScene extends InteractiveScene {
 
   addItem() {
     const maxAmount = this._items.length;
-    if (this._cardItems.length >= maxAmount) {
+    if (this._items3D.length >= maxAmount) {
       return;
     }
     //Fetch elements DOM representations
@@ -63,22 +63,22 @@ export class CardScene extends InteractiveScene {
       document.querySelectorAll("[data-follow='entry']"),
     )[0] as HTMLElement;
 
-    const item3D = new CardItem3D({
+    const item3D = new CardItem3DAnimated({
       geometry: this._planeGeometry,
-      followItem: this._items[this._cardItems.length],
+      followItem: this._items[this._items3D.length],
       domEl: element,
     });
 
     item3D.textureItem = this._textureItems[item3D.followItem.item.image.url];
     item3D.rendererBounds = this._rendererBounds;
-    this._cardItems.push(item3D);
+    this._items3D.push(item3D);
     this.add(item3D);
     item3D.animateIn();
   }
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this._cardItems.forEach(item => {
+    this._items3D.forEach(item => {
       item.update(updateInfo);
     });
   }
@@ -96,7 +96,7 @@ export class CardScene extends InteractiveScene {
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
 
-    this._cardItems.forEach(item => {
+    this._items3D.forEach(item => {
       item.rendererBounds = this._rendererBounds;
     });
   }
