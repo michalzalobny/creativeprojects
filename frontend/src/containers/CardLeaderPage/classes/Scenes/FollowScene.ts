@@ -5,6 +5,7 @@ import { Scroll } from '../Singletons/Scroll';
 import { CardScene } from './CardScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { HTMLComponent } from '../HTMLComponents/HTMLComponent';
+import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -55,7 +56,7 @@ export class FollowScene extends CardScene {
     this._updateAnimateTimeout = setTimeout(() => {
       this._areItemsAnimatedIn = true;
       this._setIsAnimatedIn(true);
-    }, FollowScene.respawnTimeout * this._items.length + 1500);
+    }, FollowScene.respawnTimeout * (this._items.length - 1) + CardItem3DAnimated.defaultDuration);
   }
 
   _onMouseDown = (e: THREE.Event) => {
