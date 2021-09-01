@@ -222,6 +222,11 @@ export class CardItem3DAnimated extends CardItem3D {
         destination: 1,
         duration: CardItem3DAnimated.defaultDuration,
       });
+
+      this.animateRandomPosition({
+        delay: 0,
+        duration: CardItem3DAnimated.defaultDuration,
+      });
     }
   }
 }
