@@ -215,6 +215,20 @@ export class CardItem3D extends MediaObject3D {
     );
   }
 
+  onMouseEnter() {
+    super.onMouseEnter();
+    if (this._mesh) {
+      this._mesh.position.z = 0.01;
+    }
+  }
+
+  onMouseLeave() {
+    super.onMouseLeave();
+    if (this._mesh) {
+      this._mesh.position.z = 0;
+    }
+  }
+
   destroy() {
     super.destroy();
   }

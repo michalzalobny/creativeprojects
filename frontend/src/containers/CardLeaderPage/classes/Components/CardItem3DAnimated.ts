@@ -193,8 +193,13 @@ export class CardItem3DAnimated extends CardItem3D {
 
   toggleFollowing(value: boolean) {
     if (value) {
-      this._lerpEase.target =
-        this._lerpFirst * Math.pow(this._lerpQuotient, this.followItem.key - 1);
+      if (this._isHovered) {
+        this._lerpEase.target = this._lerpFirst + this._lerpFirst * 0.1;
+      } else {
+        this._lerpEase.target =
+          this._lerpFirst *
+          Math.pow(this._lerpQuotient, this.followItem.key - 1);
+      }
 
       this.animateFollow({
         delay: this.followItem.key * 1,
@@ -204,7 +209,7 @@ export class CardItem3DAnimated extends CardItem3D {
 
       this.animateScale({
         delay: this.followItem.key * 1,
-        destination: 2,
+        destination: 2.8,
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
     } else {
