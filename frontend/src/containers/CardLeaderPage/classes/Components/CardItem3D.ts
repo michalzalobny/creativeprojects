@@ -1,6 +1,13 @@
 import * as THREE from 'three';
 
-import { FollowItemProps, UpdateInfo, MouseValues, Coords } from '../types';
+import {
+  FollowItemProps,
+  UpdateInfo,
+  MouseValues,
+  Coords,
+  Bounds,
+  TextureItem,
+} from '../types';
 import { lerp } from '../utils/lerp';
 import { MediaObject3D } from './MediaObject3D';
 import { getRandFloat } from '../utils/getRand';
@@ -50,6 +57,7 @@ export class CardItem3D extends MediaObject3D {
     super({ geometry });
 
     this.followItem = followItem;
+
     this._domEl = domEl;
     this._domElBounds = this._domEl.getBoundingClientRect();
 
@@ -92,7 +100,9 @@ export class CardItem3D extends MediaObject3D {
   _updateBounds() {
     this._domElBounds = this._domEl.getBoundingClientRect();
     this._childElBounds = this._childEl.getBoundingClientRect();
+
     this._updateScale();
+
     if (this._mouseValues) {
       this._updateX(this._mouseValues.current.x);
       this._updateY(this._mouseValues.current.y);
@@ -152,6 +162,8 @@ export class CardItem3D extends MediaObject3D {
     this._extra.y = 0;
     this._extraScaleTranslate.x = 0;
     this._extraScaleTranslate.y = 0;
+    this._extraTranslate.x = 0;
+    this._extraTranslate.y = 0;
     this._positionRandomly();
   }
 
@@ -207,18 +219,12 @@ export class CardItem3D extends MediaObject3D {
     super.destroy();
   }
 
-  onResize() {
-    super.onResize();
-    this._updateBounds();
-    this._resetPosition();
-  }
-
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
-    this._updateMouseValues(updateInfo);
     this._updateX(this._mouseValues.current.x);
     this._updateY(this._mouseValues.current.y);
+    this._updateMouseValues(updateInfo);
 
     //Animate lerp
     this._lerpEase.current = lerp(
@@ -231,6 +237,17 @@ export class CardItem3D extends MediaObject3D {
       this._mesh.material.uniforms.uStrength.value =
         this._mouseValues.strength.current * this._followProgress;
     }
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+    this._updateBounds();
+    this._resetPosition();
+  }
+
+  set textureItem(textureItem: TextureItem) {
+    super.textureItem = textureItem;
+    this._updateBounds();
   }
 
   set targetMouse({ x, y }: Coords) {

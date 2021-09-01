@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import debounce from 'lodash/debounce';
 
 import { UpdateInfo, FollowItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
@@ -29,26 +28,12 @@ export class CardScene extends InteractiveScene {
     this._items3D = [];
   }
 
-  _onResizeDebounced = debounce(() => {
-    this._onResize();
-  }, 500);
-
-  _onResize() {
-    if (this._items3D) {
-      this._items3D.forEach(item => {
-        item.onResize();
-      });
-    }
-  }
-
   _addListeners() {
     super._addListeners();
-    window.addEventListener('resize', this._onResizeDebounced);
   }
 
   _removeListeners() {
     super._removeListeners();
-    window.removeEventListener('resize', this._onResizeDebounced);
   }
 
   _animateInItems() {}

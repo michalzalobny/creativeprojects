@@ -76,8 +76,6 @@ export class MediaObject3D extends InteractiveObject3D {
     }
   }
 
-  onResize() {}
-
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
@@ -114,7 +112,6 @@ export class MediaObject3D extends InteractiveObject3D {
   set textureItem(textureItem: TextureItem) {
     this._textureItem = textureItem;
     this._updateTexture();
-    this.onResize();
   }
 
   set opacity(value: number) {

@@ -156,6 +156,9 @@ export class CardItem3DAnimated extends CardItem3D {
       easing: TWEEN.Easing.Exponential.InOut,
     });
 
+    this._extraTranslate.x = 0;
+    this._extraTranslate.y = 0;
+
     this.animateRandomPosition({
       delay: 0,
       duration: CardItem3DAnimated.defaultDuration,
