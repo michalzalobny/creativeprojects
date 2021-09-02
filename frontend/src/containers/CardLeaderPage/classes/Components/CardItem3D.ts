@@ -242,14 +242,12 @@ export class CardItem3D extends MediaObject3D {
   onMouseEnter() {
     super.onMouseEnter();
 
-    if (this._isHovered && !this._isFollowing && this._followProgress < 0.2)
-      this.boostDepth();
+    if (!this._isFollowing && this._followProgress < 0.2) this.boostDepth();
   }
 
   onMouseLeave() {
     super.onMouseLeave();
-    if (this._mesh && !this._isFollowing && this._followProgress < 0.2)
-      this.resetDepth();
+    if (!this._isFollowing && this._followProgress < 0.2) this.resetDepth();
   }
 
   destroy() {
