@@ -206,7 +206,7 @@ export class CardItem3DAnimated extends CardItem3D {
 
       this.animateScale({
         delay: this.followItem.reverseKey * 1,
-        destination: 2.8,
+        destination: 2.85,
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
     } else {
