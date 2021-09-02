@@ -21,8 +21,10 @@ export interface Bounds {
 }
 
 export interface FollowItemProps {
+  reverseKey: number;
   key: number;
   item: CreativeItem;
+  itemsAmount: number;
 }
 
 export interface Coords {

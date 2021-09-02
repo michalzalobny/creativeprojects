@@ -21,6 +21,7 @@ interface Constructor {
 
 export class CardItem3D extends MediaObject3D {
   static defaultOpacity = 1;
+  static depthMultiplier = 0.001;
 
   followItem: FollowItemProps;
   _domEl: HTMLElement;
@@ -30,13 +31,11 @@ export class CardItem3D extends MediaObject3D {
   _extra = { x: 0, y: 0 };
   _extraScaleTranslate = { x: 0, y: 0 };
   _extraTranslate = { x: 0, y: 0 };
-  _lerpEase = {
-    current: CardItem3DAnimated.defaultLerp,
-    target: CardItem3DAnimated.defaultLerp,
-  };
+  _lerpEase = CardItem3DAnimated.defaultLerp;
   lerpFirst = 0.2;
   lerpQuotient = 0.85;
   _shouldFollow = true;
+  _isFollowing = false;
   _followProgress = 0;
   _mouseValues: MouseValues = {
     current: { x: 0, y: 0 },
@@ -65,6 +64,8 @@ export class CardItem3D extends MediaObject3D {
     this._childElBounds = this._childEl.getBoundingClientRect();
 
     this.setColliderName('cardItem');
+
+    this.resetDepth();
   }
 
   _positionRandomly() {
@@ -189,7 +190,7 @@ export class CardItem3D extends MediaObject3D {
     this._mouseValues.strength.current = lerp(
       this._mouseValues.strength.current,
       this._mouseValues.strength.target,
-      this._lerpEase.current * updateInfo.slowDownFactor,
+      this._lerpEase * updateInfo.slowDownFactor,
     );
 
     const deltaX = this._mouseValues.current.x - this._mouseValues.last.x;
@@ -206,13 +207,37 @@ export class CardItem3D extends MediaObject3D {
     this._mouseValues.current.x = lerp(
       this._mouseValues.current.x,
       this._mouseValues.target.x,
-      this._lerpEase.current * updateInfo.slowDownFactor,
+      this._lerpEase * updateInfo.slowDownFactor,
     );
     this._mouseValues.current.y = lerp(
       this._mouseValues.current.y,
       this._mouseValues.target.y,
-      this._lerpEase.current * updateInfo.slowDownFactor,
+      this._lerpEase * updateInfo.slowDownFactor,
     );
+  }
+
+  resetDepth() {
+    if (this._mesh)
+      this._mesh.position.z = this.followItem.key * CardItem3D.depthMultiplier;
+  }
+
+  boostDepth() {
+    if (this._mesh)
+      this._mesh.position.z =
+        (this.followItem.itemsAmount + 1) * CardItem3D.depthMultiplier;
+  }
+
+  onMouseEnter() {
+    super.onMouseEnter();
+
+    if (this._isHovered && !this._isFollowing && this._followProgress < 0.2)
+      this.boostDepth();
+  }
+
+  onMouseLeave() {
+    super.onMouseLeave();
+    if (this._mesh && !this._isFollowing && this._followProgress < 0.2)
+      this.resetDepth();
   }
 
   destroy() {
@@ -225,13 +250,6 @@ export class CardItem3D extends MediaObject3D {
     this._updateX(this._mouseValues.current.x);
     this._updateY(this._mouseValues.current.y);
     this._updateMouseValues(updateInfo);
-
-    //Animate lerp
-    this._lerpEase.current = lerp(
-      this._lerpEase.current,
-      this._lerpEase.target,
-      CardItem3DAnimated.defaultLerp * updateInfo.slowDownFactor,
-    );
 
     if (this._mesh) {
       this._mesh.material.uniforms.uStrength.value =
@@ -250,8 +268,8 @@ export class CardItem3D extends MediaObject3D {
     this._updateBounds();
   }
 
-  set lerpTarget(value: number) {
-    this._lerpEase.target = value;
+  set lerpEase(value: number) {
+    this._lerpEase = value;
   }
 
   set targetMouse({ x, y }: Coords) {

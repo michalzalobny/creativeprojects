@@ -59,7 +59,12 @@ export class App {
     });
 
     this._followScene.items = Array.from(items).map((item, key) => {
-      return { key: items.length - key, item };
+      return {
+        itemsAmount: items.length,
+        key: key + 1,
+        reverseKey: items.length - key,
+        item,
+      };
     });
 
     this._onResize();

@@ -192,33 +192,33 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   toggleFollowing(value: boolean) {
+    this._isFollowing = value;
     if (value) {
       this.animateFollow({
-        delay: this.followItem.key * 1,
+        delay: this.followItem.reverseKey * 1,
         destination: 1,
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
 
       this.animateScale({
-        delay: this.followItem.key * 1,
+        delay: this.followItem.reverseKey * 1,
         destination: 2.8,
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
     } else {
-      this._lerpEase.target = CardItem3DAnimated.defaultLerp;
       this._mouseValues.target.x = this._mouseValues.current.x;
       this._mouseValues.target.y = this._mouseValues.current.y;
       this._mouseValues.last.x = this._mouseValues.current.x;
       this._mouseValues.last.y = this._mouseValues.current.y;
 
       this.animateFollow({
-        delay: this.followItem.key * 15,
+        delay: this.followItem.reverseKey * 15,
         destination: 0,
         duration: CardItem3DAnimated.defaultDuration,
       });
 
       this.animateScale({
-        delay: this.followItem.key * 15,
+        delay: this.followItem.reverseKey * 15,
         destination: 1,
         duration: CardItem3DAnimated.defaultDuration,
       });

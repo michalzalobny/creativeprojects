@@ -70,16 +70,17 @@ export class FollowScene extends CardScene {
       item.toggleFollowing(true);
 
       //Reset all objects to default
-      item.lerpTarget =
-        item.lerpFirst * Math.pow(item.lerpQuotient, item.followItem.key - 1);
-      item.position.z = 0;
+      item.lerpEase =
+        item.lerpFirst *
+        Math.pow(item.lerpQuotient, item.followItem.reverseKey - 1);
+      item.resetDepth();
     });
 
     //Update focused object
     if (this._focusedObject) {
-      this._focusedObject.lerpTarget =
-        this._focusedObject.lerpFirst + this._focusedObject.lerpFirst * 0.1;
-      this._focusedObject.position.z = 0.01;
+      this._focusedObject.lerpEase =
+        this._focusedObject.lerpFirst + this._focusedObject.lerpFirst * 0.2;
+      this._focusedObject.boostDepth();
     }
   };
 
