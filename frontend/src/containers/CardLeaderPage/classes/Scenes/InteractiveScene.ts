@@ -8,6 +8,7 @@ import {
 } from '../Components/InteractiveObject3D';
 import { IntersectiveBackground3D } from '../Components/IntersectiveBackground3D';
 import { lerp } from '../utils/lerp';
+import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -45,6 +46,7 @@ export class InteractiveScene extends THREE.Scene {
   _intersectPoint = new THREE.Vector3(0);
   _intersectPointLerp = new THREE.Vector3(0);
   _hoveredObject: InteractiveObject3D | null = null;
+  _focusedObject: CardItem3DAnimated | null = null;
   _canHoverObject = true;
   _intersectiveBackground3D = new IntersectiveBackground3D();
 
@@ -134,22 +136,26 @@ export class InteractiveScene extends THREE.Scene {
     const mouse3DX = (mouseX / this._rendererBounds.width) * 2 - 1;
     const mouse3DY = -(mouseY / this._rendererBounds.height) * 2 + 1;
 
-    this._performRaycast({
+    const el = this._performRaycast({
       x: mouse3DX,
       y: mouse3DY,
       colliderName: 'cardItem',
       fnToCallIfHit: 'onClick',
     });
+
+    this._focusedObject = el[0] as CardItem3DAnimated;
   };
 
   _addListeners() {
     this._mouseMove.addEventListener('mousemove', this._onMouseMove);
     this._mouseMove.addEventListener('click', this._onClick);
+    this._mouseMove.addEventListener('down', this._onClick);
   }
 
   _removeListeners() {
     this._mouseMove.removeEventListener('mousemove', this._onMouseMove);
     this._mouseMove.removeEventListener('click', this._onClick);
+    this._mouseMove.removeEventListener('down', this._onClick);
   }
 
   set rendererBounds(bounds: Bounds) {

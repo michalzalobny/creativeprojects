@@ -34,8 +34,8 @@ export class CardItem3D extends MediaObject3D {
     current: CardItem3DAnimated.defaultLerp,
     target: CardItem3DAnimated.defaultLerp,
   };
-  _lerpFirst = 0.2;
-  _lerpQuotient = 0.85;
+  lerpFirst = 0.2;
+  lerpQuotient = 0.85;
   _shouldFollow = true;
   _followProgress = 0;
   _mouseValues: MouseValues = {
@@ -215,20 +215,6 @@ export class CardItem3D extends MediaObject3D {
     );
   }
 
-  onMouseEnter() {
-    super.onMouseEnter();
-    if (this._mesh) {
-      this._mesh.position.z = 0.01;
-    }
-  }
-
-  onMouseLeave() {
-    super.onMouseLeave();
-    if (this._mesh) {
-      this._mesh.position.z = 0;
-    }
-  }
-
   destroy() {
     super.destroy();
   }
@@ -262,6 +248,10 @@ export class CardItem3D extends MediaObject3D {
   set textureItem(textureItem: TextureItem) {
     super.textureItem = textureItem;
     this._updateBounds();
+  }
+
+  set lerpTarget(value: number) {
+    this._lerpEase.target = value;
   }
 
   set targetMouse({ x, y }: Coords) {

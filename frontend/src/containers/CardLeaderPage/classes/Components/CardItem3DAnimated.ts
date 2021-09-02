@@ -193,14 +193,6 @@ export class CardItem3DAnimated extends CardItem3D {
 
   toggleFollowing(value: boolean) {
     if (value) {
-      if (this._isHovered) {
-        this._lerpEase.target = this._lerpFirst + this._lerpFirst * 0.1;
-      } else {
-        this._lerpEase.target =
-          this._lerpFirst *
-          Math.pow(this._lerpQuotient, this.followItem.key - 1);
-      }
-
       this.animateFollow({
         delay: this.followItem.key * 1,
         destination: 1,

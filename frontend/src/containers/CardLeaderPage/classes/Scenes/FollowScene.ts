@@ -68,7 +68,19 @@ export class FollowScene extends CardScene {
 
     this._items3D.forEach((item, key) => {
       item.toggleFollowing(true);
+
+      //Reset all objects to default
+      item.lerpTarget =
+        item.lerpFirst * Math.pow(item.lerpQuotient, item.followItem.key - 1);
+      item.position.z = 0;
     });
+
+    //Update focused object
+    if (this._focusedObject) {
+      this._focusedObject.lerpTarget =
+        this._focusedObject.lerpFirst + this._focusedObject.lerpFirst * 0.1;
+      this._focusedObject.position.z = 0.01;
+    }
   };
 
   _onMouseUp = (e: THREE.Event) => {
