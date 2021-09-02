@@ -50,6 +50,10 @@ export class CardItem3D extends MediaObject3D {
       y: 0,
     },
   };
+  _hoverValue = {
+    current: 0,
+    target: 0,
+  };
 
   constructor({ geometry, followItem, domEl }: Constructor) {
     super({ geometry });
@@ -203,6 +207,23 @@ export class CardItem3D extends MediaObject3D {
     );
   }
 
+  _updateHover(updateInfo: UpdateInfo) {
+    if (this._isHovered) {
+      this._hoverValue.target = 1;
+    } else {
+      this._hoverValue.target = 0;
+    }
+
+    this._hoverValue.current = lerp(
+      this._hoverValue.current,
+      this._hoverValue.target,
+      0.02 * updateInfo.slowDownFactor,
+    );
+    if (this._mesh) {
+      this._mesh.material.uniforms.uHovered.value = this._hoverValue.current;
+    }
+  }
+
   resetDepth() {
     if (this._mesh)
       this._mesh.position.z = this.followItem.key * CardItem3D.depthMultiplier;
@@ -246,6 +267,7 @@ export class CardItem3D extends MediaObject3D {
     this._updateX(this._mouseValues.current.x);
     this._updateY(this._mouseValues.current.y);
     this._updateMouseValues(updateInfo);
+    this._updateHover(updateInfo);
 
     if (this._mesh) {
       this._mesh.material.uniforms.uStrength.value =

@@ -82,6 +82,8 @@ export class MediaObject3D extends InteractiveObject3D {
 
     this._updateOpacity();
 
+    if (this._mesh) this._mesh.material.uniforms.uTime.value = updateInfo.time;
+
     if (this._intersectPoint && this._mesh) {
       this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
     }

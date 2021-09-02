@@ -7,7 +7,8 @@ uniform float uStrength;
 uniform vec2 uViewportSizes;
 uniform vec2 uPlaneSizes;
 uniform vec3 uMouse3D;
-
+uniform float uHovered;
+uniform float uTime;
 uniform float uRandom;
 uniform float uFollow;
 
@@ -31,6 +32,11 @@ void main() {
   //Barrel animation 
   newPosition.z += sin(newPosition.y / uViewportSizes.y * PI + PI / 2.0) * -uStrength * 0.15;
   newPosition.z += sin(newPosition.x / uViewportSizes.x * PI + PI / 2.0) * -uStrength * 0.15;
+
+  //Wave when hovered
+  float elevation = sin(newPosition.x * 0.03  - uTime * 0.003) * 0.9;
+  elevation += sin(newPosition.y * 0.01 - uTime * 0.002) * 0.7;
+  newPosition.z += elevation * uHovered * uFollow;
 
   gl_Position = projectionMatrix * newPosition;
 

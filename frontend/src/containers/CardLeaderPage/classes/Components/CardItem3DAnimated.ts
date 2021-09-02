@@ -40,7 +40,7 @@ export class CardItem3DAnimated extends CardItem3D {
       destination,
       duration,
       delay,
-      easing = TWEEN.Easing.Linear.None,
+      easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
 
     if (this._opacityTween) {
