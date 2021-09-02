@@ -36,6 +36,7 @@ export class MediaObject3D extends InteractiveObject3D {
         tMap: { value: null },
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
+        uFollow: { value: 1 },
         uTime: { value: 0 },
         uRandom: { value: Math.random() },
         uHovered: { value: 0 },

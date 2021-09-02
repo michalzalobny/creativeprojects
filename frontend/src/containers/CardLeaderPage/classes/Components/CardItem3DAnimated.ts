@@ -83,6 +83,10 @@ export class CardItem3DAnimated extends CardItem3D {
         }
 
         this._followProgress = obj.progress;
+
+        if (this._mesh) {
+          this._mesh.material.uniforms.uFollow.value = 1 - obj.progress;
+        }
       })
       .onComplete(() => {
         this._shouldFollow = true;

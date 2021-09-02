@@ -9,6 +9,7 @@ uniform vec2 uPlaneSizes;
 uniform vec3 uMouse3D;
 
 uniform float uRandom;
+uniform float uFollow;
 
 varying vec2 vUv;
 
@@ -17,8 +18,8 @@ void main() {
   vec3 stablePosition = position;
   
   //Parallax mouse animation
-  stablePosition.x -= uMouse3D.x * 0.0002 * (1.5 * uRandom + .2) ;
-  stablePosition.y -= uMouse3D.y * 0.0002 * (1.5 * uRandom + .2) ;
+  stablePosition.x -= uMouse3D.x * 0.0002 * (1.5 * uRandom + .2) * uFollow;
+  stablePosition.y -= uMouse3D.y * 0.0002 * (1.5 * uRandom + .2) * uFollow;
 
   // Cursor animation
   // float dist = distance(position.xy, uMouse3D.xy);
