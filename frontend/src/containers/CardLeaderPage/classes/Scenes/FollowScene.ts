@@ -68,18 +68,12 @@ export class FollowScene extends CardScene {
 
     this._items3D.forEach((item, key) => {
       item.toggleFollowing(true);
-
-      //Reset all objects to default
-      item.lerpEase =
-        item.lerpFirst *
-        Math.pow(item.lerpQuotient, item.followItem.reverseKey - 1);
+      item.resetLerp();
       item.resetDepth();
     });
 
-    //Update focused object
     if (this._focusedObject) {
-      this._focusedObject.lerpEase =
-        this._focusedObject.lerpFirst + this._focusedObject.lerpFirst * 0.2;
+      this._focusedObject.boostLerp();
       this._focusedObject.boostDepth();
     }
   };
