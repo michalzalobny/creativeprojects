@@ -41,7 +41,6 @@ export class CardItem3D extends MediaObject3D {
     current: { x: 0, y: 0 },
     target: { x: 0, y: 0 },
     last: { x: 0, y: 0 },
-    direction: { x: 'left', y: 'up' },
     strength: {
       current: 0,
       target: 0,
@@ -172,19 +171,6 @@ export class CardItem3D extends MediaObject3D {
   _updateMouseValues(updateInfo: UpdateInfo) {
     if (!this._mouseValues) {
       return;
-    }
-
-    //Update scroll direction
-    if (this._mouseValues.current.x > this._mouseValues.last.x) {
-      this._mouseValues.direction.x = 'left';
-    } else {
-      this._mouseValues.direction.x = 'right';
-    }
-
-    if (this._mouseValues.current.y > this._mouseValues.last.y) {
-      this._mouseValues.direction.y = 'up';
-    } else {
-      this._mouseValues.direction.y = 'down';
     }
 
     //Update strength value

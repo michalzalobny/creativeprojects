@@ -37,17 +37,10 @@ export interface Mouse {
   target: Coords;
 }
 
-export type DirectionX = 'left' | 'right';
-export type DirectionY = 'up' | 'down';
-
 export interface MouseValues {
   current: Coords;
   target: Coords;
   last: Coords;
-  direction: {
-    x: DirectionX;
-    y: DirectionY;
-  };
   strength: {
     current: number;
     target: number;
