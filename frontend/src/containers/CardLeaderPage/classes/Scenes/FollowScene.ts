@@ -72,7 +72,17 @@ export class FollowScene extends CardScene {
       item.resetDepth();
     });
 
-    if (this._focusedObject) {
+    const firstItem = this._items3D.find(el => el.followItem.reverseKey === 1);
+
+    if (this._focusedObject && this._focusedObject._mesh) {
+      const focusItemLerp = this._focusedObject._lerpEase;
+      const focusItemPositionZ = this._focusedObject._mesh.position.z;
+
+      if (firstItem && firstItem._mesh) {
+        firstItem._mesh.position.z = focusItemPositionZ;
+        firstItem._lerpEase = focusItemLerp;
+      }
+
       this._focusedObject.boostLerp();
       this._focusedObject.boostDepth();
     }

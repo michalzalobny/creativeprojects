@@ -66,6 +66,7 @@ export class CardItem3D extends MediaObject3D {
     this.setColliderName('cardItem');
 
     this.resetDepth();
+    this.resetLerp();
   }
 
   _positionRandomly() {
