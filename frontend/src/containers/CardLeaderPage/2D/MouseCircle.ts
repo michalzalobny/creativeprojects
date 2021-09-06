@@ -9,16 +9,70 @@ interface Constructor {
   mouseMove: MouseMove;
 }
 
+const DEFAULT_SIZE = 10;
 export class MouseCircle extends EventDispatcher {
+  static _radius = {
+    current: DEFAULT_SIZE,
+    target: DEFAULT_SIZE,
+  };
+
+  static _opacity = 0;
+  static _ringOpacity = 0;
+
+  static onMouseEnter() {
+    MouseCircle._radius.target = 40;
+    this._animateOpacity(1);
+    this._animateRingOpacity(1);
+  }
+
+  static onMouseLeft() {
+    MouseCircle._radius.target = DEFAULT_SIZE;
+    this._animateOpacity(0);
+    this._animateRingOpacity(0);
+  }
+
+  static hide() {
+    this._animateRingOpacity(0);
+    this._animateOpacity(0);
+    MouseCircle._radius.target = DEFAULT_SIZE;
+  }
+
+  static show() {
+    this._animateRingOpacity(0);
+    this._animateOpacity(0);
+  }
+
+  static _animateOpacity(destination: number) {
+    const tweenProgress = new TWEEN.Tween({
+      progress: this._opacity,
+    })
+      .to({ progress: destination }, 250)
+      .easing(TWEEN.Easing.Linear.None)
+      .onUpdate(obj => {
+        this._opacity = obj.progress;
+      });
+
+    tweenProgress.start();
+  }
+
+  static _animateRingOpacity(destination: number) {
+    const tweenProgress = new TWEEN.Tween({
+      progress: this._ringOpacity,
+    })
+      .to({ progress: destination }, 250)
+      .easing(TWEEN.Easing.Linear.None)
+      .onUpdate(obj => {
+        this._ringOpacity = obj.progress;
+      });
+
+    tweenProgress.start();
+  }
+
   _x = 0;
   _y = 0;
   _ease = 0.4;
-  _opacity = 1;
+
   _mouseMove: MouseMove;
-  _radius = {
-    current: 30,
-    target: 30,
-  };
 
   constructor({ mouseMove }: Constructor) {
     super();
@@ -47,19 +101,13 @@ export class MouseCircle extends EventDispatcher {
   _draw(ctx: CanvasRenderingContext2D) {
     //radius circle
     ctx.beginPath();
-    ctx.arc(
-      this._x,
-      this._y,
-      this._radius.current * this._opacity,
-      0,
-      2 * Math.PI,
-    );
-    ctx.strokeStyle = `rgba(255,255,255, ${this._opacity})`;
-    ctx.lineWidth = 1.2;
+    ctx.arc(this._x, this._y, MouseCircle._radius.current * 1, 0, 2 * Math.PI);
+    ctx.strokeStyle = `rgba(255,255,255, ${MouseCircle._ringOpacity})`;
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    ctx.font = '12px Open Sans';
-    ctx.fillStyle = `rgba(255,255,255, ${this._opacity})`;
+    ctx.font = '16px Open Sans';
+    ctx.fillStyle = `rgba(255,255,255, ${MouseCircle._opacity})`;
     const metrics = ctx.measureText('Hold');
     const actualHeight =
       metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
@@ -70,26 +118,13 @@ export class MouseCircle extends EventDispatcher {
     );
   }
 
-  _animateOpacity(destination: number) {
-    const tweenProgress = new TWEEN.Tween({
-      progress: this._opacity,
-    })
-      .to({ progress: destination }, 300)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(obj => {
-        this._opacity = obj.progress;
-      });
-
-    tweenProgress.start();
-  }
-
   update(updateInfo: UpdateInfo, ctx: CanvasRenderingContext2D) {
     this._draw(ctx);
 
-    this._radius.current = lerp(
-      this._radius.current,
-      this._radius.target,
-      0.03 * updateInfo.slowDownFactor,
+    MouseCircle._radius.current = lerp(
+      MouseCircle._radius.current,
+      MouseCircle._radius.target,
+      0.07 * updateInfo.slowDownFactor,
     );
   }
 }

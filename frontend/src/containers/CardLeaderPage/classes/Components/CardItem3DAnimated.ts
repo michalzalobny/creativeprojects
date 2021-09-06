@@ -2,6 +2,7 @@ import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import { FollowItemProps } from '../types';
 import { CardItem3D } from './CardItem3D';
+import { MouseCircle } from '../../2D/MouseCircle';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -198,6 +199,7 @@ export class CardItem3DAnimated extends CardItem3D {
   toggleFollowing(value: boolean) {
     this._isFollowing = value;
     if (value) {
+      MouseCircle.hide();
       this.animateFollow({
         delay: this.followItem.reverseKey * 1,
         destination: 1,
@@ -210,6 +212,7 @@ export class CardItem3DAnimated extends CardItem3D {
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
     } else {
+      MouseCircle.show();
       this._mouseValues.target.x = this._mouseValues.current.x;
       this._mouseValues.target.y = this._mouseValues.current.y;
       this._mouseValues.last.x = this._mouseValues.current.x;

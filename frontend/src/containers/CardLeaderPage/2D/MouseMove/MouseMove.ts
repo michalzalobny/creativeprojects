@@ -11,7 +11,7 @@ interface Mouse {
 export class MouseMove extends EventDispatcher {
   _mouseLast: Mouse = { x: 0, y: 0 };
   _isTouching = false;
-  _ease = 0.3;
+  _ease = 0.15;
   mouse: Mouse = { x: 0, y: 0 };
   mouseLerp: Mouse = { x: 0, y: 0 };
   strength = 0;
