@@ -1,6 +1,6 @@
 import TWEEN from '@tweenjs/tween.js';
 
-import { MouseMove } from './MouseMove/MouseMove';
+import { MouseMove } from './Singletons/MouseMove';
 import { MouseCircle } from './MouseCircle';
 
 export const DEFALUT_FPS = 60;

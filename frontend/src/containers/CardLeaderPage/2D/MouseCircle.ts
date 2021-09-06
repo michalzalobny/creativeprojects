@@ -2,7 +2,7 @@ import { EventDispatcher } from 'three';
 import TWEEN from '@tweenjs/tween.js';
 
 import { UpdateInfo } from './types';
-import { MouseMove } from './MouseMove/MouseMove';
+import { MouseMove } from './Singletons/MouseMove';
 import { lerp } from './utils/lerp';
 
 interface Constructor {
@@ -10,7 +10,10 @@ interface Constructor {
 }
 
 const DEFAULT_SIZE = 10;
+
 export class MouseCircle extends EventDispatcher {
+  static mouseLerp = 0.2;
+
   static _radius = {
     current: DEFAULT_SIZE,
     target: DEFAULT_SIZE,
@@ -68,8 +71,17 @@ export class MouseCircle extends EventDispatcher {
     tweenProgress.start();
   }
 
-  _x = 0;
-  _y = 0;
+  _mouse = {
+    x: {
+      current: 0,
+      target: 0,
+    },
+    y: {
+      current: 0,
+      target: 0,
+    },
+  };
+
   _ease = 0.4;
 
   _mouseMove: MouseMove;
@@ -86,22 +98,28 @@ export class MouseCircle extends EventDispatcher {
   }
 
   _onMouseMove = (e: THREE.Event) => {
-    this._x = (e.target as MouseMove).mouseLerp.x;
-    this._y = (e.target as MouseMove).mouseLerp.y;
+    this._mouse.x.target = (e.target as MouseMove).mouse.x;
+    this._mouse.y.target = (e.target as MouseMove).mouse.y;
   };
 
   _addEventListeners() {
-    this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
+    this._mouseMove.addEventListener('mousemove', this._onMouseMove);
   }
 
   _removeEventListeners() {
-    this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
+    this._mouseMove.removeEventListener('mousemove', this._onMouseMove);
   }
 
   _draw(ctx: CanvasRenderingContext2D) {
     //radius circle
     ctx.beginPath();
-    ctx.arc(this._x, this._y, MouseCircle._radius.current * 1, 0, 2 * Math.PI);
+    ctx.arc(
+      this._mouse.x.current,
+      this._mouse.y.current,
+      MouseCircle._radius.current * 1,
+      0,
+      2 * Math.PI,
+    );
     ctx.strokeStyle = `rgba(255,255,255, ${MouseCircle._ringOpacity})`;
     ctx.lineWidth = 1.5;
     ctx.stroke();
@@ -113,13 +131,25 @@ export class MouseCircle extends EventDispatcher {
       metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     ctx.fillText(
       'Hold',
-      this._x - metrics.width / 2,
-      this._y + actualHeight / 2,
+      this._mouse.x.current - metrics.width / 2,
+      this._mouse.y.current + actualHeight / 2,
     );
   }
 
   update(updateInfo: UpdateInfo, ctx: CanvasRenderingContext2D) {
     this._draw(ctx);
+
+    this._mouse.x.current = lerp(
+      this._mouse.x.current,
+      this._mouse.x.target,
+      MouseCircle.mouseLerp * updateInfo.slowDownFactor,
+    );
+
+    this._mouse.y.current = lerp(
+      this._mouse.y.current,
+      this._mouse.y.target,
+      MouseCircle.mouseLerp * updateInfo.slowDownFactor,
+    );
 
     MouseCircle._radius.current = lerp(
       MouseCircle._radius.current,
