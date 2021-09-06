@@ -21,7 +21,6 @@ export default function CardLeaderPage(props: PageProps) {
   const renderer2D = useRef<HTMLDivElement>(null);
 
   const [isFollowing, setIsFollowing] = useState(false);
-  const [isAnimatedIn, setIsAnimatedIn] = useState(false);
 
   const myApp = useRef<App | null>(null);
   const app2D = useRef<App2D | null>(null);
@@ -42,7 +41,6 @@ export default function CardLeaderPage(props: PageProps) {
         items: props.projectData.creativeItems,
         imagesToPreload,
         setIsFollowing,
-        setIsAnimatedIn,
       });
     }
 

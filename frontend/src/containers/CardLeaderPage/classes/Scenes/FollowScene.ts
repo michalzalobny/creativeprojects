@@ -12,7 +12,6 @@ interface Constructor {
   scroll: Scroll;
   mouseMove: MouseMove;
   setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class FollowScene extends CardScene {
@@ -25,22 +24,14 @@ export class FollowScene extends CardScene {
   _areItemsAnimatedIn = false;
   _updateAnimateTimeout: ReturnType<typeof setTimeout> | null = null;
   _setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
-  _setIsAnimatedIn: React.Dispatch<React.SetStateAction<boolean>>;
 
-  constructor({
-    setIsAnimatedIn,
-    setIsFollowing,
-    camera,
-    mouseMove,
-    scroll,
-  }: Constructor) {
+  constructor({ setIsFollowing, camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
     this._initHtmlComponents();
     this._setIsFollowing = setIsFollowing;
-    this._setIsAnimatedIn = setIsAnimatedIn;
   }
 
   _passMouseValues(x: number, y: number) {
@@ -55,7 +46,6 @@ export class FollowScene extends CardScene {
 
     this._updateAnimateTimeout = setTimeout(() => {
       this._areItemsAnimatedIn = true;
-      this._setIsAnimatedIn(true);
     }, FollowScene.respawnTimeout * (this._items.length - 1) + CardItem3DAnimated.defaultDuration);
   }
 
