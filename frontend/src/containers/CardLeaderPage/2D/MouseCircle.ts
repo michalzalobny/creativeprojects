@@ -80,7 +80,7 @@ export class MouseCircle extends EventDispatcher {
     const tweenProgress = new TWEEN.Tween({
       progress: this.radius,
     })
-      .to({ progress: destination }, 350)
+      .to({ progress: destination }, 400)
       .easing(TWEEN.Easing.Sinusoidal.InOut)
       .onUpdate(obj => {
         this.radius = obj.progress;
