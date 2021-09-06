@@ -82,7 +82,6 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
             <SocialsBoxComp
               offsetPadding={MENU_POS + MENU_SIZE}
               animate={showMenu ? 'animate' : 'initial'}
-              initial="initial"
             />
           </LinksWrapper>
         </AnimatePresence>
