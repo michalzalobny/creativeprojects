@@ -17,14 +17,17 @@ import { SignSvgComp } from './styled/Slider/SignSvgComp';
 import { useState } from 'react';
 import { SignContainer } from './styled/Slider/SignContainer';
 import { Text } from './styled/Slider/Text';
+import { App as App2D } from './2D/App';
 
 export default function CardLeaderPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
+  const renderer2D = useRef<HTMLDivElement>(null);
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [isAnimatedIn, setIsAnimatedIn] = useState(false);
 
   const myApp = useRef<App | null>(null);
+  const app2D = useRef<App2D | null>(null);
 
   const imagesToPreload = useMemo(
     () => props.projectData.creativeItems.map(item => item.image.url),
@@ -50,6 +53,20 @@ export default function CardLeaderPage(props: PageProps) {
       myApp.current && myApp.current.destroy();
     };
   }, [imagesToPreload, props.projectData.creativeItems]);
+
+  useEffect(() => {
+    if (!renderer2D.current) {
+      return () => {};
+    }
+
+    if (renderer2D.current) {
+      app2D.current = new App2D(renderer2D.current);
+    }
+
+    return () => {
+      app2D.current && app2D.current.destroy();
+    };
+  }, []);
 
   return (
     <>
@@ -96,6 +113,10 @@ export default function CardLeaderPage(props: PageProps) {
         </Text>
 
         <CanvasWrapper ref={rendererWrapperEl} />
+        <CanvasWrapper
+          style={{ zIndex: 20, mixBlendMode: 'difference' }} //The color of element in canvas has to be white to make the "difference" work
+          ref={renderer2D}
+        />
       </Wrapper>
     </>
   );
