@@ -182,7 +182,7 @@ export class CardItem3D extends MediaObject3D {
     this._mouseValues.strength.current = lerp(
       this._mouseValues.strength.current,
       this._mouseValues.strength.target,
-      this._lerpEase * updateInfo.slowDownFactor,
+      this._lerpEase * 0.3 * updateInfo.slowDownFactor,
     );
 
     const deltaX = this._mouseValues.current.x - this._mouseValues.last.x;
