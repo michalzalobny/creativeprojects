@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useMemo } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
-import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -15,7 +14,6 @@ import { SignWrapper } from './styled/Slider/SignWrapper';
 import { SignSvgComp } from './styled/Slider/SignSvgComp';
 import { useState } from 'react';
 import { SignContainer } from './styled/Slider/SignContainer';
-import { Text } from './styled/Slider/Text';
 import { App as App2D } from './2D/App';
 
 export default function CardLeaderPage(props: PageProps) {
@@ -101,13 +99,6 @@ export default function CardLeaderPage(props: PageProps) {
             <SignSvgComp />
           </SignWrapper>
         </SignContainer>
-
-        <Text>
-          <RevealButterflyString
-            text={'HOLD MOUSE TO LEAD'}
-            shouldAnimate={!isFollowing && isAnimatedIn}
-          />
-        </Text>
 
         <CanvasWrapper ref={rendererWrapperEl} />
         <CanvasWrapper

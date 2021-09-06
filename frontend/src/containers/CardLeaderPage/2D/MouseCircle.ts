@@ -55,8 +55,19 @@ export class MouseCircle extends EventDispatcher {
       2 * Math.PI,
     );
     ctx.strokeStyle = `rgba(255,255,255, ${this._opacity})`;
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 1.2;
     ctx.stroke();
+
+    ctx.font = '12px Open Sans';
+    ctx.fillStyle = `rgba(255,255,255, ${this._opacity})`;
+    const metrics = ctx.measureText('Hold');
+    const actualHeight =
+      metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    ctx.fillText(
+      'Hold',
+      this._x - metrics.width / 2,
+      this._y + actualHeight / 2,
+    );
   }
 
   _animateOpacity(destination: number) {
