@@ -15,6 +15,7 @@ import { SignSvgComp } from './styled/Slider/SignSvgComp';
 import { useState } from 'react';
 import { SignContainer } from './styled/Slider/SignContainer';
 import { App as App2D } from './2D/App';
+import { CanvasCircleWrapper } from './styled/Slider/CanvasCircleWrapper';
 
 export default function CardLeaderPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -99,10 +100,7 @@ export default function CardLeaderPage(props: PageProps) {
         </SignContainer>
 
         <CanvasWrapper ref={rendererWrapperEl} />
-        <CanvasWrapper
-          style={{ zIndex: 20, mixBlendMode: 'difference' }} //The color of element in canvas has to be white to make the "difference" work
-          ref={renderer2D}
-        />
+        <CanvasCircleWrapper ref={renderer2D} />
       </Wrapper>
     </>
   );

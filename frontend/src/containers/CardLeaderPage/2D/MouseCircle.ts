@@ -54,7 +54,7 @@ export class MouseCircle extends EventDispatcher {
     const tweenProgress = new TWEEN.Tween({
       progress: this._opacity,
     })
-      .to({ progress: destination }, 250)
+      .to({ progress: destination }, 150)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         this._opacity = obj.progress;
@@ -67,7 +67,7 @@ export class MouseCircle extends EventDispatcher {
     const tweenProgress = new TWEEN.Tween({
       progress: this._ringOpacity,
     })
-      .to({ progress: destination }, 250)
+      .to({ progress: destination }, 200)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         this._ringOpacity = obj.progress;
@@ -80,7 +80,7 @@ export class MouseCircle extends EventDispatcher {
     const tweenProgress = new TWEEN.Tween({
       progress: this.radius,
     })
-      .to({ progress: destination }, 450)
+      .to({ progress: destination }, 350)
       .easing(TWEEN.Easing.Sinusoidal.InOut)
       .onUpdate(obj => {
         this.radius = obj.progress;
