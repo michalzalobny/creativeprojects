@@ -9,8 +9,8 @@ interface Constructor {
   mouseMove: MouseMove;
 }
 
-const DEFAULT_SIZE = 10;
-const BIG_SIZE = 45;
+const DEFAULT_SIZE = 20;
+const BIG_SIZE = 42;
 
 export class MouseCircle extends EventDispatcher {
   static mouseLerp = 0.2;
@@ -119,7 +119,7 @@ export class MouseCircle extends EventDispatcher {
       2 * Math.PI,
     );
     ctx.strokeStyle = `rgba(255,255,255, ${MouseCircle._ringOpacity})`;
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     ctx.font = '15px Open Sans';
