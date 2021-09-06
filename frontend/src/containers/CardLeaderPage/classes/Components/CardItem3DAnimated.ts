@@ -212,7 +212,6 @@ export class CardItem3DAnimated extends CardItem3D {
         duration: CardItem3DAnimated.defaultDuration * 0.7,
       });
     } else {
-      MouseCircle.show();
       this._mouseValues.target.x = this._mouseValues.current.x;
       this._mouseValues.target.y = this._mouseValues.current.y;
       this._mouseValues.last.x = this._mouseValues.current.x;

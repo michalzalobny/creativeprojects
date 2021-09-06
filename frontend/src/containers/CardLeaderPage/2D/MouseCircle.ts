@@ -10,6 +10,7 @@ interface Constructor {
 }
 
 const DEFAULT_SIZE = 10;
+const BIG_SIZE = 45;
 
 export class MouseCircle extends EventDispatcher {
   static mouseLerp = 0.2;
@@ -19,42 +20,34 @@ export class MouseCircle extends EventDispatcher {
     target: DEFAULT_SIZE,
   };
 
-  static radius = DEFAULT_SIZE;
-
   static _opacity = 0;
   static _ringOpacity = 0;
 
   static onMouseEnter() {
-    MouseCircle._radius.target = 40;
-    this._animateRingRadius(40);
-    this._animateOpacity(1);
-    this._animateRingOpacity(1);
+    this.show();
   }
 
   static onMouseLeft() {
-    MouseCircle._radius.target = DEFAULT_SIZE;
-    this._animateRingRadius(DEFAULT_SIZE);
-    this._animateOpacity(0);
-    this._animateRingOpacity(0);
+    this.hide();
   }
 
   static hide() {
-    this._animateRingOpacity(0);
-    this._animateOpacity(0);
     MouseCircle._radius.target = DEFAULT_SIZE;
-    this._animateRingRadius(DEFAULT_SIZE);
+    this._animateOpacity(0);
+    this._animateRingOpacity(0);
   }
 
   static show() {
-    this._animateRingOpacity(0);
-    this._animateOpacity(0);
+    MouseCircle._radius.target = BIG_SIZE;
+    this._animateOpacity(1);
+    this._animateRingOpacity(1);
   }
 
   static _animateOpacity(destination: number) {
     const tweenProgress = new TWEEN.Tween({
       progress: this._opacity,
     })
-      .to({ progress: destination }, 150)
+      .to({ progress: destination }, 200)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         this._opacity = obj.progress;
@@ -67,23 +60,10 @@ export class MouseCircle extends EventDispatcher {
     const tweenProgress = new TWEEN.Tween({
       progress: this._ringOpacity,
     })
-      .to({ progress: destination }, 200)
+      .to({ progress: destination }, 220)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(obj => {
         this._ringOpacity = obj.progress;
-      });
-
-    tweenProgress.start();
-  }
-
-  static _animateRingRadius(destination: number) {
-    const tweenProgress = new TWEEN.Tween({
-      progress: this.radius,
-    })
-      .to({ progress: destination }, 400)
-      .easing(TWEEN.Easing.Sinusoidal.InOut)
-      .onUpdate(obj => {
-        this.radius = obj.progress;
       });
 
     tweenProgress.start();
@@ -134,15 +114,15 @@ export class MouseCircle extends EventDispatcher {
     ctx.arc(
       this._mouse.x.current,
       this._mouse.y.current,
-      MouseCircle.radius,
+      MouseCircle._radius.current,
       0,
       2 * Math.PI,
     );
     ctx.strokeStyle = `rgba(255,255,255, ${MouseCircle._ringOpacity})`;
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    ctx.font = '16px Open Sans';
+    ctx.font = '15px Open Sans';
     ctx.fillStyle = `rgba(255,255,255, ${MouseCircle._opacity})`;
     const metrics = ctx.measureText('Hold');
     const actualHeight =
@@ -172,7 +152,7 @@ export class MouseCircle extends EventDispatcher {
     MouseCircle._radius.current = lerp(
       MouseCircle._radius.current,
       MouseCircle._radius.target,
-      0.07 * updateInfo.slowDownFactor,
+      0.08 * updateInfo.slowDownFactor,
     );
   }
 }
