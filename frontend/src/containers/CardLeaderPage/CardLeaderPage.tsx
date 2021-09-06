@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useMemo } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
-import { Parallax } from 'components/Animations/Parallax/Parallax';
 import { RevealButterflyString } from 'components/Animations/RevealButterflyString/RevealButterflyString';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
@@ -99,9 +98,7 @@ export default function CardLeaderPage(props: PageProps) {
       <Wrapper>
         <SignContainer animate={isFollowing ? 'animate' : 'initial'}>
           <SignWrapper>
-            <Parallax offsetXMultiplier={-0.05} offsetYMultiplier={-0.05}>
-              <SignSvgComp />
-            </Parallax>
+            <SignSvgComp />
           </SignWrapper>
         </SignContainer>
 

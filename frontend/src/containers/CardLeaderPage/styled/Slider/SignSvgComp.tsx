@@ -13,7 +13,7 @@ export const SignSvgComp = styled(SignSvg)<Props>`
   pointer-events: none;
 
   ${media.tablet} {
-    height: 6vw;
+    height: 4.5vw;
   }
 `;
 

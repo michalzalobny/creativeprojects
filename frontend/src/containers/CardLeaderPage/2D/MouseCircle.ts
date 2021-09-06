@@ -13,8 +13,12 @@ export class MouseCircle extends EventDispatcher {
   _x = 0;
   _y = 0;
   _ease = 0.4;
-  _opacity = 0;
+  _opacity = 1;
   _mouseMove: MouseMove;
+  _radius = {
+    current: 30,
+    target: 30,
+  };
 
   constructor({ mouseMove }: Constructor) {
     super();
@@ -27,38 +31,31 @@ export class MouseCircle extends EventDispatcher {
     this._removeEventListeners();
   }
 
-  _onMouseOut = () => {
-    this._animateOpacity(0);
-  };
-  _onMouseEnter = () => {
-    this._animateOpacity(1);
-  };
-
   _onMouseMove = (e: THREE.Event) => {
     this._x = (e.target as MouseMove).mouseLerp.x;
     this._y = (e.target as MouseMove).mouseLerp.y;
   };
 
   _addEventListeners() {
-    window.addEventListener('mouseout', this._onMouseOut);
-    window.addEventListener('mouseover', this._onMouseEnter);
-    window.addEventListener('pointerdown', this._onMouseEnter);
     this._mouseMove.addEventListener('mousemoved', this._onMouseMove);
   }
 
   _removeEventListeners() {
-    window.removeEventListener('mouseout', this._onMouseOut);
-    window.removeEventListener('mouseover', this._onMouseEnter);
-    window.removeEventListener('pointerdown', this._onMouseEnter);
     this._mouseMove.removeEventListener('mousemoved', this._onMouseMove);
   }
 
   _draw(ctx: CanvasRenderingContext2D) {
     //radius circle
     ctx.beginPath();
-    ctx.arc(this._x, this._y, 20 * this._opacity, 0, 2 * Math.PI);
+    ctx.arc(
+      this._x,
+      this._y,
+      this._radius.current * this._opacity,
+      0,
+      2 * Math.PI,
+    );
     ctx.strokeStyle = `rgba(255,255,255, ${this._opacity})`;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 1.4;
     ctx.stroke();
   }
 
@@ -77,5 +74,11 @@ export class MouseCircle extends EventDispatcher {
 
   update(updateInfo: UpdateInfo, ctx: CanvasRenderingContext2D) {
     this._draw(ctx);
+
+    this._radius.current = lerp(
+      this._radius.current,
+      this._radius.target,
+      0.03 * updateInfo.slowDownFactor,
+    );
   }
 }
