@@ -26,6 +26,15 @@ export default function CardLeaderPage(props: PageProps) {
   const myApp = useRef<App | null>(null);
   const app2D = useRef<App2D | null>(null);
 
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    const isTouchDevice = () => {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    };
+    setIsTouch(isTouchDevice);
+  }, []);
+
   const imagesToPreload = useMemo(
     () => props.projectData.creativeItems.map(item => item.image.url),
     [props.projectData.creativeItems],
@@ -48,7 +57,8 @@ export default function CardLeaderPage(props: PageProps) {
     return () => {
       myApp.current && myApp.current.destroy();
     };
-  }, [imagesToPreload, props.projectData.creativeItems]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!renderer2D.current) {
@@ -100,7 +110,7 @@ export default function CardLeaderPage(props: PageProps) {
         </SignContainer>
 
         <CanvasWrapper ref={rendererWrapperEl} />
-        <CanvasCircleWrapper ref={renderer2D} />
+        <CanvasCircleWrapper isTouch={isTouch} ref={renderer2D} />
       </Wrapper>
     </>
   );
