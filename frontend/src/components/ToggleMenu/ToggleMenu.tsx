@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 import { MenuItem } from 'components/MenuItem/MenuItem';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -45,41 +46,46 @@ export const ToggleMenu = memo<ToggleMenuProps>(props => {
             isOpen={showMenu}
           />
         </ButtonWrapper>
-        <LinksWrapper
-          offsetPadding={MENU_POS + MENU_SIZE}
-          animate={showMenu ? 'animate' : 'initial'}
-        >
-          {links.map((link, key) => {
-            return (
-              <MenuItemComp
-                setShowMenu={setShowMenu}
-                key={link.label}
-                itemContent={link}
-              />
-            );
-          })}
-          <BackgroundComp
-            size={MENU_SIZE}
-            pos={MENU_POS}
-            animate={showMenu ? 'animate' : 'initial'}
-            variants={{
-              initial: {
-                scale: 1,
-                transition: {
-                  delay: links.length * 0.13,
-                  ...springSlow,
-                },
-              },
-              animate: {
-                scale: (windowHeight / MENU_SIZE) * 2.3,
-              },
-            }}
-          />
-          <SocialsBoxComp
+        <AnimatePresence>
+          <LinksWrapper
             offsetPadding={MENU_POS + MENU_SIZE}
+            initial="initial"
             animate={showMenu ? 'animate' : 'initial'}
-          />
-        </LinksWrapper>
+          >
+            {links.map((link, key) => {
+              return (
+                <MenuItemComp
+                  setShowMenu={setShowMenu}
+                  key={link.label}
+                  itemContent={link}
+                />
+              );
+            })}
+            <BackgroundComp
+              size={MENU_SIZE}
+              pos={MENU_POS}
+              initial="initial"
+              animate={showMenu ? 'animate' : 'initial'}
+              variants={{
+                initial: {
+                  scale: 1,
+                  transition: {
+                    delay: links.length * 0.13,
+                    ...springSlow,
+                  },
+                },
+                animate: {
+                  scale: (windowHeight / MENU_SIZE) * 2.3,
+                },
+              }}
+            />
+            <SocialsBoxComp
+              offsetPadding={MENU_POS + MENU_SIZE}
+              animate={showMenu ? 'animate' : 'initial'}
+              initial="initial"
+            />
+          </LinksWrapper>
+        </AnimatePresence>
       </Wrapper>
     </>
   );

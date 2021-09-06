@@ -60,6 +60,7 @@ export const FlowPageContent = memo<FlowPageContentProps>(props => {
       <Wrapper {...rest}>
         <HeaderWrapper>
           <SwipeContainer
+            initial="initial"
             animate={isReady && showSlider ? 'animate' : 'initial'}
           >
             <SwipeWrapper ref={el => updateRefsToOffset(el)}>

@@ -62,17 +62,24 @@ export const MenuItem = memo<MenuItemProps>(props => {
         onMouseLeave={() => setIsHovered(false)}
         {...rest}
       >
-        <LinkWrapper animate={isHovered ? 'animate' : 'initial'}>
+        <LinkWrapper
+          initial="initial"
+          animate={isHovered ? 'animate' : 'initial'}
+        >
           <LinkItem>
             {itemContent.label}
             <Underline />
           </LinkItem>
         </LinkWrapper>
 
-        <ImageContainer animate={isHovered ? 'animate' : 'initial'}>
+        <ImageContainer
+          initial="initial"
+          animate={isHovered ? 'animate' : 'initial'}
+        >
           <Parallax refElement={wrapperRef}>
             <ImageWrapper>
               <Image
+                initial="initial"
                 animate={isHovered ? 'animate' : 'initial'}
                 src={itemContent.imageSrc}
               />
