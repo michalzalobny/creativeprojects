@@ -1,6 +1,5 @@
 import { EventDispatcher } from 'three';
 import TWEEN from '@tweenjs/tween.js';
-import { animate } from 'framer-motion';
 
 import { UpdateInfo } from './types';
 import { MouseMove } from './Singletons/MouseMove';
@@ -26,12 +25,14 @@ export class MouseCircle extends EventDispatcher {
   static _ringOpacity = 0;
 
   static onMouseEnter() {
+    MouseCircle._radius.target = 40;
     this._animateRingRadius(40);
     this._animateOpacity(1);
     this._animateRingOpacity(1);
   }
 
   static onMouseLeft() {
+    MouseCircle._radius.target = DEFAULT_SIZE;
     this._animateRingRadius(DEFAULT_SIZE);
     this._animateOpacity(0);
     this._animateRingOpacity(0);
@@ -40,6 +41,7 @@ export class MouseCircle extends EventDispatcher {
   static hide() {
     this._animateRingOpacity(0);
     this._animateOpacity(0);
+    MouseCircle._radius.target = DEFAULT_SIZE;
     this._animateRingRadius(DEFAULT_SIZE);
   }
 
@@ -75,16 +77,16 @@ export class MouseCircle extends EventDispatcher {
   }
 
   static _animateRingRadius(destination: number) {
-    animate(this.radius, destination, {
-      type: 'spring',
-      stiffness: 350,
-      damping: 20,
-      restDelta: 0.001,
-      restSpeed: 0.001,
-      onUpdate: v => {
-        this.radius = Math.max(0, v.valueOf());
-      },
-    });
+    const tweenProgress = new TWEEN.Tween({
+      progress: this.radius,
+    })
+      .to({ progress: destination }, 450)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
+      .onUpdate(obj => {
+        this.radius = obj.progress;
+      });
+
+    tweenProgress.start();
   }
 
   _mouse = {
@@ -165,6 +167,12 @@ export class MouseCircle extends EventDispatcher {
       this._mouse.y.current,
       this._mouse.y.target,
       MouseCircle.mouseLerp * updateInfo.slowDownFactor,
+    );
+
+    MouseCircle._radius.current = lerp(
+      MouseCircle._radius.current,
+      MouseCircle._radius.target,
+      0.07 * updateInfo.slowDownFactor,
     );
   }
 }
