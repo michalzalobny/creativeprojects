@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
@@ -16,10 +16,16 @@ import { KnifeSvgComp } from './styled/stack/KnifeSvgComp';
 import { KnifeWrapper } from './styled/stack/KnifeWrapper';
 import { ForkSvgComp } from './styled/stack/ForkSvgComp';
 import { ForkWrapper } from './styled/stack/ForkWrapper';
+import { Button } from './styled/stack/Button';
+import { ButtonContainer } from './styled/stack/ButtonContainer';
+import { ButtonsWrapper } from './styled/stack/ButtonsWrapper';
+import { Border } from './styled/stack/Border';
 
 export default function StackPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(3);
 
   const imagesToPreload = useMemo(
     () => props.projectData.creativeItems.map(item => item.image.url),
@@ -45,6 +51,8 @@ export default function StackPage(props: PageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const buttonsArray = ['All', 'Pizza', 'Spaghetti', 'Burgers'];
+
   return (
     <>
       <Head {...props.head} />
@@ -58,6 +66,20 @@ export default function StackPage(props: PageProps) {
           <Text italic>C&apos;mon... eat that</Text>
           <Text>Carbonarra with mushrooms</Text>
 
+          <ButtonsWrapper>
+            <Border currentIndex={currentIndex} />
+
+            {buttonsArray.map((item, key) => {
+              return (
+                <ButtonContainer
+                  onClick={() => setCurrentIndex(key)}
+                  key={item}
+                >
+                  <Button>{item}</Button>
+                </ButtonContainer>
+              );
+            })}
+          </ButtonsWrapper>
           <ImageWrapper data-stack="entry"></ImageWrapper>
         </ContentWrapper>
 

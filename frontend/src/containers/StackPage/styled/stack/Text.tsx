@@ -12,6 +12,8 @@ export const Text = styled.p<Props>`
   text-align: center;
   color: black;
   font-weight: 800;
+  position: relative;
+  z-index: 1;
 
   ${props =>
     props.italic &&

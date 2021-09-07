@@ -11,7 +11,7 @@ interface Props {
 export const KnifeWrapper = styled(motion.div)<Props>`
   position: absolute;
   right: 0;
-  z-index: 1;
+  z-index: 0;
 
   top: 40%;
   transform: translate(60%, -50%);
