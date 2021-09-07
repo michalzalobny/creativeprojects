@@ -10,9 +10,9 @@ interface Constructor {
 }
 
 interface AnimateProps {
-  duration: number;
-  delay: number;
-  destination?: number;
+  duration?: number;
+  delay?: number;
+  destination: number;
   easing?: (amount: number) => number;
 }
 
@@ -26,8 +26,8 @@ export class CardItem3DAnimated extends CardItem3D {
   animateOpacity(props: AnimateProps) {
     const {
       destination,
-      duration,
-      delay,
+      duration = 400,
+      delay = 0,
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
 
@@ -44,5 +44,12 @@ export class CardItem3DAnimated extends CardItem3D {
       });
 
     this._opacityTween.start();
+  }
+
+  animateIn(props: AnimateProps) {
+    this.animateOpacity({
+      delay: props.delay,
+      destination: props.destination,
+    });
   }
 }

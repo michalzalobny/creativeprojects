@@ -7,6 +7,10 @@ import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
 import { App } from './classes/App';
 import { PageProps } from './data';
+import { Text } from './styled/stack/Text';
+import { ContentWrapper } from './styled/stack/ContentWrapper';
+import { ImageWrapper } from './styled/stack/ImageWrapper';
+import { Image } from './styled/stack/Image';
 
 export default function StackPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -41,6 +45,17 @@ export default function StackPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
+        {/* used for enabling nextjs caching */}
+        {props.projectData.creativeItems.map(item => {
+          return <Image key={item.image.url} src={item.image.url} />;
+        })}
+        <ContentWrapper>
+          <Text italic>C&apos;mon... eat that</Text>
+          <Text>Carbonarra with mushrooms</Text>
+
+          <ImageWrapper data-stack="entry"></ImageWrapper>
+        </ContentWrapper>
+
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
     </>

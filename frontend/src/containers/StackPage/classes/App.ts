@@ -65,7 +65,7 @@ export class App {
     this._camera.aspect = aspectRatio;
 
     //Set to match pixel size of the elements in three with pixel size of DOM elements
-    this._camera.position.z = 50;
+    this._camera.position.z = 500;
     this._camera.fov =
       2 *
       Math.atan(rendererBounds.height / 2 / this._camera.position.z) *

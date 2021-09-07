@@ -3,9 +3,8 @@ import * as THREE from 'three';
 import { UpdateInfo, CardItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
-import { CardItem3D } from '../Components/CardItem3D';
+import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 import { TextureItems } from '../types';
-import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -14,7 +13,7 @@ interface Constructor {
 
 export class ItemScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _items3D: CardItem3D[] = [];
+  _items3D: CardItem3DAnimated[] = [];
   _textureItems: TextureItems = {};
 
   constructor({ camera, mouseMove }: Constructor) {
@@ -54,24 +53,16 @@ export class ItemScene extends InteractiveScene {
     this._destroyItems();
 
     //Fetch elements DOM representations
-    const elements = Array.from(
-      document.querySelectorAll("[data-gallery='entry']"),
-    ) as HTMLElement[];
-
-    const galleryWrapper = Array.from(
-      document.querySelectorAll("[data-gallery='wrapper']"),
+    const domEl = Array.from(
+      document.querySelectorAll("[data-stack='entry']"),
     )[0] as HTMLElement;
 
     items &&
       items.forEach((item, key) => {
-        // const matchingFigure = elements.filter(
-        //   el => el.getAttribute('data-src') === item.item.image.url,
-        // );
-
-        const item3D = new CardItem3D({
+        const item3D = new CardItem3DAnimated({
           geometry: this._planeGeometry,
           cardItem: item,
-          domEl: elements[key],
+          domEl,
         });
         this._items3D.push(item3D);
         this.add(item3D);
@@ -95,6 +86,7 @@ export class ItemScene extends InteractiveScene {
 
     this._items3D.forEach(el => {
       el.textureItem = this._textureItems[el.cardItem.item.image.url];
+      el.animateIn({ destination: 1, delay: el.cardItem.itemKey * 90 });
     });
   }
 

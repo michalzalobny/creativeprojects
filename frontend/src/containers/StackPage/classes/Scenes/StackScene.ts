@@ -89,7 +89,7 @@ export class StackScene extends ItemScene {
   }
 
   _updateScrollValues(updateInfo: UpdateInfo) {
-    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+    // this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
 
     //Update scroll direction
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
