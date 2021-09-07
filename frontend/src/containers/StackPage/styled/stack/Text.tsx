@@ -8,7 +8,8 @@ interface Props {
 }
 
 export const Text = styled.p<Props>`
-  font-size: 8vw;
+  font-size: 5vw;
+  white-space: nowrap;
   text-align: center;
   color: black;
   font-weight: 800;
@@ -21,6 +22,7 @@ export const Text = styled.p<Props>`
       font-family: 'Playfair';
       font-style: italic;
       font-weight: 400;
+      font-size: 8vw;
     `}
 
   ${media.tablet} {
