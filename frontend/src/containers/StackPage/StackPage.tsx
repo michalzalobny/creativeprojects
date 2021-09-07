@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
+import { Parallax } from 'components/Animations/Parallax/Parallax';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -11,6 +12,10 @@ import { Text } from './styled/stack/Text';
 import { ContentWrapper } from './styled/stack/ContentWrapper';
 import { ImageWrapper } from './styled/stack/ImageWrapper';
 import { Image } from './styled/stack/Image';
+import { KnifeSvgComp } from './styled/stack/KnifeSvgComp';
+import { KnifeWrapper } from './styled/stack/KnifeWrapper';
+import { ForkSvgComp } from './styled/stack/ForkSvgComp';
+import { ForkWrapper } from './styled/stack/ForkWrapper';
 
 export default function StackPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -55,6 +60,30 @@ export default function StackPage(props: PageProps) {
 
           <ImageWrapper data-stack="entry"></ImageWrapper>
         </ContentWrapper>
+
+        <KnifeWrapper>
+          <Parallax offsetYMultiplier={0.02} offsetXMultiplier={0.02}>
+            <KnifeSvgComp secondaryItem />
+          </Parallax>
+        </KnifeWrapper>
+
+        <KnifeWrapper secondaryItem>
+          <Parallax offsetYMultiplier={0.04} offsetXMultiplier={0.04}>
+            <KnifeSvgComp />
+          </Parallax>
+        </KnifeWrapper>
+
+        <ForkWrapper>
+          <Parallax offsetYMultiplier={0.02} offsetXMultiplier={0.02}>
+            <ForkSvgComp secondaryItem />
+          </Parallax>
+        </ForkWrapper>
+
+        <ForkWrapper secondaryItem>
+          <Parallax offsetYMultiplier={0.04} offsetXMultiplier={0.04}>
+            <ForkSvgComp />
+          </Parallax>
+        </ForkWrapper>
 
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
