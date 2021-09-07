@@ -20,11 +20,6 @@ export interface Bounds {
   height: number;
 }
 
-export interface GalleryItemProps {
-  key: number;
-  item: CreativeItem;
-}
-
 export interface Coords {
   x: number;
   y: number;
@@ -51,4 +46,10 @@ export interface ScrollValues {
     current: number;
     target: number;
   };
+}
+
+export interface CardItemProps {
+  itemKey: number;
+  itemKeyReverse: number;
+  item: CreativeItem;
 }

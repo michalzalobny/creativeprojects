@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import fragmentShader from '../shaders/storyItem/fragment.glsl';
-import vertexShader from '../shaders/storyItem/vertex.glsl';
+import fragmentShader from '../shaders/media/fragment.glsl';
+import vertexShader from '../shaders/media/vertex.glsl';
 
 import { InteractiveObject3D } from './InteractiveObject3D';
 import { Bounds, TextureItem, UpdateInfo } from '../types';
@@ -37,13 +37,14 @@ export class MediaObject3D extends InteractiveObject3D {
         uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
         uTime: { value: 0 },
+        uRandom: { value: Math.random() },
         uHovered: { value: 0 },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
         uViewportSizes: {
           value: [this._rendererBounds.width, this._rendererBounds.height],
         },
         uStrength: { value: 0 },
-        uOpacity: { value: 0 },
+        uOpacity: { value: this._tweenOpacity },
       },
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
@@ -64,10 +65,6 @@ export class MediaObject3D extends InteractiveObject3D {
     }
   }
 
-  set opacity(value: number) {
-    this._masterOpacity = value;
-  }
-
   _updateOpacity() {
     if (this._mesh) {
       const computedOpacity =
@@ -77,6 +74,28 @@ export class MediaObject3D extends InteractiveObject3D {
       this._isVisible = computedOpacity > 0;
     }
   }
+
+  update(updateInfo: UpdateInfo) {
+    super.update(updateInfo);
+
+    this._updateOpacity();
+
+    if (this._mesh) this._mesh.material.uniforms.uTime.value = updateInfo.time;
+
+    if (this._intersectPoint && this._mesh) {
+      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
+    }
+  }
+
+  destroy() {
+    super.destroy();
+    this._material?.dispose();
+    if (this._mesh) {
+      this.remove(this._mesh);
+    }
+  }
+
+  onResize() {}
 
   set intersectPoint(point: THREE.Vector3) {
     this._intersectPoint = point;
@@ -99,24 +118,7 @@ export class MediaObject3D extends InteractiveObject3D {
     this.onResize();
   }
 
-  onResize() {}
-
-  update(updateInfo: UpdateInfo) {
-    super.update(updateInfo);
-
-    this._updateOpacity();
-
-    if (this._intersectPoint && this._mesh) {
-      this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
-    }
-  }
-
-  destroy() {
-    super.destroy();
-    this._geometry?.dispose();
-    this._material?.dispose();
-    if (this._mesh) {
-      this.remove(this._mesh);
-    }
+  set opacity(value: number) {
+    this._masterOpacity = value;
   }
 }

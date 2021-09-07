@@ -33,13 +33,13 @@ export default function StackPage(props: PageProps) {
     return () => {
       myApp.current && myApp.current.destroy();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
-
       <Wrapper>
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>
