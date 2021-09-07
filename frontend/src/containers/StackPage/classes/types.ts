@@ -37,7 +37,7 @@ export interface ScrollValues {
   current: Coords;
   target: Coords;
   last: Coords;
-  scrollSpeed: Coords;
+  autoScrollSpeed: Coords;
   direction: {
     x: DirectionX;
     y: DirectionY;

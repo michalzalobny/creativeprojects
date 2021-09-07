@@ -13,7 +13,8 @@ interface Constructor {
 }
 
 export class StackScene extends ItemScene {
-  static scrollSpeed = 1;
+  static autoScrollSpeed = 1;
+  static wheelMultiplier = 1;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
@@ -25,7 +26,7 @@ export class StackScene extends ItemScene {
       current: 0,
       target: 0,
     },
-    scrollSpeed: { x: 0, y: 0 },
+    autoScrollSpeed: { x: 0, y: 0 },
   };
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -35,13 +36,7 @@ export class StackScene extends ItemScene {
     this._intersectiveBackground3D.setPlaneDepth(0);
   }
 
-  _onScroll = (e: THREE.Event) => {
-    this._scrollValues.target.x -= e.x;
-    this._scrollValues.target.y += e.y;
-  };
-
   _resetScrollValues() {
-    //Reset scroll values
     this._scrollValues.current.x = 0;
     this._scrollValues.current.y = 0;
 
@@ -54,18 +49,40 @@ export class StackScene extends ItemScene {
     this._scrollValues.strength.current = 0;
     this._scrollValues.strength.target = 0;
 
-    this._scrollValues.scrollSpeed.x = 0;
-    this._scrollValues.scrollSpeed.y = 0;
+    this._scrollValues.autoScrollSpeed.x = 0;
+    this._scrollValues.autoScrollSpeed.y = 0;
   }
+
+  _applyScroll = (x: number, y: number) => {
+    this._scrollValues.target.x -= x;
+    this._scrollValues.target.y += y;
+  };
+
+  _onScrollMouse = (e: THREE.Event) => {
+    this._applyScroll(e.x, e.y);
+  };
+  _onScrollTouch = (e: THREE.Event) => {
+    this._applyScroll(e.x, e.y);
+  };
+  _onScrollWheel = (e: THREE.Event) => {
+    this._applyScroll(
+      e.x * StackScene.wheelMultiplier,
+      e.y * StackScene.wheelMultiplier,
+    );
+  };
 
   _addListeners() {
     super._addListeners();
-    this._scroll.addEventListener('applyscroll', this._onScroll);
+    this._scroll.addEventListener('mouse', this._onScrollMouse);
+    this._scroll.addEventListener('touch', this._onScrollTouch);
+    this._scroll.addEventListener('wheel', this._onScrollWheel);
   }
 
   _removeListeners() {
     super._removeListeners();
-    this._scroll.removeEventListener('applyscroll', this._onScroll);
+    this._scroll.removeEventListener('mouse', this._onScrollMouse);
+    this._scroll.removeEventListener('touch', this._onScrollTouch);
+    this._scroll.removeEventListener('wheel', this._onScrollWheel);
   }
 
   _passIntersectPoint() {
@@ -74,38 +91,24 @@ export class StackScene extends ItemScene {
     });
   }
 
-  set rendererBounds(bounds: Bounds) {
-    super.rendererBounds = bounds;
-    this._resetScrollValues();
-  }
-
-  set items(items: CardItemProps[]) {
-    super.items = items;
-
-    //Pass scrollValues to gallery elements (as a reference value for better performance)
-    this._items3D.forEach(item => {
-      item.scrollValues = this._scrollValues;
-    });
-  }
-
   _updateScrollValues(updateInfo: UpdateInfo) {
-    // this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+    // this._scrollValues.target.y += this._scrollValues.autoScrollSpeed.y;
 
     //Update scroll direction
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
       this._scrollValues.direction.x = 'left';
-      this._scrollValues.scrollSpeed.x = StackScene.scrollSpeed;
+      this._scrollValues.autoScrollSpeed.x = StackScene.autoScrollSpeed;
     } else {
       this._scrollValues.direction.x = 'right';
-      this._scrollValues.scrollSpeed.x = -StackScene.scrollSpeed;
+      this._scrollValues.autoScrollSpeed.x = -StackScene.autoScrollSpeed;
     }
 
     if (this._scrollValues.current.y > this._scrollValues.last.y) {
       this._scrollValues.direction.y = 'up';
-      this._scrollValues.scrollSpeed.y = StackScene.scrollSpeed;
+      this._scrollValues.autoScrollSpeed.y = StackScene.autoScrollSpeed;
     } else {
       this._scrollValues.direction.y = 'down';
-      this._scrollValues.scrollSpeed.y = -StackScene.scrollSpeed;
+      this._scrollValues.autoScrollSpeed.y = -StackScene.autoScrollSpeed;
     }
 
     //Update scroll strength
@@ -147,5 +150,19 @@ export class StackScene extends ItemScene {
 
   destroy() {
     super.destroy();
+  }
+
+  set rendererBounds(bounds: Bounds) {
+    super.rendererBounds = bounds;
+    this._resetScrollValues();
+  }
+
+  set items(items: CardItemProps[]) {
+    super.items = items;
+
+    //Pass scrollValues to gallery elements (as a reference value for better performance)
+    this._items3D.forEach(item => {
+      item.scrollValues = this._scrollValues;
+    });
   }
 }
