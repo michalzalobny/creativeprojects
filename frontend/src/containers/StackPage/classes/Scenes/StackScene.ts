@@ -1,13 +1,6 @@
 import * as THREE from 'three';
 
-import {
-  UpdateInfo,
-  ScrollValues,
-  CardItemProps,
-  Bounds,
-  IndexDiffs,
-} from '../types';
-import { InteractiveScene } from './InteractiveScene';
+import { UpdateInfo, Bounds, IndexDiffs } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -21,8 +14,9 @@ interface Constructor {
 }
 
 export class StackScene extends ItemScene {
-  static autoScrollSpeed = 1;
-  static wheelMultiplier = 1;
+  static lerpEase = 0.04;
+  static wheelMultiplier = 0.425;
+  static indexIncreaseMultiplier = 0.025;
 
   _items3DVisible: CardItem3DAnimated[] = [];
   _scroll: Scroll;
@@ -35,17 +29,6 @@ export class StackScene extends ItemScene {
     target: [],
   };
   _currentIndex = 0;
-  _scrollValues: ScrollValues = {
-    current: { x: 0, y: 0 },
-    target: { x: 0, y: 0 },
-    last: { x: 0, y: 0 },
-    direction: { x: 'left', y: 'up' },
-    strength: {
-      current: 0,
-      target: 0,
-    },
-    autoScrollSpeed: { x: 0, y: 0 },
-  };
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -54,31 +37,15 @@ export class StackScene extends ItemScene {
     this._intersectiveBackground3D.setPlaneDepth(0);
   }
 
-  _resetScrollValues() {
-    this._scrollValues.current.x = 0;
-    this._scrollValues.current.y = 0;
-
-    this._scrollValues.target.x = 0;
-    this._scrollValues.target.y = 0;
-
-    this._scrollValues.last.x = 0;
-    this._scrollValues.last.y = 0;
-
-    this._scrollValues.strength.current = 0;
-    this._scrollValues.strength.target = 0;
-
-    this._scrollValues.autoScrollSpeed.x = 0;
-    this._scrollValues.autoScrollSpeed.y = 0;
-  }
-
   _applyScroll = (x: number, y: number) => {
-    this._scrollValues.target.x -= x;
-    this._scrollValues.target.y += y;
-
     const minIndex = 0;
     const maxIndex = this._items3DVisible.length - 1;
+
     this._indexFloat.target = Math.min(
-      Math.max(this._indexFloat.target - y, minIndex),
+      Math.max(
+        this._indexFloat.target - y * StackScene.indexIncreaseMultiplier,
+        minIndex,
+      ),
       maxIndex,
     );
   };
@@ -116,79 +83,40 @@ export class StackScene extends ItemScene {
     });
   }
 
-  _updateScrollValues(updateInfo: UpdateInfo) {
-    // this._scrollValues.target.y += this._scrollValues.autoScrollSpeed.y;
-
-    //Update scroll direction
-    if (this._scrollValues.current.x > this._scrollValues.last.x) {
-      this._scrollValues.direction.x = 'left';
-      this._scrollValues.autoScrollSpeed.x = StackScene.autoScrollSpeed;
-    } else {
-      this._scrollValues.direction.x = 'right';
-      this._scrollValues.autoScrollSpeed.x = -StackScene.autoScrollSpeed;
-    }
-
-    if (this._scrollValues.current.y > this._scrollValues.last.y) {
-      this._scrollValues.direction.y = 'up';
-      this._scrollValues.autoScrollSpeed.y = StackScene.autoScrollSpeed;
-    } else {
-      this._scrollValues.direction.y = 'down';
-      this._scrollValues.autoScrollSpeed.y = -StackScene.autoScrollSpeed;
-    }
-
-    //Update scroll strength
-    const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
-    const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
-
-    this._scrollValues.strength.target = Math.sqrt(
-      deltaX * deltaX + deltaY * deltaY,
-    );
-
-    this._scrollValues.strength.current = lerp(
-      this._scrollValues.strength.current,
-      this._scrollValues.strength.target,
-      StackScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.last.x = this._scrollValues.current.x;
-    this._scrollValues.last.y = this._scrollValues.current.y;
-
-    //lerp scroll
-    this._scrollValues.current.x = lerp(
-      this._scrollValues.current.x,
-      this._scrollValues.target.x,
-      StackScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.current.y = lerp(
-      this._scrollValues.current.y,
-      this._scrollValues.target.y,
-      StackScene.lerpEase * updateInfo.slowDownFactor,
-    );
-  }
-
   _positionItems(updateInfo: UpdateInfo) {
     const offset = 0;
     let newIndexEased = this._items3D.length - 1;
     let smallestDiff = Number.MAX_VALUE;
 
-    for (let i = 0; i < this._items3D.length; ++i) {
-      const item = this._items3D[i];
+    for (let i = 0; i < this._items3DVisible.length; ++i) {
+      const item = this._items3DVisible[i];
 
       this._indexDiffs.current[i] =
         this._indexDiffs.current[i] || this._indexFloat.current - i;
+
       this._indexDiffs.target[i] = this._indexFloat.current - i + offset;
+
       const dIndex = this._indexDiffs.target[i] - this._indexDiffs.current[i];
+
       this._indexDiffs.current[i] += dIndex * updateInfo.slowDownFactor;
+
       const indexDiff = this._indexDiffs.current[i];
       if (Math.abs(indexDiff) < smallestDiff) {
         smallestDiff = Math.abs(indexDiff);
         newIndexEased = i;
       }
 
-      item.position.y = indexDiff * 45;
-      item.position.z = -Math.abs(indexDiff * 80);
-      item.opacity = Math.min(1.4 - Math.abs(indexDiff * 0.15), 1);
+      const indexF = this._indexFloat.current - i;
+      const cardScale = Math.max(Math.min(1, 1 - Math.abs(indexF) * 0.12), 0);
+
+      item.stackTranslateY = -indexF * 0.9;
+      item.cardScale = cardScale;
+      item.position.z = cardScale * 0.01;
+      item.opacity = Math.min(1.6 - Math.abs(indexF * 0.4), 1);
+
+      if (i === 5) {
+        // console.log(Math.abs(indexF));
+      }
     }
   }
 
@@ -204,7 +132,7 @@ export class StackScene extends ItemScene {
     this._indexFloat.current = lerp(
       this._indexFloat.current,
       this._indexFloat.target,
-      InteractiveScene.lerpEase * updateInfo.slowDownFactor,
+      StackScene.lerpEase * updateInfo.slowDownFactor,
     );
 
     // const dIndex = this._indexFloat.target - this._indexFloat.current;
@@ -221,7 +149,6 @@ export class StackScene extends ItemScene {
     this._passIntersectPoint();
     this._updateIndex(updateInfo);
     this._positionItems(updateInfo);
-    this._updateScrollValues(updateInfo);
   }
 
   destroy() {
@@ -230,16 +157,6 @@ export class StackScene extends ItemScene {
 
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
-    this._resetScrollValues();
-  }
-
-  set items(items: CardItemProps[]) {
-    super.items = items;
-
-    //Pass scrollValues to gallery elements (as a reference value for better performance)
-    this._items3D.forEach(item => {
-      item.scrollValues = this._scrollValues;
-    });
   }
 
   set filter(filter: string) {

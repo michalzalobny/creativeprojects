@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { CardItemProps, UpdateInfo, ScrollValues } from '../types';
+import { CardItemProps, UpdateInfo } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 
 interface Constructor {
@@ -13,8 +13,9 @@ export class CardItem3D extends MediaObject3D {
   cardItem: CardItemProps;
   _domEl: HTMLElement;
   _domElBounds: DOMRect | null = null;
-  _scrollValues: ScrollValues | null = null;
   _extraTranslate = { x: 0, y: 0 };
+  _scaleTranslate = { x: 0, y: 0 };
+  _stackTranslateY = 0;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -28,11 +29,6 @@ export class CardItem3D extends MediaObject3D {
   _updateBounds() {
     this._domElBounds = this._domEl.getBoundingClientRect();
     this._updateScale();
-
-    if (this._scrollValues) {
-      this._updateX(this._scrollValues.current.x);
-      this._updateY(this._scrollValues.current.y);
-    }
 
     if (this._mesh) {
       this._mesh.material.uniforms.uPlaneSizes.value = [
@@ -56,7 +52,8 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.left -
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
-        this._extraTranslate.x;
+        this._extraTranslate.x -
+        this._scaleTranslate.x;
     }
   }
 
@@ -67,7 +64,9 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
-        this._extraTranslate.y;
+        this._extraTranslate.y -
+        this._scaleTranslate.y -
+        this._stackTranslateY;
     }
   }
 
@@ -84,18 +83,25 @@ export class CardItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    // if (this._scrollValues) {
-    //   this._updateX(this._scrollValues.current.x);
-    //   this._updateY(this._scrollValues.current.y);
-    // }
+    this._updateX(0);
+    this._updateY(0);
+  }
 
-    if (this._mesh && this._scrollValues) {
-      this._mesh.material.uniforms.uStrength.value =
-        this._scrollValues.strength.current * 0.7 + 8;
+  set cardScale(value: number) {
+    if (this._domElBounds && this._mesh) {
+      this._mesh.scale.x = this._domElBounds.width * value;
+      this._mesh.scale.y = this._domElBounds.height * value;
+
+      this._scaleTranslate.x =
+        -(this._domElBounds.width - this._mesh.scale.x) / 2;
+      this._scaleTranslate.y =
+        (this._domElBounds.height - this._mesh.scale.y) / 2;
     }
   }
 
-  set scrollValues(scrollValues: ScrollValues) {
-    this._scrollValues = scrollValues;
+  set stackTranslateY(value: number) {
+    if (this._domElBounds) {
+      this._stackTranslateY = value * this._domElBounds.height * 0.1;
+    }
   }
 }

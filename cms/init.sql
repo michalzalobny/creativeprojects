@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 82 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 84 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 96 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 98 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 528 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 648 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -754,6 +754,14 @@ INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
   (81, 'burger', '9');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (82, 'test', 'z');
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`)
+VALUES
+  (83, 'test', 'vz');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -2243,7 +2251,7 @@ VALUES
     1,
     1,
     '2021-09-08 14:00:59',
-    '2021-09-08 14:07:04'
+    '2021-09-08 18:40:05'
   );
 
 # ------------------------------------------------------------
@@ -3940,6 +3948,42 @@ VALUES
     27,
     'components_creative_component_creative_items',
     81,
+    10
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    96,
+    'creativeItems',
+    28,
+    'components_creative_component_creative_items',
+    82,
+    10
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    97,
+    'creativeItems',
+    29,
+    'components_creative_component_creative_items',
+    83,
     10
   );
 
@@ -10798,7 +10842,7 @@ INSERT INTO
   )
 VALUES
   (
-    500,
+    618,
     57,
     10,
     'components_page_localized_heads',
@@ -10816,169 +10860,7 @@ INSERT INTO
   )
 VALUES
   (
-    501,
-    85,
-    73,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    502,
-    86,
-    74,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    503,
-    87,
-    75,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    504,
-    83,
-    76,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    505,
-    82,
-    77,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    506,
-    84,
-    78,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    507,
-    88,
-    79,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    508,
-    89,
-    80,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    509,
-    90,
-    81,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    510,
+    619,
     69,
     55,
     'components_creative_component_creative_items',
@@ -10996,7 +10878,7 @@ INSERT INTO
   )
 VALUES
   (
-    511,
+    620,
     64,
     56,
     'components_creative_component_creative_items',
@@ -11014,7 +10896,7 @@ INSERT INTO
   )
 VALUES
   (
-    512,
+    621,
     65,
     57,
     'components_creative_component_creative_items',
@@ -11032,7 +10914,7 @@ INSERT INTO
   )
 VALUES
   (
-    513,
+    622,
     67,
     58,
     'components_creative_component_creative_items',
@@ -11050,7 +10932,7 @@ INSERT INTO
   )
 VALUES
   (
-    514,
+    623,
     66,
     59,
     'components_creative_component_creative_items',
@@ -11068,7 +10950,7 @@ INSERT INTO
   )
 VALUES
   (
-    515,
+    624,
     68,
     60,
     'components_creative_component_creative_items',
@@ -11086,7 +10968,7 @@ INSERT INTO
   )
 VALUES
   (
-    516,
+    625,
     70,
     61,
     'components_creative_component_creative_items',
@@ -11104,7 +10986,7 @@ INSERT INTO
   )
 VALUES
   (
-    517,
+    626,
     72,
     62,
     'components_creative_component_creative_items',
@@ -11122,7 +11004,7 @@ INSERT INTO
   )
 VALUES
   (
-    518,
+    627,
     71,
     63,
     'components_creative_component_creative_items',
@@ -11140,7 +11022,7 @@ INSERT INTO
   )
 VALUES
   (
-    519,
+    628,
     78,
     64,
     'components_creative_component_creative_items',
@@ -11158,7 +11040,7 @@ INSERT INTO
   )
 VALUES
   (
-    520,
+    629,
     77,
     65,
     'components_creative_component_creative_items',
@@ -11176,7 +11058,7 @@ INSERT INTO
   )
 VALUES
   (
-    521,
+    630,
     73,
     66,
     'components_creative_component_creative_items',
@@ -11194,7 +11076,7 @@ INSERT INTO
   )
 VALUES
   (
-    522,
+    631,
     76,
     67,
     'components_creative_component_creative_items',
@@ -11212,7 +11094,7 @@ INSERT INTO
   )
 VALUES
   (
-    523,
+    632,
     74,
     68,
     'components_creative_component_creative_items',
@@ -11230,7 +11112,7 @@ INSERT INTO
   )
 VALUES
   (
-    524,
+    633,
     75,
     69,
     'components_creative_component_creative_items',
@@ -11248,7 +11130,7 @@ INSERT INTO
   )
 VALUES
   (
-    525,
+    634,
     81,
     70,
     'components_creative_component_creative_items',
@@ -11266,7 +11148,7 @@ INSERT INTO
   )
 VALUES
   (
-    526,
+    635,
     80,
     71,
     'components_creative_component_creative_items',
@@ -11284,9 +11166,207 @@ INSERT INTO
   )
 VALUES
   (
-    527,
+    636,
     79,
     72,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    637,
+    85,
+    73,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    638,
+    86,
+    74,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    639,
+    87,
+    75,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    640,
+    83,
+    76,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    641,
+    82,
+    77,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    642,
+    84,
+    78,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    643,
+    88,
+    79,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    644,
+    89,
+    80,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    645,
+    90,
+    81,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    646,
+    8,
+    82,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    647,
+    36,
+    83,
     'components_creative_component_creative_items',
     'image',
     1
