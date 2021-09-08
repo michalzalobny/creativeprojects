@@ -28,8 +28,4 @@ export const ForkSvgComp = styled(ForkSvg)<Props>`
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
-
-  ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    height: 800px;
-  }
 `;
