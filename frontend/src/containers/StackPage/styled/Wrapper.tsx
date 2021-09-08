@@ -20,7 +20,7 @@ export const Wrapper = styled(motion.div)<Props>`
     top: 0;
     left: 0;
     width: 100%;
-    height: 10vh;
+    height: 3vh;
     background: linear-gradient(
       0deg,
       rgba(242, 232, 221, 0) 0%,
@@ -36,7 +36,7 @@ export const Wrapper = styled(motion.div)<Props>`
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 10vh;
+    height: 3vh;
     background: linear-gradient(
       180deg,
       rgba(242, 232, 221, 0) 0%,
