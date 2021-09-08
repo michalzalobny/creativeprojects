@@ -10,7 +10,7 @@ export const ButtonsWrapper = styled(motion.div)<Props>`
   position: relative;
   z-index: 1;
   margin: 5vw 0;
-  margin-bottom: 10vw;
+  margin-bottom: 15vw;
 
   ${media.tablet} {
     margin: 50px 0;
