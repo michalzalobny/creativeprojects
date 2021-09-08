@@ -88,7 +88,7 @@ export class App {
 
   _onAssetsLoaded = (e: THREE.Event) => {
     this._stackScene.textureItems = (e.target as Preloader).textureItems;
-    this._stackScene.filter = 'pizza';
+    this.setStackFilter('');
   };
 
   _addListeners() {
@@ -141,6 +141,10 @@ export class App {
     if (this._rafId) {
       window.cancelAnimationFrame(this._rafId);
     }
+  }
+
+  setStackFilter(filter: string) {
+    this._stackScene.filter = filter;
   }
 
   destroy() {

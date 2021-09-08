@@ -25,7 +25,7 @@ export default function StackPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(3);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const imagesToPreload = useMemo(
     () => props.projectData.creativeItems.map(item => item.image.url),
@@ -51,7 +51,31 @@ export default function StackPage(props: PageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const buttonsArray = ['All', 'Pizza', 'Spaghetti', 'Burgers'];
+  const handleFilterChange = (filter: string, key: number) => {
+    setCurrentIndex(key);
+    if (myApp.current) {
+      myApp.current.setStackFilter(filter);
+    }
+  };
+
+  const buttonsArray = [
+    {
+      label: 'All',
+      filter: '',
+    },
+    {
+      label: 'Pizza',
+      filter: 'pizza',
+    },
+    {
+      label: 'Pasta',
+      filter: 'pasta',
+    },
+    {
+      label: 'Burgers',
+      filter: 'burger',
+    },
+  ];
 
   return (
     <>
@@ -72,10 +96,10 @@ export default function StackPage(props: PageProps) {
             {buttonsArray.map((item, key) => {
               return (
                 <ButtonContainer
-                  onClick={() => setCurrentIndex(key)}
-                  key={item}
+                  onClick={() => handleFilterChange(item.filter, key)}
+                  key={item.label}
                 >
-                  <Button>{item}</Button>
+                  <Button>{item.label}</Button>
                 </ButtonContainer>
               );
             })}
