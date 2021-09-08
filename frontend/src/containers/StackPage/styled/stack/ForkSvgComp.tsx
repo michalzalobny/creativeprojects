@@ -19,7 +19,7 @@ export const ForkSvgComp = styled(ForkSvg)<Props>`
     props.secondaryItem &&
     css`
       opacity: 1;
-      color: #e5d5c6;
+      color: #ead1b9;
     `}
 
   ${media.tablet} {

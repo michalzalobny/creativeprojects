@@ -7,12 +7,13 @@ export const Wrapper = styled(motion.div)<Props>`
   position: relative;
   min-width: 100%;
   height: 100%;
-  background-color: #f2e8dd;
+  background-color: #f5e2cd;
   user-select: none;
   pointer-events: none;
   overflow: hidden;
 
   &:before {
+    opacity: 0;
     content: '';
     display: block;
     position: absolute;
@@ -29,6 +30,7 @@ export const Wrapper = styled(motion.div)<Props>`
   }
 
   &:after {
+    opacity: 0;
     content: '';
     display: block;
     position: absolute;
