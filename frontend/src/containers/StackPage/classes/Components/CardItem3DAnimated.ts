@@ -18,6 +18,8 @@ interface AnimateProps {
 
 export class CardItem3DAnimated extends CardItem3D {
   _opacityTween: Tween<{ progress: number }> | null = null;
+  _translateXTween: Tween<{ translationX: number }> | null = null;
+  _translateYTween: Tween<{ translationY: number }> | null = null;
 
   constructor({ domEl, cardItem, geometry }: Constructor) {
     super({ domEl, geometry, cardItem });
@@ -46,10 +48,71 @@ export class CardItem3DAnimated extends CardItem3D {
     this._opacityTween.start();
   }
 
-  animateIn(props: AnimateProps) {
+  animateTranslateX(props: AnimateProps) {
+    const {
+      destination,
+      duration = 400,
+      delay = 0,
+      easing = TWEEN.Easing.Sinusoidal.InOut,
+    } = props;
+
+    if (this._translateXTween) {
+      this._translateXTween.stop();
+    }
+
+    this._translateXTween = new TWEEN.Tween({
+      translationX: this._extraTranslate.x,
+    })
+      .to({ translation: destination }, duration)
+      .delay(delay)
+      .easing(easing)
+      .onUpdate(obj => {
+        this._extraTranslate.x = obj.translationX;
+      });
+
+    this._translateXTween.start();
+  }
+
+  animateTranslateY(props: AnimateProps) {
+    const {
+      destination,
+      duration = 400,
+      delay = 0,
+      easing = TWEEN.Easing.Sinusoidal.InOut,
+    } = props;
+
+    if (this._translateYTween) {
+      this._translateYTween.stop();
+    }
+
+    this._translateYTween = new TWEEN.Tween({
+      translationY: this._extraTranslate.y,
+    })
+      .to({ translation: destination }, duration)
+      .delay(delay)
+      .easing(easing)
+      .onUpdate(obj => {
+        this._extraTranslate.y = obj.translationY;
+      });
+
+    this._translateYTween.start();
+  }
+
+  slideIn() {
     this.animateOpacity({
-      delay: props.delay,
-      destination: props.destination,
+      destination: 1,
+    });
+    this.animateTranslateX({
+      destination: 0,
+    });
+  }
+
+  slideOut() {
+    this.animateOpacity({
+      destination: 0,
+    });
+    this.animateTranslateX({
+      destination: 300,
     });
   }
 }

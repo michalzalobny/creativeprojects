@@ -88,6 +88,7 @@ export class App {
 
   _onAssetsLoaded = (e: THREE.Event) => {
     this._stackScene.textureItems = (e.target as Preloader).textureItems;
+    this._stackScene.filter = 'pasta';
   };
 
   _addListeners() {

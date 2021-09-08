@@ -84,10 +84,10 @@ export class CardItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    if (this._scrollValues) {
-      this._updateX(this._scrollValues.current.x);
-      this._updateY(this._scrollValues.current.y);
-    }
+    // if (this._scrollValues) {
+    //   this._updateX(this._scrollValues.current.x);
+    //   this._updateY(this._scrollValues.current.y);
+    // }
 
     if (this._mesh && this._scrollValues) {
       this._mesh.material.uniforms.uStrength.value =

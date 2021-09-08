@@ -53,3 +53,8 @@ export interface CardItemProps {
   itemKeyReverse: number;
   item: CreativeItem;
 }
+
+export interface IndexDiffs {
+  current: number[];
+  target: number[];
+}
