@@ -13,7 +13,7 @@ export const ImageWrapper = styled.figure<Props>`
     content: '';
     display: block;
     width: 100%;
-    padding-bottom: 150%;
+    padding-bottom: 142%;
   }
 
   ${media.tablet} {
