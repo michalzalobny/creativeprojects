@@ -63,7 +63,7 @@ export class CardItem3DAnimated extends CardItem3D {
     this._translateXTween = new TWEEN.Tween({
       translationX: this._extraTranslate.x,
     })
-      .to({ translation: destination }, duration)
+      .to({ translationX: destination }, duration)
       .delay(delay)
       .easing(easing)
       .onUpdate(obj => {
@@ -88,7 +88,7 @@ export class CardItem3DAnimated extends CardItem3D {
     this._translateYTween = new TWEEN.Tween({
       translationY: this._extraTranslate.y,
     })
-      .to({ translation: destination }, duration)
+      .to({ translationY: destination }, duration)
       .delay(delay)
       .easing(easing)
       .onUpdate(obj => {
@@ -104,15 +104,17 @@ export class CardItem3DAnimated extends CardItem3D {
     });
     this.animateTranslateX({
       destination: 0,
+      delay: 100,
     });
   }
 
   slideOut() {
     this.animateOpacity({
       destination: 0,
+      delay: 100,
     });
     this.animateTranslateX({
-      destination: 300,
+      destination: -150,
     });
   }
 }
