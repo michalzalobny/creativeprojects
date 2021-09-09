@@ -20,10 +20,7 @@ export class StackScene extends ItemScene {
 
   _items3DVisible: CardItem3DAnimated[] = [];
   _scroll: Scroll;
-  _indexFloat = {
-    current: 0,
-    target: 0,
-  };
+  _indexFloat = 0;
   _indexDiffs: IndexDiffs = {
     current: [],
     target: [],
@@ -41,9 +38,9 @@ export class StackScene extends ItemScene {
     const minIndex = 0;
     const maxIndex = this._items3DVisible.length - 1;
 
-    this._indexFloat.target = Math.min(
+    this._indexFloat = Math.min(
       Math.max(
-        this._indexFloat.target - y * StackScene.indexIncreaseMultiplier,
+        this._indexFloat - y * StackScene.indexIncreaseMultiplier,
         minIndex,
       ),
       maxIndex,
@@ -84,38 +81,35 @@ export class StackScene extends ItemScene {
   }
 
   _positionItems(updateInfo: UpdateInfo) {
-    const offset = 0;
-    let newIndexEased = this._items3D.length - 1;
-    let smallestDiff = Number.MAX_VALUE;
+    let offset = 0;
 
-    for (let i = 0; i < this._items3DVisible.length; ++i) {
-      const item = this._items3DVisible[i];
+    for (let i = 0; i < this._items3D.length; ++i) {
+      const item = this._items3D[i];
 
       this._indexDiffs.current[i] =
-        this._indexDiffs.current[i] || this._indexFloat.current - i;
+        this._indexDiffs.current[i] || this._indexFloat - i;
 
-      this._indexDiffs.target[i] = this._indexFloat.current - i + offset;
+      this._indexDiffs.target[i] = this._indexFloat - i + offset;
 
-      const dIndex = this._indexDiffs.target[i] - this._indexDiffs.current[i];
-
-      this._indexDiffs.current[i] += dIndex * updateInfo.slowDownFactor;
+      this._indexDiffs.current[i] = lerp(
+        this._indexDiffs.current[i],
+        this._indexDiffs.target[i],
+        StackScene.lerpEase * updateInfo.slowDownFactor,
+      );
 
       const indexDiff = this._indexDiffs.current[i];
-      if (Math.abs(indexDiff) < smallestDiff) {
-        smallestDiff = Math.abs(indexDiff);
-        newIndexEased = i;
-      }
 
-      const indexF = this._indexFloat.current - i;
-      const cardScale = Math.max(Math.min(1, 1 - Math.abs(indexF) * 0.12), 0);
-
-      item.stackTranslateY = -indexF * 0.9;
-      item.cardScale = cardScale;
-      item.position.z = cardScale * 0.01;
-      item.opacity = Math.min(1.6 - Math.abs(indexF * 0.4), 1);
-
-      if (i === 5) {
-        // console.log(Math.abs(indexF));
+      if (this._items3D[i].isSlidOut) {
+        offset += 1;
+      } else {
+        const cardScale = Math.max(
+          Math.min(1, 1 - Math.abs(indexDiff) * 0.12),
+          0,
+        );
+        item.stackTranslateY = -indexDiff * 0.9;
+        item.cardScale = cardScale;
+        item.position.z = cardScale * 0.01;
+        item.opacity = Math.min(1.6 - Math.abs(indexDiff * 0.4), 1);
       }
     }
   }
@@ -129,14 +123,16 @@ export class StackScene extends ItemScene {
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
-    this._indexFloat.current = lerp(
-      this._indexFloat.current,
-      this._indexFloat.target,
-      StackScene.lerpEase * updateInfo.slowDownFactor,
-    );
+    // this._indexFloat.current = lerp(
+    //   this._indexFloat.current,
+    //   this._indexFloat.target,
+    //   StackScene.lerpEase * updateInfo.slowDownFactor,
+    // );
+
+    // this._indexFloat.current = this._indexFloat.target;
 
     const prevIndex = this._currentIndex;
-    this._currentIndex = Math.round(this._indexFloat.current);
+    this._currentIndex = Math.round(this._indexFloat);
     if (prevIndex !== this._currentIndex) {
       this._onCurrentIndexChange();
     }
@@ -154,7 +150,7 @@ export class StackScene extends ItemScene {
   }
 
   goToIndex(index: number) {
-    this._indexFloat.target = index;
+    this._indexFloat = index;
   }
 
   set rendererBounds(bounds: Bounds) {
@@ -163,6 +159,7 @@ export class StackScene extends ItemScene {
 
   set filter(filter: string) {
     const currentItem = this._items3DVisible[this._currentIndex]?.cardItem;
+
     this._items3DVisible = [];
 
     this._items3D.forEach(item => {

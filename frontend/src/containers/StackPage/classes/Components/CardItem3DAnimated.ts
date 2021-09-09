@@ -20,6 +20,7 @@ export class CardItem3DAnimated extends CardItem3D {
   _opacityTween: Tween<{ progress: number }> | null = null;
   _translateXTween: Tween<{ translationX: number }> | null = null;
   _translateYTween: Tween<{ translationY: number }> | null = null;
+  isSlidOut = true;
 
   constructor({ domEl, cardItem, geometry }: Constructor) {
     super({ domEl, geometry, cardItem });
@@ -99,6 +100,10 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   slideIn() {
+    if (!this.isSlidOut) {
+      return;
+    }
+
     this.animateOpacity({
       destination: 1,
     });
@@ -106,9 +111,15 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 0,
       delay: 100,
     });
+
+    this.isSlidOut = false;
   }
 
   slideOut() {
+    if (this.isSlidOut) {
+      return;
+    }
+
     this.animateOpacity({
       destination: 0,
       delay: 100,
@@ -116,5 +127,7 @@ export class CardItem3DAnimated extends CardItem3D {
     this.animateTranslateX({
       destination: -150,
     });
+
+    this.isSlidOut = true;
   }
 }
