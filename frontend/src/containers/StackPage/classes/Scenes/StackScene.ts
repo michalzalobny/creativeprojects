@@ -14,9 +14,10 @@ interface Constructor {
 }
 
 export class StackScene extends ItemScene {
-  static lerpEase = 0.04;
+  static lerpEase = 0.085;
   static wheelMultiplier = 0.425;
   static indexIncreaseMultiplier = 0.025;
+  static timeToSnap = 500;
 
   _items3DVisible: CardItem3DAnimated[] = [];
   _scroll: Scroll;
@@ -26,6 +27,7 @@ export class StackScene extends ItemScene {
     target: [],
   };
   _currentIndex = 0;
+  _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -33,6 +35,10 @@ export class StackScene extends ItemScene {
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
   }
+
+  _performSnap = () => {
+    this.goToIndex(this._currentIndex);
+  };
 
   _applyScroll = (x: number, y: number) => {
     const minIndex = 0;
@@ -45,6 +51,12 @@ export class StackScene extends ItemScene {
       ),
       maxIndex,
     );
+
+    //Hanlde auto snap
+    if (this._snapTimeoutId) {
+      clearTimeout(this._snapTimeoutId);
+    }
+    this._snapTimeoutId = setTimeout(this._performSnap, StackScene.timeToSnap);
   };
 
   _onScrollMouse = (e: THREE.Event) => {

@@ -52,7 +52,7 @@ export class CardItem3DAnimated extends CardItem3D {
   animateTranslateX(props: AnimateProps) {
     const {
       destination,
-      duration = 400,
+      duration = 700,
       delay = 0,
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
@@ -77,7 +77,7 @@ export class CardItem3DAnimated extends CardItem3D {
   animateTranslateY(props: AnimateProps) {
     const {
       destination,
-      duration = 400,
+      duration = 700,
       delay = 0,
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
@@ -123,7 +123,7 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 0,
     });
     this.animateTranslateX({
-      destination: -180,
+      destination: -100,
     });
 
     this.isSlidOut = true;
