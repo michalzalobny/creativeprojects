@@ -13,14 +13,21 @@ export const ImageWrapper = styled.figure<Props>`
     content: '';
     display: block;
     width: 100%;
-    padding-bottom: 142%;
+    padding-bottom: 140%;
   }
 
   ${media.tablet} {
-    width: 320px;
+    width: 700px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 100%;
+      padding-bottom: 60%;
+    }
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    width: 360px;
+    width: 700px;
   }
 `;
