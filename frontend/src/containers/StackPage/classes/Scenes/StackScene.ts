@@ -108,7 +108,7 @@ export class StackScene extends ItemScene {
         );
         item.stackTranslateY = -indexDiff * 0.9;
         item.cardScale = cardScale;
-        item.position.z = cardScale * 0.01;
+        item.position.z = cardScale * 0.001;
         item.opacity = Math.min(1.6 - Math.abs(indexDiff * 0.4), 1);
       }
     }
