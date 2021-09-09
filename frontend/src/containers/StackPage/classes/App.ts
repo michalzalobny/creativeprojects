@@ -14,7 +14,7 @@ interface Constructor {
   imagesToPreload: string[];
 }
 
-export class App {
+export class App extends THREE.EventDispatcher {
   static defaultFps = 60;
   static dtFps = 1000 / App.defaultFps;
 
@@ -31,6 +31,7 @@ export class App {
   _stackScene: StackScene;
 
   constructor({ imagesToPreload, items, rendererWrapperEl }: Constructor) {
+    super();
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -91,16 +92,22 @@ export class App {
     this.setStackFilter('');
   };
 
+  _onCardChange = (e: THREE.Event) => {
+    this.dispatchEvent({ type: 'cardChange' });
+  };
+
   _addListeners() {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.addEventListener('loaded', this._onAssetsLoaded);
+    this._stackScene.addEventListener('cardChange', this._onCardChange);
   }
 
   _removeListeners() {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.removeEventListener('loaded', this._onAssetsLoaded);
+    this._stackScene.removeEventListener('cardChange', this._onCardChange);
   }
 
   _resumeAppFrame() {

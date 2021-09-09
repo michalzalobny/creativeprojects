@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
+import * as THREE from 'three';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
@@ -32,6 +33,8 @@ export default function StackPage(props: PageProps) {
     [props.projectData.creativeItems],
   );
 
+  const onCardChange = (e: THREE.Event) => {};
+
   useEffect(() => {
     if (!rendererWrapperEl.current) {
       return () => {};
@@ -43,6 +46,8 @@ export default function StackPage(props: PageProps) {
         items: props.projectData.creativeItems,
         imagesToPreload,
       });
+
+      myApp.current.addEventListener('cardChange', onCardChange);
     }
 
     return () => {
