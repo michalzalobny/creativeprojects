@@ -135,13 +135,11 @@ export class StackScene extends ItemScene {
       StackScene.lerpEase * updateInfo.slowDownFactor,
     );
 
-    // const dIndex = this._indexFloat.target - this._indexFloat.current;
-    // this._indexFloat.current += dIndex; // * this.scrollEasing * dt * slowDownFactor;
-    // const prevIndex = this._currentIndex;
-    // this._currentIndex = Math.round(this._indexFloat.current);
-    // if (prevIndex !== this._currentIndex) {
-    //   this._onCurrentIndexChange();
-    // }
+    const prevIndex = this._currentIndex;
+    this._currentIndex = Math.round(this._indexFloat.current);
+    if (prevIndex !== this._currentIndex) {
+      this._onCurrentIndexChange();
+    }
   }
 
   update(updateInfo: UpdateInfo) {
@@ -155,11 +153,16 @@ export class StackScene extends ItemScene {
     super.destroy();
   }
 
+  goToIndex(index: number) {
+    this._indexFloat.target = index;
+  }
+
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
   }
 
   set filter(filter: string) {
+    const currentItem = this._items3DVisible[this._currentIndex]?.cardItem;
     this._items3DVisible = [];
 
     this._items3D.forEach(item => {
@@ -170,5 +173,11 @@ export class StackScene extends ItemScene {
         item.slideOut();
       }
     });
+
+    const restoreIndex = currentItem
+      ? this._items3DVisible.findIndex(item => item.cardItem === currentItem)
+      : 0;
+
+    this.goToIndex(Math.max(restoreIndex, 0));
   }
 }
