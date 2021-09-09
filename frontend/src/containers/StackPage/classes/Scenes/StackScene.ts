@@ -14,7 +14,7 @@ interface Constructor {
 }
 
 export class StackScene extends ItemScene {
-  static lerpEase = 0.085;
+  static lerpEase = 0.06;
   static wheelMultiplier = 0.425;
   static indexIncreaseMultiplier = 0.025;
   static timeToSnap = 500;
