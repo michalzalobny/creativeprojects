@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
 import { Parallax } from 'components/Animations/Parallax/Parallax';
+import { SlideItemWithKey } from 'components/Animations/SlideItemWithKey/SlideItemWithKey';
 
 import { CanvasWrapper } from './styled/CanvasWrapper';
 import { Wrapper } from './styled/Wrapper';
@@ -21,10 +22,13 @@ import { Button } from './styled/stack/Button';
 import { ButtonContainer } from './styled/stack/ButtonContainer';
 import { ButtonsWrapper } from './styled/stack/ButtonsWrapper';
 import { Border } from './styled/stack/Border';
+import { CardItemProps } from './classes/types';
 
 export default function StackPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
+
+  const [itemName, setItemName] = useState('Test');
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -33,7 +37,11 @@ export default function StackPage(props: PageProps) {
     [props.projectData.creativeItems],
   );
 
-  const onCardChange = (e: THREE.Event) => {};
+  const onItemChange = (e: THREE.Event) => {
+    const el = e.el as CardItemProps;
+    setItemName(el.item.description);
+    // console.log(el.item.image.url);
+  };
 
   useEffect(() => {
     if (!rendererWrapperEl.current) {
@@ -47,11 +55,14 @@ export default function StackPage(props: PageProps) {
         imagesToPreload,
       });
 
-      myApp.current.addEventListener('cardChange', onCardChange);
+      myApp.current.addEventListener('itemchange', onItemChange);
     }
 
     return () => {
-      myApp.current && myApp.current.destroy();
+      if (myApp.current) {
+        myApp.current.removeEventListener('itemchange', onItemChange);
+        myApp.current.destroy();
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -93,7 +104,9 @@ export default function StackPage(props: PageProps) {
         })}
         <ContentWrapper>
           <Text italic>C&apos;mon... eat that</Text>
-          <Text>Carbonarra with mushrooms</Text>
+          <SlideItemWithKey itemKey={itemName}>
+            <Text>{itemName}</Text>
+          </SlideItemWithKey>
 
           <ButtonsWrapper>
             <Border currentIndex={currentIndex} />

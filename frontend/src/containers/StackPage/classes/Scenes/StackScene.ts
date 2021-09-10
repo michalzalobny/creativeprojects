@@ -21,12 +21,19 @@ export class StackScene extends ItemScene {
 
   _items3DVisible: CardItem3DAnimated[] = [];
   _scroll: Scroll;
-  _indexFloat = 0;
+  _indexFloat = {
+    last: 0,
+    current: 0,
+    target: 0.0001, //setting to 0.0001 fixes index lerp bug
+  };
+  _currentIndex = {
+    current: 0,
+    target: 0,
+  };
   _indexDiffs: IndexDiffs = {
     current: [],
     target: [],
   };
-  _currentIndex = 0;
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -37,16 +44,16 @@ export class StackScene extends ItemScene {
   }
 
   _performSnap = () => {
-    this.goToIndex(this._currentIndex);
+    this.goToIndex(this._currentIndex.target);
   };
 
   _applyScroll = (x: number, y: number) => {
     const minIndex = 0;
     const maxIndex = this._items3DVisible.length - 1;
 
-    this._indexFloat = Math.min(
+    this._indexFloat.target = Math.min(
       Math.max(
-        this._indexFloat - y * StackScene.indexIncreaseMultiplier,
+        this._indexFloat.target - y * StackScene.indexIncreaseMultiplier,
         minIndex,
       ),
       maxIndex,
@@ -99,9 +106,9 @@ export class StackScene extends ItemScene {
       const item = this._items3D[i];
 
       this._indexDiffs.current[i] =
-        this._indexDiffs.current[i] || this._indexFloat - i;
+        this._indexDiffs.current[i] || this._indexFloat.target - i;
 
-      this._indexDiffs.target[i] = this._indexFloat - i + offset;
+      this._indexDiffs.target[i] = this._indexFloat.target - i + offset;
 
       this._indexDiffs.current[i] = lerp(
         this._indexDiffs.current[i],
@@ -127,25 +134,31 @@ export class StackScene extends ItemScene {
   }
 
   _onCurrentIndexChange() {
+    const item = this._items3DVisible[this._currentIndex.current];
+    if (!item) {
+      return;
+    }
     //Dispatch event with current index
-    // this.dispatchEvent({
-    //   type: 'itemchange',
-    //   item: this._items3D[this.currentIndexEased],
-    // });
+    this.dispatchEvent({
+      type: 'itemchange',
+      el: item.cardItem,
+    });
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
-    // this._indexFloat.current = lerp(
-    //   this._indexFloat.current,
-    //   this._indexFloat.target,
-    //   StackScene.lerpEase * updateInfo.slowDownFactor,
-    // );
+    this._currentIndex.target = Math.round(this._indexFloat.target);
+    this._indexFloat.last = this._indexFloat.current;
 
-    // this._indexFloat.current = this._indexFloat.target;
+    this._indexFloat.current = lerp(
+      this._indexFloat.current,
+      this._indexFloat.target,
+      StackScene.lerpEase * updateInfo.slowDownFactor,
+    );
 
-    const prevIndex = this._currentIndex;
-    this._currentIndex = Math.round(this._indexFloat);
-    if (prevIndex !== this._currentIndex) {
+    const prevIndex = Math.round(this._indexFloat.last);
+    this._currentIndex.current = Math.round(this._indexFloat.current);
+
+    if (prevIndex !== this._currentIndex.current) {
       this._onCurrentIndexChange();
     }
   }
@@ -162,7 +175,7 @@ export class StackScene extends ItemScene {
   }
 
   goToIndex(index: number) {
-    this._indexFloat = index;
+    this._indexFloat.target = index;
   }
 
   set rendererBounds(bounds: Bounds) {
@@ -170,7 +183,8 @@ export class StackScene extends ItemScene {
   }
 
   set filter(filter: string) {
-    const currentItem = this._items3DVisible[this._currentIndex]?.cardItem;
+    const currentItem = this._items3DVisible[this._currentIndex.target]
+      ?.cardItem;
 
     this._items3DVisible = [];
 
