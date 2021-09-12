@@ -96,7 +96,7 @@ export class App extends THREE.EventDispatcher {
 
   _onItemChangeDebounced = debounce((e: THREE.Event) => {
     this._onItemChange(e);
-  }, 100);
+  }, 300);
 
   _onItemChange(e: THREE.Event) {
     const el = e.el as CardItemProps;
