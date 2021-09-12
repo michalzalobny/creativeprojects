@@ -92,6 +92,7 @@ export class App extends THREE.EventDispatcher {
   _onAssetsLoaded = (e: THREE.Event) => {
     this._stackScene.textureItems = (e.target as Preloader).textureItems;
     this.setStackFilter('');
+    this._stackScene.animateIn();
   };
 
   _onItemChangeDebounced = debounce((e: THREE.Event) => {

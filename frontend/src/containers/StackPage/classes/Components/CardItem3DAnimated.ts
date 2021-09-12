@@ -99,6 +99,16 @@ export class CardItem3DAnimated extends CardItem3D {
     this._translateYTween.start();
   }
 
+  animateIn() {
+    this._tweenOpacity = 0;
+
+    this.animateOpacity({
+      destination: 1,
+      duration: 1000,
+      delay: 900,
+    });
+  }
+
   slideIn() {
     if (!this.isSlidOut) {
       return;
@@ -132,7 +142,7 @@ export class CardItem3DAnimated extends CardItem3D {
       duration: 600,
     });
     this.animateTranslateX({
-      destination: -elWidth * 1.3,
+      destination: -elWidth * 1.15,
       duration: 1100,
       easing: TWEEN.Easing.Exponential.Out,
     });

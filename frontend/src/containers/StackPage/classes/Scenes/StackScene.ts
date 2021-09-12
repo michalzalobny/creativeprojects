@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
 
 import { UpdateInfo, Bounds, IndexDiffs } from '../types';
 import { Scroll } from '../Singletons/Scroll';
@@ -24,7 +25,7 @@ export class StackScene extends ItemScene {
   _indexFloat = {
     last: 0,
     current: 0,
-    target: 0.0001, //setting to 0.0001 fixes index lerp bug
+    target: 0, //setting to 0.0001 fixes index lerp bug
   };
   _currentIndex = {
     current: 0,
@@ -35,6 +36,8 @@ export class StackScene extends ItemScene {
     target: [],
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  _animateInTween: Tween<{ progress: number }> | null = null;
+  _isAnimatedIn = false;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -48,6 +51,10 @@ export class StackScene extends ItemScene {
   };
 
   _applyScroll = (x: number, y: number) => {
+    if (!this._isAnimatedIn) {
+      return;
+    }
+
     const minIndex = 0;
     const maxIndex = this._items3DVisible.length - 1;
 
@@ -176,6 +183,43 @@ export class StackScene extends ItemScene {
 
   goToIndex(index: number) {
     this._indexFloat.target = index;
+  }
+
+  animateIn() {
+    if (this._isAnimatedIn) {
+      return;
+    }
+
+    this._items3D.forEach(item => {
+      item.animateIn();
+    });
+
+    const finalIndex = 0;
+    const startIndex = this._items3D.length - 1;
+
+    if (this._animateInTween) {
+      this._animateInTween.stop();
+    }
+
+    this._indexFloat.last = startIndex;
+    this._indexFloat.target = startIndex;
+    this._indexFloat.current = startIndex;
+
+    this._animateInTween = new TWEEN.Tween({
+      progress: startIndex,
+    })
+      .to({ progress: finalIndex }, 2200)
+      .delay(1500)
+      .easing(TWEEN.Easing.Exponential.InOut)
+      .onUpdate(obj => {
+        this._indexFloat.target = obj.progress;
+        this._indexFloat.current = obj.progress;
+      })
+      .onComplete(() => {
+        this._isAnimatedIn = true;
+      });
+
+    this._animateInTween.start();
   }
 
   set rendererBounds(bounds: Bounds) {
