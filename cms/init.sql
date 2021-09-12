@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 758 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 812 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -689,7 +689,7 @@ VALUES
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
-  (65, 'pasta', 'Creamy shrimp pasta');
+  (65, 'pasta', 'Shrimp pasta');
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
@@ -709,7 +709,7 @@ VALUES
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
-  (71, 'pasta', 'Creamy carbonara');
+  (71, 'pasta', 'Cheesy carbonara');
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
@@ -717,7 +717,7 @@ VALUES
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
-  (73, 'burger', 'Juicy double cheeseburger');
+  (73, 'burger', 'Double cheeseburger');
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`)
 VALUES
@@ -1254,7 +1254,7 @@ VALUES
 INSERT INTO
   `components_page_localized_long_texts` (`id`, `language`, `text`)
 VALUES
-  (10, 1, 'Slider recipes stack made in THREE.JS');
+  (10, 1, 'Slider with food images made in THREE.JS');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -1340,11 +1340,11 @@ VALUES
 INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
-  (19, 'Recipes Stack', 1);
+  (19, 'Food Stack', 1);
 INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
-  (20, 'Recipes Stack', 1);
+  (20, 'Food Stack', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -2239,7 +2239,7 @@ VALUES
     1,
     1,
     '2021-09-08 14:00:59',
-    '2021-09-12 16:44:30'
+    '2021-09-12 20:23:09'
   );
 
 # ------------------------------------------------------------
@@ -3519,7 +3519,7 @@ VALUES
   (
     72,
     'creativeItems',
-    1,
+    11,
     'components_creative_component_creative_items',
     58,
     10
@@ -3555,7 +3555,7 @@ VALUES
   (
     74,
     'creativeItems',
-    2,
+    4,
     'components_creative_component_creative_items',
     60,
     10
@@ -3609,7 +3609,7 @@ VALUES
   (
     77,
     'creativeItems',
-    3,
+    6,
     'components_creative_component_creative_items',
     63,
     10
@@ -3627,7 +3627,7 @@ VALUES
   (
     78,
     'creativeItems',
-    4,
+    3,
     'components_creative_component_creative_items',
     64,
     10
@@ -3645,7 +3645,7 @@ VALUES
   (
     79,
     'creativeItems',
-    6,
+    1,
     'components_creative_component_creative_items',
     65,
     10
@@ -3663,7 +3663,7 @@ VALUES
   (
     80,
     'creativeItems',
-    8,
+    7,
     'components_creative_component_creative_items',
     66,
     10
@@ -3681,7 +3681,7 @@ VALUES
   (
     81,
     'creativeItems',
-    10,
+    9,
     'components_creative_component_creative_items',
     67,
     10
@@ -3807,7 +3807,7 @@ VALUES
   (
     89,
     'creativeItems',
-    5,
+    2,
     'components_creative_component_creative_items',
     75,
     10
@@ -3843,7 +3843,7 @@ VALUES
   (
     91,
     'creativeItems',
-    11,
+    10,
     'components_creative_component_creative_items',
     77,
     10
@@ -3861,7 +3861,7 @@ VALUES
   (
     92,
     'creativeItems',
-    7,
+    5,
     'components_creative_component_creative_items',
     78,
     10
@@ -3879,7 +3879,7 @@ VALUES
   (
     93,
     'creativeItems',
-    9,
+    8,
     'components_creative_component_creative_items',
     79,
     10
@@ -10820,7 +10820,7 @@ INSERT INTO
   )
 VALUES
   (
-    731,
+    785,
     91,
     10,
     'components_page_localized_heads',
@@ -10838,9 +10838,9 @@ INSERT INTO
   )
 VALUES
   (
-    732,
-    67,
-    58,
+    786,
+    77,
+    65,
     'components_creative_component_creative_items',
     'image',
     1
@@ -10856,61 +10856,7 @@ INSERT INTO
   )
 VALUES
   (
-    733,
-    68,
-    60,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    734,
-    71,
-    63,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    735,
-    78,
-    64,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    736,
+    787,
     87,
     75,
     'components_creative_component_creative_items',
@@ -10928,9 +10874,9 @@ INSERT INTO
   )
 VALUES
   (
-    737,
-    77,
-    65,
+    788,
+    78,
+    64,
     'components_creative_component_creative_items',
     'image',
     1
@@ -10946,7 +10892,25 @@ INSERT INTO
   )
 VALUES
   (
-    738,
+    789,
+    68,
+    60,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    790,
     84,
     78,
     'components_creative_component_creative_items',
@@ -10964,7 +10928,25 @@ INSERT INTO
   )
 VALUES
   (
-    739,
+    791,
+    71,
+    63,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    792,
     73,
     66,
     'components_creative_component_creative_items',
@@ -10982,7 +10964,7 @@ INSERT INTO
   )
 VALUES
   (
-    740,
+    793,
     88,
     79,
     'components_creative_component_creative_items',
@@ -11000,7 +10982,7 @@ INSERT INTO
   )
 VALUES
   (
-    741,
+    794,
     76,
     67,
     'components_creative_component_creative_items',
@@ -11018,7 +11000,7 @@ INSERT INTO
   )
 VALUES
   (
-    742,
+    795,
     82,
     77,
     'components_creative_component_creative_items',
@@ -11036,7 +11018,25 @@ INSERT INTO
   )
 VALUES
   (
-    743,
+    796,
+    67,
+    58,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    797,
     89,
     80,
     'components_creative_component_creative_items',
@@ -11054,7 +11054,7 @@ INSERT INTO
   )
 VALUES
   (
-    744,
+    798,
     75,
     69,
     'components_creative_component_creative_items',
@@ -11072,7 +11072,7 @@ INSERT INTO
   )
 VALUES
   (
-    745,
+    799,
     90,
     81,
     'components_creative_component_creative_items',
@@ -11090,7 +11090,7 @@ INSERT INTO
   )
 VALUES
   (
-    746,
+    800,
     70,
     61,
     'components_creative_component_creative_items',
@@ -11108,7 +11108,7 @@ INSERT INTO
   )
 VALUES
   (
-    747,
+    801,
     81,
     70,
     'components_creative_component_creative_items',
@@ -11126,7 +11126,7 @@ INSERT INTO
   )
 VALUES
   (
-    748,
+    802,
     65,
     57,
     'components_creative_component_creative_items',
@@ -11144,7 +11144,7 @@ INSERT INTO
   )
 VALUES
   (
-    749,
+    803,
     80,
     71,
     'components_creative_component_creative_items',
@@ -11162,7 +11162,7 @@ INSERT INTO
   )
 VALUES
   (
-    750,
+    804,
     66,
     59,
     'components_creative_component_creative_items',
@@ -11180,7 +11180,7 @@ INSERT INTO
   )
 VALUES
   (
-    751,
+    805,
     79,
     72,
     'components_creative_component_creative_items',
@@ -11198,7 +11198,7 @@ INSERT INTO
   )
 VALUES
   (
-    752,
+    806,
     85,
     73,
     'components_creative_component_creative_items',
@@ -11216,7 +11216,7 @@ INSERT INTO
   )
 VALUES
   (
-    753,
+    807,
     72,
     62,
     'components_creative_component_creative_items',
@@ -11234,7 +11234,7 @@ INSERT INTO
   )
 VALUES
   (
-    754,
+    808,
     69,
     55,
     'components_creative_component_creative_items',
@@ -11252,7 +11252,7 @@ INSERT INTO
   )
 VALUES
   (
-    755,
+    809,
     86,
     74,
     'components_creative_component_creative_items',
@@ -11270,7 +11270,7 @@ INSERT INTO
   )
 VALUES
   (
-    756,
+    810,
     83,
     76,
     'components_creative_component_creative_items',
@@ -11288,7 +11288,7 @@ INSERT INTO
   )
 VALUES
   (
-    757,
+    811,
     64,
     56,
     'components_creative_component_creative_items',
