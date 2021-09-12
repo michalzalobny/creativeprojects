@@ -104,16 +104,18 @@ export class CardItem3DAnimated extends CardItem3D {
       return;
     }
 
+    this.isSlidOut = false;
+
     this.animateOpacity({
       destination: 1,
-      duration: 550,
+      duration: 600,
+      delay: 50,
     });
     this.animateTranslateX({
       destination: 0,
-      duration: 550,
+      duration: 1100,
+      easing: TWEEN.Easing.Exponential.Out,
     });
-
-    this.isSlidOut = false;
   }
 
   slideOut() {
@@ -121,15 +123,18 @@ export class CardItem3DAnimated extends CardItem3D {
       return;
     }
 
-    this.animateOpacity({
-      destination: 0,
-      duration: 550,
-    });
-    this.animateTranslateX({
-      destination: -200,
-      duration: 550,
-    });
+    const elWidth = this._domElBounds?.width || 400;
 
     this.isSlidOut = true;
+
+    this.animateOpacity({
+      destination: 0,
+      duration: 600,
+    });
+    this.animateTranslateX({
+      destination: -elWidth * 1.3,
+      duration: 1100,
+      easing: TWEEN.Easing.Exponential.Out,
+    });
   }
 }
