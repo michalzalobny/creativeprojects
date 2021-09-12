@@ -14,6 +14,7 @@ interface Constructor {
   rendererWrapperEl: HTMLDivElement;
   items: CreativeItem[];
   imagesToPreload: string[];
+  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class App extends THREE.EventDispatcher {
@@ -31,13 +32,21 @@ export class App extends THREE.EventDispatcher {
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
   _stackScene: StackScene;
+  _setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 
-  constructor({ imagesToPreload, items, rendererWrapperEl }: Constructor) {
+  constructor({
+    setIsLoaded,
+    imagesToPreload,
+    items,
+    rendererWrapperEl,
+  }: Constructor) {
     super();
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
     this._camera = new THREE.PerspectiveCamera();
+
+    this._setIsLoaded = setIsLoaded;
 
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
@@ -91,6 +100,7 @@ export class App extends THREE.EventDispatcher {
 
   _onAssetsLoaded = (e: THREE.Event) => {
     this._stackScene.textureItems = (e.target as Preloader).textureItems;
+    this._setIsLoaded(true);
     this.setStackFilter('');
     this._stackScene.animateIn();
   };

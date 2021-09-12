@@ -29,6 +29,7 @@ export default function StackPage(props: PageProps) {
   const myApp = useRef<App | null>(null);
 
   const [itemName, setItemName] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -53,6 +54,7 @@ export default function StackPage(props: PageProps) {
         rendererWrapperEl: rendererWrapperEl.current,
         items: props.projectData.creativeItems,
         imagesToPreload,
+        setIsLoaded,
       });
 
       myApp.current.addEventListener('itemchange', onItemChange);
@@ -102,7 +104,7 @@ export default function StackPage(props: PageProps) {
         {props.projectData.creativeItems.map(item => {
           return <Image key={item.image.url} src={item.image.url} />;
         })}
-        <ContentWrapper>
+        <ContentWrapper animate={isLoaded ? 'animate' : 'initial'}>
           <Text italic>C&apos;mon... eat that</Text>
           <SlideItemWithKey itemKey={itemName}>
             <Text style={{ width: '100%', textTransform: 'capitalize' }}>
