@@ -106,9 +106,11 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateOpacity({
       destination: 1,
+      duration: 550,
     });
     this.animateTranslateX({
       destination: 0,
+      duration: 550,
     });
 
     this.isSlidOut = false;
@@ -121,9 +123,11 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateOpacity({
       destination: 0,
+      duration: 550,
     });
     this.animateTranslateX({
-      destination: -100,
+      destination: -200,
+      duration: 550,
     });
 
     this.isSlidOut = true;
