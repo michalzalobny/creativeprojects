@@ -201,6 +201,7 @@ export class StackScene extends ItemScene {
       ? this._items3DVisible.findIndex(item => item.cardItem === currentItem)
       : 0;
 
+    this._onCurrentIndexChange();
     this.goToIndex(Math.max(restoreIndex, 0));
   }
 }

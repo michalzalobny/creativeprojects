@@ -17,17 +17,17 @@ export const ImageWrapper = styled.figure<Props>`
   }
 
   ${media.tablet} {
-    width: 700px;
+    width: 650px;
 
     &:before {
       content: '';
       display: block;
       width: 100%;
-      padding-bottom: 60%;
+      padding-bottom: 70%;
     }
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    width: 700px;
+    width: 650px;
   }
 `;
