@@ -105,7 +105,7 @@ export default function StackPage(props: PageProps) {
         <ContentWrapper>
           <Text italic>C&apos;mon... eat that</Text>
           <SlideItemWithKey itemKey={itemName}>
-            <Text>{itemName}</Text>
+            <Text style={{ width: '100%' }}>{itemName}</Text>
           </SlideItemWithKey>
 
           <ButtonsWrapper>

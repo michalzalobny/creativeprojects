@@ -1,9 +1,9 @@
 import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
+import debounce from 'lodash/debounce';
 
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { CardItemProps } from './types';
-import { CardItem3DAnimated } from './Components/CardItem3DAnimated';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
@@ -94,23 +94,33 @@ export class App extends THREE.EventDispatcher {
     this.setStackFilter('');
   };
 
-  _onItemChange = (e: THREE.Event) => {
+  _onItemChangeDebounced = debounce((e: THREE.Event) => {
+    this._onItemChange(e);
+  }, 100);
+
+  _onItemChange(e: THREE.Event) {
     const el = e.el as CardItemProps;
     this.dispatchEvent({ type: 'itemchange', el });
-  };
+  }
 
   _addListeners() {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.addEventListener('loaded', this._onAssetsLoaded);
-    this._stackScene.addEventListener('itemchange', this._onItemChange);
+    this._stackScene.addEventListener(
+      'itemchange',
+      this._onItemChangeDebounced,
+    );
   }
 
   _removeListeners() {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.removeEventListener('loaded', this._onAssetsLoaded);
-    this._stackScene.removeEventListener('itemchange', this._onItemChange);
+    this._stackScene.removeEventListener(
+      'itemchange',
+      this._onItemChangeDebounced,
+    );
   }
 
   _resumeAppFrame() {
