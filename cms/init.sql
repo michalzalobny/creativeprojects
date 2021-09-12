@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 91 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 92 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 731 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 758 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -2239,7 +2239,7 @@ VALUES
     1,
     1,
     '2021-09-08 14:00:59',
-    '2021-09-12 16:14:55'
+    '2021-09-12 16:44:30'
   );
 
 # ------------------------------------------------------------
@@ -9556,6 +9556,50 @@ VALUES
     '2021-09-08 14:05:40',
     '2021-09-08 14:05:40'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    91,
+    'z11a.png',
+    '',
+    '',
+    1639,
+    882,
+    '{\"thumbnail\":{\"name\":\"thumbnail_z11a.png\",\"hash\":\"thumbnail_z11a_42ab1649eb\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":132,\"size\":33.02,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1631465060/thumbnail_z11a_42ab1649eb.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_z11a_42ab1649eb\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_z11a.png\",\"hash\":\"large_z11a_42ab1649eb\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":538,\"size\":398.39,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1631465061/large_z11a_42ab1649eb.png\",\"provider_metadata\":{\"public_id\":\"large_z11a_42ab1649eb\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_z11a.png\",\"hash\":\"medium_z11a_42ab1649eb\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":404,\"size\":236.35,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1631465063/medium_z11a_42ab1649eb.png\",\"provider_metadata\":{\"public_id\":\"medium_z11a_42ab1649eb\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_z11a.png\",\"hash\":\"small_z11a_42ab1649eb\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":269,\"size\":113.88,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1631465064/small_z11a_42ab1649eb.png\",\"provider_metadata\":{\"public_id\":\"small_z11a_42ab1649eb\",\"resource_type\":\"image\"}}}',
+    'z11a_42ab1649eb',
+    '.png',
+    'image/png',
+    912.07,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1631465059/z11a_42ab1649eb.png',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"z11a_42ab1649eb\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-09-12 16:44:25',
+    '2021-09-12 16:44:25'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -10776,8 +10820,8 @@ INSERT INTO
   )
 VALUES
   (
-    704,
-    57,
+    731,
+    91,
     10,
     'components_page_localized_heads',
     'ogImage',
@@ -10794,7 +10838,7 @@ INSERT INTO
   )
 VALUES
   (
-    705,
+    732,
     67,
     58,
     'components_creative_component_creative_items',
@@ -10812,7 +10856,7 @@ INSERT INTO
   )
 VALUES
   (
-    706,
+    733,
     68,
     60,
     'components_creative_component_creative_items',
@@ -10830,7 +10874,7 @@ INSERT INTO
   )
 VALUES
   (
-    707,
+    734,
     71,
     63,
     'components_creative_component_creative_items',
@@ -10848,7 +10892,7 @@ INSERT INTO
   )
 VALUES
   (
-    708,
+    735,
     78,
     64,
     'components_creative_component_creative_items',
@@ -10866,7 +10910,7 @@ INSERT INTO
   )
 VALUES
   (
-    709,
+    736,
     87,
     75,
     'components_creative_component_creative_items',
@@ -10884,7 +10928,7 @@ INSERT INTO
   )
 VALUES
   (
-    710,
+    737,
     77,
     65,
     'components_creative_component_creative_items',
@@ -10902,7 +10946,7 @@ INSERT INTO
   )
 VALUES
   (
-    711,
+    738,
     84,
     78,
     'components_creative_component_creative_items',
@@ -10920,7 +10964,7 @@ INSERT INTO
   )
 VALUES
   (
-    712,
+    739,
     73,
     66,
     'components_creative_component_creative_items',
@@ -10938,7 +10982,7 @@ INSERT INTO
   )
 VALUES
   (
-    713,
+    740,
     88,
     79,
     'components_creative_component_creative_items',
@@ -10956,7 +11000,7 @@ INSERT INTO
   )
 VALUES
   (
-    714,
+    741,
     76,
     67,
     'components_creative_component_creative_items',
@@ -10974,7 +11018,7 @@ INSERT INTO
   )
 VALUES
   (
-    715,
+    742,
     82,
     77,
     'components_creative_component_creative_items',
@@ -10992,7 +11036,7 @@ INSERT INTO
   )
 VALUES
   (
-    716,
+    743,
     89,
     80,
     'components_creative_component_creative_items',
@@ -11010,7 +11054,7 @@ INSERT INTO
   )
 VALUES
   (
-    717,
+    744,
     75,
     69,
     'components_creative_component_creative_items',
@@ -11028,7 +11072,7 @@ INSERT INTO
   )
 VALUES
   (
-    718,
+    745,
     90,
     81,
     'components_creative_component_creative_items',
@@ -11046,7 +11090,7 @@ INSERT INTO
   )
 VALUES
   (
-    719,
+    746,
     70,
     61,
     'components_creative_component_creative_items',
@@ -11064,7 +11108,7 @@ INSERT INTO
   )
 VALUES
   (
-    720,
+    747,
     81,
     70,
     'components_creative_component_creative_items',
@@ -11082,7 +11126,7 @@ INSERT INTO
   )
 VALUES
   (
-    721,
+    748,
     65,
     57,
     'components_creative_component_creative_items',
@@ -11100,7 +11144,7 @@ INSERT INTO
   )
 VALUES
   (
-    722,
+    749,
     80,
     71,
     'components_creative_component_creative_items',
@@ -11118,7 +11162,7 @@ INSERT INTO
   )
 VALUES
   (
-    723,
+    750,
     66,
     59,
     'components_creative_component_creative_items',
@@ -11136,7 +11180,7 @@ INSERT INTO
   )
 VALUES
   (
-    724,
+    751,
     79,
     72,
     'components_creative_component_creative_items',
@@ -11154,7 +11198,7 @@ INSERT INTO
   )
 VALUES
   (
-    725,
+    752,
     85,
     73,
     'components_creative_component_creative_items',
@@ -11172,7 +11216,7 @@ INSERT INTO
   )
 VALUES
   (
-    726,
+    753,
     72,
     62,
     'components_creative_component_creative_items',
@@ -11190,7 +11234,7 @@ INSERT INTO
   )
 VALUES
   (
-    727,
+    754,
     69,
     55,
     'components_creative_component_creative_items',
@@ -11208,7 +11252,7 @@ INSERT INTO
   )
 VALUES
   (
-    728,
+    755,
     86,
     74,
     'components_creative_component_creative_items',
@@ -11226,7 +11270,7 @@ INSERT INTO
   )
 VALUES
   (
-    729,
+    756,
     83,
     76,
     'components_creative_component_creative_items',
@@ -11244,7 +11288,7 @@ INSERT INTO
   )
 VALUES
   (
-    730,
+    757,
     64,
     56,
     'components_creative_component_creative_items',
