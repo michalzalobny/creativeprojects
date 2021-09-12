@@ -1,7 +1,7 @@
 {
   "name": "cms",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A Strapi application",
   "scripts": {
     "develop": "npm run sync-db && strapi develop",
