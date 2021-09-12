@@ -28,7 +28,7 @@ export default function StackPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
 
-  const [itemName, setItemName] = useState('Test');
+  const [itemName, setItemName] = useState('');
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
