@@ -25,6 +25,7 @@ export const ImageWrapper = styled.figure<Props>`
       width: 100%;
       padding-bottom: 70%;
     }
+    margin-bottom: 30px;
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {

@@ -139,11 +139,11 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateOpacity({
       destination: 0,
-      duration: 600,
+      duration: 200,
     });
     this.animateTranslateX({
-      destination: -elWidth * 1.15,
-      duration: 1100,
+      destination: -elWidth * 0.8,
+      duration: 1300,
       easing: TWEEN.Easing.Exponential.Out,
     });
   }

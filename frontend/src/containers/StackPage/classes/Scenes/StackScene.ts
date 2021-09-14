@@ -15,7 +15,7 @@ interface Constructor {
 }
 
 export class StackScene extends ItemScene {
-  static lerpEase = 0.06;
+  static lerpEase = 0.045;
   static wheelMultiplier = 0.425;
   static indexIncreaseMultiplier = 0.025;
   static timeToSnap = 500;
@@ -132,10 +132,10 @@ export class StackScene extends ItemScene {
           Math.min(1, 1 - Math.abs(indexDiff) * 0.12),
           0,
         );
-        item.stackTranslateY = -indexDiff * 0.9;
+        item.stackTranslateY = -indexDiff * 1;
         item.cardScale = cardScale;
         item.position.z = cardScale * 0.001;
-        item.opacity = Math.min(1.6 - Math.abs(indexDiff * 0.4), 1);
+        item.opacity = Math.min(1.7 - Math.abs(indexDiff * 0.34), 1);
       }
     }
   }
