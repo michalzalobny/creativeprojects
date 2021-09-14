@@ -33,7 +33,10 @@ export default function IndexPage(props: IndexPageProps) {
           <LinkWrapper>Card leader</LinkWrapper>
         </Link>
         <Link passHref href={'/stack'}>
-          <LinkWrapper>Stack</LinkWrapper>
+          <LinkWrapper>Food Stack</LinkWrapper>
+        </Link>
+        <Link passHref href={'/unique-collection'}>
+          <LinkWrapper>Unique Collection</LinkWrapper>
         </Link>
         <div style={{ width: '100%', height: '50vh', background: '#d5edf1' }} />
       </Wrapper>

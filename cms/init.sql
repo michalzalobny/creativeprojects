@@ -14,8 +14,9 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
+  `filter` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 84 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 85 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -49,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -76,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -99,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -216,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -232,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 98 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -267,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 86 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 92 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_role
@@ -349,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 839 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 842 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -411,345 +412,360 @@ CREATE TABLE IF NOT EXISTS `users-permissions_user` (
 # ------------------------------------------------------------
 
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (
     1,
     'Forest 2021',
-    'Lorem ipsum dolor sit amet, conse ctetur adipiscing elit, sed do eiusmod tempor incididunt ali'
+    'Lorem ipsum dolor sit amet, conse ctetur adipiscing elit, sed do eiusmod tempor incididunt ali',
+    NULL
   );
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (
     2,
     'Ocean 2020',
-    'Lorem ipsum dolor siqua. Ut enim ad minim veniam, quis nostrud exercitation ur incididunt ali.'
+    'Lorem ipsum dolor siqua. Ut enim ad minim veniam, quis nostrud exercitation ur incididunt ali.',
+    NULL
   );
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (
     3,
     'Fire 2021',
-    'Isum dolor sit amet, conse ctetum ad minim veniam, quis nostrud exercitation.'
+    'Isum dolor sit amet, conse ctetum ad minim veniam, quis nostrud exercitation.',
+    NULL
   );
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (
     4,
     'Forest',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolor.'
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolor.',
+    NULL
   );
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (
     5,
     'Ocean',
-    'Lot, consectetur adipiscirem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod re et dolor.'
+    'Lot, consectetur adipiscirem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod re et dolor.',
+    NULL
   );
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (
     6,
     'Fire',
-    'Num vitae sapien pellentesque habitant morbi tristique senectus. Diam vulputate ut pharetra sit amet aliquam id diam. Risus.'
+    'Num vitae sapien pellentesque habitant morbi tristique senectus. Diam vulputate ut pharetra sit amet aliquam id diam. Risus.',
+    NULL
   );
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (7, 'La Lambo', 'Lamborghini Aventador white');
+  (7, 'La Lambo', 'Lamborghini Aventador white', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (8, 'Night In Tokyo', '');
+  (8, 'Night In Tokyo', '', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (9, 'DeLorean', NULL);
+  (9, 'DeLorean', NULL, NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (11, 'Nature', 'description');
+  (11, 'Nature', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (12, 'Retro', 'description');
+  (12, 'Retro', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (13, 'Summer', 'description');
+  (13, 'Summer', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (14, 'Canyon', 'description');
+  (14, 'Canyon', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (15, 'Aisle', 'description');
+  (15, 'Aisle', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (16, 'Ice', 'Description');
+  (16, 'Ice', 'Description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (17, 'Forest', 'description');
+  (17, 'Forest', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (18, 'Fire', 'description');
+  (18, 'Fire', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (19, 'Tsunami', 'Description');
+  (19, 'Tsunami', 'Description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (20, 'Green', 'description');
+  (20, 'Green', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (21, 'Space', 'description');
+  (21, 'Space', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (22, 'first image', 'description');
+  (22, 'first image', 'description', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (23, 'second image', 'desc');
+  (23, 'second image', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (24, 'third ', 'desc');
+  (24, 'third ', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (25, 'four', 'desc');
+  (25, 'four', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (26, 'fifth', 'esc');
+  (26, 'fifth', 'esc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (27, 'six', 'des');
+  (27, 'six', 'des', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (28, 'sev', 'desc');
+  (28, 'sev', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (29, 'eight', 'desc');
+  (29, 'eight', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (30, 'nine', 'desc');
+  (30, 'nine', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (31, 'ten', 'desc');
+  (31, 'ten', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (32, 'four', 'desc');
+  (32, 'four', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (33, 'twelve', 'dsc');
+  (33, 'twelve', 'dsc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (34, 't13', 'desc');
+  (34, 't13', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (35, 't14', NULL);
+  (35, 't14', NULL, NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (36, 't15', 'desc');
+  (36, 't15', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (37, 't16', 'desc');
+  (37, 't16', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (38, 't17', 'desc');
+  (38, 't17', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (39, 't18', 'desc');
+  (39, 't18', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (40, '19', 'desc');
+  (40, '19', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (41, '20', 'desc');
+  (41, '20', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (42, '21', 'desc');
+  (42, '21', 'desc', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (43, '4', '4');
+  (43, '4', '4', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (44, '1', '1');
+  (44, '1', '1', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (45, '2', '2');
+  (45, '2', '2', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (46, '3', '3');
+  (46, '3', '3', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (47, '5', '5');
+  (47, '5', '5', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (48, '6', '6');
+  (48, '6', '6', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (49, '7', '7');
+  (49, '7', '7', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (50, '8', '8');
+  (50, '8', '8', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (51, '9', '9');
+  (51, '9', '9', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (52, '10', '10');
+  (52, '10', '10', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (53, '11', '11');
+  (53, '11', '11', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (54, '12', '12');
+  (54, '12', '12', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (55, 'pizza', 'Pepperoni pizza');
+  (55, 'pizza', 'Pepperoni pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (56, 'pizza', 'Spring herb pizza');
+  (56, 'pizza', 'Spring herb pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (57, 'pizza', 'Detroit traditional pizza');
+  (57, 'pizza', 'Detroit traditional pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (58, 'pizza', 'Calzone pizza');
+  (58, 'pizza', 'Calzone pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (59, 'pizza', 'Crusty neapolitan pizza');
+  (59, 'pizza', 'Crusty neapolitan pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (60, 'pizza', 'Sicilian Pizza');
+  (60, 'pizza', 'Sicilian Pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (61, 'pizza', 'California style pizza');
+  (61, 'pizza', 'California style pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (62, 'pizza', 'Mushroom thyme pizza');
+  (62, 'pizza', 'Mushroom thyme pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (63, 'pizza', 'Greek Pizza');
+  (63, 'pizza', 'Greek Pizza', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (64, 'pasta', 'Truffle carbonara');
+  (64, 'pasta', 'Truffle carbonara', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (65, 'pasta', 'Shrimp pasta');
+  (65, 'pasta', 'Shrimp pasta', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (66, 'pasta', 'Spaghetti bolognese');
+  (66, 'pasta', 'Spaghetti bolognese', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (67, 'pasta', 'Spaghetti aglio e olio');
+  (67, 'pasta', 'Spaghetti aglio e olio', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (69, 'pasta', 'Mediterranean pasta ');
+  (69, 'pasta', 'Mediterranean pasta ', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (70, 'pasta', 'Seaside greek spaghetti');
+  (70, 'pasta', 'Seaside greek spaghetti', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (71, 'pasta', 'Cheesy carbonara');
+  (71, 'pasta', 'Cheesy carbonara', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (72, 'pasta', 'Lemon ricotta pasta');
+  (72, 'pasta', 'Lemon ricotta pasta', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (73, 'burger', 'Double cheeseburger');
+  (73, 'burger', 'Double cheeseburger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (74, 'burger', 'Oklahoma onion burger');
+  (74, 'burger', 'Oklahoma onion burger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (75, 'burger', 'Bacon burger ');
+  (75, 'burger', 'Bacon burger ', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (76, 'burger', 'Gruyere stuffed burger');
+  (76, 'burger', 'Gruyere stuffed burger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (77, 'burger', 'Fresh salad burger');
+  (77, 'burger', 'Fresh salad burger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (78, 'burger', 'Crispy chicken burger');
+  (78, 'burger', 'Crispy chicken burger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (79, 'burger', 'Triple beef burger');
+  (79, 'burger', 'Triple beef burger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (80, 'burger', 'Cheesy beef stacker burger');
+  (80, 'burger', 'Cheesy beef stacker burger', NULL);
 INSERT INTO
-  `components_creative_component_creative_items` (`id`, `name`, `description`)
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (81, 'burger', 'Mushroom swiss burger');
+  (81, 'burger', 'Mushroom swiss burger', NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (
+    84,
+    'Single earrings',
+    'Single earrings description',
+    'Ocha'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -821,6 +837,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (10, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (11, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -1186,6 +1206,42 @@ VALUES
     10,
     10
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    21,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    21,
+    11
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    22,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    11,
+    11
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -1255,6 +1311,10 @@ INSERT INTO
   `components_page_localized_long_texts` (`id`, `language`, `text`)
 VALUES
   (10, 1, 'Slider with food images made in THREE.JS');
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (11, 1, 'Unique Collection page made with THREE.js');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -1345,6 +1405,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (20, 'Food Stack', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (21, 'Unique Collection', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (22, 'Unique Collection', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -1834,7 +1902,7 @@ VALUES
   (
     44,
     'model_def_creative-component.creative-item',
-    '{\"uid\":\"creative-component.creative-item\",\"collectionName\":\"components_creative_component_creative_items\",\"info\":{\"name\":\"creativeItem\",\"icon\":\"address-book\"},\"options\":{\"timestamps\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"image\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false},\"description\":{\"type\":\"richtext\"}}}',
+    '{\"uid\":\"creative-component.creative-item\",\"collectionName\":\"components_creative_component_creative_items\",\"info\":{\"name\":\"creativeItem\",\"icon\":\"address-book\",\"description\":\"\"},\"options\":{\"timestamps\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"image\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false},\"description\":{\"type\":\"richtext\"},\"filter\":{\"type\":\"string\"},\"secondaryImage\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false}}}',
     'object',
     NULL,
     NULL
@@ -1845,7 +1913,7 @@ VALUES
   (
     45,
     'plugin_content_manager_configuration_components::creative-component.creative-item',
-    '{\"uid\":\"creative-component.creative-item\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"name\",\"defaultSortBy\":\"name\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":false,\"sortable\":false}},\"name\":{\"edit\":{\"label\":\"Name\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Name\",\"searchable\":true,\"sortable\":true}},\"image\":{\"edit\":{\"label\":\"Image\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Image\",\"searchable\":false,\"sortable\":false}},\"description\":{\"edit\":{\"label\":\"Description\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Description\",\"searchable\":false,\"sortable\":false}}},\"layouts\":{\"list\":[\"id\",\"name\",\"image\"],\"edit\":[[{\"name\":\"name\",\"size\":6},{\"name\":\"image\",\"size\":6}],[{\"name\":\"description\",\"size\":12}]],\"editRelations\":[]},\"isComponent\":true}',
+    '{\"uid\":\"creative-component.creative-item\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"name\",\"defaultSortBy\":\"name\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":false,\"sortable\":false}},\"name\":{\"edit\":{\"label\":\"Name\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Name\",\"searchable\":true,\"sortable\":true}},\"image\":{\"edit\":{\"label\":\"Image\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Image\",\"searchable\":false,\"sortable\":false}},\"description\":{\"edit\":{\"label\":\"Description\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Description\",\"searchable\":false,\"sortable\":false}},\"filter\":{\"edit\":{\"label\":\"Filter\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"Filter\",\"searchable\":true,\"sortable\":true}},\"secondaryImage\":{\"edit\":{\"label\":\"SecondaryImage\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"SecondaryImage\",\"searchable\":false,\"sortable\":false}}},\"layouts\":{\"list\":[\"id\",\"name\",\"image\",\"filter\"],\"edit\":[[{\"name\":\"name\",\"size\":6},{\"name\":\"image\",\"size\":6}],[{\"name\":\"description\",\"size\":12}],[{\"name\":\"filter\",\"size\":6},{\"name\":\"secondaryImage\",\"size\":6}]],\"editRelations\":[]},\"isComponent\":true}',
     'object',
     '',
     ''
@@ -2240,6 +2308,24 @@ VALUES
     1,
     '2021-09-08 14:00:59',
     '2021-09-14 11:06:56'
+  );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    11,
+    'unique-collection',
+    1,
+    1,
+    '2021-09-14 15:05:14',
+    '2021-09-14 15:05:14'
   );
 
 # ------------------------------------------------------------
@@ -3920,6 +4006,60 @@ VALUES
     81,
     10
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    98,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    11,
+    11
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    99,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    22,
+    11
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    100,
+    'creativeItems',
+    1,
+    'components_creative_component_creative_items',
+    84,
+    11
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -3945,7 +4085,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$sBaw/0YxaN0LAH0H/kflx.jf3xE7ROmS2FPumu6HWKCY.fIGhFomi',
+    '$2b$10$ijMyuvOhmfb/9P46hpCY8.cUQSPh9A8Qj4H4XRjAr.l9yaiXHAKBu',
     NULL,
     NULL,
     1,
@@ -5443,14 +5583,14 @@ INSERT INTO
   )
 VALUES
   (
-    80,
+    86,
     'plugins::content-manager.explorer.create',
     'application::flow-page.flow-page',
-    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\",\"slideImages\"]',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"flowItems.filter\",\"flowItems.secondaryImage\",\"asideDescription\",\"slideImages\"]',
     '[]',
     1,
-    '2021-05-15 10:38:55',
-    '2021-05-15 10:38:55'
+    '2021-09-14 15:03:53',
+    '2021-09-14 15:03:53'
   );
 INSERT INTO
   `strapi_permission` (
@@ -5465,58 +5605,14 @@ INSERT INTO
   )
 VALUES
   (
-    81,
-    'plugins::content-manager.explorer.read',
-    'application::flow-page.flow-page',
-    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\",\"slideImages\"]',
-    '[]',
-    1,
-    '2021-05-15 10:38:55',
-    '2021-05-15 10:38:55'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
-    82,
-    'plugins::content-manager.explorer.update',
-    'application::flow-page.flow-page',
-    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"asideDescription\",\"slideImages\"]',
-    '[]',
-    1,
-    '2021-05-15 10:38:55',
-    '2021-05-15 10:38:55'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
-    83,
+    87,
     'plugins::content-manager.explorer.create',
     'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\"]',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\"]',
     '[]',
     1,
-    '2021-06-06 21:15:46',
-    '2021-06-06 21:15:47'
+    '2021-09-14 15:03:53',
+    '2021-09-14 15:03:53'
   );
 INSERT INTO
   `strapi_permission` (
@@ -5531,14 +5627,36 @@ INSERT INTO
   )
 VALUES
   (
-    84,
+    88,
+    'plugins::content-manager.explorer.read',
+    'application::flow-page.flow-page',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"flowItems.filter\",\"flowItems.secondaryImage\",\"asideDescription\",\"slideImages\"]',
+    '[]',
+    1,
+    '2021-09-14 15:03:53',
+    '2021-09-14 15:03:53'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    89,
     'plugins::content-manager.explorer.read',
     'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\"]',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\"]',
     '[]',
     1,
-    '2021-06-06 21:15:46',
-    '2021-06-06 21:15:47'
+    '2021-09-14 15:03:53',
+    '2021-09-14 15:03:53'
   );
 INSERT INTO
   `strapi_permission` (
@@ -5553,14 +5671,36 @@ INSERT INTO
   )
 VALUES
   (
-    85,
+    90,
     'plugins::content-manager.explorer.update',
-    'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\"]',
+    'application::flow-page.flow-page',
+    '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"flowItems.filter\",\"flowItems.secondaryImage\",\"asideDescription\",\"slideImages\"]',
     '[]',
     1,
-    '2021-06-06 21:15:46',
-    '2021-06-06 21:15:47'
+    '2021-09-14 15:03:53',
+    '2021-09-14 15:03:53'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    91,
+    'plugins::content-manager.explorer.update',
+    'application::project.project',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\"]',
+    '[]',
+    1,
+    '2021-09-14 15:03:53',
+    '2021-09-14 15:03:53'
   );
 
 # ------------------------------------------------------------
@@ -11337,6 +11477,60 @@ VALUES
     56,
     'components_creative_component_creative_items',
     'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    839,
+    57,
+    11,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    840,
+    86,
+    84,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    841,
+    88,
+    84,
+    'components_creative_component_creative_items',
+    'secondaryImage',
     1
   );
 
