@@ -17,12 +17,12 @@ export const LinkItem = styled(motion.a)<Props>`
 
   ${media.tablet} {
     font-size: ${computeValue({
-      pixelValue: 30,
+      pixelValue: 23,
       referenceWidth: sharedValues.containers.normal.referenceWidth,
     })};
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    font-size: 30px;
+    font-size: 23px;
   }
 `;
