@@ -26,6 +26,7 @@ export class SlideScene extends ItemScene {
     target: 0,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  _currentIndex = 0;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -96,6 +97,15 @@ export class SlideScene extends ItemScene {
     });
   }
 
+  _onIndexChange(index: number) {
+    this._currentIndex = index;
+    const item = this._items3D[this._currentIndex];
+
+    if (!item) {
+      return;
+    }
+  }
+
   _updateIndex(updateInfo: UpdateInfo) {
     this._offsetX.last = this._offsetX.current;
 
@@ -108,12 +118,13 @@ export class SlideScene extends ItemScene {
     const unit = this._imageWrapperClientWidth + this._imageWrapperMarginRight;
     const triggerLine = unit / 2; //We move the trigger line to be at the center of the screen
 
-    const prev = Math.floor((this._offsetX.last + triggerLine) / unit);
-    const curr = Math.floor((this._offsetX.current + triggerLine) / unit);
+    const prevIndex = Math.floor((this._offsetX.last + triggerLine) / unit);
+    const currentIndex = Math.floor(
+      (this._offsetX.current + triggerLine) / unit,
+    );
 
-    if (prev !== curr) {
-      console.log(curr);
-      // console.log(currentProgress);
+    if (prevIndex !== currentIndex) {
+      this._onIndexChange(currentIndex);
     }
   }
 
