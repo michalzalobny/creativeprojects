@@ -70,6 +70,19 @@ export class CardItem3D extends MediaObject3D {
     }
   }
 
+  _handlePositioning() {
+    if (this._mesh) {
+      const amplitude = this._mesh.scale.x * 0.2;
+      const frequency = 1;
+
+      this._mesh.rotation.z =
+        -0.1 * Math.PI * Math.sin((this._mesh.position.x * 0.001) / frequency);
+
+      this._mesh.position.y =
+        amplitude * Math.sin(this.cardItem.itemKey / frequency);
+    }
+  }
+
   _resetPosition() {
     this._extraTranslate.x = 0;
     this._extraTranslate.y = 0;
@@ -85,6 +98,7 @@ export class CardItem3D extends MediaObject3D {
     super.update(updateInfo);
     this._updateX(this._currentOffsetX);
     this._updateY(0);
+    this._handlePositioning();
   }
 
   set currentOffsetX(value: number) {
