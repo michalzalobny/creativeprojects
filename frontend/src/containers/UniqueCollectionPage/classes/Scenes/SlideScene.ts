@@ -5,7 +5,6 @@ import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { lerp } from '../utils/lerp';
-import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -14,14 +13,14 @@ interface Constructor {
 }
 
 export class SlideScene extends ItemScene {
-  static lerpEase = 0.045;
-  static wheelMultiplier = 0.425;
-  static indexIncreaseMultiplier = 0.025;
+  static lerpEase = 0.06;
+  static wheelMultiplier = 1;
+  static mouseMultiplier = 2;
+  static touchMultiplier = 2;
   static timeToSnap = 500;
 
-  _items3DVisible: CardItem3DAnimated[] = [];
   _scroll: Scroll;
-  _indexFloat = {
+  _offsetX = {
     last: 0,
     current: 0,
     target: 0, //setting to 0.0001 fixes index lerp bug
@@ -37,20 +36,11 @@ export class SlideScene extends ItemScene {
   }
 
   _performSnap = () => {
-    this.goToIndex(Math.round(this._indexFloat.target));
+    this.goToIndex(Math.round(this._offsetX.target));
   };
 
-  _applyScroll = (x: number, y: number) => {
-    const minIndex = 0;
-    const maxIndex = this._items3DVisible.length - 1;
-
-    this._indexFloat.target = Math.min(
-      Math.max(
-        this._indexFloat.target - y * SlideScene.indexIncreaseMultiplier,
-        minIndex,
-      ),
-      maxIndex,
-    );
+  _applyScrollX = (x: number) => {
+    this._offsetX.target = this._offsetX.target - x;
 
     //Hanlde auto snap
     if (this._snapTimeoutId) {
@@ -60,16 +50,13 @@ export class SlideScene extends ItemScene {
   };
 
   _onScrollMouse = (e: THREE.Event) => {
-    this._applyScroll(e.x, e.y);
+    this._applyScrollX(e.x * SlideScene.mouseMultiplier);
   };
   _onScrollTouch = (e: THREE.Event) => {
-    this._applyScroll(e.x, e.y);
+    this._applyScrollX(e.x * SlideScene.touchMultiplier);
   };
   _onScrollWheel = (e: THREE.Event) => {
-    this._applyScroll(
-      e.x * SlideScene.wheelMultiplier,
-      e.y * SlideScene.wheelMultiplier,
-    );
+    this._applyScrollX(e.y * SlideScene.wheelMultiplier);
   };
 
   _addListeners() {
@@ -92,14 +79,18 @@ export class SlideScene extends ItemScene {
     });
   }
 
-  _positionItems(updateInfo: UpdateInfo) {}
+  _positionItems(updateInfo: UpdateInfo) {
+    this._items3D.forEach((item, index) => {
+      item.currentOffsetX = this._offsetX.current;
+    });
+  }
 
   _updateIndex(updateInfo: UpdateInfo) {
-    this._indexFloat.last = this._indexFloat.current;
+    this._offsetX.last = this._offsetX.current;
 
-    this._indexFloat.current = lerp(
-      this._indexFloat.current,
-      this._indexFloat.target,
+    this._offsetX.current = lerp(
+      this._offsetX.current,
+      this._offsetX.target,
       SlideScene.lerpEase * updateInfo.slowDownFactor,
     );
   }
@@ -116,7 +107,7 @@ export class SlideScene extends ItemScene {
   }
 
   goToIndex(index: number) {
-    this._indexFloat.target = index;
+    this._offsetX.target = index;
   }
 
   animateIn() {

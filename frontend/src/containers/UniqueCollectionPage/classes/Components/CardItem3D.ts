@@ -15,7 +15,7 @@ export class CardItem3D extends MediaObject3D {
   _domElBounds: DOMRect | null = null;
   _extraTranslate = { x: 0, y: 0 };
   _scaleTranslate = { x: 0, y: 0 };
-  _stackTranslateY = 0;
+  _currentOffsetX = 0;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -65,8 +65,7 @@ export class CardItem3D extends MediaObject3D {
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
         this._extraTranslate.y -
-        this._scaleTranslate.y -
-        this._stackTranslateY;
+        this._scaleTranslate.y;
     }
   }
 
@@ -83,25 +82,11 @@ export class CardItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this._updateX(0);
+    this._updateX(this._currentOffsetX);
     this._updateY(0);
   }
 
-  set cardScale(value: number) {
-    if (this._domElBounds && this._mesh) {
-      this._mesh.scale.x = this._domElBounds.width * value;
-      this._mesh.scale.y = this._domElBounds.height * value;
-
-      this._scaleTranslate.x =
-        -(this._domElBounds.width - this._mesh.scale.x) / 2;
-      this._scaleTranslate.y =
-        (this._domElBounds.height - this._mesh.scale.y) / 2;
-    }
-  }
-
-  set stackTranslateY(value: number) {
-    if (this._domElBounds) {
-      this._stackTranslateY = value * this._domElBounds.height * 0.1;
-    }
+  set currentOffsetX(value: number) {
+    this._currentOffsetX = value;
   }
 }
