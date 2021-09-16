@@ -7,6 +7,8 @@ interface Props {}
 
 export const ImageWrapper = styled(motion.figure)<Props>`
   position: relative;
+  opacity: 0;
+  visibility: hidden;
 
   height: 38rem;
   width: 26rem;

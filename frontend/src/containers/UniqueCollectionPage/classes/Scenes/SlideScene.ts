@@ -119,6 +119,12 @@ export class SlideScene extends ItemScene {
     this._indexFloat.target = index;
   }
 
+  animateIn() {
+    this._items3D.forEach(item => {
+      item.animateIn();
+    });
+  }
+
   set rendererBounds(bounds: Bounds) {
     super.rendererBounds = bounds;
   }

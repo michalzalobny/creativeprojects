@@ -99,6 +99,7 @@ export class App extends THREE.EventDispatcher {
   _onAssetsLoaded = (e: THREE.Event) => {
     this._slideScene.textureItems = (e.target as Preloader).textureItems;
     this._setIsLoaded(true);
+    this._slideScene.animateIn();
   };
 
   _addListeners() {
