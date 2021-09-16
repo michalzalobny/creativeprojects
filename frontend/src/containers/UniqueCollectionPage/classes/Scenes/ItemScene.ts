@@ -66,7 +66,7 @@ export class ItemScene extends InteractiveScene {
     if (this._imageWrapper) {
       this._imageWrapperClientWidth = this._imageWrapper.clientWidth;
       const elStyle = getComputedStyle(this._imageWrapper);
-      this._imageWrapperMarginRight = parseInt(elStyle.marginRight);
+      this._imageWrapperMarginRight = parseFloat(elStyle.marginRight);
     }
   }
 
