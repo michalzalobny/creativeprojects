@@ -56,7 +56,7 @@ export default function UniqueCollectionPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
         <ContentWrapper>
-          <CollectionWrapper>
+          <CollectionWrapper data-collection-wrapper="wrapper">
             {props.projectData.creativeItems.map(item => {
               return (
                 <ImageWrapper data-src={item.image.url} key={item.image.url}>

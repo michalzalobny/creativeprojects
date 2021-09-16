@@ -23,9 +23,8 @@ export class SlideScene extends ItemScene {
   _offsetX = {
     last: 0,
     current: 0,
-    target: 0, //setting to 0.0001 fixes index lerp bug
+    target: 0,
   };
-
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -40,7 +39,17 @@ export class SlideScene extends ItemScene {
   };
 
   _applyScrollX = (x: number) => {
-    this._offsetX.target = this._offsetX.target - x;
+    let newOffset = this._offsetX.target - x;
+    const rightBoundary =
+      this._collectionWrapperRect.width - this._items3D[0].domElBounds.width;
+
+    if (newOffset < 0) {
+      newOffset = 0;
+    } else if (newOffset >= rightBoundary) {
+      newOffset = rightBoundary;
+    }
+
+    this._offsetX.target = newOffset;
 
     //Hanlde auto snap
     if (this._snapTimeoutId) {

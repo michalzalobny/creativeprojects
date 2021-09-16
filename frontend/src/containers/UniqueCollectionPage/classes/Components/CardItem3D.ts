@@ -11,8 +11,8 @@ interface Constructor {
 
 export class CardItem3D extends MediaObject3D {
   cardItem: CardItemProps;
+  domElBounds: DOMRect;
   _domEl: HTMLElement;
-  _domElBounds: DOMRect | null = null;
   _extraTranslate = { x: 0, y: 0 };
   _scaleTranslate = { x: 0, y: 0 };
   _currentOffsetX = 0;
@@ -22,12 +22,13 @@ export class CardItem3D extends MediaObject3D {
 
     this.cardItem = cardItem;
     this._domEl = domEl;
+    this.domElBounds = this._domEl.getBoundingClientRect();
 
     this.setColliderName('cardItem');
   }
 
   _updateBounds() {
-    this._domElBounds = this._domEl.getBoundingClientRect();
+    this.domElBounds = this._domEl.getBoundingClientRect();
     this._updateScale();
 
     if (this._mesh) {
@@ -39,17 +40,17 @@ export class CardItem3D extends MediaObject3D {
   }
 
   _updateScale() {
-    if (this._mesh && this._domElBounds) {
-      this._mesh.scale.x = this._domElBounds.width;
-      this._mesh.scale.y = this._domElBounds.height;
+    if (this._mesh) {
+      this._mesh.scale.x = this.domElBounds.width;
+      this._mesh.scale.y = this.domElBounds.height;
     }
   }
 
   _updateX(x: number) {
-    if (this._mesh && this._domElBounds) {
+    if (this._mesh) {
       this._mesh.position.x =
         -x +
-        this._domElBounds.left -
+        this.domElBounds.left -
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
         this._extraTranslate.x -
@@ -58,10 +59,10 @@ export class CardItem3D extends MediaObject3D {
   }
 
   _updateY(y: number) {
-    if (this._mesh && this._domElBounds) {
+    if (this._mesh) {
       this._mesh.position.y =
         -y -
-        this._domElBounds.top +
+        this.domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
         this._extraTranslate.y -

@@ -15,9 +15,17 @@ export class ItemScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _items3D: CardItem3DAnimated[] = [];
   _textureItems: TextureItems = {};
+  _collectionWrapper: HTMLDivElement;
+  _collectionWrapperRect: DOMRect;
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
+
+    this._collectionWrapper = Array.from(
+      document.querySelectorAll('[data-collection-wrapper="wrapper"]'),
+    )[0] as HTMLDivElement;
+
+    this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
   }
 
   _onItemClick = (e: THREE.Event) => {};
@@ -32,6 +40,8 @@ export class ItemScene extends InteractiveScene {
   }
 
   _onResize = () => {
+    this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
+
     if (this._items3D) {
       this._items3D.forEach(item => {
         item.onResize();
