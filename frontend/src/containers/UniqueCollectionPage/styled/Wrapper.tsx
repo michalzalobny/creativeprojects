@@ -30,20 +30,15 @@ export const Wrapper = styled(motion.div)<Props>`
   }
 
   &:after {
-    opacity: 0;
     content: '';
-    display: block;
+    height: 100%;
     position: absolute;
-    z-index: 5;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3vh;
-    background: linear-gradient(
-      180deg,
-      rgba(242, 232, 221, 0) 0%,
-      rgba(242, 232, 221, 1) 80%
-    );
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    z-index: 10;
+    background: green;
   }
 `;
 

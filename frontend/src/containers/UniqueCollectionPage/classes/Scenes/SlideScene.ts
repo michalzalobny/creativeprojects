@@ -41,7 +41,9 @@ export class SlideScene extends ItemScene {
   _applyScrollX = (x: number) => {
     let newOffset = this._offsetX.target - x;
     const rightBoundary =
-      this._collectionWrapperRect.width - this._items3D[0].domElBounds.width;
+      this._collectionWrapperRect.width -
+      this._imageWrapperClientWidth -
+      this._imageWrapperMarginRight / 2;
 
     if (newOffset < 0) {
       newOffset = 0;
@@ -52,10 +54,10 @@ export class SlideScene extends ItemScene {
     this._offsetX.target = newOffset;
 
     //Hanlde auto snap
-    if (this._snapTimeoutId) {
-      clearTimeout(this._snapTimeoutId);
-    }
-    this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
+    // if (this._snapTimeoutId) {
+    //   clearTimeout(this._snapTimeoutId);
+    // }
+    // this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
   };
 
   _onScrollMouse = (e: THREE.Event) => {
@@ -102,6 +104,17 @@ export class SlideScene extends ItemScene {
       this._offsetX.target,
       SlideScene.lerpEase * updateInfo.slowDownFactor,
     );
+
+    const unit = this._imageWrapperClientWidth + this._imageWrapperMarginRight;
+    const triggerLine = unit / 2; //We move the trigger line to be at the center of the screen
+
+    const prev = Math.floor((this._offsetX.last + triggerLine) / unit);
+    const curr = Math.floor((this._offsetX.current + triggerLine) / unit);
+
+    if (prev !== curr) {
+      console.log(curr);
+      // console.log(currentProgress);
+    }
   }
 
   update(updateInfo: UpdateInfo) {

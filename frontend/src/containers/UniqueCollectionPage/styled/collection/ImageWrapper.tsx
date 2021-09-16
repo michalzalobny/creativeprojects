@@ -10,12 +10,12 @@ export const ImageWrapper = styled(motion.figure)<Props>`
   opacity: 0;
   visibility: hidden;
 
-  height: 38rem;
-  width: 26rem;
-  margin: 0 2rem;
+  height: 36rem;
+  width: 25rem;
+  margin-right: 7rem;
 
   &:first-child {
-    margin-left: 0;
+    margin-left: 3.5rem;
   }
 
   &:last-child {
@@ -23,8 +23,12 @@ export const ImageWrapper = styled(motion.figure)<Props>`
   }
 
   ${media.tablet} {
-    height: 63.1rem;
-    width: 44rem;
-    margin: 0 5.5rem;
+    height: 52rem;
+    width: 36rem;
+    margin-right: 11rem;
+
+    &:first-child {
+      margin-left: 5.5rem;
+    }
   }
 `;

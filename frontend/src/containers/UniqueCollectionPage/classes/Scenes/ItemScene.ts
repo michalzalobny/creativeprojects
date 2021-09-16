@@ -17,6 +17,9 @@ export class ItemScene extends InteractiveScene {
   _textureItems: TextureItems = {};
   _collectionWrapper: HTMLDivElement;
   _collectionWrapperRect: DOMRect;
+  _imageWrapper: HTMLDivElement | null = null;
+  _imageWrapperClientWidth = 1;
+  _imageWrapperMarginRight = 1;
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -41,7 +44,7 @@ export class ItemScene extends InteractiveScene {
 
   _onResize = () => {
     this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
-
+    this._measureImageWrapper();
     if (this._items3D) {
       this._items3D.forEach(item => {
         item.onResize();
@@ -59,6 +62,14 @@ export class ItemScene extends InteractiveScene {
     window.removeEventListener('resize', this._onResize);
   }
 
+  _measureImageWrapper() {
+    if (this._imageWrapper) {
+      this._imageWrapperClientWidth = this._imageWrapper.clientWidth;
+      const elStyle = getComputedStyle(this._imageWrapper);
+      this._imageWrapperMarginRight = parseInt(elStyle.marginRight);
+    }
+  }
+
   set items(items: CardItemProps[]) {
     this._destroyItems();
 
@@ -68,6 +79,11 @@ export class ItemScene extends InteractiveScene {
         const domEl = Array.from(
           document.querySelectorAll(`[data-src="${item.item.image.url}"]`),
         )[0] as HTMLElement;
+
+        if (!this._imageWrapper) {
+          this._imageWrapper = domEl as HTMLDivElement;
+          this._measureImageWrapper();
+        }
 
         const item3D = new CardItem3DAnimated({
           geometry: this._planeGeometry,
