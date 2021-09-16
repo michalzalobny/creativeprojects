@@ -15,6 +15,4 @@ export const ContentWrapper = styled(motion.div)<Props>`
   ${media.tablet} {
     transform: translateX(-23.5rem);
   }
-
-  border-left: 1px solid red;
 `;

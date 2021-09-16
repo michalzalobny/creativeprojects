@@ -30,6 +30,7 @@ export const Wrapper = styled(motion.div)<Props>`
   }
 
   &:after {
+    opacity: 0.4;
     content: '';
     height: 100%;
     position: absolute;
@@ -38,7 +39,7 @@ export const Wrapper = styled(motion.div)<Props>`
     transform: translateX(-50%);
     width: 1px;
     z-index: 10;
-    background: green;
+    background: #003cff;
   }
 `;
 
