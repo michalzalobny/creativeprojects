@@ -52,13 +52,13 @@ export class ItemScene extends InteractiveScene {
   set items(items: CardItemProps[]) {
     this._destroyItems();
 
-    //Fetch elements DOM representations
-    const domEl = Array.from(
-      document.querySelectorAll("[data-stack='entry']"),
-    )[0] as HTMLElement;
-
     items &&
       items.forEach((item, key) => {
+        //Fetch elements DOM representations
+        const domEl = Array.from(
+          document.querySelectorAll(`[data-src="${item.item.image.url}"]`),
+        )[0] as HTMLElement;
+
         const item3D = new CardItem3DAnimated({
           geometry: this._planeGeometry,
           cardItem: item,

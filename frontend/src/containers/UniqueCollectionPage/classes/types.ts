@@ -20,7 +20,7 @@ export interface Bounds {
   height: number;
 }
 
-export interface Coords {
+interface Coords {
   x: number;
   y: number;
 }
@@ -30,31 +30,8 @@ export interface Mouse {
   target: Coords;
 }
 
-export type DirectionX = 'left' | 'right';
-export type DirectionY = 'up' | 'down';
-
-export interface ScrollValues {
-  current: Coords;
-  target: Coords;
-  last: Coords;
-  autoScrollSpeed: Coords;
-  direction: {
-    x: DirectionX;
-    y: DirectionY;
-  };
-  strength: {
-    current: number;
-    target: number;
-  };
-}
-
 export interface CardItemProps {
   itemKey: number;
   itemKeyReverse: number;
   item: CreativeItem;
-}
-
-export interface IndexDiffs {
-  current: number[];
-  target: number[];
 }

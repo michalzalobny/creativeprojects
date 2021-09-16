@@ -1,13 +1,11 @@
 import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
-import debounce from 'lodash/debounce';
 
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
-import { CardItemProps } from './types';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
-import { StackScene } from './Scenes/StackScene';
+import { SlideScene } from './Scenes/SlideScene';
 import { Preloader } from './Utility/Preloader';
 
 interface Constructor {
@@ -31,7 +29,7 @@ export class App extends THREE.EventDispatcher {
   _mouseMove = MouseMove.getInstance();
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
-  _stackScene: StackScene;
+  _slideScene: SlideScene;
   _setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor({
@@ -54,13 +52,13 @@ export class App extends THREE.EventDispatcher {
       alpha: true,
     });
 
-    this._stackScene = new StackScene({
+    this._slideScene = new SlideScene({
       camera: this._camera,
       scroll: this._scroll,
       mouseMove: this._mouseMove,
     });
 
-    this._stackScene.items = Array.from(items).map((item, key) => {
+    this._slideScene.items = Array.from(items).map((item, key) => {
       return { itemKey: key + 1, itemKeyReverse: items.length - key, item };
     });
 
@@ -87,7 +85,7 @@ export class App extends THREE.EventDispatcher {
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this._camera.updateProjectionMatrix();
 
-    this._stackScene.rendererBounds = rendererBounds;
+    this._slideScene.rendererBounds = rendererBounds;
   };
 
   _onVisibilityChange = () => {
@@ -99,39 +97,20 @@ export class App extends THREE.EventDispatcher {
   };
 
   _onAssetsLoaded = (e: THREE.Event) => {
-    this._stackScene.textureItems = (e.target as Preloader).textureItems;
+    this._slideScene.textureItems = (e.target as Preloader).textureItems;
     this._setIsLoaded(true);
-    this.setStackFilter('');
-    this._stackScene.animateIn();
   };
-
-  _onItemChangeDebounced = debounce((e: THREE.Event) => {
-    this._onItemChange(e);
-  }, 300);
-
-  _onItemChange(e: THREE.Event) {
-    const el = e.el as CardItemProps;
-    this.dispatchEvent({ type: 'itemchange', el });
-  }
 
   _addListeners() {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.addEventListener('loaded', this._onAssetsLoaded);
-    this._stackScene.addEventListener(
-      'itemchange',
-      this._onItemChangeDebounced,
-    );
   }
 
   _removeListeners() {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.removeEventListener('loaded', this._onAssetsLoaded);
-    this._stackScene.removeEventListener(
-      'itemchange',
-      this._onItemChangeDebounced,
-    );
   }
 
   _resumeAppFrame() {
@@ -163,19 +142,15 @@ export class App extends THREE.EventDispatcher {
 
     this._mouseMove.update({ delta, slowDownFactor, time });
     this._scroll.update({ delta, slowDownFactor, time });
-    this._stackScene.update({ delta, slowDownFactor, time });
+    this._slideScene.update({ delta, slowDownFactor, time });
 
-    this._renderer.render(this._stackScene, this._camera);
+    this._renderer.render(this._slideScene, this._camera);
   };
 
   _stopAppFrame() {
     if (this._rafId) {
       window.cancelAnimationFrame(this._rafId);
     }
-  }
-
-  setStackFilter(filter: string) {
-    this._stackScene.filter = filter;
   }
 
   destroy() {
@@ -185,7 +160,7 @@ export class App extends THREE.EventDispatcher {
     this._stopAppFrame();
     this._removeListeners();
 
-    this._stackScene.destroy();
+    this._slideScene.destroy();
     this._preloader.destroy();
   }
 }

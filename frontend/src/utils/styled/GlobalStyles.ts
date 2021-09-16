@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import { media } from 'utils/responsive';
+
 export const GlobalStyles = createGlobalStyle`
   *,
   *::after,
@@ -30,9 +32,19 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    box-sizing: border-box;
-    font-size:62.5%; // 1rem = 10px;
+    box-sizing: border-box; 
+  }
+
+  html{
+    font-size: calc(100vw / 375 * 10);
     
+    ${media.tablet}{
+      font-size: calc(100vw / 1920 * 10);
+    }
+
+    ${media.custom(1920)}{
+      font-size: 62.5%;
+    }
   }
 
   html,
