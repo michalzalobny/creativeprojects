@@ -40,7 +40,12 @@ export async function getProjectData(urlSlug: string) {
               formats,
               url
             },
-            description
+            description,
+            filter,
+            secondaryImage{
+              formats,
+              url
+            },
           },
         }
       }

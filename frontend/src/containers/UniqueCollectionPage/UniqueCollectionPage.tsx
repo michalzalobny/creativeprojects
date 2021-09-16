@@ -33,10 +33,15 @@ export default function UniqueCollectionPage(props: PageProps) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const imagesToPreload = useMemo(
-    () => props.projectData.creativeItems.map(item => item.image.url),
-    [props.projectData.creativeItems],
-  );
+  const imagesToPreload = useMemo(() => {
+    const coverImages = props.projectData.creativeItems.map(
+      item => item.image.url,
+    );
+    const backImages = props.projectData.creativeItems.map(
+      item => item.secondaryImage.url,
+    );
+    return [...coverImages, ...backImages];
+  }, [props.projectData.creativeItems]);
 
   const onItemChange = (e: THREE.Event) => {
     const el = e.el as CardItemProps;

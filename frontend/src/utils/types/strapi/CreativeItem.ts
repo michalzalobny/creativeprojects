@@ -4,4 +4,6 @@ export interface CreativeItem {
   name: string;
   image: ImageMediaProps;
   description: string;
+  filter: string;
+  secondaryImage: ImageMediaProps;
 }
