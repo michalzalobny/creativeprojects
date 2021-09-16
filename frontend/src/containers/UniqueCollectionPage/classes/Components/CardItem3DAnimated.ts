@@ -17,6 +17,8 @@ interface AnimateProps {
 }
 
 export class CardItem3DAnimated extends CardItem3D {
+  static defaultOpacity = 0.4;
+
   _opacityTween: Tween<{ progress: number }> | null = null;
   _translateXTween: Tween<{ translationX: number }> | null = null;
   _translateYTween: Tween<{ translationY: number }> | null = null;
@@ -102,8 +104,22 @@ export class CardItem3DAnimated extends CardItem3D {
     this._tweenOpacity = 0;
 
     this.animateOpacity({
+      destination: CardItem3DAnimated.defaultOpacity,
+      duration: 500,
+    });
+  }
+
+  animateFocusIn() {
+    this.animateOpacity({
       destination: 1,
-      duration: 1000,
+      duration: 500,
+    });
+  }
+
+  animateFocusOut() {
+    this.animateOpacity({
+      destination: CardItem3DAnimated.defaultOpacity,
+      duration: 500,
     });
   }
 }

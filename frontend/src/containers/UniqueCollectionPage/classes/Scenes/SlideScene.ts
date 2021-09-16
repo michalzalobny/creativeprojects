@@ -97,13 +97,20 @@ export class SlideScene extends ItemScene {
     });
   }
 
-  _onIndexChange(index: number) {
-    this._currentIndex = index;
-    const item = this._items3D[this._currentIndex];
+  _onIndexChange() {
+    const el = this._items3D[this._currentIndex];
 
-    if (!item) {
+    if (!el) {
       return;
     }
+
+    this._items3D.forEach(item => {
+      if (item === el) {
+        item.animateFocusIn();
+      } else {
+        item.animateFocusOut();
+      }
+    });
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
@@ -124,7 +131,8 @@ export class SlideScene extends ItemScene {
     );
 
     if (prevIndex !== currentIndex) {
-      this._onIndexChange(currentIndex);
+      this._currentIndex = currentIndex;
+      this._onIndexChange();
     }
   }
 
@@ -147,6 +155,8 @@ export class SlideScene extends ItemScene {
     this._items3D.forEach(item => {
       item.animateIn();
     });
+
+    this._onIndexChange();
   }
 
   set rendererBounds(bounds: Bounds) {
