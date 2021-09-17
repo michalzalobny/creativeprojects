@@ -26,7 +26,7 @@ export class SlideScene extends ItemScene {
     target: 0,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  _currentIndex = 0;
+  _activeIndex = 0;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -98,7 +98,7 @@ export class SlideScene extends ItemScene {
   }
 
   _onIndexChange() {
-    const el = this._items3D[this._currentIndex];
+    const el = this._items3D[this._activeIndex];
 
     if (!el) {
       return;
@@ -131,7 +131,7 @@ export class SlideScene extends ItemScene {
     );
 
     if (prevIndex !== currentIndex) {
-      this._currentIndex = currentIndex;
+      this._activeIndex = currentIndex;
       this._onIndexChange();
     }
   }
