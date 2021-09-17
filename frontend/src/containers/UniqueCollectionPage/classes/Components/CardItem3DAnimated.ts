@@ -22,6 +22,7 @@ export class CardItem3DAnimated extends CardItem3D {
   _opacityTween: Tween<{ progress: number }> | null = null;
   _translateXTween: Tween<{ translationX: number }> | null = null;
   _translateYTween: Tween<{ translationY: number }> | null = null;
+  isFocused = false;
 
   constructor({ domEl, cardItem, geometry }: Constructor) {
     super({ domEl, geometry, cardItem });
@@ -110,6 +111,12 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   animateFocusIn() {
+    if (this.isFocused) {
+      return;
+    }
+
+    this.isFocused = true;
+
     this.animateOpacity({
       destination: 1,
       duration: 500,
@@ -117,6 +124,12 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   animateFocusOut() {
+    if (!this.isFocused) {
+      return;
+    }
+
+    this.isFocused = false;
+
     this.animateOpacity({
       destination: CardItem3DAnimated.defaultOpacity,
       duration: 500,

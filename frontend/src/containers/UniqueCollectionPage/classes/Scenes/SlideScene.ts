@@ -105,9 +105,9 @@ export class SlideScene extends ItemScene {
     }
 
     this._items3D.forEach(item => {
-      if (item === el) {
+      if (item === el && !item.isFocused) {
         item.animateFocusIn();
-      } else {
+      } else if (item.isFocused) {
         item.animateFocusOut();
       }
     });
