@@ -1,5 +1,6 @@
 import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
+import { debounce } from 'lodash';
 
 import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 
@@ -69,7 +70,9 @@ export class App extends THREE.EventDispatcher {
     this._preloader.images = imagesToPreload;
   }
 
-  _onResize = () => {
+  _onResizeDebounced = debounce(() => this._onResize(), 300);
+
+  _onResize() {
     const rendererBounds = this._rendererWrapperEl.getBoundingClientRect();
     const aspectRatio = rendererBounds.width / rendererBounds.height;
     this._camera.aspect = aspectRatio;
@@ -86,7 +89,7 @@ export class App extends THREE.EventDispatcher {
     this._camera.updateProjectionMatrix();
 
     this._slideScene.rendererBounds = rendererBounds;
-  };
+  }
 
   _onVisibilityChange = () => {
     if (document.hidden) {
@@ -103,13 +106,13 @@ export class App extends THREE.EventDispatcher {
   };
 
   _addListeners() {
-    window.addEventListener('resize', this._onResize);
+    window.addEventListener('resize', this._onResizeDebounced);
     window.addEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.addEventListener('loaded', this._onAssetsLoaded);
   }
 
   _removeListeners() {
-    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('resize', this._onResizeDebounced);
     window.removeEventListener('visibilitychange', this._onVisibilityChange);
     this._preloader.removeEventListener('loaded', this._onAssetsLoaded);
   }

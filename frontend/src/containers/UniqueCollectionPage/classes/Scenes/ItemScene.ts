@@ -42,7 +42,7 @@ export class ItemScene extends InteractiveScene {
     this._items3D = [];
   }
 
-  _onResize = () => {
+  _onResize() {
     this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
     this._measureImageWrapper();
     if (this._items3D) {
@@ -50,16 +50,14 @@ export class ItemScene extends InteractiveScene {
         item.onResize();
       });
     }
-  };
+  }
 
   _addListeners() {
     super._addListeners();
-    window.addEventListener('resize', this._onResize);
   }
 
   _removeListeners() {
     super._removeListeners();
-    window.removeEventListener('resize', this._onResize);
   }
 
   _measureImageWrapper() {
@@ -105,6 +103,8 @@ export class ItemScene extends InteractiveScene {
     this._items3D.forEach(item => {
       item.rendererBounds = this._rendererBounds;
     });
+
+    this._onResize();
   }
 
   set textureItems(textureItems: TextureItems) {

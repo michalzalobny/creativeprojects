@@ -27,6 +27,7 @@ export class SlideScene extends ItemScene {
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
+  _scrollBoundary = 1;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -41,15 +42,11 @@ export class SlideScene extends ItemScene {
 
   _applyScrollX = (x: number) => {
     let newOffset = this._offsetX.target - x;
-    const rightBoundary =
-      this._collectionWrapperRect.width -
-      this._imageWrapperClientWidth -
-      this._imageWrapperMarginRight / 2;
 
     if (newOffset < 0) {
       newOffset = 0;
-    } else if (newOffset >= rightBoundary) {
-      newOffset = rightBoundary;
+    } else if (newOffset >= this._scrollBoundary) {
+      newOffset = this._scrollBoundary;
     }
 
     this._offsetX.target = newOffset;
@@ -70,6 +67,15 @@ export class SlideScene extends ItemScene {
   _onScrollWheel = (e: THREE.Event) => {
     this._applyScrollX(e.y * SlideScene.wheelMultiplier);
   };
+
+  _onResize() {
+    super._onResize();
+
+    this._scrollBoundary =
+      this._collectionWrapperRect.width -
+      this._imageWrapperClientWidth -
+      this._imageWrapperMarginRight / 2;
+  }
 
   _addListeners() {
     super._addListeners();
@@ -122,12 +128,13 @@ export class SlideScene extends ItemScene {
       SlideScene.lerpEase * updateInfo.slowDownFactor,
     );
 
-    const unit = this._imageWrapperClientWidth + this._imageWrapperMarginRight;
-    const triggerLine = unit / 2; //We move the trigger line to be at the center of the screen
+    const prevIndex = Math.round(
+      (this._offsetX.last / this._scrollBoundary) * (this._items3D.length - 1),
+    );
 
-    const prevIndex = Math.floor((this._offsetX.last + triggerLine) / unit);
-    const currentIndex = Math.floor(
-      (this._offsetX.current + triggerLine) / unit,
+    const currentIndex = Math.round(
+      (this._offsetX.current / this._scrollBoundary) *
+        (this._items3D.length - 1),
     );
 
     if (prevIndex !== currentIndex) {

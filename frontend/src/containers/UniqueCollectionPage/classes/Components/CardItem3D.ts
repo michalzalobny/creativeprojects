@@ -103,7 +103,6 @@ export class CardItem3D extends MediaObject3D {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._updateX(this._currentOffsetX);
-    // this._updateY(0);
     this._handlePositioning();
   }
 
