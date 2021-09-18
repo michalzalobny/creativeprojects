@@ -138,6 +138,14 @@ export class CardItem3D extends MediaObject3D {
     }
   }
 
+  _resetPosition() {
+    this._scaleTranslate.x = 0;
+    this._scaleTranslate.y = 0;
+    this._extraTranslate.x = 0;
+    this._extraTranslate.y = 0;
+    this._positionRandomly();
+  }
+
   animateOpacity(props: AnimateProps) {}
 
   onMouseEnter() {
@@ -168,6 +176,7 @@ export class CardItem3D extends MediaObject3D {
 
   onResize() {
     super.onResize();
+    this._resetPosition();
     this._updateBounds();
   }
 
