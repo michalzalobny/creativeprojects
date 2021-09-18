@@ -17,6 +17,7 @@ export class CardItem3D extends MediaObject3D {
   _scaleTranslate = { x: 0, y: 0 };
   _currentOffsetX = 0;
   _randomValue = 1;
+  _readyProgress = 0;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -24,6 +25,10 @@ export class CardItem3D extends MediaObject3D {
     this.cardItem = cardItem;
     this._domEl = domEl;
     this._domElBounds = this._domEl.getBoundingClientRect();
+
+    if (this._mesh) {
+      this._mesh.position.z = this.cardItem.itemKeyReverse * 0.001;
+    }
 
     this._randomValue = Math.random() > 0.5 ? 1 : -1;
 
@@ -53,9 +58,9 @@ export class CardItem3D extends MediaObject3D {
     if (this._mesh) {
       this._mesh.position.x =
         -x +
-        this._domElBounds.left -
-        this._rendererBounds.width / 2 +
-        this._mesh.scale.x / 2 -
+        this._domElBounds.left * this._readyProgress -
+        (this._rendererBounds.width / 2) * this._readyProgress +
+        (this._mesh.scale.x / 2) * this._readyProgress -
         this._extraTranslate.x -
         this._scaleTranslate.x;
     }
@@ -85,7 +90,9 @@ export class CardItem3D extends MediaObject3D {
         Math.sin((this._mesh.position.x * 0.001) / frequency);
 
       this._mesh.position.y =
-        amplitude * Math.sin(this.cardItem.itemKey / frequency);
+        amplitude *
+        Math.sin(this.cardItem.itemKey / frequency) *
+        this._readyProgress;
     }
   }
 
