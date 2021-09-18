@@ -25,7 +25,8 @@ export class SlideScene extends ItemScene {
     last: 0,
     current: 0,
     target: 0,
-    strength: 0,
+    strengthTarget: 0,
+    strengthCurrent: 0,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
@@ -107,7 +108,7 @@ export class SlideScene extends ItemScene {
   _passValues() {
     this._items3D.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
-      item.strength = this._offsetX.strength;
+      item.strength = this._offsetX.strengthCurrent;
     });
   }
 
@@ -151,7 +152,13 @@ export class SlideScene extends ItemScene {
       SlideScene.lerpEase * updateInfo.slowDownFactor,
     );
 
-    this._offsetX.strength = this._offsetX.last - this._offsetX.current;
+    this._offsetX.strengthTarget = this._offsetX.last - this._offsetX.current;
+
+    this._offsetX.strengthCurrent = lerp(
+      this._offsetX.strengthCurrent,
+      this._offsetX.strengthTarget,
+      SlideScene.lerpEase * updateInfo.slowDownFactor,
+    );
 
     const prevIndex = Math.round(
       (this._offsetX.last / this._scrollBoundary) * (this._items3D.length - 1),
