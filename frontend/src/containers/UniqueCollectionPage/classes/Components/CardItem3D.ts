@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { CardItemProps, UpdateInfo, AnimateProps } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 import { CardItem3DAnimated } from './CardItem3DAnimated';
+import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -16,9 +17,12 @@ export class CardItem3D extends MediaObject3D {
   _domElBounds: DOMRect;
   _extraTranslate = { x: 0, y: 0 };
   _scaleTranslate = { x: 0, y: 0 };
+  _yAmplitude = 0;
   _currentOffsetX = 0;
   _randomValue = 1;
   _readyProgress = 0;
+  _gatherProgress = 0;
+  _isAnimatedIn = false;
   isFocused = false;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
@@ -35,6 +39,42 @@ export class CardItem3D extends MediaObject3D {
     this._randomValue = Math.random() > 0.5 ? 1 : -1;
 
     this.setColliderName('cardItem');
+  }
+
+  _positionRandomly() {
+    const position = this._getRandomPosition();
+
+    this._extraTranslate.x = position.x;
+    this._extraTranslate.y = position.y;
+  }
+
+  _getRandomPosition(): { x: number; y: number } {
+    if (!this._mesh) {
+      return { x: 0, y: 0 };
+    }
+
+    const randomX = Math.random() > 0.5 ? 1 : -1;
+    const randomY = Math.random() > 0.5 ? 1 : -1;
+
+    const x = ((Math.random() * this._rendererBounds.width) / 2) * randomX;
+    const y = ((Math.random() * this._rendererBounds.height) / 2) * randomY;
+
+    const minVertical = this._rendererBounds.height * 0.5 * 0.5;
+    const maxVertical = this._rendererBounds.height * 0.5;
+    const minHorizontal = this._rendererBounds.width * 0.5 * 0.5;
+    const maxHorizontal = this._rendererBounds.width * 0.5;
+
+    const absX = Math.abs(x);
+    const absY = Math.abs(y);
+
+    if (
+      (absX < minHorizontal || absX > maxHorizontal) &&
+      (absY < minVertical || absY > maxVertical)
+    ) {
+      return this._getRandomPosition();
+    }
+
+    return { x: x * 1.1, y: y * 1.1 };
   }
 
   _updateBounds() {
@@ -63,8 +103,8 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.left * this._readyProgress -
         (this._rendererBounds.width / 2) * this._readyProgress +
         (this._mesh.scale.x / 2) * this._readyProgress -
-        this._extraTranslate.x -
-        this._scaleTranslate.x;
+        this._extraTranslate.x * (1 - this._gatherProgress) -
+        this._scaleTranslate.x * this._readyProgress;
     }
   }
 
@@ -75,8 +115,9 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
-        this._extraTranslate.y -
-        this._scaleTranslate.y;
+        this._extraTranslate.y * (1 - this._gatherProgress) -
+        this._scaleTranslate.y -
+        this._yAmplitude;
     }
   }
 
@@ -91,7 +132,7 @@ export class CardItem3D extends MediaObject3D {
         Math.PI *
         Math.sin((this._mesh.position.x * 0.001) / frequency);
 
-      this._mesh.position.y =
+      this._yAmplitude =
         amplitude *
         Math.sin(this.cardItem.itemKey / frequency) *
         this._readyProgress;
@@ -99,14 +140,17 @@ export class CardItem3D extends MediaObject3D {
   }
 
   _resetPosition() {
+    this._scaleTranslate.x = 0;
+    this._scaleTranslate.y = 0;
     this._extraTranslate.x = 0;
     this._extraTranslate.y = 0;
+    this._positionRandomly();
   }
 
   animateOpacity(props: AnimateProps) {}
 
   onMouseEnter() {
-    if (this.isFocused) {
+    if (this.isFocused || !this._isAnimatedIn) {
       return;
     }
     super.onMouseEnter();
@@ -119,7 +163,7 @@ export class CardItem3D extends MediaObject3D {
   }
 
   onMouseLeave() {
-    if (this.isFocused) {
+    if (this.isFocused || !this._isAnimatedIn) {
       return;
     }
     super.onMouseLeave();
@@ -140,6 +184,7 @@ export class CardItem3D extends MediaObject3D {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._updateX(this._currentOffsetX);
+    this._updateY(0);
     this._handlePositioning();
   }
 

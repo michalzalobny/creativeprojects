@@ -6,6 +6,7 @@ import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { lerp } from '../utils/lerp';
+import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -225,11 +226,21 @@ export class SlideScene extends ItemScene {
   }
 
   animateIn() {
-    this._items3D.forEach(item => {
-      item.animateIn();
+    const delayInterval = 40;
+    this._items3D.forEach(el => {
+      el.animateIn(el.cardItem.itemKeyReverse * delayInterval);
     });
 
-    this._onIndexChange();
+    const maximumDelay = this._items3D.length * delayInterval;
+
+    const finalTiming =
+      maximumDelay +
+      CardItem3DAnimated.animateReadyDelay +
+      CardItem3DAnimated.animateReadyDuration * 0.25;
+
+    setTimeout(() => {
+      this._onIndexChange();
+    }, finalTiming);
   }
 
   set rendererBounds(bounds: Bounds) {
