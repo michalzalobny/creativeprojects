@@ -46,10 +46,9 @@ export class SlideScene extends ItemScene {
 
   _applyScrollX = (x: number) => {
     if (this._isAutoScrolling) {
-      if (this._snapTimeoutId) {
-        clearTimeout(this._snapTimeoutId);
-      }
-      return;
+      if (this._goToIndexTween) this._goToIndexTween.stop();
+      if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
+      this._isAutoScrolling = false;
     }
 
     let newOffset = this._offsetX.target - x;
@@ -63,10 +62,7 @@ export class SlideScene extends ItemScene {
     this._offsetX.target = newOffset;
 
     //Hanlde auto snap
-    if (this._snapTimeoutId) {
-      clearTimeout(this._snapTimeoutId);
-    }
-
+    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
     this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
   };
 
@@ -88,9 +84,8 @@ export class SlideScene extends ItemScene {
       this._imageWrapperClientWidth -
       this._imageWrapperMarginRight / 2;
 
-    if (this._snapTimeoutId) {
-      clearTimeout(this._snapTimeoutId);
-    }
+    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
+
     this._performSnap();
   }
 
@@ -122,7 +117,11 @@ export class SlideScene extends ItemScene {
 
   _handleIndexClick(index: number) {
     super._handleIndexClick(index);
-    this.animateToIndex({ destination: index });
+
+    if (index === this._activeIndex) {
+    } else {
+      this.animateToIndex({ destination: index });
+    }
   }
 
   _onIndexChange() {
@@ -189,13 +188,9 @@ export class SlideScene extends ItemScene {
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
 
-    if (this._snapTimeoutId) {
-      clearTimeout(this._snapTimeoutId);
-    }
+    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
 
-    if (this._goToIndexTween) {
-      this._goToIndexTween.stop();
-    }
+    if (this._goToIndexTween) this._goToIndexTween.stop();
 
     this._isAutoScrolling = true;
 
@@ -203,7 +198,7 @@ export class SlideScene extends ItemScene {
       (destination / (this._items3D.length - 1)) * this._scrollBoundary;
 
     this._goToIndexTween = new TWEEN.Tween({
-      progress: this._offsetX.current,
+      progress: this._offsetX.target,
     })
       .to({ progress: offset }, duration)
       .delay(delay)
