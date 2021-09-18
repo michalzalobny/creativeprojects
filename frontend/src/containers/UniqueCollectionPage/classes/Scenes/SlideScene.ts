@@ -184,6 +184,10 @@ export class SlideScene extends ItemScene {
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
 
+    if (this._snapTimeoutId) {
+      clearTimeout(this._snapTimeoutId);
+    }
+
     if (this._goToIndexTween) {
       this._goToIndexTween.stop();
     }
