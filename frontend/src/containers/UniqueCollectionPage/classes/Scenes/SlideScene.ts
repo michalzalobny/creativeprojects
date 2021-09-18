@@ -18,7 +18,7 @@ export class SlideScene extends ItemScene {
   static wheelMultiplier = 1;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
-  static timeToSnap = 1500;
+  static timeToSnap = 1200;
 
   _scroll: Scroll;
   _offsetX = {
@@ -31,6 +31,7 @@ export class SlideScene extends ItemScene {
   _targetIndex = 0;
   _scrollBoundary = 1;
   _goToIndexTween: Tween<{ progress: number }> | null = null;
+  _isAutoScrolling = false;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -44,6 +45,13 @@ export class SlideScene extends ItemScene {
   };
 
   _applyScrollX = (x: number) => {
+    if (this._isAutoScrolling) {
+      if (this._snapTimeoutId) {
+        clearTimeout(this._snapTimeoutId);
+      }
+      return;
+    }
+
     let newOffset = this._offsetX.target - x;
 
     if (newOffset < 0) {
@@ -58,6 +66,7 @@ export class SlideScene extends ItemScene {
     if (this._snapTimeoutId) {
       clearTimeout(this._snapTimeoutId);
     }
+
     this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
   };
 
@@ -179,6 +188,8 @@ export class SlideScene extends ItemScene {
       this._goToIndexTween.stop();
     }
 
+    this._isAutoScrolling = true;
+
     const offset =
       (destination / (this._items3D.length - 1)) * this._scrollBoundary;
 
@@ -190,6 +201,9 @@ export class SlideScene extends ItemScene {
       .easing(easing)
       .onUpdate(obj => {
         this._offsetX.target = obj.progress;
+      })
+      .onComplete(() => {
+        this._isAutoScrolling = false;
       });
 
     this._goToIndexTween.start();
