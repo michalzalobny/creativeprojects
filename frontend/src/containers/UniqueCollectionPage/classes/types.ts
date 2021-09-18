@@ -35,3 +35,10 @@ export interface CardItemProps {
   itemKeyReverse: number;
   item: CreativeItem;
 }
+
+export interface AnimateProps {
+  duration?: number;
+  delay?: number;
+  destination: number;
+  easing?: (amount: number) => number;
+}

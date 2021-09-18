@@ -1,19 +1,12 @@
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { CardItemProps } from '../types';
+import { CardItemProps, AnimateProps } from '../types';
 import { CardItem3D } from './CardItem3D';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
   cardItem: CardItemProps;
   domEl: HTMLElement;
-}
-
-interface AnimateProps {
-  duration?: number;
-  delay?: number;
-  destination: number;
-  easing?: (amount: number) => number;
 }
 
 export class CardItem3DAnimated extends CardItem3D {

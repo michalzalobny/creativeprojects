@@ -1,6 +1,7 @@
 import * as THREE from 'three';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { UpdateInfo, Bounds } from '../types';
+import { UpdateInfo, Bounds, AnimateProps } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -13,11 +14,11 @@ interface Constructor {
 }
 
 export class SlideScene extends ItemScene {
-  static lerpEase = 0.05;
+  static lerpEase = 0.07;
   static wheelMultiplier = 1;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
-  static timeToSnap = 2000;
+  static timeToSnap = 1500;
 
   _scroll: Scroll;
   _offsetX = {
@@ -29,6 +30,7 @@ export class SlideScene extends ItemScene {
   _activeIndex = 0;
   _targetIndex = 0;
   _scrollBoundary = 1;
+  _goToIndexTween: Tween<{ progress: number }> | null = null;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -38,7 +40,7 @@ export class SlideScene extends ItemScene {
   }
 
   _performSnap = () => {
-    this.goToIndex(this._targetIndex);
+    this.animateToIndex({ destination: this._targetIndex });
   };
 
   _applyScrollX = (x: number) => {
@@ -106,7 +108,7 @@ export class SlideScene extends ItemScene {
 
   _handleIndexClick(index: number) {
     super._handleIndexClick(index);
-    this.goToIndex(index);
+    this.animateToIndex({ destination: index });
   }
 
   _onIndexChange() {
@@ -165,9 +167,32 @@ export class SlideScene extends ItemScene {
     super.destroy();
   }
 
-  goToIndex(index: number) {
-    const offset = (index / (this._items3D.length - 1)) * this._scrollBoundary;
-    this._offsetX.target = offset;
+  animateToIndex(props: AnimateProps) {
+    const {
+      destination,
+      duration = 500,
+      delay = 0,
+      easing = TWEEN.Easing.Sinusoidal.InOut,
+    } = props;
+
+    if (this._goToIndexTween) {
+      this._goToIndexTween.stop();
+    }
+
+    const offset =
+      (destination / (this._items3D.length - 1)) * this._scrollBoundary;
+
+    this._goToIndexTween = new TWEEN.Tween({
+      progress: this._offsetX.current,
+    })
+      .to({ progress: offset }, duration)
+      .delay(delay)
+      .easing(easing)
+      .onUpdate(obj => {
+        this._offsetX.target = obj.progress;
+      });
+
+    this._goToIndexTween.start();
   }
 
   animateIn() {
