@@ -242,10 +242,6 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   animateFocusIn() {
-    if (this.isFocused) {
-      return;
-    }
-
     this.isFocused = true;
 
     this.animateOpacity({
@@ -259,10 +255,6 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   animateFocusOut() {
-    if (!this.isFocused) {
-      return;
-    }
-
     this.isFocused = false;
 
     this.animateOpacity({

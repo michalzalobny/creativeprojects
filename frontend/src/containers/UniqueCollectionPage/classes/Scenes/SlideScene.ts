@@ -95,6 +95,11 @@ export class SlideScene extends ItemScene {
 
     if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
 
+    if (this._isReady) {
+      const item = this._items3D[this._activeIndex];
+      item.animateFocusIn();
+    }
+
     this._performSnap();
   }
 
