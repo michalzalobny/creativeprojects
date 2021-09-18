@@ -31,7 +31,13 @@ export class ItemScene extends InteractiveScene {
     this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
   }
 
-  _onItemClick = (e: THREE.Event) => {};
+  _handleIndexClick(index: number) {}
+
+  _onItemClick = (e: THREE.Event) => {
+    const indexClicked = this._items3D.findIndex(el => el === e.target);
+
+    this._handleIndexClick(indexClicked);
+  };
 
   _destroyItems() {
     this._items3D.forEach(item => {

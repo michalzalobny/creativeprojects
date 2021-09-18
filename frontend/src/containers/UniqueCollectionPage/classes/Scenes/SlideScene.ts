@@ -17,7 +17,7 @@ export class SlideScene extends ItemScene {
   static wheelMultiplier = 1;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
-  static timeToSnap = 500;
+  static timeToSnap = 2000;
 
   _scroll: Scroll;
   _offsetX = {
@@ -27,6 +27,7 @@ export class SlideScene extends ItemScene {
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
+  _targetIndex = 0;
   _scrollBoundary = 1;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -37,7 +38,7 @@ export class SlideScene extends ItemScene {
   }
 
   _performSnap = () => {
-    this.goToIndex(Math.round(this._offsetX.target));
+    this.goToIndex(this._targetIndex);
   };
 
   _applyScrollX = (x: number) => {
@@ -52,10 +53,10 @@ export class SlideScene extends ItemScene {
     this._offsetX.target = newOffset;
 
     //Hanlde auto snap
-    // if (this._snapTimeoutId) {
-    //   clearTimeout(this._snapTimeoutId);
-    // }
-    // this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
+    if (this._snapTimeoutId) {
+      clearTimeout(this._snapTimeoutId);
+    }
+    this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
   };
 
   _onScrollMouse = (e: THREE.Event) => {
@@ -103,6 +104,11 @@ export class SlideScene extends ItemScene {
     });
   }
 
+  _handleIndexClick(index: number) {
+    super._handleIndexClick(index);
+    this.goToIndex(index);
+  }
+
   _onIndexChange() {
     const el = this._items3D[this._activeIndex];
 
@@ -141,6 +147,11 @@ export class SlideScene extends ItemScene {
       this._activeIndex = currentIndex;
       this._onIndexChange();
     }
+
+    this._targetIndex = Math.round(
+      (this._offsetX.target / this._scrollBoundary) *
+        (this._items3D.length - 1),
+    );
   }
 
   update(updateInfo: UpdateInfo) {
@@ -155,7 +166,8 @@ export class SlideScene extends ItemScene {
   }
 
   goToIndex(index: number) {
-    this._offsetX.target = index;
+    const offset = (index / (this._items3D.length - 1)) * this._scrollBoundary;
+    this._offsetX.target = offset;
   }
 
   animateIn() {
