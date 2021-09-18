@@ -181,7 +181,7 @@ export class CardItem3DAnimated extends CardItem3D {
   animateIn() {
     this._tweenOpacity = 0;
 
-    this.setElementScale(0.5);
+    this.setElementScale(0.75);
 
     this.animateOpacity({
       destination: CardItem3DAnimated.defaultOpacity,
