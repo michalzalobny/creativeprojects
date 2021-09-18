@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import { CardItemProps, UpdateInfo, AnimateProps } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 import { CardItem3DAnimated } from './CardItem3DAnimated';
-import { getRandFloat } from '../utils/getRand';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -139,14 +138,6 @@ export class CardItem3D extends MediaObject3D {
     }
   }
 
-  _resetPosition() {
-    this._scaleTranslate.x = 0;
-    this._scaleTranslate.y = 0;
-    this._extraTranslate.x = 0;
-    this._extraTranslate.y = 0;
-    this._positionRandomly();
-  }
-
   animateOpacity(props: AnimateProps) {}
 
   onMouseEnter() {
@@ -177,7 +168,6 @@ export class CardItem3D extends MediaObject3D {
 
   onResize() {
     super.onResize();
-    this._resetPosition();
     this._updateBounds();
   }
 
