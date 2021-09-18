@@ -7,10 +7,10 @@ uniform float uStrength;
 uniform vec2 uViewportSizes;
 uniform vec2 uPlaneSizes;
 uniform vec3 uMouse3D;
-uniform float uHovered;
 uniform float uTime;
 uniform float uRandom;
-uniform float uFollow;
+uniform float uRandomSign;
+
 
 varying vec2 vUv;
 
@@ -19,8 +19,8 @@ void main() {
   vec3 stablePosition = position;
   
   //Parallax mouse animation
-  stablePosition.x -= uMouse3D.x * 0.0002 * (1.5 * uRandom + .2) * uFollow;
-  stablePosition.y -= uMouse3D.y * 0.0002 * (1.5 * uRandom + .2) * uFollow;
+  // stablePosition.x -= uMouse3D.x * 0.0002 * (1.5 * uRandom + .2) ;
+  // stablePosition.y -= uMouse3D.y * 0.0002 * (1.5 * uRandom + .2) ;
 
   // Cursor animation
   // float dist = distance(position.xy, uMouse3D.xy);
@@ -29,14 +29,10 @@ void main() {
 
   vec4 newPosition = modelViewMatrix * vec4(stablePosition, 1.0);
 
-  //Barrel animation 
-  newPosition.z += sin(newPosition.y / uViewportSizes.y * PI + PI / 2.0) * -uStrength * 0.15;
-  newPosition.z += sin(newPosition.x / uViewportSizes.x * PI + PI / 2.0) * -uStrength * 0.15;
+  newPosition.z += sin(stablePosition.x  * PI * 0.5 * uRandomSign+ PI / 3.0) * abs(uStrength) * uRandomSign * 0.4;
+  newPosition.y += sin(uTime * 0.0008 * (uRandom + 1.) * 0.5)  * uRandomSign * 20. ;
 
-  //Wave when hovered
-  float elevation = sin(newPosition.x * 0.03  - uTime * 0.003) * 0.9;
-  elevation += sin(newPosition.y * 0.01 - uTime * 0.002) * 0.7;
-  newPosition.z += elevation * uHovered * uFollow;
+  newPosition.z += sin(stablePosition.x *1.5 * PI + PI / 2.0 + uTime * 0.0005 * uRandomSign * (uRandom+ 1.) * 0.5)  * 10. * uRandomSign;
 
   gl_Position = projectionMatrix * newPosition;
 

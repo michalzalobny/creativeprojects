@@ -215,7 +215,7 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateScale({
       destination: 1.15,
-      duration: 1500,
+      duration: 1600,
     });
   }
 
@@ -233,7 +233,7 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateScale({
       destination: 1,
-      duration: 1000,
+      duration: 1600,
     });
   }
 }

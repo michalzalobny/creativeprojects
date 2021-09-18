@@ -19,6 +19,7 @@ export class MediaObject3D extends InteractiveObject3D {
   _masterOpacity = 1;
   _tweenOpacity = 0;
   _isVisible = false;
+  _strength = 0;
 
   constructor({ geometry }: Constructor) {
     super();
@@ -38,7 +39,7 @@ export class MediaObject3D extends InteractiveObject3D {
         uImageSizes: { value: [0, 0] },
         uTime: { value: 0 },
         uRandom: { value: Math.random() },
-        uHovered: { value: 0 },
+        uRandomSign: { value: Math.random() > 0.5 ? 1 : -1 },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
         uViewportSizes: {
           value: [this._rendererBounds.width, this._rendererBounds.height],
@@ -82,6 +83,9 @@ export class MediaObject3D extends InteractiveObject3D {
 
     if (this._mesh) this._mesh.material.uniforms.uTime.value = updateInfo.time;
 
+    if (this._mesh)
+      this._mesh.material.uniforms.uStrength.value = this._strength;
+
     if (this._intersectPoint && this._mesh) {
       this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
     }
@@ -120,5 +124,9 @@ export class MediaObject3D extends InteractiveObject3D {
 
   set opacity(value: number) {
     this._masterOpacity = value;
+  }
+
+  set strength(value: number) {
+    this._strength = value;
   }
 }
