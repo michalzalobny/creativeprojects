@@ -101,6 +101,18 @@ export class CardItem3D extends MediaObject3D {
     this._extraTranslate.y = 0;
   }
 
+  onMouseEnter() {
+    super.onMouseEnter();
+    document.body.style.cursor = 'pointer';
+    this.dispatchEvent({ type: 'pointerover' });
+  }
+
+  onMouseLeave() {
+    super.onMouseLeave();
+    document.body.style.cursor = 'initial';
+    this.dispatchEvent({ type: 'pointerleft' });
+  }
+
   onResize() {
     super.onResize();
     this._resetPosition();
