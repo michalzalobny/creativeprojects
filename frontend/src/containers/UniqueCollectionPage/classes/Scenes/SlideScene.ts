@@ -87,6 +87,11 @@ export class SlideScene extends ItemScene {
       this._collectionWrapperRect.width -
       this._imageWrapperClientWidth -
       this._imageWrapperMarginRight / 2;
+
+    if (this._snapTimeoutId) {
+      clearTimeout(this._snapTimeoutId);
+    }
+    this._performSnap();
   }
 
   _addListeners() {
@@ -128,7 +133,7 @@ export class SlideScene extends ItemScene {
     }
 
     this._items3D.forEach(item => {
-      if (item === el && !item.isFocused) {
+      if (item === el) {
         item.animateFocusIn();
       } else if (item.isFocused) {
         item.animateFocusOut();
