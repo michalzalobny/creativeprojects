@@ -18,7 +18,7 @@ export class SlideScene extends ItemScene {
   static wheelMultiplier = 1;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
-  static timeToSnap = 1200;
+  static timeToSnap = 500;
 
   _scroll: Scroll;
   _offsetX = {

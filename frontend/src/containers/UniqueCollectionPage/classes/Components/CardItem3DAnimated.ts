@@ -212,6 +212,11 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 1,
       duration: 500,
     });
+
+    this.animateScale({
+      destination: 1.15,
+      duration: 1500,
+    });
   }
 
   animateFocusOut() {
@@ -224,6 +229,11 @@ export class CardItem3DAnimated extends CardItem3D {
     this.animateOpacity({
       destination: CardItem3DAnimated.defaultOpacity,
       duration: 500,
+    });
+
+    this.animateScale({
+      destination: 1,
+      duration: 1000,
     });
   }
 }
