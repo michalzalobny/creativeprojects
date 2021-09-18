@@ -179,7 +179,7 @@ export class SlideScene extends ItemScene {
   animateToIndex(props: AnimateProps) {
     const {
       destination,
-      duration = 500,
+      duration = 600,
       delay = 0,
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
