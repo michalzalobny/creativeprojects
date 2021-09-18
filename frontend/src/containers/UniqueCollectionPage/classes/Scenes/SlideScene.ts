@@ -13,7 +13,7 @@ interface Constructor {
 }
 
 export class SlideScene extends ItemScene {
-  static lerpEase = 0.06;
+  static lerpEase = 0.05;
   static wheelMultiplier = 1;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
