@@ -30,11 +30,13 @@ export class SlideScene extends ItemScene {
     strengthCurrent: 0,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  _readyTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
   _targetIndex = 0;
   _scrollBoundary = 1;
   _goToIndexTween: Tween<{ progress: number }> | null = null;
   _isAutoScrolling = false;
+  _isReady = false;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -48,6 +50,10 @@ export class SlideScene extends ItemScene {
   };
 
   _applyScrollX = (x: number) => {
+    if (!this._isReady) {
+      return;
+    }
+
     if (this._isAutoScrolling) {
       if (this._goToIndexTween) this._goToIndexTween.stop();
       if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
@@ -190,6 +196,9 @@ export class SlideScene extends ItemScene {
 
   destroy() {
     super.destroy();
+
+    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
+    if (this._readyTimeoutId) clearTimeout(this._readyTimeoutId);
   }
 
   animateToIndex(props: AnimateProps) {
@@ -238,8 +247,9 @@ export class SlideScene extends ItemScene {
       CardItem3DAnimated.animateReadyDelay +
       CardItem3DAnimated.animateReadyDuration * 0.25;
 
-    setTimeout(() => {
+    this._readyTimeoutId = setTimeout(() => {
       this._onIndexChange();
+      this._isReady = true;
     }, finalTiming);
   }
 
