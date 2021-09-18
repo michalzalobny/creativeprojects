@@ -30,7 +30,7 @@ void main() {
   vec4 newPosition = modelViewMatrix * vec4(stablePosition, 1.0);
 
   newPosition.z += sin(stablePosition.x  * PI * 0.5 * uRandomSign+ PI / 3.0) * abs(uStrength) * uRandomSign * 0.8;
-  newPosition.y += sin(uTime * 0.0008 * (uRandom + 1.) * 0.5)  * uRandomSign * 5. ;
+  newPosition.y += sin(uTime * 0.0008 * (uRandom + 1.) * 0.5)  * uRandomSign * 12. ;
 
   newPosition.z += sin(stablePosition.x *1.5 * PI + PI / 2.0 + uTime * 0.0005 * uRandomSign * (uRandom+ 1.) * 0.5)  * 10. * uRandomSign;
 
