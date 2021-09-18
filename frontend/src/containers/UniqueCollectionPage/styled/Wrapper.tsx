@@ -13,7 +13,7 @@ export const Wrapper = styled(motion.div)<Props>`
   overflow: hidden;
 
   &:after {
-    opacity: 0.4;
+    opacity: 0;
     content: '';
     height: 100%;
     position: absolute;
