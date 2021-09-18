@@ -20,7 +20,6 @@ export class CardItem3DAnimated extends CardItem3D {
     x: number;
     y: number;
   }> | null = null;
-  isFocused = false;
 
   constructor({ domEl, cardItem, geometry }: Constructor) {
     super({ domEl, geometry, cardItem });
@@ -93,9 +92,10 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   animateOpacity(props: AnimateProps) {
+    super.animateOpacity(props);
     const {
       destination,
-      duration = 400,
+      duration = 500,
       delay = 0,
       easing = TWEEN.Easing.Sinusoidal.InOut,
     } = props;
@@ -185,7 +185,6 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateOpacity({
       destination: CardItem3DAnimated.defaultOpacity,
-      duration: 500,
     });
 
     this.animateReady({
@@ -210,7 +209,6 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateOpacity({
       destination: 1,
-      duration: 500,
     });
 
     this.animateScale({
@@ -228,7 +226,6 @@ export class CardItem3DAnimated extends CardItem3D {
 
     this.animateOpacity({
       destination: CardItem3DAnimated.defaultOpacity,
-      duration: 500,
     });
 
     this.animateScale({

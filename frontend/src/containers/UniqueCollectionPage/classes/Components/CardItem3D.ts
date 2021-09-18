@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-import { CardItemProps, UpdateInfo } from '../types';
+import { CardItemProps, UpdateInfo, AnimateProps } from '../types';
 import { MediaObject3D } from './MediaObject3D';
+import { CardItem3DAnimated } from './CardItem3DAnimated';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -18,6 +19,7 @@ export class CardItem3D extends MediaObject3D {
   _currentOffsetX = 0;
   _randomValue = 1;
   _readyProgress = 0;
+  isFocused = false;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -101,16 +103,32 @@ export class CardItem3D extends MediaObject3D {
     this._extraTranslate.y = 0;
   }
 
+  animateOpacity(props: AnimateProps) {}
+
   onMouseEnter() {
+    if (this.isFocused) {
+      return;
+    }
     super.onMouseEnter();
     document.body.style.cursor = 'pointer';
     this.dispatchEvent({ type: 'pointerover' });
+
+    this.animateOpacity({
+      destination: 0.7,
+    });
   }
 
   onMouseLeave() {
+    if (this.isFocused) {
+      return;
+    }
     super.onMouseLeave();
     document.body.style.cursor = 'initial';
     this.dispatchEvent({ type: 'pointerleft' });
+
+    this.animateOpacity({
+      destination: CardItem3DAnimated.defaultOpacity,
+    });
   }
 
   onResize() {
