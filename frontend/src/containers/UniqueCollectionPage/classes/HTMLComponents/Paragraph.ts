@@ -48,7 +48,9 @@ export class Paragraph extends Animation {
     super.animateIn();
     each(this.calculatedLines, (line, lineIndex) => {
       each(line, word => {
-        word.style.transition = `transform 1.5s ${0.5 + lineIndex * 0.1}s ease`;
+        word.style.transition = `transform 1.5s ${
+          lineIndex * 0.1
+        }s cubic-bezier(0.87, 0, 0.13, 1)`;
         word.style[this.transformPrefix] = 'translateY(0)';
       });
     });

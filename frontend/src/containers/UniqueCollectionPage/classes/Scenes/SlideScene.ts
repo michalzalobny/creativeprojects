@@ -59,6 +59,14 @@ export class SlideScene extends ItemScene {
 
   _performSnap = () => {
     this.animateToIndex({ destination: this._targetIndex });
+
+    this._HTMLElements.forEach(el => {
+      if (el.isVisible) {
+        el.animateOut();
+      } else {
+        el.animateIn();
+      }
+    });
   };
 
   _applyScrollX = (x: number) => {

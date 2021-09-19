@@ -58,9 +58,9 @@ export default function UniqueCollectionPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
-        <DescriptionWrapper>
+        <DescriptionWrapper data-animation="paragraph">
           <DescriptionTitle>Treccia collection</DescriptionTitle>
-          <DescriptionText data-animation="paragraph">
+          <DescriptionText>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a aut,
             aperiam amet debitis repudiandae magnam optio voluptas architecto
             rerum, natus iure reprehenderit molestias non unde deleniti animi
