@@ -156,15 +156,7 @@ export class SlideScene extends ItemScene {
     }
   }
 
-  _onIndexChange() {
-    const el = this._items3D[this._activeIndex];
-
-    if (!el) {
-      return;
-    }
-
-    this._activeCollection = el.cardItem.item.filter.toLocaleLowerCase();
-
+  _updateActiveCollectionTitle() {
     this._HTMLElements.forEach(el => {
       const elFilter = el.element.dataset.cfilter;
 
@@ -173,15 +165,18 @@ export class SlideScene extends ItemScene {
       } else {
         el.animateOut();
       }
-
-      // if (el.isVisible) {
-      //   el.animateOut();
-      // } else {
-      //   el.animateIn();
-      // }
     });
+  }
 
-    console.log(this._activeCollection);
+  _onIndexChange() {
+    const el = this._items3D[this._activeIndex];
+    this._activeCollection = el.cardItem.item.filter.toLocaleLowerCase();
+
+    if (!el) {
+      return;
+    }
+
+    this._updateActiveCollectionTitle();
 
     this._items3D.forEach(item => {
       if (item === el) {
