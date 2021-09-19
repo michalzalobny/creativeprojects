@@ -92,6 +92,22 @@ export default class Document extends NextDocument {
             crossOrigin="anonymous"
           />
 
+          <link
+            rel="preload"
+            as="font"
+            type="font/woff2"
+            href={'/fonts/1.woff2'}
+            crossOrigin="anonymous"
+          />
+
+          <link
+            rel="preload"
+            as="font"
+            type="font/woff2"
+            href={'/fonts/2.woff2'}
+            crossOrigin="anonymous"
+          />
+
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         </Head>
         <body>

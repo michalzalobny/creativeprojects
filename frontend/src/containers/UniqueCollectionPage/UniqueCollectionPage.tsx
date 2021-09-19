@@ -11,6 +11,9 @@ import { CollectionWrapper } from './styled/collection/CollectionWrapper';
 import { ContentWrapper } from './styled/collection/ContentWrapper';
 import { Image } from './styled/collection/Image';
 import { ImageWrapper } from './styled/collection/ImageWrapper';
+import { DescriptionText } from './styled/collection/DescriptionText';
+import { DescriptionTitle } from './styled/collection/DescriptionTitle';
+import { DescriptionWrapper } from './styled/collection/DescriptionWrapper';
 
 export default function UniqueCollectionPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -55,6 +58,15 @@ export default function UniqueCollectionPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
+        <DescriptionWrapper>
+          <DescriptionTitle>Treccia collection</DescriptionTitle>
+          <DescriptionText>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a aut,
+            aperiam amet debitis repudiandae magnam optio voluptas architecto
+            rerum, natus iure reprehenderit molestias non unde deleniti animi
+            explicabo? Error.
+          </DescriptionText>
+        </DescriptionWrapper>
         <ContentWrapper>
           <CollectionWrapper data-collection-wrapper="wrapper">
             {props.projectData.creativeItems.map(item => {
