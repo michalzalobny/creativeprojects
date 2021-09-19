@@ -41,7 +41,6 @@ export class Paragraph extends Animation {
       this.lines.push(...spans);
     }
     this.onResize();
-    this.hide();
   }
 
   animateIn() {
@@ -66,15 +65,6 @@ export class Paragraph extends Animation {
         }s cubic-bezier(0.77, 0, 0.175, 1)`;
         word.style[this.transformPrefix] = 'translateY(100%)';
         word.style.opacity = '1';
-      });
-    });
-  }
-
-  hide() {
-    each(this.calculatedLines, (line, lineIndex) => {
-      each(line, word => {
-        word.style[this.transformPrefix] = 'translateY(100%)';
-        word.style.opacity = '0';
       });
     });
   }

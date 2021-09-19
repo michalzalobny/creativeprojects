@@ -31,6 +31,11 @@ export const Wrapper = styled(motion.div)<Props>`
       overflow: hidden;
       vertical-align: top;
     }
+
+    span span {
+      opacity: 0;
+      transform: translateY(100%);
+    }
   }
 `;
 
