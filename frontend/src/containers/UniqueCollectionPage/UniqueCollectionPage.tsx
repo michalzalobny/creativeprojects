@@ -58,15 +58,34 @@ export default function UniqueCollectionPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
-        <DescriptionWrapper data-animation="paragraph">
+        <DescriptionWrapper data-cfilter="treccia" data-animation="paragraph">
           <DescriptionTitle>Treccia collection</DescriptionTitle>
           <DescriptionText>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a aut,
-            aperiam amet debitis repudiandae magnam optio voluptas architecto
-            rerum, natus iure reprehenderit molestias non unde deleniti animi
-            explicabo? Error.
+            Every single piece of this collection is created hand-weaving
+            several precious threads. Some of the twines contain precious and
+            colorful stones.
           </DescriptionText>
         </DescriptionWrapper>
+
+        <DescriptionWrapper data-cfilter="onde" data-animation="paragraph">
+          <DescriptionTitle>Onde collection</DescriptionTitle>
+          <DescriptionText>
+            The fluid movement of the elements of this collection joins the soft
+            shapes of the filigree, that looks as if floating in the structures.
+            The repetition of the waves creates large but incredibly light
+            earrings.
+          </DescriptionText>
+        </DescriptionWrapper>
+
+        <DescriptionWrapper data-cfilter="vita" data-animation="paragraph">
+          <DescriptionTitle>Vita collection</DescriptionTitle>
+          <DescriptionText>
+            The organic structure of the Vita collection contains minute shapes
+            created with precious metal threads and small gold or silver spheres
+            that unveil themselves with light reflection.
+          </DescriptionText>
+        </DescriptionWrapper>
+
         <ContentWrapper>
           <CollectionWrapper data-collection-wrapper="wrapper">
             {props.projectData.creativeItems.map(item => {

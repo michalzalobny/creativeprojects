@@ -40,6 +40,7 @@ export class SlideScene extends ItemScene {
   _isAutoScrolling = false;
   _isReady = false;
   _HTMLElements: Animation[] = [];
+  _activeCollection = '';
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -59,14 +60,6 @@ export class SlideScene extends ItemScene {
 
   _performSnap = () => {
     this.animateToIndex({ destination: this._targetIndex });
-
-    this._HTMLElements.forEach(el => {
-      if (el.isVisible) {
-        el.animateOut();
-      } else {
-        el.animateIn();
-      }
-    });
   };
 
   _applyScrollX = (x: number) => {
@@ -169,6 +162,26 @@ export class SlideScene extends ItemScene {
     if (!el) {
       return;
     }
+
+    this._activeCollection = el.cardItem.item.filter.toLocaleLowerCase();
+
+    this._HTMLElements.forEach(el => {
+      const elFilter = el.element.dataset.cfilter;
+
+      if (elFilter === this._activeCollection) {
+        el.animateIn();
+      } else {
+        el.animateOut();
+      }
+
+      // if (el.isVisible) {
+      //   el.animateOut();
+      // } else {
+      //   el.animateIn();
+      // }
+    });
+
+    console.log(this._activeCollection);
 
     this._items3D.forEach(item => {
       if (item === el) {
