@@ -24,6 +24,14 @@ export const Wrapper = styled(motion.div)<Props>`
     z-index: 10;
     background: #003cff;
   }
+
+  [data-animation='paragraph'] {
+    span {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+    }
+  }
 `;
 
 Wrapper.defaultProps = {

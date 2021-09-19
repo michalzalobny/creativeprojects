@@ -59,10 +59,8 @@ export default function UniqueCollectionPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
         <DescriptionWrapper>
-          <DescriptionTitle data-uq="title">
-            Treccia collection
-          </DescriptionTitle>
-          <DescriptionText data-uq="description">
+          <DescriptionTitle>Treccia collection</DescriptionTitle>
+          <DescriptionText data-animation="paragraph">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a aut,
             aperiam amet debitis repudiandae magnam optio voluptas architecto
             rerum, natus iure reprehenderit molestias non unde deleniti animi

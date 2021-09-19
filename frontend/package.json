@@ -31,6 +31,7 @@
     "next-compose-plugins": "2.2.0",
     "next-optimized-images": "^3.0.0-canary.10",
     "normalize-wheel": "^1.0.1",
+    "prefix": "^1.0.0",
     "raw-loader": "^4.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
