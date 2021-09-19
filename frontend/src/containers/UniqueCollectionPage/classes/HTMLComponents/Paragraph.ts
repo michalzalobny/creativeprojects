@@ -40,9 +40,8 @@ export class Paragraph extends Animation {
 
       this.lines.push(...spans);
     }
-
     this.onResize();
-    this.animateOut();
+    this.hide();
   }
 
   animateIn() {
@@ -53,6 +52,7 @@ export class Paragraph extends Animation {
           0.8 + lineIndex * 0.1
         }s cubic-bezier(0.77, 0, 0.175, 1)`;
         word.style[this.transformPrefix] = 'translateY(0)';
+        word.style.opacity = '1';
       });
     });
   }
@@ -65,6 +65,16 @@ export class Paragraph extends Animation {
           0.2 + lineIndex * 0.1
         }s cubic-bezier(0.77, 0, 0.175, 1)`;
         word.style[this.transformPrefix] = 'translateY(100%)';
+        word.style.opacity = '1';
+      });
+    });
+  }
+
+  hide() {
+    each(this.calculatedLines, (line, lineIndex) => {
+      each(line, word => {
+        word.style[this.transformPrefix] = 'translateY(100%)';
+        word.style.opacity = '0';
       });
     });
   }

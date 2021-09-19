@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 984 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1268 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -872,7 +872,7 @@ VALUES
     96,
     'Ring Sapphire',
     'This ring is the result of weaving several silver wires, that contain a wonderful blue sapphire in the centre. Perfect to mix and match with the other plaited rings, whether silver or gold.',
-    'Treccia'
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -881,7 +881,7 @@ VALUES
     97,
     'Necklace Sapphire',
     'This luminous necklace, called “Venetian” is perfect for the woven bezel that protects a wonderful deep blue sapphire. The necklace is completely made in 18k gold.',
-    'Treccia'
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -890,7 +890,7 @@ VALUES
     98,
     'Ring Emerald',
     'This ring is the result of weaving several silver wires, that contain a wonderful green emerald in the centre. Perfect to mix and match with the other plaited rings, whether silver or gold.',
-    'Treccia'
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -898,8 +898,8 @@ VALUES
   (
     99,
     'Silver Ring',
-    'This ring is the result of weaving several silver threads, that reflect the light with a diamond effect. Wear more than one on one finger for a band ring effect or divide them, depending on the occasion. Perfect to mix and match with the other TRECCIA rings, whether silver or gold',
-    'Treccia'
+    'This ring is the result of weaving several silver threads, that reflect the light with a diamond effect. Wear more than one on one finger for a band ring effect or divide them, depending on the occasion. Perfect to mix and match with the other ONDE rings, whether silver or gold',
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -908,7 +908,7 @@ VALUES
     100,
     'Double Earrings',
     'These earrings are both elegant and playful, perfect for any age. Lightness is one the main characteristics of filigree and it allows to create earrings this big but light as a feather',
-    'Onde '
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -917,7 +917,7 @@ VALUES
     101,
     'Earrings Medium',
     'You can wear these earrings in many ways, just rotating them on your ear, according to your mood or depending on the occasion. Go and have a closer look to see the thin filigree threads in them!',
-    'Vita'
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -935,7 +935,7 @@ VALUES
     103,
     'Gold Earrings',
     'These earrings are realized weaving together two 18k gold threads. The perfect shape of the circle creates an elegant and minimal glaze on your ear.',
-    'Treccia'
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -943,8 +943,8 @@ VALUES
   (
     104,
     'Gold Ring',
-    'The result of weaving two gold threads is this elegant and versatile ring. You can wear more than one on the same finger or on all the other ones creating a new composition every time. It can be also used to secure another ring. They are perfect to mix and match with other TRECCIA Gold Rings with Sapphires, Emeralds and Rubies.',
-    'Treccia'
+    'The result of weaving two gold threads is this elegant and versatile ring. You can wear more than one on the same finger or on all the other ones creating a new composition every time. It can be also used to secure another ring. They are perfect to mix and match with other ONDE Gold Rings with Sapphires, Emeralds and Rubies.',
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -952,8 +952,8 @@ VALUES
   (
     105,
     'Big Hoops',
-    'The TRECCIA earrings are particularly luminous thanks to the silver threads twine, that reflects the light in a diamond effect. The piece is embellished by the 18k white gold clasp, chosen for its hardness and durability.',
-    'Treccia'
+    'The ONDE earrings are particularly luminous thanks to the silver threads twine, that reflects the light in a diamond effect. The piece is embellished by the 18k white gold clasp, chosen for its hardness and durability.',
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -961,8 +961,8 @@ VALUES
   (
     106,
     'Ring Set',
-    'The result of weaving two gold threads is this elegant and versatile ring. You can wear more than one on the same finger or on all the other ones creating a new composition every time. It can be also used to secure another ring. They are perfect to mix and match with other TRECCIA Gold Rings with Sapphires, Emeralds and Rubies.',
-    'Treccia'
+    'The result of weaving two gold threads is this elegant and versatile ring. You can wear more than one on the same finger or on all the other ones creating a new composition every time. It can be also used to secure another ring. They are perfect to mix and match with other ONDE Gold Rings with Sapphires, Emeralds and Rubies.',
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -971,7 +971,7 @@ VALUES
     107,
     'Silver Necklace',
     'The ONDE necklace, light and comfortable, is inspired by the movement and lightness of the water. The filigree in it is composed of very thin silver threads, that underline the idea of the jewel movement and transparency.',
-    'Onde '
+    'Onde'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -979,8 +979,8 @@ VALUES
   (
     108,
     'Small Hoops',
-    'The TRECCIA earrings are particularly luminous thanks to the silver threads twine, that reflects the light in a diamond effect. The piece is embellished by the 18k white gold clasp, chosen for its hardness and durability.',
-    'Treccia'
+    'The VITA earrings are particularly luminous thanks to the silver threads twine, that reflects the light in a diamond effect. The piece is embellished by the 18k white gold clasp, chosen for its hardness and durability.',
+    'Vita'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -989,7 +989,7 @@ VALUES
     109,
     'Earrings Gold',
     'Using Filigree wires of the size of a hair, these earrings are at the same time minimal and elegant.',
-    'Onde'
+    'Vita'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -1025,7 +1025,7 @@ VALUES
     113,
     'Triple Earrings',
     'The waves of these earrings move sinuously in the space, elegant and contemporary at the same time. When they are worn they are surprisingly light and comfortable, even for long hours.',
-    'Onde'
+    'Vita'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -1061,7 +1061,7 @@ VALUES
     117,
     'Earrings Small',
     'These earrings are realized weaving together two 18k gold threads. The perfect shape of the circle creates an elegant and minimal glaze on your ear.',
-    'Treccia'
+    'Vita'
   );
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
@@ -2631,7 +2631,7 @@ VALUES
     1,
     1,
     '2021-09-14 15:05:14',
-    '2021-09-19 08:22:37'
+    '2021-09-19 21:04:24'
   );
 
 # ------------------------------------------------------------
@@ -14080,7 +14080,7 @@ INSERT INTO
   )
 VALUES
   (
-    913,
+    1197,
     57,
     11,
     'components_page_localized_heads',
@@ -14098,7 +14098,7 @@ INSERT INTO
   )
 VALUES
   (
-    914,
+    1198,
     95,
     86,
     'components_creative_component_creative_items',
@@ -14116,7 +14116,7 @@ INSERT INTO
   )
 VALUES
   (
-    915,
+    1199,
     128,
     86,
     'components_creative_component_creative_items',
@@ -14134,7 +14134,7 @@ INSERT INTO
   )
 VALUES
   (
-    916,
+    1200,
     97,
     87,
     'components_creative_component_creative_items',
@@ -14152,7 +14152,7 @@ INSERT INTO
   )
 VALUES
   (
-    917,
+    1201,
     128,
     87,
     'components_creative_component_creative_items',
@@ -14170,7 +14170,7 @@ INSERT INTO
   )
 VALUES
   (
-    918,
+    1202,
     94,
     88,
     'components_creative_component_creative_items',
@@ -14188,7 +14188,7 @@ INSERT INTO
   )
 VALUES
   (
-    919,
+    1203,
     128,
     88,
     'components_creative_component_creative_items',
@@ -14206,7 +14206,7 @@ INSERT INTO
   )
 VALUES
   (
-    920,
+    1204,
     98,
     84,
     'components_creative_component_creative_items',
@@ -14224,7 +14224,7 @@ INSERT INTO
   )
 VALUES
   (
-    921,
+    1205,
     128,
     84,
     'components_creative_component_creative_items',
@@ -14242,7 +14242,7 @@ INSERT INTO
   )
 VALUES
   (
-    922,
+    1206,
     93,
     85,
     'components_creative_component_creative_items',
@@ -14260,7 +14260,7 @@ INSERT INTO
   )
 VALUES
   (
-    923,
+    1207,
     128,
     85,
     'components_creative_component_creative_items',
@@ -14278,7 +14278,7 @@ INSERT INTO
   )
 VALUES
   (
-    924,
+    1208,
     96,
     89,
     'components_creative_component_creative_items',
@@ -14296,7 +14296,7 @@ INSERT INTO
   )
 VALUES
   (
-    925,
+    1209,
     128,
     89,
     'components_creative_component_creative_items',
@@ -14314,7 +14314,7 @@ INSERT INTO
   )
 VALUES
   (
-    926,
+    1210,
     99,
     90,
     'components_creative_component_creative_items',
@@ -14332,7 +14332,7 @@ INSERT INTO
   )
 VALUES
   (
-    927,
+    1211,
     128,
     90,
     'components_creative_component_creative_items',
@@ -14350,7 +14350,7 @@ INSERT INTO
   )
 VALUES
   (
-    928,
+    1212,
     100,
     91,
     'components_creative_component_creative_items',
@@ -14368,7 +14368,7 @@ INSERT INTO
   )
 VALUES
   (
-    929,
+    1213,
     128,
     91,
     'components_creative_component_creative_items',
@@ -14386,7 +14386,7 @@ INSERT INTO
   )
 VALUES
   (
-    930,
+    1214,
     103,
     92,
     'components_creative_component_creative_items',
@@ -14404,7 +14404,7 @@ INSERT INTO
   )
 VALUES
   (
-    931,
+    1215,
     128,
     92,
     'components_creative_component_creative_items',
@@ -14422,7 +14422,7 @@ INSERT INTO
   )
 VALUES
   (
-    932,
+    1216,
     101,
     93,
     'components_creative_component_creative_items',
@@ -14440,7 +14440,7 @@ INSERT INTO
   )
 VALUES
   (
-    933,
+    1217,
     128,
     93,
     'components_creative_component_creative_items',
@@ -14458,7 +14458,7 @@ INSERT INTO
   )
 VALUES
   (
-    934,
+    1218,
     102,
     94,
     'components_creative_component_creative_items',
@@ -14476,7 +14476,7 @@ INSERT INTO
   )
 VALUES
   (
-    935,
+    1219,
     128,
     94,
     'components_creative_component_creative_items',
@@ -14494,7 +14494,7 @@ INSERT INTO
   )
 VALUES
   (
-    936,
+    1220,
     104,
     95,
     'components_creative_component_creative_items',
@@ -14512,7 +14512,7 @@ INSERT INTO
   )
 VALUES
   (
-    937,
+    1221,
     128,
     95,
     'components_creative_component_creative_items',
@@ -14530,7 +14530,7 @@ INSERT INTO
   )
 VALUES
   (
-    938,
+    1222,
     106,
     96,
     'components_creative_component_creative_items',
@@ -14548,7 +14548,7 @@ INSERT INTO
   )
 VALUES
   (
-    939,
+    1223,
     128,
     96,
     'components_creative_component_creative_items',
@@ -14566,7 +14566,7 @@ INSERT INTO
   )
 VALUES
   (
-    940,
+    1224,
     105,
     97,
     'components_creative_component_creative_items',
@@ -14584,7 +14584,7 @@ INSERT INTO
   )
 VALUES
   (
-    941,
+    1225,
     128,
     97,
     'components_creative_component_creative_items',
@@ -14602,7 +14602,7 @@ INSERT INTO
   )
 VALUES
   (
-    942,
+    1226,
     107,
     98,
     'components_creative_component_creative_items',
@@ -14620,7 +14620,7 @@ INSERT INTO
   )
 VALUES
   (
-    943,
+    1227,
     128,
     98,
     'components_creative_component_creative_items',
@@ -14638,7 +14638,7 @@ INSERT INTO
   )
 VALUES
   (
-    944,
+    1228,
     108,
     99,
     'components_creative_component_creative_items',
@@ -14656,7 +14656,7 @@ INSERT INTO
   )
 VALUES
   (
-    945,
+    1229,
     128,
     99,
     'components_creative_component_creative_items',
@@ -14674,7 +14674,7 @@ INSERT INTO
   )
 VALUES
   (
-    946,
+    1230,
     109,
     100,
     'components_creative_component_creative_items',
@@ -14692,7 +14692,7 @@ INSERT INTO
   )
 VALUES
   (
-    947,
+    1231,
     129,
     100,
     'components_creative_component_creative_items',
@@ -14710,7 +14710,7 @@ INSERT INTO
   )
 VALUES
   (
-    948,
+    1232,
     110,
     101,
     'components_creative_component_creative_items',
@@ -14728,7 +14728,7 @@ INSERT INTO
   )
 VALUES
   (
-    949,
+    1233,
     130,
     101,
     'components_creative_component_creative_items',
@@ -14746,7 +14746,7 @@ INSERT INTO
   )
 VALUES
   (
-    950,
+    1234,
     111,
     102,
     'components_creative_component_creative_items',
@@ -14764,7 +14764,7 @@ INSERT INTO
   )
 VALUES
   (
-    951,
+    1235,
     129,
     102,
     'components_creative_component_creative_items',
@@ -14782,7 +14782,7 @@ INSERT INTO
   )
 VALUES
   (
-    952,
+    1236,
     112,
     103,
     'components_creative_component_creative_items',
@@ -14800,7 +14800,7 @@ INSERT INTO
   )
 VALUES
   (
-    953,
+    1237,
     128,
     103,
     'components_creative_component_creative_items',
@@ -14818,7 +14818,7 @@ INSERT INTO
   )
 VALUES
   (
-    954,
+    1238,
     113,
     104,
     'components_creative_component_creative_items',
@@ -14836,7 +14836,7 @@ INSERT INTO
   )
 VALUES
   (
-    955,
+    1239,
     128,
     104,
     'components_creative_component_creative_items',
@@ -14854,7 +14854,7 @@ INSERT INTO
   )
 VALUES
   (
-    956,
+    1240,
     115,
     105,
     'components_creative_component_creative_items',
@@ -14872,7 +14872,7 @@ INSERT INTO
   )
 VALUES
   (
-    957,
+    1241,
     128,
     105,
     'components_creative_component_creative_items',
@@ -14890,7 +14890,7 @@ INSERT INTO
   )
 VALUES
   (
-    958,
+    1242,
     116,
     106,
     'components_creative_component_creative_items',
@@ -14908,7 +14908,7 @@ INSERT INTO
   )
 VALUES
   (
-    959,
+    1243,
     128,
     106,
     'components_creative_component_creative_items',
@@ -14926,7 +14926,7 @@ INSERT INTO
   )
 VALUES
   (
-    960,
+    1244,
     114,
     107,
     'components_creative_component_creative_items',
@@ -14944,7 +14944,7 @@ INSERT INTO
   )
 VALUES
   (
-    961,
+    1245,
     129,
     107,
     'components_creative_component_creative_items',
@@ -14962,7 +14962,7 @@ INSERT INTO
   )
 VALUES
   (
-    962,
+    1246,
     117,
     108,
     'components_creative_component_creative_items',
@@ -14980,7 +14980,7 @@ INSERT INTO
   )
 VALUES
   (
-    963,
+    1247,
     128,
     108,
     'components_creative_component_creative_items',
@@ -14998,7 +14998,7 @@ INSERT INTO
   )
 VALUES
   (
-    964,
+    1248,
     118,
     109,
     'components_creative_component_creative_items',
@@ -15016,7 +15016,7 @@ INSERT INTO
   )
 VALUES
   (
-    965,
+    1249,
     129,
     109,
     'components_creative_component_creative_items',
@@ -15034,7 +15034,7 @@ INSERT INTO
   )
 VALUES
   (
-    966,
+    1250,
     119,
     110,
     'components_creative_component_creative_items',
@@ -15052,7 +15052,7 @@ INSERT INTO
   )
 VALUES
   (
-    967,
+    1251,
     130,
     110,
     'components_creative_component_creative_items',
@@ -15070,7 +15070,7 @@ INSERT INTO
   )
 VALUES
   (
-    968,
+    1252,
     120,
     111,
     'components_creative_component_creative_items',
@@ -15088,7 +15088,7 @@ INSERT INTO
   )
 VALUES
   (
-    969,
+    1253,
     130,
     111,
     'components_creative_component_creative_items',
@@ -15106,7 +15106,7 @@ INSERT INTO
   )
 VALUES
   (
-    970,
+    1254,
     121,
     112,
     'components_creative_component_creative_items',
@@ -15124,7 +15124,7 @@ INSERT INTO
   )
 VALUES
   (
-    971,
+    1255,
     130,
     112,
     'components_creative_component_creative_items',
@@ -15142,7 +15142,7 @@ INSERT INTO
   )
 VALUES
   (
-    972,
+    1256,
     122,
     113,
     'components_creative_component_creative_items',
@@ -15160,7 +15160,7 @@ INSERT INTO
   )
 VALUES
   (
-    973,
+    1257,
     129,
     113,
     'components_creative_component_creative_items',
@@ -15178,7 +15178,7 @@ INSERT INTO
   )
 VALUES
   (
-    974,
+    1258,
     123,
     114,
     'components_creative_component_creative_items',
@@ -15196,7 +15196,7 @@ INSERT INTO
   )
 VALUES
   (
-    975,
+    1259,
     130,
     114,
     'components_creative_component_creative_items',
@@ -15214,7 +15214,7 @@ INSERT INTO
   )
 VALUES
   (
-    976,
+    1260,
     124,
     115,
     'components_creative_component_creative_items',
@@ -15232,7 +15232,7 @@ INSERT INTO
   )
 VALUES
   (
-    977,
+    1261,
     130,
     115,
     'components_creative_component_creative_items',
@@ -15250,7 +15250,7 @@ INSERT INTO
   )
 VALUES
   (
-    978,
+    1262,
     125,
     116,
     'components_creative_component_creative_items',
@@ -15268,7 +15268,7 @@ INSERT INTO
   )
 VALUES
   (
-    979,
+    1263,
     130,
     116,
     'components_creative_component_creative_items',
@@ -15286,7 +15286,7 @@ INSERT INTO
   )
 VALUES
   (
-    980,
+    1264,
     127,
     117,
     'components_creative_component_creative_items',
@@ -15304,7 +15304,7 @@ INSERT INTO
   )
 VALUES
   (
-    981,
+    1265,
     128,
     117,
     'components_creative_component_creative_items',
@@ -15322,7 +15322,7 @@ INSERT INTO
   )
 VALUES
   (
-    982,
+    1266,
     126,
     118,
     'components_creative_component_creative_items',
@@ -15340,7 +15340,7 @@ INSERT INTO
   )
 VALUES
   (
-    983,
+    1267,
     130,
     118,
     'components_creative_component_creative_items',
