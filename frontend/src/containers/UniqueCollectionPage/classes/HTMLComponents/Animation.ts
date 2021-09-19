@@ -2,24 +2,33 @@ import Prefix from 'prefix';
 
 interface Constructor {
   element: HTMLElement;
+  useObserver?: boolean;
 }
 
 export class Animation {
   delay: number;
   element: HTMLElement;
-  target: HTMLElement | null;
+  target: HTMLElement;
   transformPrefix = Prefix('transform');
   isVisible = false;
   observer: void | null = null;
 
-  constructor({ element }: Constructor) {
+  constructor({ useObserver = true, element }: Constructor) {
     const { animationDelay = '0', animationTarget = null } = element.dataset;
 
     this.delay = Number(animationDelay);
 
     this.element = element;
 
-    this.target = animationTarget ? element.closest(animationTarget) : element;
+    const specificTarget = animationTarget
+      ? (element.closest(animationTarget) as HTMLElement)
+      : null;
+
+    this.target = specificTarget ? specificTarget : element;
+
+    if (!useObserver) {
+      return;
+    }
 
     if ('IntersectionObserver' in window) {
       this.createObserver();
@@ -27,10 +36,6 @@ export class Animation {
   }
 
   createObserver() {
-    if (!this.target) {
-      return;
-    }
-
     this.observer = new window.IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
