@@ -2,7 +2,6 @@ import Prefix from 'prefix';
 
 interface Constructor {
   element: HTMLElement;
-  useObserver?: boolean;
 }
 
 export class Animation {
@@ -13,20 +12,24 @@ export class Animation {
   isVisible = false;
   observer: void | null = null;
 
-  constructor({ useObserver = true, element }: Constructor) {
-    const { animationDelay = '0', animationTarget = null } = element.dataset;
+  constructor({ element }: Constructor) {
+    const {
+      animationdelay = '0',
+      animationtarget = null,
+      useobserver = false,
+    } = element.dataset;
 
-    this.delay = Number(animationDelay);
+    this.delay = Number(animationdelay);
 
     this.element = element;
 
-    const specificTarget = animationTarget
-      ? (element.closest(animationTarget) as HTMLElement)
+    const specificTarget = animationtarget
+      ? (element.closest(animationtarget) as HTMLElement)
       : null;
 
     this.target = specificTarget ? specificTarget : element;
 
-    if (!useObserver) {
+    if (!useobserver) {
       return;
     }
 
@@ -54,4 +57,6 @@ export class Animation {
   animateOut() {
     this.isVisible = false;
   }
+
+  onResize() {}
 }

@@ -64,6 +64,7 @@ export class Paragraph extends Animation {
   }
 
   onResize() {
+    super.onResize();
     this.calculatedLines = calculate(this.lines);
   }
 }

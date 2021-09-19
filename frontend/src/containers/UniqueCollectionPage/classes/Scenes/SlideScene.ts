@@ -7,6 +7,8 @@ import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { lerp } from '../utils/lerp';
 import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
+import { Paragraph } from '../HTMLComponents/Paragraph';
+import { Animation } from '../HTMLComponents/Animation';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -37,12 +39,22 @@ export class SlideScene extends ItemScene {
   _goToIndexTween: Tween<{ progress: number }> | null = null;
   _isAutoScrolling = false;
   _isReady = false;
+  _HTMLElements: Animation[] = [];
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
+
+    const animatedParagraphs = Array.from(
+      document.querySelectorAll('[data-animation="paragraph"]'),
+    ) as HTMLElement[];
+
+    animatedParagraphs.forEach(el => {
+      const animatedParagraph = new Paragraph({ element: el });
+      this._HTMLElements.push(animatedParagraph);
+    });
   }
 
   _performSnap = () => {
@@ -101,6 +113,10 @@ export class SlideScene extends ItemScene {
     }
 
     this._performSnap();
+
+    this._HTMLElements.forEach(el => {
+      el.onResize();
+    });
   }
 
   _addListeners() {
