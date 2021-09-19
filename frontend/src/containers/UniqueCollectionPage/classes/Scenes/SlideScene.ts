@@ -148,6 +148,10 @@ export class SlideScene extends ItemScene {
   }
 
   _handleIndexClick(index: number) {
+    if (!this._isReady) {
+      return;
+    }
+
     super._handleIndexClick(index);
 
     if (index === this._activeIndex) {
