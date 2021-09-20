@@ -41,11 +41,16 @@ export const Wrapper = styled(motion.div)<Props>`
 
 Wrapper.defaultProps = {
   variants: {
-    initial: {},
-    animate: {},
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+    },
     exit: {},
   },
   transition: {
+    delay: 0.3,
     staggerChildren: 0.2,
   },
 };
