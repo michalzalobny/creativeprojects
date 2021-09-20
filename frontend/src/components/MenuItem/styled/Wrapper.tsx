@@ -12,24 +12,11 @@ export const Wrapper = styled(motion.div)<Props>`
   min-width: 60vw;
   cursor: pointer;
   position: relative;
-
-  padding: 3vw 0;
+  padding: 10px 0;
 
   ${media.tablet} {
     min-width: 25vw;
-    padding-top: ${computeValue({
-      pixelValue: 16,
-      referenceWidth: sharedValues.containers.normal.referenceWidth,
-    })};
-
-    padding-bottom: ${computeValue({
-      pixelValue: 16,
-      referenceWidth: sharedValues.containers.normal.referenceWidth,
-    })};
-  }
-
-  ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    padding: 16px 0;
+    padding: 14px 0;
   }
 `;
 

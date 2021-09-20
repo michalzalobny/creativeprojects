@@ -11,18 +11,11 @@ export const LinkItem = styled(motion.a)<Props>`
   color: ${sharedValues.colors.trueWhite};
   ${sharedValues.fontPresets.normal};
   white-space: nowrap;
-  font-size: 5vw;
+  font-size: 18px;
   display: block;
   position: relative;
 
   ${media.tablet} {
-    font-size: ${computeValue({
-      pixelValue: 23,
-      referenceWidth: sharedValues.containers.normal.referenceWidth,
-    })};
-  }
-
-  ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    font-size: 23px;
+    font-size: 20px;
   }
 `;
