@@ -8,6 +8,8 @@ export const DescriptionWrapper = styled.div<Props>`
   position: absolute;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
 
   max-width: 30rem;
   margin: 2.5rem;
