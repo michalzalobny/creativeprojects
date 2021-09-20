@@ -14,6 +14,8 @@ import { ImageWrapper } from './styled/collection/ImageWrapper';
 import { DescriptionText } from './styled/collection/DescriptionText';
 import { DescriptionTitle } from './styled/collection/DescriptionTitle';
 import { DescriptionWrapper } from './styled/collection/DescriptionWrapper';
+import { TitleWrapper } from './styled/collection/TitleWrapper';
+import { Title } from './styled/collection/Title';
 
 export default function UniqueCollectionPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -58,7 +60,11 @@ export default function UniqueCollectionPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <Wrapper>
-        <DescriptionWrapper data-cfilter="treccia" data-animation="paragraph">
+        <DescriptionWrapper
+          data-cfilter="treccia"
+          data-animationel="description"
+          data-animation="paragraph"
+        >
           <DescriptionTitle>Treccia collection</DescriptionTitle>
           <DescriptionText>
             Every single piece of this collection is created hand-weaving
@@ -67,7 +73,11 @@ export default function UniqueCollectionPage(props: PageProps) {
           </DescriptionText>
         </DescriptionWrapper>
 
-        <DescriptionWrapper data-cfilter="onde" data-animation="paragraph">
+        <DescriptionWrapper
+          data-cfilter="onde"
+          data-animationel="description"
+          data-animation="paragraph"
+        >
           <DescriptionTitle>Onde collection</DescriptionTitle>
           <DescriptionText>
             The fluid movement of the elements of this collection joins the soft
@@ -77,7 +87,11 @@ export default function UniqueCollectionPage(props: PageProps) {
           </DescriptionText>
         </DescriptionWrapper>
 
-        <DescriptionWrapper data-cfilter="vita" data-animation="paragraph">
+        <DescriptionWrapper
+          data-cfilter="vita"
+          data-animationel="description"
+          data-animation="paragraph"
+        >
           <DescriptionTitle>Vita collection</DescriptionTitle>
           <DescriptionText>
             The organic structure of the Vita collection contains minute shapes
@@ -85,6 +99,19 @@ export default function UniqueCollectionPage(props: PageProps) {
             that unveil themselves with light reflection.
           </DescriptionText>
         </DescriptionWrapper>
+
+        {props.projectData.creativeItems.map((item, key) => {
+          return (
+            <TitleWrapper
+              data-celkey={key}
+              data-animation="paragraph"
+              data-animationel="title"
+              key={item.image.url}
+            >
+              <Title>{item.name}</Title>
+            </TitleWrapper>
+          );
+        })}
 
         <ContentWrapper>
           <CollectionWrapper data-collection-wrapper="wrapper">

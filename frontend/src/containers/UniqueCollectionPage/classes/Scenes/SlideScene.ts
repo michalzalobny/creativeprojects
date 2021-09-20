@@ -39,7 +39,8 @@ export class SlideScene extends ItemScene {
   _goToIndexTween: Tween<{ progress: number }> | null = null;
   _isAutoScrolling = false;
   _isReady = false;
-  _HTMLElements: Animation[] = [];
+  _HTMLTitles: Animation[] = [];
+  _HTMLDescriptions: Animation[] = [];
   _activeCollection = '';
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
@@ -48,13 +49,22 @@ export class SlideScene extends ItemScene {
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
 
-    const animatedParagraphs = Array.from(
-      document.querySelectorAll('[data-animation="paragraph"]'),
+    const animatedDescriptions = Array.from(
+      document.querySelectorAll('[data-animationel="description"]'),
     ) as HTMLElement[];
 
-    animatedParagraphs.forEach(el => {
+    animatedDescriptions.forEach(el => {
       const animatedParagraph = new Paragraph({ element: el });
-      this._HTMLElements.push(animatedParagraph);
+      this._HTMLDescriptions.push(animatedParagraph);
+    });
+
+    const animatedTitles = Array.from(
+      document.querySelectorAll('[data-animationel="title"]'),
+    ) as HTMLElement[];
+
+    animatedTitles.forEach(el => {
+      const animatedParagraph = new Paragraph({ element: el });
+      this._HTMLTitles.push(animatedParagraph);
     });
   }
 
@@ -115,7 +125,11 @@ export class SlideScene extends ItemScene {
 
     this._performSnap();
 
-    this._HTMLElements.forEach(el => {
+    this._HTMLDescriptions.forEach(el => {
+      el.onResize();
+    });
+
+    this._HTMLTitles.forEach(el => {
       el.onResize();
     });
   }
@@ -161,10 +175,22 @@ export class SlideScene extends ItemScene {
   }
 
   _updateActiveCollectionTitle() {
-    this._HTMLElements.forEach(el => {
+    this._HTMLDescriptions.forEach(el => {
       const elFilter = el.element.dataset.cfilter;
 
       if (elFilter === this._activeCollection) {
+        el.animateIn();
+      } else {
+        el.animateOut();
+      }
+    });
+  }
+
+  _updateActiveItemTitle() {
+    this._HTMLTitles.forEach(el => {
+      const elKey = el.element.dataset.celkey;
+
+      if (elKey === this._activeIndex.toString()) {
         el.animateIn();
       } else {
         el.animateOut();
@@ -181,6 +207,7 @@ export class SlideScene extends ItemScene {
     }
 
     this._updateActiveCollectionTitle();
+    this._updateActiveItemTitle();
 
     this._items3D.forEach(item => {
       if (item === el) {
