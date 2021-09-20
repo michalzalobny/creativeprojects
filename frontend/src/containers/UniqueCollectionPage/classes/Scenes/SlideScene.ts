@@ -200,11 +200,12 @@ export class SlideScene extends ItemScene {
 
   _onIndexChange() {
     const el = this._items3D[this._activeIndex];
-    this._activeCollection = el.cardItem.item.filter.toLocaleLowerCase();
 
     if (!el) {
       return;
     }
+
+    this._activeCollection = el.cardItem.item.filter.toLocaleLowerCase();
 
     this._updateActiveCollectionTitle();
     this._updateActiveItemTitle();
