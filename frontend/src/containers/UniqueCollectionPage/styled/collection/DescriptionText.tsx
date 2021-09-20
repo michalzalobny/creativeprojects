@@ -1,8 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { media } from 'utils/responsive';
 
-interface Props {}
+interface Props {
+  hideMobile?: boolean;
+  hideDesktop?: boolean;
+}
 
 export const DescriptionText = styled.p<Props>`
   margin-top: 1rem;
@@ -12,7 +15,24 @@ export const DescriptionText = styled.p<Props>`
   font-weight: 300;
   font-family: '2';
 
+  ${props =>
+    props.hideMobile &&
+    css`
+      display: none;
+    `}
+
   ${media.tablet} {
     font-size: 1.7rem;
+    ${props =>
+      props.hideMobile &&
+      css`
+        display: initial;
+      `}
+
+    ${props =>
+      props.hideDesktop &&
+      css`
+        display: none;
+      `}
   }
 `;

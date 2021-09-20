@@ -65,8 +65,10 @@ export default function UniqueCollectionPage(props: PageProps) {
           data-animationel="description"
           data-animation="paragraph"
         >
-          <DescriptionTitle>Treccia collection</DescriptionTitle>
-          <DescriptionText>
+          <DescriptionText hideDesktop>COLLECTION ONE</DescriptionText>
+          <DescriptionTitle hideDesktop>Treccia</DescriptionTitle>
+          <DescriptionTitle hideMobile>Treccia collection</DescriptionTitle>
+          <DescriptionText hideMobile>
             Every single piece of this collection is created hand-weaving
             several precious threads. Some of the twines contain precious and
             colorful stones.
@@ -78,8 +80,10 @@ export default function UniqueCollectionPage(props: PageProps) {
           data-animationel="description"
           data-animation="paragraph"
         >
-          <DescriptionTitle>Onde collection</DescriptionTitle>
-          <DescriptionText>
+          <DescriptionText hideDesktop>COLLECTION TWO</DescriptionText>
+          <DescriptionTitle hideDesktop>Onde</DescriptionTitle>
+          <DescriptionTitle hideMobile>Onde collection</DescriptionTitle>
+          <DescriptionText hideMobile>
             The fluid movement of the elements of this collection joins the soft
             shapes of the filigree, that looks as if floating in the structures.
             The repetition of the waves creates large but incredibly light
@@ -92,8 +96,10 @@ export default function UniqueCollectionPage(props: PageProps) {
           data-animationel="description"
           data-animation="paragraph"
         >
-          <DescriptionTitle>Vita collection</DescriptionTitle>
-          <DescriptionText>
+          <DescriptionText hideDesktop>COLLECTION THREE</DescriptionText>
+          <DescriptionTitle hideDesktop>Vita</DescriptionTitle>
+          <DescriptionTitle hideMobile>Vita collection</DescriptionTitle>
+          <DescriptionText hideMobile>
             The organic structure of the Vita collection contains minute shapes
             created with precious metal threads and small gold or silver spheres
             that unveil themselves with light reflection.

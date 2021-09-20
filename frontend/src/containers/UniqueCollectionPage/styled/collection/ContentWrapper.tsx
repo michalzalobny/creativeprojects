@@ -10,7 +10,7 @@ export const ContentWrapper = styled(motion.div)<Props>`
   top: 0;
   left: 50%;
   height: 100%;
-  transform: translateX(-16rem);
+  transform: translateX(-12.5rem);
 
   ${media.tablet} {
     transform: translateX(-23.5rem);

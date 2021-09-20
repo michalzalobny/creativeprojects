@@ -10,12 +10,12 @@ export const ImageWrapper = styled(motion.figure)<Props>`
   opacity: 0;
   visibility: hidden;
 
-  height: 36rem;
-  width: 25rem;
-  margin-right: 7rem;
+  height: 30rem;
+  width: 20rem;
+  margin-right: 5rem;
 
   &:first-child {
-    margin-left: 3.5rem;
+    margin-left: 2.5rem;
   }
 
   &:last-child {
