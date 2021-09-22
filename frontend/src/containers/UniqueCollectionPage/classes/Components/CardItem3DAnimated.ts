@@ -76,22 +76,26 @@ export class CardItem3DAnimated extends CardItem3D {
   animateRotate(props: AnimateProps) {
     const {
       destination,
-      duration = 1200,
+      duration = 2500,
       delay = 0,
       easing = TWEEN.Easing.Exponential.InOut,
     } = props;
 
-    if (!this._mesh) return;
-
     if (this._rotateTween) this._rotateTween.stop();
 
     this._rotateTween = new TWEEN.Tween({
-      progress: this._mesh.rotation.y,
+      progress: this._rotationProgress,
     })
       .to({ progress: destination }, duration)
       .delay(delay)
       .easing(easing)
-      .onUpdate(obj => {});
+      .onUpdate(obj => {
+        this._rotationProgress = obj.progress;
+
+        if (this._mesh) {
+          this._mesh.rotation.y = this._rotationProgress * Math.PI;
+        }
+      });
 
     this._rotateTween.start();
   }
@@ -276,6 +280,8 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 1.18,
       duration: 1400,
     });
+
+    this.animateRotate({ destination: 2 });
   }
 
   animateFocusOut() {
@@ -289,5 +295,7 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 1,
       duration: 1400,
     });
+
+    this.animateRotate({ destination: 0 });
   }
 }

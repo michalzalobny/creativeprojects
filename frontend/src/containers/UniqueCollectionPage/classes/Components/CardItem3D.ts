@@ -21,6 +21,7 @@ export class CardItem3D extends MediaObject3D {
   _randomValue = 1;
   _readyProgress = 0;
   _gatherProgress = 0;
+  _rotationProgress = 0;
   _isAnimatedIn = false;
   isFocused = false;
 
