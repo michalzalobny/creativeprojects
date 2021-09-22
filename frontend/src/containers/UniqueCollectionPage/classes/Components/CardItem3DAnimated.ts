@@ -17,6 +17,7 @@ export class CardItem3DAnimated extends CardItem3D {
 
   _gatherTween: Tween<{ progress: number }> | null = null;
   _readyTween: Tween<{ progress: number }> | null = null;
+  _rotateTween: Tween<{ progress: number }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
   _translateXTween: Tween<{ translationX: number }> | null = null;
   _translateYTween: Tween<{ translationY: number }> | null = null;
@@ -70,6 +71,29 @@ export class CardItem3DAnimated extends CardItem3D {
       .onComplete(() => {});
 
     this._scaleTween.start();
+  }
+
+  animateRotate(props: AnimateProps) {
+    const {
+      destination,
+      duration = 1200,
+      delay = 0,
+      easing = TWEEN.Easing.Exponential.InOut,
+    } = props;
+
+    if (!this._mesh) return;
+
+    if (this._rotateTween) this._rotateTween.stop();
+
+    this._rotateTween = new TWEEN.Tween({
+      progress: this._mesh.rotation.y,
+    })
+      .to({ progress: destination }, duration)
+      .delay(delay)
+      .easing(easing)
+      .onUpdate(obj => {});
+
+    this._rotateTween.start();
   }
 
   animateReady(props: AnimateProps) {
