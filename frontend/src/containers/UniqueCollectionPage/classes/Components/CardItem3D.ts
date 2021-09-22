@@ -18,9 +18,9 @@ export class CardItem3D extends MediaObject3D {
   _scaleTranslate = { x: 0, y: 0 };
   _yAmplitude = 0;
   _currentOffsetX = 0;
-  _randomValue = 1;
   _readyProgress = 0;
   _gatherProgress = 0;
+  _rotationProgress = 0;
   _isAnimatedIn = false;
   isFocused = false;
 
@@ -34,8 +34,6 @@ export class CardItem3D extends MediaObject3D {
     if (this._mesh) {
       this._mesh.position.z = this.cardItem.itemKeyReverse * 0.001;
     }
-
-    this._randomValue = Math.random() > 0.5 ? 1 : -1;
 
     this.setColliderName('cardItem');
   }
@@ -80,24 +78,32 @@ export class CardItem3D extends MediaObject3D {
     this._domElBounds = this._domEl.getBoundingClientRect();
     this._updateScale();
 
-    if (this._mesh) {
+    if (this._mesh && this._meshBack) {
       this._mesh.material.uniforms.uPlaneSizes.value = [
         this._mesh.scale.x,
         this._mesh.scale.y,
+      ];
+
+      this._meshBack.material.uniforms.uPlaneSizes.value = [
+        this._meshBack.scale.x,
+        this._meshBack.scale.y,
       ];
     }
   }
 
   _updateScale() {
-    if (this._mesh) {
+    if (this._mesh && this._meshBack) {
       this._mesh.scale.x = this._domElBounds.width;
       this._mesh.scale.y = this._domElBounds.height;
+
+      this._meshBack.scale.x = this._domElBounds.width;
+      this._meshBack.scale.y = this._domElBounds.height;
     }
   }
 
   _updateX(x: number) {
     if (this._mesh) {
-      this._mesh.position.x =
+      this._group.position.x =
         -x +
         this._domElBounds.left * this._readyProgress -
         (this._rendererBounds.width / 2) * this._readyProgress +
@@ -109,7 +115,7 @@ export class CardItem3D extends MediaObject3D {
 
   _updateY(y: number) {
     if (this._mesh) {
-      this._mesh.position.y =
+      this._group.position.y =
         -y -
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
@@ -125,11 +131,11 @@ export class CardItem3D extends MediaObject3D {
       const amplitude = this._mesh.scale.x * 0.2;
       const frequency = 1;
 
-      this._mesh.rotation.z =
-        this._randomValue *
+      this._group.rotation.z =
+        this._randomSign *
         -0.08 *
         Math.PI *
-        Math.sin((this._mesh.position.x * 0.001) / frequency);
+        Math.sin((this._group.position.x * 0.001) / frequency);
 
       this._yAmplitude =
         amplitude *

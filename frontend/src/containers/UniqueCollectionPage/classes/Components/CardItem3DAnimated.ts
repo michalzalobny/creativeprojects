@@ -60,12 +60,15 @@ export class CardItem3DAnimated extends CardItem3D {
       .delay(delay)
       .easing(easing)
       .onUpdate(obj => {
-        if (this._mesh) {
+        if (this._mesh && this._meshBack) {
           this._scaleTranslate.x = -(this._domElBounds.width - obj.x) / 2;
           this._scaleTranslate.y = (this._domElBounds.height - obj.y) / 2;
 
           this._mesh.scale.x = obj.x;
           this._mesh.scale.y = obj.y;
+
+          this._meshBack.scale.x = obj.x;
+          this._meshBack.scale.y = obj.y;
         }
       })
       .onComplete(() => {});
@@ -76,22 +79,28 @@ export class CardItem3DAnimated extends CardItem3D {
   animateRotate(props: AnimateProps) {
     const {
       destination,
-      duration = 1200,
+      duration = 2500,
       delay = 0,
       easing = TWEEN.Easing.Exponential.InOut,
     } = props;
 
-    if (!this._mesh) return;
-
     if (this._rotateTween) this._rotateTween.stop();
 
     this._rotateTween = new TWEEN.Tween({
-      progress: this._mesh.rotation.y,
+      progress: this._rotationProgress,
     })
       .to({ progress: destination }, duration)
       .delay(delay)
       .easing(easing)
-      .onUpdate(obj => {});
+      .onUpdate(obj => {
+        this._rotationProgress = obj.progress;
+
+        if (this._meshBack && this._mesh) {
+          this._meshBack.rotation.y =
+            Math.PI - this._rotationProgress * Math.PI;
+          this._mesh.rotation.y = -this._rotationProgress * Math.PI;
+        }
+      });
 
     this._rotateTween.start();
   }
@@ -220,7 +229,7 @@ export class CardItem3DAnimated extends CardItem3D {
   }
 
   setElementScale(value: number) {
-    if (this._mesh) {
+    if (this._mesh && this._meshBack) {
       const destinationX = this._domElBounds.width * value;
       const destinationY = this._domElBounds.height * value;
 
@@ -229,6 +238,9 @@ export class CardItem3DAnimated extends CardItem3D {
 
       this._mesh.scale.x = destinationX;
       this._mesh.scale.y = destinationY;
+
+      this._meshBack.scale.x = destinationX;
+      this._meshBack.scale.y = destinationY;
     }
   }
 
@@ -276,6 +288,8 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 1.18,
       duration: 1400,
     });
+
+    this.animateRotate({ destination: 2 });
   }
 
   animateFocusOut() {
@@ -289,5 +303,7 @@ export class CardItem3DAnimated extends CardItem3D {
       destination: 1,
       duration: 1400,
     });
+
+    this.animateRotate({ destination: 0 });
   }
 }

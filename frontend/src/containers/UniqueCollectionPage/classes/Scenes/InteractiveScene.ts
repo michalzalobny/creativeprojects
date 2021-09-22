@@ -62,8 +62,8 @@ export class InteractiveScene extends THREE.Scene {
     const intersectingObjects: InteractiveObject3D[] = [];
 
     for (let i = 0; i < intersects.length; ++i) {
-      const interactiveObject = intersects[i].object
-        .parent as InteractiveObject3D;
+      const interactiveObject = intersects[i].object.parent
+        ?.parent as InteractiveObject3D;
       if (interactiveObject.colliderName) {
         intersectingObjects.push(interactiveObject);
         if (fnToCallIfHit) {
