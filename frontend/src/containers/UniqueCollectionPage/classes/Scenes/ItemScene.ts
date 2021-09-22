@@ -118,6 +118,9 @@ export class ItemScene extends InteractiveScene {
 
     this._items3D.forEach(el => {
       el.textureItem = this._textureItems[el.cardItem.item.image.url];
+      el.textureItemBack = this._textureItems[
+        el.cardItem.item.secondaryImage.url
+      ];
     });
   }
 

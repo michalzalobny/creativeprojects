@@ -15,6 +15,7 @@ export class MediaObject3D extends InteractiveObject3D {
   _mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null = null;
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _textureItem: TextureItem | null = null;
+  _textureItemBack: TextureItem | null = null;
   _intersectPoint: THREE.Vector3 | null = null;
   _masterOpacity = 1;
   _tweenOpacity = 0;
@@ -30,13 +31,15 @@ export class MediaObject3D extends InteractiveObject3D {
   _createMesh() {
     this._material = new THREE.ShaderMaterial({
       transparent: true,
-      side: THREE.FrontSide,
+      side: THREE.DoubleSide,
       depthWrite: false,
       depthTest: false,
       uniforms: {
         tMap: { value: null },
-        uPlaneSizes: { value: [0, 0] },
         uImageSizes: { value: [0, 0] },
+        tMapBack: { value: null },
+        uImageSizesBack: { value: [0, 0] },
+        uPlaneSizes: { value: [0, 0] },
         uTime: { value: 0 },
         uRandom: { value: Math.random() },
         uRandomSign: { value: Math.random() > 0.5 ? 1 : -1 },
@@ -62,6 +65,17 @@ export class MediaObject3D extends InteractiveObject3D {
       this._material.uniforms.uImageSizes.value = [
         this._textureItem.naturalWidth,
         this._textureItem.naturalHeight,
+      ];
+    }
+  }
+
+  _updateTextureBack() {
+    if (this._material && this._textureItemBack && this._mesh) {
+      this._material.uniforms.tMapBack.value = this._textureItemBack.texture;
+
+      this._material.uniforms.uImageSizes.value = [
+        this._textureItemBack.naturalWidth,
+        this._textureItemBack.naturalHeight,
       ];
     }
   }
@@ -119,6 +133,12 @@ export class MediaObject3D extends InteractiveObject3D {
   set textureItem(textureItem: TextureItem) {
     this._textureItem = textureItem;
     this._updateTexture();
+    this.onResize();
+  }
+
+  set textureItemBack(textureItem: TextureItem) {
+    this._textureItemBack = textureItem;
+    this._updateTextureBack();
     this.onResize();
   }
 
