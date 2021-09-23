@@ -11,9 +11,9 @@ interface Constructor {
 
 export class CardItem3DAnimated extends CardItem3D {
   static defaultOpacity = 0.4;
-  static gatherDuration = 340; //3400
+  static gatherDuration = 3400;
   static animateReadyDelay = CardItem3DAnimated.gatherDuration * 0.8;
-  static animateReadyDuration = 200; //2000
+  static animateReadyDuration = 2000;
 
   _gatherTween: Tween<{ progress: number }> | null = null;
   _readyTween: Tween<{ progress: number }> | null = null;
@@ -76,7 +76,7 @@ export class CardItem3DAnimated extends CardItem3D {
   animateRotate(props: AnimateProps) {
     const {
       destination,
-      duration = 1500,
+      duration = 1300,
       delay = 0,
       easing = TWEEN.Easing.Exponential.InOut,
     } = props;
@@ -295,13 +295,13 @@ export class CardItem3DAnimated extends CardItem3D {
     });
   }
 
-  animatePreviewIn() {
-    this.isInPreview = true;
-
-    this.animateRotate({ destination: 2 });
+  animateRotateIn() {
+    this.isRotated = true;
+    this.animateRotate({ destination: 1 });
   }
 
-  animatePreviewOut() {
-    this.isInPreview = true;
+  animateRotateOut() {
+    this.isRotated = false;
+    this.animateRotate({ destination: 0 });
   }
 }

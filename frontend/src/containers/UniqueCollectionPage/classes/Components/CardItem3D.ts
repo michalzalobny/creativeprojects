@@ -24,7 +24,7 @@ export class CardItem3D extends MediaObject3D {
   _rotationProgress = 0;
   _isAnimatedIn = false;
   isFocused = false;
-  isInPreview = false;
+  isRotated = false;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
     super({ geometry });

@@ -42,7 +42,6 @@ export class SlideScene extends ItemScene {
   _HTMLTitles: Animation[] = [];
   _HTMLDescriptions: Animation[] = [];
   _activeCollection = '';
-  _isTransitionedIn = false;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -162,17 +161,12 @@ export class SlideScene extends ItemScene {
     });
   }
 
-  _handleTransitionIn(el: CardItem3DAnimated) {
-    this._isTransitionedIn = true;
-    el.animatePreviewIn();
-
-    this._HTMLDescriptions.forEach(el => {
-      el.animateOut();
-    });
-
-    this._HTMLTitles.forEach(el => {
-      el.animateOut();
-    });
+  _handlePreview(el: CardItem3DAnimated) {
+    if (el.isRotated) {
+      el.animateRotateOut();
+    } else {
+      el.animateRotateIn();
+    }
   }
 
   _handleIndexClick(index: number) {
@@ -194,7 +188,7 @@ export class SlideScene extends ItemScene {
     }
 
     if (el.isFocused) {
-      this._handleTransitionIn(el);
+      this._handlePreview(el);
     }
   }
 
@@ -235,6 +229,7 @@ export class SlideScene extends ItemScene {
     this._updateActiveItemTitle();
 
     this._items3D.forEach(item => {
+      item.animateRotateOut();
       if (item === el) {
         item.animateFocusIn();
       } else if (item.isFocused) {
