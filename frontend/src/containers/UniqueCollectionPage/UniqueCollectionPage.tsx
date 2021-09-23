@@ -16,6 +16,8 @@ import { DescriptionTitle } from './styled/collection/DescriptionTitle';
 import { DescriptionWrapper } from './styled/collection/DescriptionWrapper';
 import { TitleWrapper } from './styled/collection/TitleWrapper';
 import { Title } from './styled/collection/Title';
+import { DetailsWrapper } from './styled/collection/DetailsWrapper';
+import { ImageWrapperDetails } from './styled/collection/ImageWrapperDetails';
 
 export default function UniqueCollectionPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -105,6 +107,10 @@ export default function UniqueCollectionPage(props: PageProps) {
             that unveil themselves with light reflection.
           </DescriptionText>
         </DescriptionWrapper>
+
+        <DetailsWrapper>
+          <ImageWrapperDetails data-collection="zoomimage" />
+        </DetailsWrapper>
 
         {props.projectData.creativeItems.map((item, key) => {
           return (

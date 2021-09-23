@@ -24,6 +24,7 @@ export class CardItem3D extends MediaObject3D {
   _rotationProgress = 0;
   _isAnimatedIn = false;
   isFocused = false;
+  isInPreview = false;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -150,12 +151,13 @@ export class CardItem3D extends MediaObject3D {
   animateOpacity(props: AnimateProps) {}
 
   onMouseEnter() {
-    if (this.isFocused || !this._isAnimatedIn) {
-      return;
-    }
     super.onMouseEnter();
     document.body.style.cursor = 'pointer';
     this.dispatchEvent({ type: 'pointerover' });
+
+    if (this.isFocused || !this._isAnimatedIn) {
+      return;
+    }
 
     this.animateOpacity({
       destination: 0.7,
@@ -163,12 +165,13 @@ export class CardItem3D extends MediaObject3D {
   }
 
   onMouseLeave() {
-    if (this.isFocused || !this._isAnimatedIn) {
-      return;
-    }
     super.onMouseLeave();
     document.body.style.cursor = 'initial';
     this.dispatchEvent({ type: 'pointerleft' });
+
+    if (this.isFocused || !this._isAnimatedIn) {
+      return;
+    }
 
     this.animateOpacity({
       destination: CardItem3DAnimated.defaultOpacity,

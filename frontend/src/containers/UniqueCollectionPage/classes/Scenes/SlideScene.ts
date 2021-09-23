@@ -42,6 +42,7 @@ export class SlideScene extends ItemScene {
   _HTMLTitles: Animation[] = [];
   _HTMLDescriptions: Animation[] = [];
   _activeCollection = '';
+  _isTransitionedIn = false;
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -161,6 +162,19 @@ export class SlideScene extends ItemScene {
     });
   }
 
+  _handleTransitionIn(el: CardItem3DAnimated) {
+    this._isTransitionedIn = true;
+    el.animatePreviewIn();
+
+    this._HTMLDescriptions.forEach(el => {
+      el.animateOut();
+    });
+
+    this._HTMLTitles.forEach(el => {
+      el.animateOut();
+    });
+  }
+
   _handleIndexClick(index: number) {
     if (!this._isReady) {
       return;
@@ -171,6 +185,16 @@ export class SlideScene extends ItemScene {
     if (index === this._activeIndex) {
     } else {
       this.animateToIndex({ destination: index });
+    }
+
+    const el = this._items3D[index];
+
+    if (!el) {
+      return;
+    }
+
+    if (el.isFocused) {
+      this._handleTransitionIn(el);
     }
   }
 
