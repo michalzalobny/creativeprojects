@@ -42,3 +42,21 @@ export interface AnimateProps {
   destination: number;
   easing?: (amount: number) => number;
 }
+
+export type DirectionX = 'left' | 'right';
+export type DirectionY = 'up' | 'down';
+
+export interface ScrollValues {
+  current: Coords;
+  target: Coords;
+  last: Coords;
+  scrollSpeed: Coords;
+  direction: {
+    x: DirectionX;
+    y: DirectionY;
+  };
+  strength: {
+    current: number;
+    target: number;
+  };
+}

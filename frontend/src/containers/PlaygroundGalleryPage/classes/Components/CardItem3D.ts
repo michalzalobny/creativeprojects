@@ -16,14 +16,9 @@ export class CardItem3D extends MediaObject3D {
   _domElBounds: DOMRect;
   _extraTranslate = { x: 0, y: 0 };
   _scaleTranslate = { x: 0, y: 0 };
-  _yAmplitude = 0;
-  _currentOffsetX = 0;
   _randomValue = 1;
-  _readyProgress = 0;
-  _gatherProgress = 0;
   _rotationProgress = 0;
   _isAnimatedIn = false;
-  isFocused = false;
   isRotated = false;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
@@ -101,11 +96,11 @@ export class CardItem3D extends MediaObject3D {
     if (this._mesh) {
       this._mesh.position.x =
         -x +
-        this._domElBounds.left * this._readyProgress -
-        (this._rendererBounds.width / 2) * this._readyProgress +
-        (this._mesh.scale.x / 2) * this._readyProgress -
-        this._extraTranslate.x * (1 - this._gatherProgress) -
-        this._scaleTranslate.x * this._readyProgress;
+        this._domElBounds.left -
+        this._rendererBounds.width / 2 +
+        this._mesh.scale.x / 2 -
+        this._extraTranslate.x -
+        this._scaleTranslate.x;
     }
   }
 
@@ -116,27 +111,8 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
-        this._extraTranslate.y * (1 - this._gatherProgress) -
-        this._scaleTranslate.y -
-        this._yAmplitude;
-    }
-  }
-
-  _handlePositioning() {
-    if (this._mesh) {
-      const amplitude = this._mesh.scale.x * 0.2;
-      const frequency = 1;
-
-      this._mesh.rotation.z =
-        this._randomValue *
-        -0.08 *
-        Math.PI *
-        Math.sin((this._mesh.position.x * 0.001) / frequency);
-
-      this._yAmplitude =
-        amplitude *
-        Math.sin(this.cardItem.itemKey / frequency) *
-        this._readyProgress;
+        this._extraTranslate.y -
+        this._scaleTranslate.y;
     }
   }
 
@@ -154,28 +130,12 @@ export class CardItem3D extends MediaObject3D {
     super.onMouseEnter();
     document.body.style.cursor = 'pointer';
     this.dispatchEvent({ type: 'pointerover' });
-
-    if (this.isFocused || !this._isAnimatedIn) {
-      return;
-    }
-
-    this.animateOpacity({
-      destination: 0.7,
-    });
   }
 
   onMouseLeave() {
     super.onMouseLeave();
     document.body.style.cursor = 'initial';
     this.dispatchEvent({ type: 'pointerleft' });
-
-    if (this.isFocused || !this._isAnimatedIn) {
-      return;
-    }
-
-    this.animateOpacity({
-      destination: CardItem3DAnimated.defaultOpacity,
-    });
   }
 
   onResize() {
@@ -186,12 +146,7 @@ export class CardItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this._updateX(this._currentOffsetX);
+    this._updateX(0);
     this._updateY(0);
-    this._handlePositioning();
-  }
-
-  set currentOffsetX(value: number) {
-    this._currentOffsetX = value;
   }
 }

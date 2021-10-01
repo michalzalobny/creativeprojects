@@ -30,7 +30,6 @@ export class SlideScene extends ItemScene {
     strengthCurrent: 0,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  _readyTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
   _targetIndex = 0;
   _scrollBoundary = 1;
@@ -96,11 +95,6 @@ export class SlideScene extends ItemScene {
 
     if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
 
-    if (this._isReady) {
-      const item = this._items3D[this._activeIndex];
-      item.animateFocusIn();
-    }
-
     this._performSnap();
   }
 
@@ -122,12 +116,6 @@ export class SlideScene extends ItemScene {
     this._items3D.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
       item.strength = this._offsetX.strengthCurrent;
-    });
-  }
-
-  _positionItems(updateInfo: UpdateInfo) {
-    this._items3D.forEach((item, index) => {
-      item.currentOffsetX = this._offsetX.current;
     });
   }
 
@@ -156,29 +144,6 @@ export class SlideScene extends ItemScene {
     if (!el) {
       return;
     }
-
-    if (el.isFocused) {
-      this._handlePreview(el);
-    }
-  }
-
-  _onIndexChange() {
-    const el = this._items3D[this._activeIndex];
-
-    if (!el) {
-      return;
-    }
-
-    this._activeCollection = el.cardItem.item.filter.toLocaleLowerCase();
-
-    this._items3D.forEach(item => {
-      item.animateRotateOut();
-      if (item === el) {
-        item.animateFocusIn();
-      } else if (item.isFocused) {
-        item.animateFocusOut();
-      }
-    });
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
@@ -209,7 +174,7 @@ export class SlideScene extends ItemScene {
 
     if (prevIndex !== currentIndex) {
       this._activeIndex = currentIndex;
-      this._onIndexChange();
+      // this._onIndexChange();
     }
 
     this._targetIndex = Math.round(
@@ -222,14 +187,12 @@ export class SlideScene extends ItemScene {
     super.update(updateInfo);
     this._passValues();
     this._updateIndex(updateInfo);
-    this._positionItems(updateInfo);
   }
 
   destroy() {
     super.destroy();
 
     if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
-    if (this._readyTimeoutId) clearTimeout(this._readyTimeoutId);
   }
 
   animateToIndex(props: AnimateProps) {
@@ -266,21 +229,8 @@ export class SlideScene extends ItemScene {
   }
 
   animateIn() {
-    const delayInterval = 40;
     this._items3D.forEach(el => {
-      el.animateIn(el.cardItem.itemKeyReverse * delayInterval);
+      el.animateIn(0);
     });
-
-    const maximumDelay = this._items3D.length * delayInterval;
-
-    const finalTiming =
-      maximumDelay +
-      CardItem3DAnimated.animateReadyDelay +
-      CardItem3DAnimated.animateReadyDuration * 0.25;
-
-    this._readyTimeoutId = setTimeout(() => {
-      this._onIndexChange();
-      this._isReady = true;
-    }, finalTiming);
   }
 }

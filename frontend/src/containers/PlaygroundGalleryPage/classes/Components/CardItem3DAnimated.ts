@@ -10,12 +10,8 @@ interface Constructor {
 }
 
 export class CardItem3DAnimated extends CardItem3D {
-  static defaultOpacity = 0.4;
-  static gatherDuration = 3400;
-  static animateReadyDelay = CardItem3DAnimated.gatherDuration * 0.8;
-  static animateReadyDuration = 2000;
+  static defaultOpacity = 1;
 
-  _gatherTween: Tween<{ progress: number }> | null = null;
   _readyTween: Tween<{ progress: number }> | null = null;
   _rotateTween: Tween<{ progress: number }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
@@ -98,55 +94,6 @@ export class CardItem3DAnimated extends CardItem3D {
       });
 
     this._rotateTween.start();
-  }
-
-  animateReady(props: AnimateProps) {
-    const {
-      destination,
-      duration = 400,
-      delay = 0,
-      easing = TWEEN.Easing.Exponential.InOut,
-    } = props;
-
-    if (this._readyTween) {
-      this._readyTween.stop();
-    }
-
-    this._readyTween = new TWEEN.Tween({ progress: this._readyProgress })
-      .to({ progress: destination }, duration)
-      .delay(delay)
-      .easing(easing)
-      .onUpdate(obj => {
-        this._readyProgress = obj.progress;
-      })
-      .onComplete(() => {
-        this._isAnimatedIn = true;
-      });
-
-    this._readyTween.start();
-  }
-
-  animateGather(props: AnimateProps) {
-    const {
-      destination,
-      duration = 400,
-      delay = 0,
-      easing = TWEEN.Easing.Exponential.InOut,
-    } = props;
-
-    if (this._gatherTween) {
-      this._gatherTween.stop();
-    }
-
-    this._gatherTween = new TWEEN.Tween({ progress: this._gatherProgress })
-      .to({ progress: destination }, duration)
-      .delay(delay)
-      .easing(easing)
-      .onUpdate(obj => {
-        this._gatherProgress = obj.progress;
-      });
-
-    this._gatherTween.start();
   }
 
   animateOpacity(props: AnimateProps) {
@@ -239,59 +186,11 @@ export class CardItem3DAnimated extends CardItem3D {
   animateIn(delay: number) {
     this._tweenOpacity = 0;
 
-    this.setElementScale(0.3);
-
-    this._positionRandomly();
-
-    this.animateGather({
-      destination: 1,
-      duration: CardItem3DAnimated.gatherDuration,
-      delay: delay,
-    });
-
     this.animateOpacity({
       easing: TWEEN.Easing.Exponential.InOut,
       destination: CardItem3DAnimated.defaultOpacity,
-      duration: CardItem3DAnimated.gatherDuration,
+      duration: 1000,
       delay: delay,
-    });
-
-    this.animateScale({
-      destination: 1,
-      duration: 0.75 * CardItem3DAnimated.gatherDuration,
-      delay: 0.25 * CardItem3DAnimated.gatherDuration + delay,
-    });
-
-    this.animateReady({
-      delay: CardItem3DAnimated.animateReadyDelay + delay,
-      destination: 1,
-      duration: CardItem3DAnimated.animateReadyDuration,
-    });
-  }
-
-  animateFocusIn() {
-    this.isFocused = true;
-
-    this.animateOpacity({
-      destination: 1,
-    });
-
-    this.animateScale({
-      destination: 1.18,
-      duration: 1400,
-    });
-  }
-
-  animateFocusOut() {
-    this.isFocused = false;
-
-    this.animateOpacity({
-      destination: CardItem3DAnimated.defaultOpacity,
-    });
-
-    this.animateScale({
-      destination: 1,
-      duration: 1400,
     });
   }
 
