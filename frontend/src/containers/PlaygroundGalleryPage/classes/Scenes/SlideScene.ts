@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { UpdateInfo, Bounds, AnimateProps } from '../types';
+import { UpdateInfo, Bounds, AnimateProps, ScrollValues } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -22,12 +22,21 @@ export class SlideScene extends ItemScene {
   static timeToSnap = 500;
 
   _scroll: Scroll;
-  _offsetX = {
+  _scrollValues: ScrollValues = {
+    current: { x: 0, y: 0 },
+    target: { x: 0, y: 0 },
+    last: { x: 0, y: 0 },
+    direction: { x: 'left', y: 'up' },
+    strength: {
+      current: 0,
+      target: 0,
+    },
+    scrollSpeed: { x: 0, y: 0 },
+  };
+  _depthIndex = {
     last: 0,
     current: 0,
     target: 0,
-    strengthTarget: 0,
-    strengthCurrent: 0,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
@@ -49,40 +58,25 @@ export class SlideScene extends ItemScene {
     this.animateToIndex({ destination: this._targetIndex });
   };
 
-  _applyScrollX = (x: number) => {
-    if (!this._isReady) {
-      return;
-    }
-
-    if (this._isAutoScrolling) {
-      if (this._goToIndexTween) this._goToIndexTween.stop();
-      if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
-      this._isAutoScrolling = false;
-    }
-
-    let newOffset = this._offsetX.target - x;
-
-    if (newOffset < 0) {
-      newOffset = 0;
-    } else if (newOffset >= this._scrollBoundary) {
-      newOffset = this._scrollBoundary;
-    }
-
-    this._offsetX.target = newOffset;
-
-    //Hanlde auto snap
-    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
-    this._snapTimeoutId = setTimeout(this._performSnap, SlideScene.timeToSnap);
+  _applyScroll = (x: number, y: number) => {
+    this._scrollValues.target.x -= x;
+    this._scrollValues.target.y += y;
   };
 
   _onScrollMouse = (e: THREE.Event) => {
-    this._applyScrollX(e.x * SlideScene.mouseMultiplier);
+    this._applyScroll(
+      e.x * SlideScene.mouseMultiplier,
+      e.y * SlideScene.mouseMultiplier,
+    );
   };
   _onScrollTouch = (e: THREE.Event) => {
-    this._applyScrollX(e.x * SlideScene.touchMultiplier);
+    this._applyScroll(
+      e.x * SlideScene.touchMultiplier,
+      e.y * SlideScene.touchMultiplier,
+    );
   };
   _onScrollWheel = (e: THREE.Event) => {
-    this._applyScrollX(e.y * SlideScene.wheelMultiplier);
+    //Update depth
   };
 
   _onResize() {
@@ -115,7 +109,8 @@ export class SlideScene extends ItemScene {
   _passValues() {
     this._items3D.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
-      item.strength = this._offsetX.strengthCurrent;
+      // pass scroll values
+      // item.strength = this._depthIndex.strengthCurrent;
     });
   }
 
@@ -147,28 +142,21 @@ export class SlideScene extends ItemScene {
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
-    this._offsetX.last = this._offsetX.current;
+    this._depthIndex.last = this._depthIndex.current;
 
-    this._offsetX.current = lerp(
-      this._offsetX.current,
-      this._offsetX.target,
-      SlideScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._offsetX.strengthTarget = this._offsetX.last - this._offsetX.current;
-
-    this._offsetX.strengthCurrent = lerp(
-      this._offsetX.strengthCurrent,
-      this._offsetX.strengthTarget,
+    this._depthIndex.current = lerp(
+      this._depthIndex.current,
+      this._depthIndex.target,
       SlideScene.lerpEase * updateInfo.slowDownFactor,
     );
 
     const prevIndex = Math.round(
-      (this._offsetX.last / this._scrollBoundary) * (this._items3D.length - 1),
+      (this._depthIndex.last / this._scrollBoundary) *
+        (this._items3D.length - 1),
     );
 
     const currentIndex = Math.round(
-      (this._offsetX.current / this._scrollBoundary) *
+      (this._depthIndex.current / this._scrollBoundary) *
         (this._items3D.length - 1),
     );
 
@@ -178,9 +166,32 @@ export class SlideScene extends ItemScene {
     }
 
     this._targetIndex = Math.round(
-      (this._offsetX.target / this._scrollBoundary) *
+      (this._depthIndex.target / this._scrollBoundary) *
         (this._items3D.length - 1),
     );
+  }
+
+  _resetScrollValues() {
+    //Reset scroll values
+    this._scrollValues.current.x = 0;
+    this._scrollValues.current.y = 0;
+
+    this._scrollValues.target.x = 0;
+    this._scrollValues.target.y = 0;
+
+    this._scrollValues.last.x = 0;
+    this._scrollValues.last.y = 0;
+
+    this._scrollValues.strength.current = 0;
+    this._scrollValues.strength.target = 0;
+
+    this._scrollValues.scrollSpeed.x = 0;
+    this._scrollValues.scrollSpeed.y = 0;
+
+    //Reset depth values
+    this._depthIndex.current = 0;
+    this._depthIndex.last = 0;
+    this._depthIndex.target = 0;
   }
 
   update(updateInfo: UpdateInfo) {
@@ -213,13 +224,13 @@ export class SlideScene extends ItemScene {
       (destination / (this._items3D.length - 1)) * this._scrollBoundary;
 
     this._goToIndexTween = new TWEEN.Tween({
-      progress: this._offsetX.target,
+      progress: this._depthIndex.target,
     })
       .to({ progress: offset }, duration)
       .delay(delay)
       .easing(easing)
       .onUpdate(obj => {
-        this._offsetX.target = obj.progress;
+        this._depthIndex.target = obj.progress;
       })
       .onComplete(() => {
         this._isAutoScrolling = false;
@@ -232,5 +243,11 @@ export class SlideScene extends ItemScene {
     this._items3D.forEach(el => {
       el.animateIn(0);
     });
+  }
+
+  setRendererBounds(bounds: Bounds) {
+    super.setRendererBounds(bounds);
+
+    this._resetScrollValues();
   }
 }
