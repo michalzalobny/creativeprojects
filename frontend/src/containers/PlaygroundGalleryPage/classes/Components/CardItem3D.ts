@@ -143,6 +143,19 @@ export class CardItem3D extends MediaObject3D {
 
   animateOpacity(props: AnimateProps) {}
 
+  setElementScale(value: number) {
+    if (this._mesh) {
+      const destinationX = this._domElBounds.width * value;
+      const destinationY = this._domElBounds.height * value;
+
+      this._scaleTranslate.x = -(this._domElBounds.width - destinationX) / 2;
+      this._scaleTranslate.y = (this._domElBounds.height - destinationY) / 2;
+
+      this._mesh.scale.x = destinationX;
+      this._mesh.scale.y = destinationY;
+    }
+  }
+
   onMouseEnter() {
     super.onMouseEnter();
     document.body.style.cursor = 'pointer';

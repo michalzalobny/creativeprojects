@@ -91,19 +91,6 @@ export class CardItem3DAnimated extends CardItem3D {
     this._opacityTween.start();
   }
 
-  setElementScale(value: number) {
-    if (this._mesh) {
-      const destinationX = this._domElBounds.width * value;
-      const destinationY = this._domElBounds.height * value;
-
-      this._scaleTranslate.x = -(this._domElBounds.width - destinationX) / 2;
-      this._scaleTranslate.y = (this._domElBounds.height - destinationY) / 2;
-
-      this._mesh.scale.x = destinationX;
-      this._mesh.scale.y = destinationY;
-    }
-  }
-
   animateIn(delay: number) {
     this._tweenOpacity = 0;
 
