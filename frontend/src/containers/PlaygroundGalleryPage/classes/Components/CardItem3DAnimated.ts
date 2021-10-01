@@ -1,11 +1,11 @@
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { CardItemProps, AnimateProps } from '../types';
+import { ItemProps, AnimateProps } from '../types';
 import { CardItem3D } from './CardItem3D';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
-  cardItem: CardItemProps;
+  cardItem: ItemProps;
   domEl: HTMLElement;
 }
 

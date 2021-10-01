@@ -1,21 +1,16 @@
 import * as THREE from 'three';
 
-import {
-  CardItemProps,
-  UpdateInfo,
-  AnimateProps,
-  ScrollValues,
-} from '../types';
+import { ItemProps, UpdateInfo, AnimateProps, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
-  cardItem: CardItemProps;
+  cardItem: ItemProps;
   domEl: HTMLElement;
 }
 
 export class CardItem3D extends MediaObject3D {
-  cardItem: CardItemProps;
+  cardItem: ItemProps;
   _domEl: HTMLElement;
   _domElBounds: DOMRect;
   _extraTranslate = { x: 0, y: 0 };

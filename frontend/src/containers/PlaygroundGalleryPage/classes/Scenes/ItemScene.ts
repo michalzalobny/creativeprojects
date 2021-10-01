@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, CardItemProps, Bounds } from '../types';
+import { UpdateInfo, ItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
@@ -74,7 +74,7 @@ export class ItemScene extends InteractiveScene {
     }
   }
 
-  setItems(items: CardItemProps[]) {
+  setItems(items: ItemProps[]) {
     this._destroyItems();
 
     items &&
@@ -117,7 +117,7 @@ export class ItemScene extends InteractiveScene {
     this._textureItems = textureItems;
 
     this._items3D.forEach(el => {
-      el.textureItem = this._textureItems[el.cardItem.item.image.url];
+      el.textureItem = this._textureItems[el.cardItem.imageSrc];
     });
   }
 

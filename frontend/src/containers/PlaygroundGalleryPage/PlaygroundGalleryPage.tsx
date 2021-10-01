@@ -1,15 +1,37 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
 
 import { App } from './classes/App';
+import { ItemProps } from './classes/types';
 import { PageProps } from './data';
 import * as S from './PlaygroundGalleryPage.styles';
 
 export default function PlaygroundGalleryPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
+
+  const imagesToPreload = useMemo(() => {
+    return props.projectData.creativeItems.map((item, key) => {
+      if (item.name === 'image') {
+        return item.image.url;
+      }
+      return '';
+    });
+  }, [props.projectData.creativeItems]);
+
+  const carouselItems = useMemo(() => {
+    return props.projectData.creativeItems.map((item, key) => {
+      const slideItem: ItemProps = {
+        imageSrc: item.image.url,
+        itemKey: key + 1,
+        itemKeyReverse: props.projectData.creativeItems.length - key,
+        type: item.name,
+      };
+      return slideItem;
+    });
+  }, [props.projectData.creativeItems]);
 
   useEffect(() => {
     if (!rendererWrapperEl.current) {
@@ -28,6 +50,14 @@ export default function PlaygroundGalleryPage(props: PageProps) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (myApp.current) myApp.current.setItems(carouselItems);
+  }, [carouselItems]);
+
+  useEffect(() => {
+    if (myApp.current) myApp.current.setImagesToPreload(imagesToPreload);
+  }, [imagesToPreload]);
 
   return (
     <>

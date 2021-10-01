@@ -30,12 +30,6 @@ export interface Mouse {
   target: Coords;
 }
 
-export interface CardItemProps {
-  itemKey: number;
-  itemKeyReverse: number;
-  item: CreativeItem;
-}
-
 export interface AnimateProps {
   duration?: number;
   delay?: number;
@@ -59,4 +53,11 @@ export interface ScrollValues {
     current: number;
     target: number;
   };
+}
+
+export interface ItemProps {
+  itemKey: number;
+  itemKeyReverse: number;
+  type: string;
+  imageSrc: string;
 }

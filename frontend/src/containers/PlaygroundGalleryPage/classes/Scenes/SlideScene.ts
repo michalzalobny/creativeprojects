@@ -6,7 +6,7 @@ import {
   Bounds,
   AnimateProps,
   ScrollValues,
-  CardItemProps,
+  ItemProps,
 } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
@@ -255,7 +255,7 @@ export class SlideScene extends ItemScene {
     this._resetScrollValues();
   }
 
-  setItems(items: CardItemProps[]) {
+  setItems(items: ItemProps[]) {
     super.setItems(items);
 
     //Passing scrollValues as reference for better performance
