@@ -1,7 +1,13 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { UpdateInfo, Bounds, AnimateProps, ScrollValues } from '../types';
+import {
+  UpdateInfo,
+  Bounds,
+  AnimateProps,
+  ScrollValues,
+  CardItemProps,
+} from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -109,8 +115,6 @@ export class SlideScene extends ItemScene {
   _passValues() {
     this._items3D.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
-      // pass scroll values
-      // item.strength = this._depthIndex.strengthCurrent;
     });
   }
 
@@ -249,5 +253,14 @@ export class SlideScene extends ItemScene {
     super.setRendererBounds(bounds);
 
     this._resetScrollValues();
+  }
+
+  setItems(items: CardItemProps[]) {
+    super.setItems(items);
+
+    //Passing scrollValues as reference for better performance
+    this._items3D.forEach(item => {
+      item.setScrollValues(this._scrollValues);
+    });
   }
 }

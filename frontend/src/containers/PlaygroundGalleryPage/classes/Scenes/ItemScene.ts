@@ -74,7 +74,7 @@ export class ItemScene extends InteractiveScene {
     }
   }
 
-  set items(items: CardItemProps[]) {
+  setItems(items: CardItemProps[]) {
     this._destroyItems();
 
     items &&

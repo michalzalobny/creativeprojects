@@ -1,8 +1,12 @@
 import * as THREE from 'three';
 
-import { CardItemProps, UpdateInfo, AnimateProps } from '../types';
+import {
+  CardItemProps,
+  UpdateInfo,
+  AnimateProps,
+  ScrollValues,
+} from '../types';
 import { MediaObject3D } from './MediaObject3D';
-import { CardItem3DAnimated } from './CardItem3DAnimated';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -19,6 +23,7 @@ export class CardItem3D extends MediaObject3D {
   _randomValue = 1;
   _rotationProgress = 0;
   _isAnimatedIn = false;
+  _scrollValues: ScrollValues | null = null;
   isRotated = false;
 
   constructor({ geometry, cardItem, domEl }: Constructor) {
@@ -142,6 +147,10 @@ export class CardItem3D extends MediaObject3D {
     super.onResize();
     this._resetPosition();
     this._updateBounds();
+  }
+
+  setScrollValues(scrollValues: ScrollValues) {
+    this._scrollValues = scrollValues;
   }
 
   update(updateInfo: UpdateInfo) {
