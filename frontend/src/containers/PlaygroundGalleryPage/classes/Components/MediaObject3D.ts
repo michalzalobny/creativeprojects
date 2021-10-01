@@ -37,8 +37,6 @@ export class MediaObject3D extends InteractiveObject3D {
       uniforms: {
         tMap: { value: null },
         uImageSizes: { value: [0, 0] },
-        tMapBack: { value: null },
-        uImageSizesBack: { value: [0, 0] },
         uPlaneSizes: { value: [0, 0] },
         uTime: { value: 0 },
         uRandom: { value: Math.random() },
@@ -65,17 +63,6 @@ export class MediaObject3D extends InteractiveObject3D {
       this._material.uniforms.uImageSizes.value = [
         this._textureItem.naturalWidth,
         this._textureItem.naturalHeight,
-      ];
-    }
-  }
-
-  _updateTextureBack() {
-    if (this._material && this._textureItemBack && this._mesh) {
-      this._material.uniforms.tMapBack.value = this._textureItemBack.texture;
-
-      this._material.uniforms.uImageSizes.value = [
-        this._textureItemBack.naturalWidth,
-        this._textureItemBack.naturalHeight,
       ];
     }
   }
@@ -138,7 +125,6 @@ export class MediaObject3D extends InteractiveObject3D {
 
   set textureItemBack(textureItem: TextureItem) {
     this._textureItemBack = textureItem;
-    this._updateTextureBack();
     this.onResize();
   }
 

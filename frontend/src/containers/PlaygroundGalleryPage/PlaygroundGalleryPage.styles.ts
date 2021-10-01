@@ -13,6 +13,7 @@ export const GalleryWrapper = styled.div`
   grid-column-gap: ${MOBILE_GAP}vw;
   grid-row-gap: ${MOBILE_GAP * 1.3}vw;
   background: green;
+  opacity: 0.5;
 `;
 
 export const GalleryItem = styled.div`
