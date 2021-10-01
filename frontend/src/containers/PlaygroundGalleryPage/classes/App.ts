@@ -69,7 +69,7 @@ export class App extends THREE.EventDispatcher {
     this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this._camera.updateProjectionMatrix();
 
-    this._slideScene.rendererBounds = rendererBounds;
+    this._slideScene.setRendererBounds(rendererBounds);
   }
 
   _onVisibilityChange = () => {

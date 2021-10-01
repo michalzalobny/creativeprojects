@@ -103,8 +103,8 @@ export class ItemScene extends InteractiveScene {
     });
   }
 
-  set rendererBounds(bounds: Bounds) {
-    super.rendererBounds = bounds;
+  setRendererBounds(bounds: Bounds) {
+    super.setRendererBounds(bounds);
 
     this._items3D.forEach(item => {
       item.rendererBounds = this._rendererBounds;

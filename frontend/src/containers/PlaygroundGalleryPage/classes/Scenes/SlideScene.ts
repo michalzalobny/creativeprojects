@@ -283,8 +283,4 @@ export class SlideScene extends ItemScene {
       this._isReady = true;
     }, finalTiming);
   }
-
-  set rendererBounds(bounds: Bounds) {
-    super.rendererBounds = bounds;
-  }
 }

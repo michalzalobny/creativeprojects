@@ -148,7 +148,7 @@ export class InteractiveScene extends THREE.Scene {
     this._mouseMove.removeEventListener('click', this._onClick);
   }
 
-  set rendererBounds(bounds: Bounds) {
+  setRendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
   }
 
