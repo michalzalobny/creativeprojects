@@ -18,7 +18,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     throw new Error('No locale provided in getStaticProps function');
   }
   const projectData = (await getProjectData(
-    'unique-collection',
+    'playground-gallery',
   )) as ProjectData;
   const allProjectsData = await getAllProjectsData();
   const projectHead = projectData.localizedHead;
