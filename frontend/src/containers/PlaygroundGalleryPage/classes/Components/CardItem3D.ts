@@ -7,26 +7,34 @@ interface Constructor {
   geometry: THREE.PlaneGeometry;
   cardItem: ItemProps;
   domEl: HTMLElement;
+  galleryDomEl: HTMLElement;
 }
 
 export class CardItem3D extends MediaObject3D {
+  static disappearOffset = 1; //Prevents from image disappearing too fast
+
   cardItem: ItemProps;
   _domEl: HTMLElement;
   _domElBounds: DOMRect;
-  _extraTranslate = { x: 0, y: 0 };
+  _galleryDomEl: HTMLElement;
+  _galleryDomElBounds: DOMRect;
   _scaleTranslate = { x: 0, y: 0 };
+  _extra = { x: 0, y: 0 };
   _randomValue = 1;
   _rotationProgress = 0;
   _isAnimatedIn = false;
   _scrollValues: ScrollValues | null = null;
   isRotated = false;
 
-  constructor({ geometry, cardItem, domEl }: Constructor) {
+  constructor({ galleryDomEl, geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
 
     this.cardItem = cardItem;
     this._domEl = domEl;
     this._domElBounds = this._domEl.getBoundingClientRect();
+
+    this._galleryDomEl = galleryDomEl;
+    this._galleryDomElBounds = this._galleryDomEl.getBoundingClientRect();
 
     if (this._mesh) {
       this._mesh.position.z = this.cardItem.itemKeyReverse * 0.001;
@@ -37,44 +45,9 @@ export class CardItem3D extends MediaObject3D {
     this.setColliderName('cardItem');
   }
 
-  _positionRandomly() {
-    const position = this._getRandomPosition();
-
-    this._extraTranslate.x = position.x;
-    this._extraTranslate.y = position.y;
-  }
-
-  _getRandomPosition(): { x: number; y: number } {
-    if (!this._mesh) {
-      return { x: 0, y: 0 };
-    }
-
-    const randomX = Math.random() > 0.5 ? 1 : -1;
-    const randomY = Math.random() > 0.5 ? 1 : -1;
-
-    const x = ((Math.random() * this._rendererBounds.width) / 2) * randomX;
-    const y = ((Math.random() * this._rendererBounds.height) / 2) * randomY;
-
-    const minVertical = this._rendererBounds.height * 0.5 * 0.5;
-    const maxVertical = this._rendererBounds.height * 0.5;
-    const minHorizontal = this._rendererBounds.width * 0.5 * 0.5;
-    const maxHorizontal = this._rendererBounds.width * 0.5;
-
-    const absX = Math.abs(x);
-    const absY = Math.abs(y);
-
-    if (
-      (absX < minHorizontal || absX > maxHorizontal) &&
-      (absY < minVertical || absY > maxVertical)
-    ) {
-      return this._getRandomPosition();
-    }
-
-    return { x: x * 1.1, y: y * 1.1 };
-  }
-
   _updateBounds() {
     this._domElBounds = this._domEl.getBoundingClientRect();
+    this._galleryDomElBounds = this._galleryDomEl.getBoundingClientRect();
     this._updateScale();
 
     if (this._mesh) {
@@ -99,7 +72,7 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.left -
         this._rendererBounds.width / 2 +
         this._mesh.scale.x / 2 -
-        this._extraTranslate.x -
+        this._extra.x -
         this._scaleTranslate.x;
     }
   }
@@ -111,7 +84,7 @@ export class CardItem3D extends MediaObject3D {
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
         this._mesh.scale.y / 2 -
-        this._extraTranslate.y -
+        this._extra.y -
         this._scaleTranslate.y;
     }
   }
@@ -119,9 +92,53 @@ export class CardItem3D extends MediaObject3D {
   _resetPosition() {
     this._scaleTranslate.x = 0;
     this._scaleTranslate.y = 0;
-    this._extraTranslate.x = 0;
-    this._extraTranslate.y = 0;
-    this._positionRandomly();
+    this._extra.x = 0;
+    this._extra.y = 0;
+  }
+
+  _handleInfinityScroll() {
+    if (this._mesh && this._galleryDomElBounds && this._scrollValues) {
+      // x axis
+      const scaleX = this._mesh.scale.x / 2;
+      if (this._scrollValues.direction.x === 'left') {
+        const x = this._mesh.position.x + scaleX;
+
+        if (
+          x <
+          (-this._rendererBounds.width / 2) * CardItem3D.disappearOffset
+        ) {
+          this._extra.x -= this._galleryDomElBounds.width;
+        }
+      } else if (this._scrollValues.direction.x === 'right') {
+        const x = this._mesh.position.x - scaleX;
+
+        if (x > (this._rendererBounds.width / 2) * CardItem3D.disappearOffset) {
+          this._extra.x += this._galleryDomElBounds.width;
+        }
+      }
+
+      // y axis
+      const scaleY = this._mesh.scale.y / 2;
+      if (this._scrollValues.direction.y === 'up') {
+        const y = this._mesh.position.y + scaleY;
+
+        if (
+          y <
+          (-this._rendererBounds.height / 2) * CardItem3D.disappearOffset
+        ) {
+          this._extra.y -= this._galleryDomElBounds.height;
+        }
+      } else if (this._scrollValues.direction.y === 'down') {
+        const y = this._mesh.position.y - scaleY;
+
+        if (
+          y >
+          (this._rendererBounds.height / 2) * CardItem3D.disappearOffset
+        ) {
+          this._extra.y += this._galleryDomElBounds.height;
+        }
+      }
+    }
   }
 
   animateOpacity(props: AnimateProps) {}
@@ -150,7 +167,10 @@ export class CardItem3D extends MediaObject3D {
 
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
-    this._updateX(0);
-    this._updateY(0);
+    if (this._scrollValues) {
+      this._updateX(this._scrollValues.current.x);
+      this._updateY(this._scrollValues.current.y);
+    }
+    this._handleInfinityScroll();
   }
 }

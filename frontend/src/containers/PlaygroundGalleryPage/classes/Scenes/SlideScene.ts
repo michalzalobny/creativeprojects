@@ -118,14 +118,6 @@ export class SlideScene extends ItemScene {
     });
   }
 
-  _handlePreview(el: CardItem3DAnimated) {
-    if (el.isRotated) {
-      el.animateRotateOut();
-    } else {
-      el.animateRotateIn();
-    }
-  }
-
   _handleIndexClick(index: number) {
     if (!this._isReady) {
       return;
@@ -198,10 +190,58 @@ export class SlideScene extends ItemScene {
     this._depthIndex.target = 0;
   }
 
+  _updateScrollValues(updateInfo: UpdateInfo) {
+    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
+
+    //Update scroll direction
+    if (this._scrollValues.current.x > this._scrollValues.last.x) {
+      this._scrollValues.direction.x = 'left';
+    } else {
+      this._scrollValues.direction.x = 'right';
+    }
+
+    if (this._scrollValues.current.y > this._scrollValues.last.y) {
+      this._scrollValues.direction.y = 'up';
+    } else {
+      this._scrollValues.direction.y = 'down';
+    }
+
+    //Update scroll strength
+    const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
+    const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
+
+    this._scrollValues.strength.target = Math.sqrt(
+      deltaX * deltaX + deltaY * deltaY,
+    );
+
+    this._scrollValues.strength.current = lerp(
+      this._scrollValues.strength.current,
+      this._scrollValues.strength.target,
+      SlideScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    this._scrollValues.last.x = this._scrollValues.current.x;
+    this._scrollValues.last.y = this._scrollValues.current.y;
+
+    //lerp scroll
+    this._scrollValues.current.x = lerp(
+      this._scrollValues.current.x,
+      this._scrollValues.target.x,
+      SlideScene.lerpEase * updateInfo.slowDownFactor,
+    );
+
+    this._scrollValues.current.y = lerp(
+      this._scrollValues.current.y,
+      this._scrollValues.target.y,
+      SlideScene.lerpEase * updateInfo.slowDownFactor,
+    );
+  }
+
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._passValues();
     this._updateIndex(updateInfo);
+    this._updateScrollValues(updateInfo);
   }
 
   destroy() {

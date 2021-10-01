@@ -7,23 +7,21 @@ interface Constructor {
   geometry: THREE.PlaneGeometry;
   cardItem: ItemProps;
   domEl: HTMLElement;
+  galleryDomEl: HTMLElement;
 }
 
 export class CardItem3DAnimated extends CardItem3D {
   static defaultOpacity = 1;
 
   _readyTween: Tween<{ progress: number }> | null = null;
-  _rotateTween: Tween<{ progress: number }> | null = null;
   _opacityTween: Tween<{ progress: number }> | null = null;
-  _translateXTween: Tween<{ translationX: number }> | null = null;
-  _translateYTween: Tween<{ translationY: number }> | null = null;
   _scaleTween: Tween<{
     x: number;
     y: number;
   }> | null = null;
 
-  constructor({ domEl, cardItem, geometry }: Constructor) {
-    super({ domEl, geometry, cardItem });
+  constructor({ galleryDomEl, domEl, cardItem, geometry }: Constructor) {
+    super({ galleryDomEl, domEl, geometry, cardItem });
   }
 
   animateScale(props: AnimateProps) {
@@ -69,33 +67,6 @@ export class CardItem3DAnimated extends CardItem3D {
     this._scaleTween.start();
   }
 
-  animateRotate(props: AnimateProps) {
-    const {
-      destination,
-      duration = 1300,
-      delay = 0,
-      easing = TWEEN.Easing.Exponential.InOut,
-    } = props;
-
-    if (this._rotateTween) this._rotateTween.stop();
-
-    this._rotateTween = new TWEEN.Tween({
-      progress: this._rotationProgress,
-    })
-      .to({ progress: destination }, duration)
-      .delay(delay)
-      .easing(easing)
-      .onUpdate(obj => {
-        this._rotationProgress = obj.progress;
-
-        if (this._mesh) {
-          this._mesh.rotation.y = this._rotationProgress * Math.PI;
-        }
-      });
-
-    this._rotateTween.start();
-  }
-
   animateOpacity(props: AnimateProps) {
     super.animateOpacity(props);
     const {
@@ -120,56 +91,6 @@ export class CardItem3DAnimated extends CardItem3D {
     this._opacityTween.start();
   }
 
-  animateTranslateX(props: AnimateProps) {
-    const {
-      destination,
-      duration = 700,
-      delay = 0,
-      easing = TWEEN.Easing.Sinusoidal.InOut,
-    } = props;
-
-    if (this._translateXTween) {
-      this._translateXTween.stop();
-    }
-
-    this._translateXTween = new TWEEN.Tween({
-      translationX: this._extraTranslate.x,
-    })
-      .to({ translationX: destination }, duration)
-      .delay(delay)
-      .easing(easing)
-      .onUpdate(obj => {
-        this._extraTranslate.x = obj.translationX;
-      });
-
-    this._translateXTween.start();
-  }
-
-  animateTranslateY(props: AnimateProps) {
-    const {
-      destination,
-      duration = 700,
-      delay = 0,
-      easing = TWEEN.Easing.Sinusoidal.InOut,
-    } = props;
-
-    if (this._translateYTween) {
-      this._translateYTween.stop();
-    }
-
-    this._translateYTween = new TWEEN.Tween({
-      translationY: this._extraTranslate.y,
-    })
-      .to({ translationY: destination }, duration)
-      .delay(delay)
-      .easing(easing)
-      .onUpdate(obj => {
-        this._extraTranslate.y = obj.translationY;
-      });
-
-    this._translateYTween.start();
-  }
-
   setElementScale(value: number) {
     if (this._mesh) {
       const destinationX = this._domElBounds.width * value;
@@ -192,15 +113,5 @@ export class CardItem3DAnimated extends CardItem3D {
       duration: 1000,
       delay: delay,
     });
-  }
-
-  animateRotateIn() {
-    this.isRotated = true;
-    this.animateRotate({ destination: 1 });
-  }
-
-  animateRotateOut() {
-    this.isRotated = false;
-    this.animateRotate({ destination: 0 });
   }
 }

@@ -84,6 +84,10 @@ export class ItemScene extends InteractiveScene {
           document.querySelectorAll(`[data-playground-item="${key}"]`),
         )[0] as HTMLElement;
 
+        const galleryDomEl = Array.from(
+          document.querySelectorAll('[data-playground="wrapper"]'),
+        )[0] as HTMLElement;
+
         if (!this._imageWrapper) {
           this._imageWrapper = domEl as HTMLDivElement;
           this._measureImageWrapper();
@@ -93,6 +97,7 @@ export class ItemScene extends InteractiveScene {
           geometry: this._planeGeometry,
           cardItem: item,
           domEl,
+          galleryDomEl,
         });
         this._items3D.push(item3D);
         this.add(item3D);
