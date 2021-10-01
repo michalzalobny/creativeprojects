@@ -20,6 +20,7 @@ export class ItemScene extends InteractiveScene {
   _imageWrapper: HTMLDivElement | null = null;
   _imageWrapperClientWidth = 1;
   _imageWrapperMarginRight = 1;
+  _groupsArray: THREE.Group[] = [];
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -29,6 +30,11 @@ export class ItemScene extends InteractiveScene {
     )[0] as HTMLDivElement;
 
     this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
+
+    for (let i = 0; i < 3; i++) {
+      this._groupsArray.push(new THREE.Group());
+      this.add(this._groupsArray[i]);
+    }
   }
 
   _handleIndexClick(index: number) {}
@@ -56,6 +62,8 @@ export class ItemScene extends InteractiveScene {
         item.onResize();
       });
     }
+
+    // this._groupsArray[0].scale.set(0.5, 0.5, 0.5);
   }
 
   _addListeners() {
@@ -100,7 +108,12 @@ export class ItemScene extends InteractiveScene {
           galleryDomEl,
         });
         this._items3D.push(item3D);
-        this.add(item3D);
+
+        if (key >= 2) {
+          this._groupsArray[0].add(item3D);
+        } else {
+          this._groupsArray[1].add(item3D);
+        }
       });
 
     this._items3D.forEach(item => {

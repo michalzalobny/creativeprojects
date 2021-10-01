@@ -82,7 +82,9 @@ export class SlideScene extends ItemScene {
     );
   };
   _onScrollWheel = (e: THREE.Event) => {
-    //Update depth
+    const newTarget = this._depthIndex.target - e.y * 0.001;
+    // this._depthIndex.target = Math.min(Math.max(0, newTarget), 3);
+    this._depthIndex.target = newTarget;
   };
 
   _onResize() {
@@ -237,11 +239,19 @@ export class SlideScene extends ItemScene {
     );
   }
 
+  _positionGroups(updateInfo: UpdateInfo) {
+    this._groupsArray.forEach((group, key) => {
+      const finalScale = Math.abs(this._depthIndex.current - key) % 3;
+      group.scale.set(finalScale, finalScale, finalScale);
+    });
+  }
+
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
     this._passValues();
     this._updateIndex(updateInfo);
     this._updateScrollValues(updateInfo);
+    this._positionGroups(updateInfo);
   }
 
   destroy() {
