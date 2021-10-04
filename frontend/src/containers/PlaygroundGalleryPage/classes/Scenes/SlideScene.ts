@@ -1,18 +1,10 @@
 import * as THREE from 'three';
-import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import {
-  UpdateInfo,
-  Bounds,
-  AnimateProps,
-  ScrollValues,
-  ItemProps,
-} from '../types';
+import { UpdateInfo, Bounds, ScrollValues, ItemProps } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { lerp } from '../utils/lerp';
-import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -25,7 +17,6 @@ export class SlideScene extends ItemScene {
   static wheelMultiplier = 1;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
-  static timeToSnap = 500;
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 3;
@@ -48,14 +39,6 @@ export class SlideScene extends ItemScene {
     current: SlideScene.defaultDepthValue,
     target: SlideScene.defaultDepthValue,
   };
-  _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  _activeIndex = 0;
-  _targetIndex = 0;
-  _scrollBoundary = 1;
-  _goToIndexTween: Tween<{ progress: number }> | null = null;
-  _isAutoScrolling = false;
-  _isReady = false;
-  _activeCollection = '';
 
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
@@ -63,10 +46,6 @@ export class SlideScene extends ItemScene {
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
   }
-
-  _performSnap = () => {
-    // this.animateToIndex({ destination: this._targetIndex });
-  };
 
   _applyScroll = (x: number, y: number) => {
     this._scrollValues.target.x -= x;
@@ -93,10 +72,6 @@ export class SlideScene extends ItemScene {
 
   _onResize() {
     super._onResize();
-
-    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
-
-    this._performSnap();
   }
 
   _addListeners() {
@@ -117,25 +92,6 @@ export class SlideScene extends ItemScene {
     this._items3D.forEach(item => {
       item.intersectPoint = this._intersectPointLerp;
     });
-  }
-
-  _handleIndexClick(index: number) {
-    if (!this._isReady) {
-      return;
-    }
-
-    super._handleIndexClick(index);
-
-    if (index === this._activeIndex) {
-    } else {
-      this.animateToIndex({ destination: index });
-    }
-
-    const el = this._items3D[index];
-
-    if (!el) {
-      return;
-    }
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
@@ -246,56 +202,21 @@ export class SlideScene extends ItemScene {
 
   destroy() {
     super.destroy();
-
-    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
-  }
-
-  animateToIndex(props: AnimateProps) {
-    //Todo
-    const {
-      destination,
-      duration = 400,
-      delay = 0,
-      easing = TWEEN.Easing.Sinusoidal.InOut,
-    } = props;
-
-    if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
-
-    if (this._goToIndexTween) this._goToIndexTween.stop();
-
-    this._isAutoScrolling = true;
-
-    this._goToIndexTween = new TWEEN.Tween({
-      progress: this._depthIndex.target,
-    })
-      .to({ progress: 0 }, duration)
-      .delay(delay)
-      .easing(easing)
-      .onUpdate(obj => {
-        this._depthIndex.target = obj.progress;
-      })
-      .onComplete(() => {
-        this._isAutoScrolling = false;
-      });
-
-    this._goToIndexTween.start();
   }
 
   animateIn() {
     this._items3D.forEach(el => {
-      el.animateIn(0);
+      el.animateOpacity({ destination: 1 });
     });
   }
 
   setRendererBounds(bounds: Bounds) {
     super.setRendererBounds(bounds);
-
     this._resetScrollValues();
   }
 
   setItems(items: ItemProps[]) {
     super.setItems(items);
-
     //Passing scrollValues as reference for better performance
     this._items3D.forEach(item => {
       item.setScrollValues(this._scrollValues);

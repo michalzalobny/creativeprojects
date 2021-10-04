@@ -4,7 +4,8 @@ import { chunk } from 'lodash';
 import { UpdateInfo, ItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
-import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
+import { Image3D } from '../Components/Medias/Image3D';
+import { MediaHolder3D } from '../Components/MediaHolder3D';
 import { TextureItems } from '../types';
 import { SlideScene } from './SlideScene';
 
@@ -15,7 +16,7 @@ interface Constructor {
 
 export class ItemScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
-  _items3D: CardItem3DAnimated[] = [];
+  _items3D: MediaHolder3D[] = [];
   _textureItems: TextureItems = {};
   _groupsArray: THREE.Group[] = [];
 
@@ -23,12 +24,14 @@ export class ItemScene extends InteractiveScene {
     super({ camera, mouseMove });
   }
 
-  _handleIndexClick(index: number) {}
+  _handleItemClick(index: number) {
+    console.log(`item index: ${index}`);
+  }
 
   _onItemClick = (e: THREE.Event) => {
     const indexClicked = this._items3D.findIndex(el => el === e.target);
 
-    this._handleIndexClick(indexClicked);
+    this._handleItemClick(indexClicked);
   };
 
   _destroyItems() {
@@ -80,7 +83,7 @@ export class ItemScene extends InteractiveScene {
           document.querySelectorAll(`[data-playground-item="${itemKey}"]`),
         )[0] as HTMLElement;
 
-        const item3D = new CardItem3DAnimated({
+        const item3D = new Image3D({
           geometry: this._planeGeometry,
           cardItem: item,
           domEl,
@@ -108,7 +111,8 @@ export class ItemScene extends InteractiveScene {
     this._textureItems = textureItems;
 
     this._items3D.forEach(el => {
-      el.textureItem = this._textureItems[el.cardItem.imageSrc];
+      if (el.cardItem.type === 'image')
+        (el as Image3D).textureItem = this._textureItems[el.cardItem.imageSrc];
     });
   }
 

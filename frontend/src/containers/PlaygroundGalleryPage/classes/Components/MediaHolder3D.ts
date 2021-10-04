@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { ItemProps, UpdateInfo, AnimateProps, ScrollValues } from '../types';
+import { ItemProps, UpdateInfo, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 
 interface Constructor {
@@ -10,9 +10,7 @@ interface Constructor {
   galleryDomEl: HTMLElement;
 }
 
-export class CardItem3D extends MediaObject3D {
-  static disappearOffset = 1; //Prevents from image disappearing too fast
-
+export class MediaHolder3D extends MediaObject3D {
   cardItem: ItemProps;
   _domEl: HTMLElement;
   _domElBounds: DOMRect;
@@ -20,11 +18,7 @@ export class CardItem3D extends MediaObject3D {
   _galleryDomElBounds: DOMRect;
   _scaleTranslate = { x: 0, y: 0 };
   _extra = { x: 0, y: 0 };
-  _randomValue = 1;
-  _rotationProgress = 0;
-  _isAnimatedIn = false;
   _scrollValues: ScrollValues | null = null;
-  isRotated = false;
 
   constructor({ galleryDomEl, geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -35,12 +29,6 @@ export class CardItem3D extends MediaObject3D {
 
     this._galleryDomEl = galleryDomEl;
     this._galleryDomElBounds = this._galleryDomEl.getBoundingClientRect();
-
-    if (this._mesh) {
-      this._mesh.position.z = this.cardItem.itemKeyReverse * 0.001;
-    }
-
-    this._randomValue = Math.random() > 0.5 ? 1 : -1;
 
     this.setColliderName('cardItem');
   }
@@ -103,16 +91,13 @@ export class CardItem3D extends MediaObject3D {
       if (this._scrollValues.direction.x === 'left') {
         const x = this._mesh.position.x + scaleX;
 
-        if (
-          x <
-          (-this._rendererBounds.width / 2) * CardItem3D.disappearOffset
-        ) {
+        if (x < -this._rendererBounds.width / 2) {
           this._extra.x -= this._galleryDomElBounds.width;
         }
       } else if (this._scrollValues.direction.x === 'right') {
         const x = this._mesh.position.x - scaleX;
 
-        if (x > (this._rendererBounds.width / 2) * CardItem3D.disappearOffset) {
+        if (x > this._rendererBounds.width / 2) {
           this._extra.x += this._galleryDomElBounds.width;
         }
       }
@@ -122,37 +107,16 @@ export class CardItem3D extends MediaObject3D {
       if (this._scrollValues.direction.y === 'up') {
         const y = this._mesh.position.y + scaleY;
 
-        if (
-          y <
-          (-this._rendererBounds.height / 2) * CardItem3D.disappearOffset
-        ) {
+        if (y < -this._rendererBounds.height / 2) {
           this._extra.y -= this._galleryDomElBounds.height;
         }
       } else if (this._scrollValues.direction.y === 'down') {
         const y = this._mesh.position.y - scaleY;
 
-        if (
-          y >
-          (this._rendererBounds.height / 2) * CardItem3D.disappearOffset
-        ) {
+        if (y > this._rendererBounds.height / 2) {
           this._extra.y += this._galleryDomElBounds.height;
         }
       }
-    }
-  }
-
-  animateOpacity(props: AnimateProps) {}
-
-  setElementScale(value: number) {
-    if (this._mesh) {
-      const destinationX = this._domElBounds.width * value;
-      const destinationY = this._domElBounds.height * value;
-
-      this._scaleTranslate.x = -(this._domElBounds.width - destinationX) / 2;
-      this._scaleTranslate.y = (this._domElBounds.height - destinationY) / 2;
-
-      this._mesh.scale.x = destinationX;
-      this._mesh.scale.y = destinationY;
     }
   }
 
@@ -169,7 +133,6 @@ export class CardItem3D extends MediaObject3D {
   }
 
   onResize() {
-    super.onResize();
     this._resetPosition();
     this._updateBounds();
   }
