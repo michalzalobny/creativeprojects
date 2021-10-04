@@ -33,6 +33,7 @@ export default function MyApp(props: AppProps) {
   }, []);
 
   useEffect(() => {
+    document.body.style.cursor = 'initial';
     const links = document.links;
 
     for (let i = 0, linksLength = links.length; i < linksLength; i++) {
