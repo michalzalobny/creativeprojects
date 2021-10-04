@@ -183,13 +183,25 @@ export class SlideScene extends ItemScene {
   }
 
   _positionGroups(updateInfo: UpdateInfo) {
-    this._groupsArray.forEach((group, key) => {
+    this._groups3DArray.forEach((group, key) => {
       const finalScale =
         (Math.abs(this._depthIndex.current - key) % SlideScene.groupsAmount) *
           SlideScene.maxDepthZoom +
-        1; // the value goes : 1, 2, 3, 4, 1, 2, 3, 4, 1...
+        1; // the value goes : 1, 2, 3, 1, 2, 3, 1...
       group.scale.set(finalScale, finalScale, finalScale);
       group.position.z = finalScale * 0.1; //Places group with the biggest scale on top
+    });
+
+    this._items3D.forEach((item, key) => {
+      const finalScale =
+        (Math.abs(this._depthIndex.current - item.groupIndex) %
+          SlideScene.groupsAmount) /
+        SlideScene.groupsAmount;
+
+      item.opacity = finalScale;
+      // if (key === 1) {
+      //   console.log(finalScale);
+      // }
     });
   }
 

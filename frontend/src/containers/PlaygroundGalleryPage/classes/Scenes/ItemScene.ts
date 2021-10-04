@@ -17,8 +17,8 @@ interface Constructor {
 export class ItemScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _items3D: MediaHolder3D[] = [];
+  _groups3DArray: THREE.Group[] = [];
   _textureItems: TextureItems = {};
-  _groupsArray: THREE.Group[] = [];
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -42,7 +42,7 @@ export class ItemScene extends InteractiveScene {
 
     this._items3D = [];
 
-    this._groupsArray.forEach(group => {
+    this._groups3DArray.forEach(group => {
       this.remove(group);
     });
   }
@@ -66,8 +66,8 @@ export class ItemScene extends InteractiveScene {
     this._destroyItems();
 
     for (let i = 0; i < SlideScene.groupsAmount; i++) {
-      this._groupsArray.push(new THREE.Group());
-      this.add(this._groupsArray[i]);
+      this._groups3DArray.push(new THREE.Group());
+      this.add(this._groups3DArray[i]);
     }
 
     const groupedItems = chunk(items, SlideScene.itemsPerGroup);
@@ -89,9 +89,9 @@ export class ItemScene extends InteractiveScene {
           domEl,
           galleryDomEl,
         });
+        item3D.groupIndexValue = groupKey;
         this._items3D.push(item3D);
-
-        this._groupsArray[groupKey].add(item3D);
+        this._groups3DArray[groupKey].add(item3D);
       });
     });
 

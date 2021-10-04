@@ -12,6 +12,7 @@ interface Constructor {
 
 export class MediaHolder3D extends MediaObject3D {
   cardItem: ItemProps;
+  groupIndex = 0;
   _domEl: HTMLElement;
   _domElBounds: DOMRect;
   _galleryDomEl: HTMLElement;
@@ -148,5 +149,9 @@ export class MediaHolder3D extends MediaObject3D {
       this._updateY(this._scrollValues.current.y);
     }
     this._handleInfinityScroll();
+  }
+
+  set groupIndexValue(index: number) {
+    this.groupIndex = index;
   }
 }
