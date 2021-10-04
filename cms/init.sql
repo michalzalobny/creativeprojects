@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
   `description` longtext,
   `filter` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 120 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 128 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_heads
@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 138 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 146 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 133 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 142 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1342 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1356 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1076,6 +1076,38 @@ INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
   (119, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (120, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (121, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (122, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (123, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (124, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (125, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (126, 'image', NULL, NULL);
+INSERT INTO
+  `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
+VALUES
+  (127, 'image', NULL, NULL);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_heads
@@ -2705,7 +2737,7 @@ VALUES
     1,
     1,
     '2021-10-01 09:43:02',
-    '2021-10-01 09:50:30'
+    '2021-10-04 11:14:48'
   );
 
 # ------------------------------------------------------------
@@ -5106,6 +5138,150 @@ VALUES
     119,
     12
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    138,
+    'creativeItems',
+    2,
+    'components_creative_component_creative_items',
+    120,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    139,
+    'creativeItems',
+    3,
+    'components_creative_component_creative_items',
+    121,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    140,
+    'creativeItems',
+    4,
+    'components_creative_component_creative_items',
+    122,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    141,
+    'creativeItems',
+    5,
+    'components_creative_component_creative_items',
+    123,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    142,
+    'creativeItems',
+    6,
+    'components_creative_component_creative_items',
+    124,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    143,
+    'creativeItems',
+    7,
+    'components_creative_component_creative_items',
+    125,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    144,
+    'creativeItems',
+    8,
+    'components_creative_component_creative_items',
+    126,
+    12
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    145,
+    'creativeItems',
+    9,
+    'components_creative_component_creative_items',
+    127,
+    12
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -5131,7 +5307,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$strQIb/nHoh/swn4gt.ge.GMZ.QCHLVpMqgElZppEHDF7lJeziyBe',
+    '$2b$10$caOV3hGwzTCAjjh1xqgEDe06W/c6umMbAeQq3ehC759x7tvVPHJzG',
     NULL,
     NULL,
     1,
@@ -12590,6 +12766,402 @@ VALUES
     '2021-10-01 09:46:04',
     '2021-10-01 09:46:04'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    133,
+    '6.jpg',
+    '',
+    '',
+    880,
+    880,
+    '{\"thumbnail\":{\"name\":\"thumbnail_6.jpg\",\"hash\":\"thumbnail_6_be3c9446bb\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":156,\"height\":156,\"size\":1.95,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338764/thumbnail_6_be3c9446bb.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_6_be3c9446bb\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_6.jpg\",\"hash\":\"medium_6_be3c9446bb\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":750,\"size\":16.39,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/medium_6_be3c9446bb.jpg\",\"provider_metadata\":{\"public_id\":\"medium_6_be3c9446bb\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_6.jpg\",\"hash\":\"small_6_be3c9446bb\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":500,\"size\":9.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/small_6_be3c9446bb.jpg\",\"provider_metadata\":{\"public_id\":\"small_6_be3c9446bb\",\"resource_type\":\"image\"}}}',
+    '6_be3c9446bb',
+    '.jpg',
+    'image/jpeg',
+    19.57,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338763/6_be3c9446bb.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"6_be3c9446bb\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:46',
+    '2021-10-04 09:12:46'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    134,
+    '3.jpg',
+    '',
+    '',
+    687,
+    1031,
+    '{\"thumbnail\":{\"name\":\"thumbnail_3.jpg\",\"hash\":\"thumbnail_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":2.36,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338764/thumbnail_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_3_ce5980a205\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_3.jpg\",\"hash\":\"large_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":666,\"height\":1000,\"size\":31.68,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/large_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"large_3_ce5980a205\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_3.jpg\",\"hash\":\"medium_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":20.52,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/medium_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"medium_3_ce5980a205\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_3.jpg\",\"hash\":\"small_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":11.4,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338766/small_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"small_3_ce5980a205\",\"resource_type\":\"image\"}}}',
+    '3_ce5980a205',
+    '.jpg',
+    'image/jpeg',
+    32.95,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338763/3_ce5980a205.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"3_ce5980a205\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:47',
+    '2021-10-04 09:12:47'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    135,
+    '7.jpg',
+    '',
+    '',
+    1332,
+    749,
+    '{\"thumbnail\":{\"name\":\"thumbnail_7.jpg\",\"hash\":\"thumbnail_7_0ac2dcc5c5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":138,\"size\":4.31,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338764/thumbnail_7_0ac2dcc5c5.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_7_0ac2dcc5c5\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_7.jpg\",\"hash\":\"large_7_0ac2dcc5c5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":562,\"size\":29.58,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/large_7_0ac2dcc5c5.jpg\",\"provider_metadata\":{\"public_id\":\"large_7_0ac2dcc5c5\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_7.jpg\",\"hash\":\"medium_7_0ac2dcc5c5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":422,\"size\":19.91,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/medium_7_0ac2dcc5c5.jpg\",\"provider_metadata\":{\"public_id\":\"medium_7_0ac2dcc5c5\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_7.jpg\",\"hash\":\"small_7_0ac2dcc5c5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":281,\"size\":11.36,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338766/small_7_0ac2dcc5c5.jpg\",\"provider_metadata\":{\"public_id\":\"small_7_0ac2dcc5c5\",\"resource_type\":\"image\"}}}',
+    '7_0ac2dcc5c5',
+    '.jpg',
+    'image/jpeg',
+    42.99,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338763/7_0ac2dcc5c5.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"7_0ac2dcc5c5\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:47',
+    '2021-10-04 09:12:47'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    136,
+    '4.jpg',
+    '',
+    '',
+    627,
+    1115,
+    '{\"thumbnail\":{\"name\":\"thumbnail_4.jpg\",\"hash\":\"thumbnail_4_90c16966f9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":88,\"height\":156,\"size\":1.28,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338764/thumbnail_4_90c16966f9.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_4_90c16966f9\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_4.jpg\",\"hash\":\"large_4_90c16966f9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":562,\"height\":1000,\"size\":23.05,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/large_4_90c16966f9.jpg\",\"provider_metadata\":{\"public_id\":\"large_4_90c16966f9\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_4.jpg\",\"hash\":\"medium_4_90c16966f9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":422,\"height\":750,\"size\":13.93,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/medium_4_90c16966f9.jpg\",\"provider_metadata\":{\"public_id\":\"medium_4_90c16966f9\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_4.jpg\",\"hash\":\"small_4_90c16966f9\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":281,\"height\":500,\"size\":7.05,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338766/small_4_90c16966f9.jpg\",\"provider_metadata\":{\"public_id\":\"small_4_90c16966f9\",\"resource_type\":\"image\"}}}',
+    '4_90c16966f9',
+    '.jpg',
+    'image/jpeg',
+    27.81,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338763/4_90c16966f9.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"4_90c16966f9\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:47',
+    '2021-10-04 09:12:47'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    137,
+    '5.jpg',
+    '',
+    '',
+    1170,
+    780,
+    '{\"thumbnail\":{\"name\":\"thumbnail_5.jpg\",\"hash\":\"thumbnail_5_a20f895e30\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":4,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338764/thumbnail_5_a20f895e30.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_5_a20f895e30\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_5.jpg\",\"hash\":\"large_5_a20f895e30\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":33.98,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/large_5_a20f895e30.jpg\",\"provider_metadata\":{\"public_id\":\"large_5_a20f895e30\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_5.jpg\",\"hash\":\"medium_5_a20f895e30\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":22.07,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338766/medium_5_a20f895e30.jpg\",\"provider_metadata\":{\"public_id\":\"medium_5_a20f895e30\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_5.jpg\",\"hash\":\"small_5_a20f895e30\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":11.87,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/small_5_a20f895e30.jpg\",\"provider_metadata\":{\"public_id\":\"small_5_a20f895e30\",\"resource_type\":\"image\"}}}',
+    '5_a20f895e30',
+    '.jpg',
+    'image/jpeg',
+    42.01,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338763/5_a20f895e30.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"5_a20f895e30\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:47',
+    '2021-10-04 09:12:48'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    138,
+    '2.jpg',
+    '',
+    '',
+    1074,
+    806,
+    '{\"thumbnail\":{\"name\":\"thumbnail_2.jpg\",\"hash\":\"thumbnail_2_3be2b45ce5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":208,\"height\":156,\"size\":8.82,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/thumbnail_2_3be2b45ce5.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_2_3be2b45ce5\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_2.jpg\",\"hash\":\"large_2_3be2b45ce5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":750,\"size\":118.25,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338766/large_2_3be2b45ce5.jpg\",\"provider_metadata\":{\"public_id\":\"large_2_3be2b45ce5\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_2.jpg\",\"hash\":\"medium_2_3be2b45ce5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":563,\"size\":73.19,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/medium_2_3be2b45ce5.jpg\",\"provider_metadata\":{\"public_id\":\"medium_2_3be2b45ce5\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_2.jpg\",\"hash\":\"small_2_3be2b45ce5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":375,\"size\":36.46,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338768/small_2_3be2b45ce5.jpg\",\"provider_metadata\":{\"public_id\":\"small_2_3be2b45ce5\",\"resource_type\":\"image\"}}}',
+    '2_3be2b45ce5',
+    '.jpg',
+    'image/jpeg',
+    133.00,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/2_3be2b45ce5.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"2_3be2b45ce5\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:49',
+    '2021-10-04 09:12:49'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    139,
+    '8.jpg',
+    '',
+    '',
+    1064,
+    808,
+    '{\"thumbnail\":{\"name\":\"thumbnail_8.jpg\",\"hash\":\"thumbnail_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":205,\"height\":156,\"size\":4.57,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/thumbnail_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_8_22e5559125\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_8.jpg\",\"hash\":\"large_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":759,\"size\":65.72,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338768/large_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"large_8_22e5559125\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_8.jpg\",\"hash\":\"medium_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":570,\"size\":41.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338769/medium_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"medium_8_22e5559125\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_8.jpg\",\"hash\":\"small_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":380,\"size\":20.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338770/small_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"small_8_22e5559125\",\"resource_type\":\"image\"}}}',
+    '8_22e5559125',
+    '.jpg',
+    'image/jpeg',
+    72.15,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/8_22e5559125.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"8_22e5559125\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:51',
+    '2021-10-04 09:12:51'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    140,
+    '10.jpg',
+    '',
+    '',
+    1170,
+    780,
+    '{\"thumbnail\":{\"name\":\"thumbnail_10.jpg\",\"hash\":\"thumbnail_10_3baed51590\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":234,\"height\":156,\"size\":3.9,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338768/thumbnail_10_3baed51590.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_10_3baed51590\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_10.jpg\",\"hash\":\"large_10_3baed51590\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":667,\"size\":32.16,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338769/large_10_3baed51590.jpg\",\"provider_metadata\":{\"public_id\":\"large_10_3baed51590\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_10.jpg\",\"hash\":\"medium_10_3baed51590\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":500,\"size\":20.48,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338769/medium_10_3baed51590.jpg\",\"provider_metadata\":{\"public_id\":\"medium_10_3baed51590\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_10.jpg\",\"hash\":\"small_10_3baed51590\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":333,\"size\":11.16,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338770/small_10_3baed51590.jpg\",\"provider_metadata\":{\"public_id\":\"small_10_3baed51590\",\"resource_type\":\"image\"}}}',
+    '10_3baed51590',
+    '.jpg',
+    'image/jpeg',
+    40.79,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/10_3baed51590.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"10_3baed51590\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:51',
+    '2021-10-04 09:12:51'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    141,
+    '9.jpg',
+    '',
+    '',
+    1064,
+    808,
+    '{\"thumbnail\":{\"name\":\"thumbnail_9.jpg\",\"hash\":\"thumbnail_9_e5334bbc88\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":205,\"height\":156,\"size\":2.73,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338768/thumbnail_9_e5334bbc88.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_9_e5334bbc88\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_9.jpg\",\"hash\":\"large_9_e5334bbc88\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":759,\"size\":25.89,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338768/large_9_e5334bbc88.jpg\",\"provider_metadata\":{\"public_id\":\"large_9_e5334bbc88\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_9.jpg\",\"hash\":\"medium_9_e5334bbc88\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":570,\"size\":17.04,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338770/medium_9_e5334bbc88.jpg\",\"provider_metadata\":{\"public_id\":\"medium_9_e5334bbc88\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_9.jpg\",\"hash\":\"small_9_e5334bbc88\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":380,\"size\":9.29,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338771/small_9_e5334bbc88.jpg\",\"provider_metadata\":{\"public_id\":\"small_9_e5334bbc88\",\"resource_type\":\"image\"}}}',
+    '9_e5334bbc88',
+    '.jpg',
+    'image/jpeg',
+    27.98,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/9_e5334bbc88.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"9_e5334bbc88\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-04 09:12:51',
+    '2021-10-04 09:12:51'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -15574,7 +16146,7 @@ INSERT INTO
   )
 VALUES
   (
-    1340,
+    1346,
     2,
     12,
     'components_page_localized_heads',
@@ -15592,9 +16164,153 @@ INSERT INTO
   )
 VALUES
   (
-    1341,
+    1347,
+    136,
+    122,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1348,
+    137,
+    123,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1349,
+    133,
+    124,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1350,
+    135,
+    125,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1351,
+    139,
+    126,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1352,
+    141,
+    127,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1353,
     132,
     119,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1354,
+    138,
+    120,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1355,
+    134,
+    121,
     'components_creative_component_creative_items',
     'image',
     1

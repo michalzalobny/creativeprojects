@@ -6,10 +6,12 @@ export const GalleryWrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
+  width: 125%;
   transform: translate(-50%, -50%);
   display: grid;
+
   grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: min-content;
   grid-column-gap: ${MOBILE_GAP}vw;
   grid-row-gap: ${MOBILE_GAP * 1.3}vw;
   background: green;

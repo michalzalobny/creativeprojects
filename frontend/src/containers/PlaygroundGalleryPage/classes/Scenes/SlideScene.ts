@@ -26,6 +26,10 @@ export class SlideScene extends ItemScene {
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
   static timeToSnap = 500;
+  static groupsAmount = 3;
+  static defaultDepthValue = SlideScene.groupsAmount;
+  static itemsPerGroup = 3;
+  static maxDepthZoom = 0.4;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
@@ -40,9 +44,9 @@ export class SlideScene extends ItemScene {
     scrollSpeed: { x: 0, y: 0 },
   };
   _depthIndex = {
-    last: 0,
-    current: 0,
-    target: 0,
+    last: SlideScene.defaultDepthValue - 1,
+    current: SlideScene.defaultDepthValue,
+    target: SlideScene.defaultDepthValue,
   };
   _snapTimeoutId: ReturnType<typeof setTimeout> | null = null;
   _activeIndex = 0;
@@ -61,7 +65,7 @@ export class SlideScene extends ItemScene {
   }
 
   _performSnap = () => {
-    this.animateToIndex({ destination: this._targetIndex });
+    // this.animateToIndex({ destination: this._targetIndex });
   };
 
   _applyScroll = (x: number, y: number) => {
@@ -82,18 +86,13 @@ export class SlideScene extends ItemScene {
     );
   };
   _onScrollWheel = (e: THREE.Event) => {
-    const newTarget = this._depthIndex.target - e.y * 0.001;
+    const newTarget = this._depthIndex.target - e.y * 0.003;
     // this._depthIndex.target = Math.min(Math.max(0, newTarget), 3);
     this._depthIndex.target = newTarget;
   };
 
   _onResize() {
     super._onResize();
-
-    this._scrollBoundary =
-      this._collectionWrapperRect.width -
-      this._imageWrapperClientWidth -
-      this._imageWrapperMarginRight / 2;
 
     if (this._snapTimeoutId) clearTimeout(this._snapTimeoutId);
 
@@ -140,32 +139,19 @@ export class SlideScene extends ItemScene {
   }
 
   _updateIndex(updateInfo: UpdateInfo) {
+    //Loops depthIndex so that it never reaches negative value
+    if (this._depthIndex.current < SlideScene.defaultDepthValue) {
+      this._depthIndex.current += SlideScene.defaultDepthValue;
+      this._depthIndex.last += SlideScene.defaultDepthValue;
+      this._depthIndex.target += SlideScene.defaultDepthValue;
+    }
+
     this._depthIndex.last = this._depthIndex.current;
 
     this._depthIndex.current = lerp(
       this._depthIndex.current,
       this._depthIndex.target,
       SlideScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    const prevIndex = Math.round(
-      (this._depthIndex.last / this._scrollBoundary) *
-        (this._items3D.length - 1),
-    );
-
-    const currentIndex = Math.round(
-      (this._depthIndex.current / this._scrollBoundary) *
-        (this._items3D.length - 1),
-    );
-
-    if (prevIndex !== currentIndex) {
-      this._activeIndex = currentIndex;
-      // this._onIndexChange();
-    }
-
-    this._targetIndex = Math.round(
-      (this._depthIndex.target / this._scrollBoundary) *
-        (this._items3D.length - 1),
     );
   }
 
@@ -187,9 +173,9 @@ export class SlideScene extends ItemScene {
     this._scrollValues.scrollSpeed.y = 0;
 
     //Reset depth values
-    this._depthIndex.current = 0;
-    this._depthIndex.last = 0;
-    this._depthIndex.target = 0;
+    this._depthIndex.target = SlideScene.defaultDepthValue;
+    this._depthIndex.current = SlideScene.defaultDepthValue;
+    this._depthIndex.last = SlideScene.defaultDepthValue - 1;
   }
 
   _updateScrollValues(updateInfo: UpdateInfo) {
@@ -241,8 +227,12 @@ export class SlideScene extends ItemScene {
 
   _positionGroups(updateInfo: UpdateInfo) {
     this._groupsArray.forEach((group, key) => {
-      const finalScale = Math.abs(this._depthIndex.current - key) % 3;
+      const finalScale =
+        (Math.abs(this._depthIndex.current - key) % SlideScene.groupsAmount) *
+          SlideScene.maxDepthZoom +
+        1; // the value goes : 1, 2, 3, 4, 1, 2, 3, 4, 1...
       group.scale.set(finalScale, finalScale, finalScale);
+      group.position.z = finalScale * 0.1; //Places group with the biggest scale on top
     });
   }
 
@@ -261,6 +251,7 @@ export class SlideScene extends ItemScene {
   }
 
   animateToIndex(props: AnimateProps) {
+    //Todo
     const {
       destination,
       duration = 400,
@@ -274,13 +265,10 @@ export class SlideScene extends ItemScene {
 
     this._isAutoScrolling = true;
 
-    const offset =
-      (destination / (this._items3D.length - 1)) * this._scrollBoundary;
-
     this._goToIndexTween = new TWEEN.Tween({
       progress: this._depthIndex.target,
     })
-      .to({ progress: offset }, duration)
+      .to({ progress: 0 }, duration)
       .delay(delay)
       .easing(easing)
       .onUpdate(obj => {

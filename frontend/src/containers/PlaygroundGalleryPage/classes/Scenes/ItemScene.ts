@@ -1,10 +1,12 @@
 import * as THREE from 'three';
+import { chunk } from 'lodash';
 
 import { UpdateInfo, ItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { CardItem3DAnimated } from '../Components/CardItem3DAnimated';
 import { TextureItems } from '../types';
+import { SlideScene } from './SlideScene';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -15,26 +17,10 @@ export class ItemScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _items3D: CardItem3DAnimated[] = [];
   _textureItems: TextureItems = {};
-  _collectionWrapper: HTMLDivElement;
-  _collectionWrapperRect: DOMRect;
-  _imageWrapper: HTMLDivElement | null = null;
-  _imageWrapperClientWidth = 1;
-  _imageWrapperMarginRight = 1;
   _groupsArray: THREE.Group[] = [];
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
-
-    this._collectionWrapper = Array.from(
-      document.querySelectorAll('[data-playground="wrapper"]'),
-    )[0] as HTMLDivElement;
-
-    this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
-
-    for (let i = 0; i < 3; i++) {
-      this._groupsArray.push(new THREE.Group());
-      this.add(this._groupsArray[i]);
-    }
   }
 
   _handleIndexClick(index: number) {}
@@ -48,22 +34,21 @@ export class ItemScene extends InteractiveScene {
   _destroyItems() {
     this._items3D.forEach(item => {
       item.destroy();
-      this.remove(item);
       item.removeEventListener('click', this._onItemClick);
     });
+
     this._items3D = [];
+
+    this._groupsArray.forEach(group => {
+      this.remove(group);
+    });
   }
 
   _onResize() {
-    this._collectionWrapperRect = this._collectionWrapper.getBoundingClientRect();
-    this._measureImageWrapper();
-    if (this._items3D) {
-      this._items3D.forEach(item => {
-        item.onResize();
-      });
-    }
-
-    // this._groupsArray[0].scale.set(0.5, 0.5, 0.5);
+    this._items3D.forEach(item => {
+      item.rendererBounds = this._rendererBounds;
+      item.onResize();
+    });
   }
 
   _addListeners() {
@@ -74,32 +59,26 @@ export class ItemScene extends InteractiveScene {
     super._removeListeners();
   }
 
-  _measureImageWrapper() {
-    if (this._imageWrapper) {
-      this._imageWrapperClientWidth = this._imageWrapper.clientWidth;
-      const elStyle = getComputedStyle(this._imageWrapper);
-      this._imageWrapperMarginRight = parseFloat(elStyle.marginRight);
-    }
-  }
-
   setItems(items: ItemProps[]) {
     this._destroyItems();
 
-    items &&
-      items.forEach((item, key) => {
+    for (let i = 0; i < SlideScene.groupsAmount; i++) {
+      this._groupsArray.push(new THREE.Group());
+      this.add(this._groupsArray[i]);
+    }
+
+    const groupedItems = chunk(items, SlideScene.itemsPerGroup);
+
+    const galleryDomEl = Array.from(
+      document.querySelectorAll('[data-playground="wrapper"]'),
+    )[0] as HTMLElement;
+
+    groupedItems.forEach((group, groupKey) => {
+      group.forEach((item, itemKey) => {
         //Fetch elements DOM representations
         const domEl = Array.from(
-          document.querySelectorAll(`[data-playground-item="${key}"]`),
+          document.querySelectorAll(`[data-playground-item="${itemKey}"]`),
         )[0] as HTMLElement;
-
-        const galleryDomEl = Array.from(
-          document.querySelectorAll('[data-playground="wrapper"]'),
-        )[0] as HTMLElement;
-
-        if (!this._imageWrapper) {
-          this._imageWrapper = domEl as HTMLDivElement;
-          this._measureImageWrapper();
-        }
 
         const item3D = new CardItem3DAnimated({
           geometry: this._planeGeometry,
@@ -109,25 +88,19 @@ export class ItemScene extends InteractiveScene {
         });
         this._items3D.push(item3D);
 
-        if (key >= 2) {
-          this._groupsArray[0].add(item3D);
-        } else {
-          this._groupsArray[1].add(item3D);
-        }
+        this._groupsArray[groupKey].add(item3D);
       });
+    });
 
     this._items3D.forEach(item => {
       item.addEventListener('click', this._onItemClick);
     });
+
+    this._onResize();
   }
 
   setRendererBounds(bounds: Bounds) {
     super.setRendererBounds(bounds);
-
-    this._items3D.forEach(item => {
-      item.rendererBounds = this._rendererBounds;
-    });
-
     this._onResize();
   }
 
