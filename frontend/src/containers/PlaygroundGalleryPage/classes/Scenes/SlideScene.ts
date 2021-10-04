@@ -13,8 +13,8 @@ interface Constructor {
 }
 
 export class SlideScene extends ItemScene {
-  static lerpEase = 0.07;
-  static wheelMultiplier = 1;
+  static lerpEase = 0.06;
+  static wheelMultiplier = 0.002;
   static mouseMultiplier = 2;
   static touchMultiplier = 2;
   static groupsAmount = 3;
@@ -65,7 +65,8 @@ export class SlideScene extends ItemScene {
     );
   };
   _onScrollWheel = (e: THREE.Event) => {
-    const newTarget = this._depthIndex.target - e.y * 0.003;
+    const newTarget =
+      this._depthIndex.target - e.y * SlideScene.wheelMultiplier;
     // this._depthIndex.target = Math.min(Math.max(0, newTarget), 3);
     this._depthIndex.target = newTarget;
   };
