@@ -29,7 +29,7 @@ export class SlideScene extends ItemScene {
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 3;
-  static maxDepthZoom = 0.4;
+  static maxDepthZoom = 0.6;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
