@@ -11,7 +11,7 @@
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   `filter` varchar(255) DEFAULT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_heads` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `description` longtext,
   `ogType` varchar(255) DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `components_page_heads` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_links` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `label` varchar(255) DEFAULT NULL,
   `href` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `components_page_links` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
@@ -57,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int unsigned NOT NULL,
+  `order` int(10) unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int NOT NULL,
-  `components_page_localized_head_id` int unsigned NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `components_page_localized_head_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `language` int DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
@@ -84,10 +84,10 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_rich_texts` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `text` longtext,
-  `language` int DEFAULT NULL,
+  `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -96,9 +96,9 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_rich_texts` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `text` varchar(255) DEFAULT NULL,
-  `language` int DEFAULT NULL,
+  `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 25 DEFAULT CHARSET = latin1;
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_videos` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `videoURI` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `components_page_videos` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `core_store` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
   `value` longtext,
   `type` varchar(255) DEFAULT NULL,
@@ -131,11 +131,11 @@ CREATE TABLE IF NOT EXISTS `core_store` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `flow_pages` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `language` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `language` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `asideDescription` longtext,
@@ -147,12 +147,12 @@ CREATE TABLE IF NOT EXISTS `flow_pages` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `flow_pages_components` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int unsigned NOT NULL,
+  `order` int(10) unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int NOT NULL,
-  `flow_page_id` int unsigned NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `flow_page_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_page_id_fk` (`flow_page_id`),
   CONSTRAINT `flow_page_id_fk` FOREIGN KEY (`flow_page_id`) REFERENCES `flow_pages` (`id`) ON DELETE CASCADE
@@ -163,11 +163,11 @@ CREATE TABLE IF NOT EXISTS `flow_pages_components` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `index_pages` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `language` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `language` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -178,12 +178,12 @@ CREATE TABLE IF NOT EXISTS `index_pages` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `index_pages_components` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int unsigned NOT NULL,
+  `order` int(10) unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int NOT NULL,
-  `index_page_id` int unsigned NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `index_page_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_page_id_fk` (`index_page_id`),
   CONSTRAINT `index_page_id_fk` FOREIGN KEY (`index_page_id`) REFERENCES `index_pages` (`id`) ON DELETE CASCADE
@@ -194,11 +194,11 @@ CREATE TABLE IF NOT EXISTS `index_pages_components` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `languages` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -209,10 +209,10 @@ CREATE TABLE IF NOT EXISTS `languages` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `projects` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `urlSlug` varchar(255) DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -224,12 +224,12 @@ CREATE TABLE IF NOT EXISTS `projects` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `projects_components` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int unsigned NOT NULL,
+  `order` int(10) unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int NOT NULL,
-  `project_id` int unsigned NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `project_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_administrator` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -259,12 +259,12 @@ CREATE TABLE IF NOT EXISTS `strapi_administrator` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_permission` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
   `subject` varchar(255) DEFAULT NULL,
   `fields` longtext,
   `conditions` longtext,
-  `role` int DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_role` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -291,9 +291,9 @@ CREATE TABLE IF NOT EXISTS `strapi_role` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_users_roles` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT NULL,
-  `role_id` int DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = latin1;
 
@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `strapi_users_roles` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_webhooks` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `url` longtext,
   `headers` longtext,
@@ -316,12 +316,12 @@ CREATE TABLE IF NOT EXISTS `strapi_webhooks` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `upload_file` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `alternativeText` varchar(255) DEFAULT NULL,
   `caption` varchar(255) DEFAULT NULL,
-  `width` int DEFAULT NULL,
-  `height` int DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
   `formats` longtext,
   `hash` varchar(255) NOT NULL,
   `ext` varchar(255) DEFAULT NULL,
@@ -331,41 +331,41 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `previewUrl` varchar(255) DEFAULT NULL,
   `provider` varchar(255) NOT NULL,
   `provider_metadata` longtext,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 158 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 159 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `upload_file_morph` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `upload_file_id` int DEFAULT NULL,
-  `related_id` int DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `upload_file_id` int(11) DEFAULT NULL,
+  `related_id` int(11) DEFAULT NULL,
   `related_type` longtext,
   `field` longtext,
-  `order` int DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1442 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1491 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users-permissions_permission` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
   `controller` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   `policy` varchar(255) DEFAULT NULL,
-  `role` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 209 DEFAULT CHARSET = latin1;
 
@@ -374,12 +374,12 @@ CREATE TABLE IF NOT EXISTS `users-permissions_permission` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users-permissions_role` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users-permissions_role_type_unique` (`type`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
@@ -389,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `users-permissions_role` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users-permissions_user` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `provider` varchar(255) DEFAULT NULL,
@@ -398,9 +398,9 @@ CREATE TABLE IF NOT EXISTS `users-permissions_user` (
   `confirmationToken` varchar(255) DEFAULT NULL,
   `confirmed` tinyint(1) DEFAULT NULL,
   `blocked` tinyint(1) DEFAULT NULL,
-  `role` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -2893,7 +2893,7 @@ VALUES
     1,
     1,
     '2021-10-01 09:43:02',
-    '2021-10-05 13:28:08'
+    '2021-10-05 21:14:55'
   );
 
 # ------------------------------------------------------------
@@ -6165,7 +6165,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$gn6HSjXDvEcnuLBS5eCeX.sqW16aU4zyiW3XrQQEa2AR3Dsfki3b6',
+    '$2b$10$J1K6liPYESKPmM0l9q4c9uWaNv/DaRKmJ6NyCQJRyIgCAm4.IDhOu',
     NULL,
     NULL,
     1,
@@ -14724,6 +14724,50 @@ VALUES
     '2021-10-05 13:05:17',
     '2021-10-05 13:05:17'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    158,
+    'newsitezzz.png',
+    '',
+    '',
+    963,
+    518,
+    '{\"thumbnail\":{\"name\":\"thumbnail_newsitezzz.png\",\"hash\":\"thumbnail_newsitezzz_55a2f37cbd\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":132,\"size\":22.53,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633468481/thumbnail_newsitezzz_55a2f37cbd.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_newsitezzz_55a2f37cbd\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_newsitezzz.png\",\"hash\":\"medium_newsitezzz_55a2f37cbd\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":403,\"size\":161.8,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633468482/medium_newsitezzz_55a2f37cbd.png\",\"provider_metadata\":{\"public_id\":\"medium_newsitezzz_55a2f37cbd\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_newsitezzz.png\",\"hash\":\"small_newsitezzz_55a2f37cbd\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":269,\"size\":77.57,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633468483/small_newsitezzz_55a2f37cbd.png\",\"provider_metadata\":{\"public_id\":\"small_newsitezzz_55a2f37cbd\",\"resource_type\":\"image\"}}}',
+    'newsitezzz_55a2f37cbd',
+    '.png',
+    'image/png',
+    223.54,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633468480/newsitezzz_55a2f37cbd.png',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"newsitezzz_55a2f37cbd\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-10-05 21:14:43',
+    '2021-10-05 21:14:43'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -17708,8 +17752,8 @@ INSERT INTO
   )
 VALUES
   (
-    1393,
-    2,
+    1442,
+    158,
     12,
     'components_page_localized_heads',
     'ogImage',
@@ -17726,421 +17770,7 @@ INSERT INTO
   )
 VALUES
   (
-    1394,
-    132,
-    144,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1395,
-    138,
-    145,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1396,
-    134,
-    146,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1397,
-    136,
-    147,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1398,
-    137,
-    148,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1399,
-    133,
-    149,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1400,
-    135,
-    150,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1401,
-    139,
-    151,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1402,
-    141,
-    152,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1403,
-    140,
-    153,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1404,
-    146,
-    154,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1405,
-    143,
-    155,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1406,
-    145,
-    156,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1407,
-    144,
-    157,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1408,
-    147,
-    158,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1409,
-    142,
-    159,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1410,
-    149,
-    160,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1411,
-    150,
-    161,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1412,
-    148,
-    162,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1413,
-    152,
-    163,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1414,
-    151,
-    164,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1415,
-    153,
-    165,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1416,
-    154,
-    166,
-    'components_creative_component_creative_items',
-    'image',
-    1
-  );
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (
-    1417,
+    1443,
     132,
     119,
     'components_creative_component_creative_items',
@@ -18158,7 +17788,7 @@ INSERT INTO
   )
 VALUES
   (
-    1418,
+    1444,
     138,
     120,
     'components_creative_component_creative_items',
@@ -18176,7 +17806,7 @@ INSERT INTO
   )
 VALUES
   (
-    1419,
+    1445,
     134,
     121,
     'components_creative_component_creative_items',
@@ -18194,7 +17824,7 @@ INSERT INTO
   )
 VALUES
   (
-    1420,
+    1446,
     136,
     122,
     'components_creative_component_creative_items',
@@ -18212,7 +17842,7 @@ INSERT INTO
   )
 VALUES
   (
-    1421,
+    1447,
     137,
     123,
     'components_creative_component_creative_items',
@@ -18230,7 +17860,7 @@ INSERT INTO
   )
 VALUES
   (
-    1422,
+    1448,
     133,
     124,
     'components_creative_component_creative_items',
@@ -18248,7 +17878,7 @@ INSERT INTO
   )
 VALUES
   (
-    1423,
+    1449,
     135,
     125,
     'components_creative_component_creative_items',
@@ -18266,7 +17896,7 @@ INSERT INTO
   )
 VALUES
   (
-    1424,
+    1450,
     139,
     126,
     'components_creative_component_creative_items',
@@ -18284,7 +17914,7 @@ INSERT INTO
   )
 VALUES
   (
-    1425,
+    1451,
     141,
     127,
     'components_creative_component_creative_items',
@@ -18302,7 +17932,7 @@ INSERT INTO
   )
 VALUES
   (
-    1426,
+    1452,
     140,
     128,
     'components_creative_component_creative_items',
@@ -18320,7 +17950,7 @@ INSERT INTO
   )
 VALUES
   (
-    1427,
+    1453,
     157,
     129,
     'components_creative_component_creative_items',
@@ -18338,7 +17968,7 @@ INSERT INTO
   )
 VALUES
   (
-    1428,
+    1454,
     143,
     130,
     'components_creative_component_creative_items',
@@ -18356,7 +17986,7 @@ INSERT INTO
   )
 VALUES
   (
-    1429,
+    1455,
     145,
     131,
     'components_creative_component_creative_items',
@@ -18374,7 +18004,7 @@ INSERT INTO
   )
 VALUES
   (
-    1430,
+    1456,
     144,
     132,
     'components_creative_component_creative_items',
@@ -18392,7 +18022,7 @@ INSERT INTO
   )
 VALUES
   (
-    1431,
+    1457,
     147,
     133,
     'components_creative_component_creative_items',
@@ -18410,7 +18040,7 @@ INSERT INTO
   )
 VALUES
   (
-    1432,
+    1458,
     142,
     134,
     'components_creative_component_creative_items',
@@ -18428,7 +18058,7 @@ INSERT INTO
   )
 VALUES
   (
-    1433,
+    1459,
     149,
     135,
     'components_creative_component_creative_items',
@@ -18446,7 +18076,7 @@ INSERT INTO
   )
 VALUES
   (
-    1434,
+    1460,
     150,
     136,
     'components_creative_component_creative_items',
@@ -18464,7 +18094,7 @@ INSERT INTO
   )
 VALUES
   (
-    1435,
+    1461,
     148,
     137,
     'components_creative_component_creative_items',
@@ -18482,7 +18112,7 @@ INSERT INTO
   )
 VALUES
   (
-    1436,
+    1462,
     152,
     138,
     'components_creative_component_creative_items',
@@ -18500,7 +18130,7 @@ INSERT INTO
   )
 VALUES
   (
-    1437,
+    1463,
     151,
     139,
     'components_creative_component_creative_items',
@@ -18518,7 +18148,7 @@ INSERT INTO
   )
 VALUES
   (
-    1438,
+    1464,
     153,
     140,
     'components_creative_component_creative_items',
@@ -18536,7 +18166,7 @@ INSERT INTO
   )
 VALUES
   (
-    1439,
+    1465,
     154,
     141,
     'components_creative_component_creative_items',
@@ -18554,7 +18184,7 @@ INSERT INTO
   )
 VALUES
   (
-    1440,
+    1466,
     155,
     142,
     'components_creative_component_creative_items',
@@ -18572,9 +18202,423 @@ INSERT INTO
   )
 VALUES
   (
-    1441,
+    1467,
     156,
     143,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1468,
+    132,
+    144,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1469,
+    138,
+    145,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1470,
+    134,
+    146,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1471,
+    136,
+    147,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1472,
+    137,
+    148,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1473,
+    133,
+    149,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1474,
+    135,
+    150,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1475,
+    139,
+    151,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1476,
+    141,
+    152,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1477,
+    140,
+    153,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1478,
+    146,
+    154,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1479,
+    143,
+    155,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1480,
+    145,
+    156,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1481,
+    144,
+    157,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1482,
+    147,
+    158,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1483,
+    142,
+    159,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1484,
+    149,
+    160,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1485,
+    150,
+    161,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1486,
+    148,
+    162,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1487,
+    152,
+    163,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1488,
+    151,
+    164,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1489,
+    153,
+    165,
+    'components_creative_component_creative_items',
+    'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1490,
+    154,
+    166,
     'components_creative_component_creative_items',
     'image',
     1
