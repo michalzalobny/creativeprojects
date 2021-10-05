@@ -8,6 +8,57 @@ import { ItemProps } from './classes/types';
 import { PageProps } from './data';
 import * as S from './PlaygroundGalleryPage.styles';
 
+const Gallery = () => {
+  return (
+    <S.GalleryWrapper data-playground="wrapper">
+      <S.RowWrapper>
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="0" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="1" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="2" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="3" />
+        <S.GallerySpacer half />
+      </S.RowWrapper>
+      <S.RowWrapper>
+        <S.GallerySpacer half />
+        <S.GalleryItem data-playground-item="4" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="5" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="6" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="7" />
+        <S.GallerySpacer />
+      </S.RowWrapper>
+      <S.RowWrapper>
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="8" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="9" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="10" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="11" />
+        <S.GallerySpacer half />
+      </S.RowWrapper>
+      <S.RowWrapper>
+        <S.GallerySpacer half />
+        <S.GalleryItem data-playground-item="12" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="13" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="14" />
+        <S.GallerySpacer />
+        <S.GalleryItem data-playground-item="15" />
+        <S.GallerySpacer />
+      </S.RowWrapper>
+    </S.GalleryWrapper>
+  );
+};
+
 export default function PlaygroundGalleryPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
@@ -64,24 +115,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
       <S.Wrapper>
-        <S.GalleryWrapper data-playground="wrapper">
-          {[...Array(16)].map((item, key) => {
-            const itemKey = key + 1;
-            const columnsAmount = 4;
-            const ratio = itemKey / columnsAmount;
-            const itemRow = Math.floor(ratio % 1 === 0 ? ratio - 1 : ratio);
-            const shouldOffset = (itemRow + 1) % 2 === 0;
-
-            //Rendering spans conditionally allows to create and offset in the grid
-            return (
-              <React.Fragment key={key}>
-                {!shouldOffset && <span />}
-                <S.GalleryItem data-playground-item={key} />
-                {shouldOffset && <span />}
-              </React.Fragment>
-            );
-          })}
-        </S.GalleryWrapper>
+        <Gallery />
         <S.CanvasWrapper ref={rendererWrapperEl} />
       </S.Wrapper>
     </>

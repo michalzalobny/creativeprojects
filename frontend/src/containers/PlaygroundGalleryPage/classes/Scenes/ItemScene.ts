@@ -83,6 +83,10 @@ export class ItemScene extends InteractiveScene {
           document.querySelectorAll(`[data-playground-item="${itemKey}"]`),
         )[0] as HTMLElement;
 
+        if (!domEl) {
+          return;
+        }
+
         const item3D = new Image3D({
           geometry: this._planeGeometry,
           cardItem: item,
