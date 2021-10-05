@@ -19,8 +19,8 @@ export class SlideScene extends ItemScene {
   static touchMultiplier = 2;
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
-  static itemsPerGroup = 3;
-  static maxDepthZoom = 0.6;
+  static itemsPerGroup = 16;
+  static maxDepthZoom = 1.2;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
