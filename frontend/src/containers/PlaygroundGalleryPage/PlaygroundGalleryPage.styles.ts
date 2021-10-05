@@ -17,7 +17,7 @@ export const GalleryWrapper = styled.div`
   grid-template-columns: 1fr;
   grid-row-gap: ${MOBILE_GAP * 2}vw;
   /* background: green; */
-  opacity: 0.5;
+
   padding: ${MOBILE_GAP}vw 0;
 `;
 
@@ -36,6 +36,7 @@ export const GalleryItem = styled.div`
     width: 100%;
     padding-bottom: 100%;
   }
+
   /* background: red; */
 `;
 
@@ -64,7 +65,7 @@ export const Wrapper = styled.div`
   position: relative;
   min-width: 100%;
   height: 100%;
-  background-color: #fcf7eb;
+  background-color: black;
   user-select: none;
   pointer-events: none;
   overflow: hidden;

@@ -14,9 +14,9 @@ interface Constructor {
 
 export class SlideScene extends ItemScene {
   static lerpEase = 0.06;
-  static wheelMultiplier = 0.002;
-  static mouseMultiplier = 2;
-  static touchMultiplier = 2;
+  static wheelMultiplier = 0.0018;
+  static mouseMultiplier = 1;
+  static touchMultiplier = 1;
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 16;
@@ -194,12 +194,14 @@ export class SlideScene extends ItemScene {
 
     this._items3D.forEach((item, key) => {
       // The value goes from 0 to 1 based on element scale
-      const normalizedOpacity =
+      const xO =
         (this._groups3DArray[item.groupIndex].scale.x - 1) /
         SlideScene.maxDepthZoom /
         SlideScene.groupsAmount;
 
-      item.opacity = 1 - Math.pow(normalizedOpacity * 2 - 1, 8);
+      // item.opacity = 1 - Math.pow(normalizedOpacity * 2 - 1, 8);
+      // item.opacity = 4 * (Math.pow(-xO, 5) + Math.pow(-xO, 2));
+      item.opacity = 7 * (Math.pow(-xO, 7) + Math.pow(-xO, 4));
     });
   }
 
