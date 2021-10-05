@@ -16,7 +16,7 @@ export const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: ${MOBILE_GAP * 2}vw;
-  background: green;
+  /* background: green; */
   opacity: 0.5;
   padding: ${MOBILE_GAP}vw 0;
 `;
@@ -36,7 +36,7 @@ export const GalleryItem = styled.div`
     width: 100%;
     padding-bottom: 100%;
   }
-  background: red;
+  /* background: red; */
 `;
 
 export const GallerySpacer = styled.div<GallerySpacer>`
@@ -48,7 +48,7 @@ export const GallerySpacer = styled.div<GallerySpacer>`
     `}
 
   position: relative;
-  background: pink;
+  /* background: pink; */
 `;
 
 export const CanvasWrapper = styled.div`
