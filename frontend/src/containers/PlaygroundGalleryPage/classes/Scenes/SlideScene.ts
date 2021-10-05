@@ -193,14 +193,17 @@ export class SlideScene extends ItemScene {
     });
 
     this._items3D.forEach((item, key) => {
-      const finalScale =
-        (Math.abs(this._depthIndex.current - item.groupIndex) %
-          SlideScene.groupsAmount) /
-        SlideScene.groupsAmount;
+      if (key === 0) {
+        // console.log(this._groups3DArray[item.groupIndex].scale.x);
+      }
+      item.opacity = this._groups3DArray[item.groupIndex].scale.x - 1;
+      // const finalScale =
+      //   Math.abs(this._depthIndex.current - item.groupIndex) %
+      //   SlideScene.groupsAmount;
 
-      item.opacity = finalScale;
-      // if (key === 1) {
-      //   console.log(finalScale);
+      // item.opacity = finalScale;
+      // if (key === 7) {
+      //   // console.log(finalScale);
       // }
     });
   }

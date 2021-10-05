@@ -91,7 +91,7 @@ export class MediaObject3D extends InteractiveObject3D {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
-    this._updateOpacity();
+    // this._updateOpacity();
 
     if (this._mesh) this._mesh.material.uniforms.uTime.value = updateInfo.time;
 
@@ -129,7 +129,8 @@ export class MediaObject3D extends InteractiveObject3D {
   }
 
   set opacity(value: number) {
-    this._masterOpacity = value;
+    if (this._mesh) this._mesh.material.uniforms.uOpacity.value = value;
+    // this._masterOpacity = value;
   }
 
   set strength(value: number) {
