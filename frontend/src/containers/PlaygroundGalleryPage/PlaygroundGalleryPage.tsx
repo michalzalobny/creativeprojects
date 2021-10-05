@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 import { Head } from 'utils/seo/Head';
 import { Layout } from 'components/Layout/Layout';
@@ -63,6 +63,8 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
   const myApp = useRef<App | null>(null);
 
+  const [isReady, setIsReady] = useState(false);
+
   const imagesToPreload = useMemo(() => {
     return props.projectData.creativeItems.map((item, key) => {
       if (item.name === 'image') {
@@ -92,6 +94,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
     if (rendererWrapperEl.current) {
       myApp.current = new App({
         rendererWrapperEl: rendererWrapperEl.current,
+        setIsReady,
       });
     }
 
@@ -116,7 +119,12 @@ export default function PlaygroundGalleryPage(props: PageProps) {
       <Layout allProjects={props.allProjectsData} />
       <S.Wrapper>
         <Gallery />
-        <S.CanvasWrapper ref={rendererWrapperEl} />
+        <S.CanvasWrapper
+          variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
+          initial="initial"
+          animate={isReady ? 'animate' : 'initial'}
+          ref={rendererWrapperEl}
+        />
       </S.Wrapper>
     </>
   );

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 const MOBILE_GAP = 5;
 const SPACER_WIDTH = 15;
@@ -53,7 +54,7 @@ export const GallerySpacer = styled.div<GallerySpacer>`
   background: pink;
 `;
 
-export const CanvasWrapper = styled.div`
+export const CanvasWrapper = styled(motion.div)`
   width: 100%;
   height: 100%;
   position: absolute;

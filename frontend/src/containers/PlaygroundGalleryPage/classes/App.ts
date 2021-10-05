@@ -10,6 +10,7 @@ import { ItemProps } from './types';
 
 interface Constructor {
   rendererWrapperEl: HTMLDivElement;
+  setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class App extends THREE.EventDispatcher {
@@ -27,9 +28,11 @@ export class App extends THREE.EventDispatcher {
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
   _slideScene: SlideScene;
+  _setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
 
-  constructor({ rendererWrapperEl }: Constructor) {
+  constructor({ setIsReady, rendererWrapperEl }: Constructor) {
     super();
+    this._setIsReady = setIsReady;
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -83,6 +86,7 @@ export class App extends THREE.EventDispatcher {
 
   _onAssetsLoaded = (e: THREE.Event) => {
     this._slideScene.textureItems = (e.target as Preloader).textureItems;
+    this._setIsReady(true);
     this._slideScene.animateIn();
   };
 
