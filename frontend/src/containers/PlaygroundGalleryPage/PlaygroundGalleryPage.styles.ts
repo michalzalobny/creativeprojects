@@ -16,9 +16,9 @@ export const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: ${MOBILE_GAP * 2}vw;
-  /* background: green; */
-
+  background: green;
   padding: ${MOBILE_GAP}vw 0;
+  opacity: 0;
 `;
 
 export const RowWrapper = styled.div`
@@ -37,7 +37,7 @@ export const GalleryItem = styled.div`
     padding-bottom: 100%;
   }
 
-  /* background: red; */
+  background: red;
 `;
 
 export const GallerySpacer = styled.div<GallerySpacer>`
@@ -45,11 +45,12 @@ export const GallerySpacer = styled.div<GallerySpacer>`
   ${props =>
     props.half &&
     css`
-      width: ${SPACER_WIDTH / 2}vw;
+      /* width: ${SPACER_WIDTH / 2}vw; */
+      width: ${0}vw; 
     `}
 
   position: relative;
-  /* background: pink; */
+  background: pink;
 `;
 
 export const CanvasWrapper = styled.div`
