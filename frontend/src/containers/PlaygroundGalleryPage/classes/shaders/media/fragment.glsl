@@ -42,5 +42,5 @@ void main() {
     gl_FragColor.rgb = tBack.rgb;
   }
 
-  gl_FragColor.a = uOpacity;
+  gl_FragColor.a = uOpacity * tFront.a;
 }

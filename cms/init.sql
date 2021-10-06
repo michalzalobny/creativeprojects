@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 159 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 160 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1491 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1589 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -2893,7 +2893,7 @@ VALUES
     1,
     1,
     '2021-10-01 09:43:02',
-    '2021-10-05 21:14:55'
+    '2021-10-06 08:59:24'
   );
 
 # ------------------------------------------------------------
@@ -6165,7 +6165,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$J1K6liPYESKPmM0l9q4c9uWaNv/DaRKmJ6NyCQJRyIgCAm4.IDhOu',
+    '$2b$10$9Nh3DGJQrTkIxRGttneXFO5jv.3f2jyI9h/ePXocxQI7eLZTpc8W.',
     NULL,
     NULL,
     1,
@@ -13696,21 +13696,21 @@ VALUES
     '3.jpg',
     '',
     '',
-    687,
-    1031,
-    '{\"thumbnail\":{\"name\":\"thumbnail_3.jpg\",\"hash\":\"thumbnail_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":104,\"height\":156,\"size\":2.36,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338764/thumbnail_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_3_ce5980a205\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_3.jpg\",\"hash\":\"large_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":666,\"height\":1000,\"size\":31.68,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/large_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"large_3_ce5980a205\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_3.jpg\",\"hash\":\"medium_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":750,\"size\":20.52,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338765/medium_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"medium_3_ce5980a205\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_3.jpg\",\"hash\":\"small_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":333,\"height\":500,\"size\":11.4,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338766/small_3_ce5980a205.jpg\",\"provider_metadata\":{\"public_id\":\"small_3_ce5980a205\",\"resource_type\":\"image\"}}}',
+    664,
+    647,
+    '{\"thumbnail\":{\"name\":\"thumbnail_3.jpg\",\"hash\":\"thumbnail_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/png\",\"width\":160,\"height\":156,\"size\":14.15,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511863/thumbnail_3_ce5980a205.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_3_ce5980a205\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_3.jpg\",\"hash\":\"small_3_ce5980a205\",\"ext\":\".jpg\",\"mime\":\"image/png\",\"width\":500,\"height\":487,\"size\":93.7,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511864/small_3_ce5980a205.png\",\"provider_metadata\":{\"public_id\":\"small_3_ce5980a205\",\"resource_type\":\"image\"}}}',
     '3_ce5980a205',
     '.jpg',
-    'image/jpeg',
-    32.95,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338763/3_ce5980a205.jpg',
+    'image/png',
+    128.07,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511862/3_ce5980a205.png',
     NULL,
     'cloudinary',
     '{\"public_id\":\"3_ce5980a205\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-10-04 09:12:47',
-    '2021-10-04 09:12:47'
+    '2021-10-06 09:17:44'
   );
 INSERT INTO
   `upload_file` (
@@ -13918,19 +13918,19 @@ VALUES
     '',
     1064,
     808,
-    '{\"thumbnail\":{\"name\":\"thumbnail_8.jpg\",\"hash\":\"thumbnail_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":205,\"height\":156,\"size\":4.57,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/thumbnail_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_8_22e5559125\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_8.jpg\",\"hash\":\"large_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":759,\"size\":65.72,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338768/large_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"large_8_22e5559125\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_8.jpg\",\"hash\":\"medium_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":570,\"size\":41.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338769/medium_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"medium_8_22e5559125\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_8.jpg\",\"hash\":\"small_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":380,\"size\":20.2,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338770/small_8_22e5559125.jpg\",\"provider_metadata\":{\"public_id\":\"small_8_22e5559125\",\"resource_type\":\"image\"}}}',
+    '{\"thumbnail\":{\"name\":\"thumbnail_8.jpg\",\"hash\":\"thumbnail_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/png\",\"width\":205,\"height\":156,\"size\":29.91,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511025/thumbnail_8_22e5559125.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_8_22e5559125\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_8.jpg\",\"hash\":\"large_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/png\",\"width\":1000,\"height\":759,\"size\":540.34,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511027/large_8_22e5559125.png\",\"provider_metadata\":{\"public_id\":\"large_8_22e5559125\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_8.jpg\",\"hash\":\"medium_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/png\",\"width\":750,\"height\":570,\"size\":315.95,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511028/medium_8_22e5559125.png\",\"provider_metadata\":{\"public_id\":\"medium_8_22e5559125\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_8.jpg\",\"hash\":\"small_8_22e5559125\",\"ext\":\".jpg\",\"mime\":\"image/png\",\"width\":500,\"height\":380,\"size\":146.98,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511029/small_8_22e5559125.png\",\"provider_metadata\":{\"public_id\":\"small_8_22e5559125\",\"resource_type\":\"image\"}}}',
     '8_22e5559125',
     '.jpg',
-    'image/jpeg',
-    72.15,
-    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633338767/8_22e5559125.jpg',
+    'image/png',
+    523.60,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1633511024/8_22e5559125.png',
     NULL,
     'cloudinary',
     '{\"public_id\":\"8_22e5559125\",\"resource_type\":\"image\"}',
     1,
     1,
     '2021-10-04 09:12:51',
-    '2021-10-04 09:12:51'
+    '2021-10-06 09:03:50'
   );
 INSERT INTO
   `upload_file` (
@@ -17752,7 +17752,7 @@ INSERT INTO
   )
 VALUES
   (
-    1442,
+    1540,
     158,
     12,
     'components_page_localized_heads',
@@ -17770,7 +17770,7 @@ INSERT INTO
   )
 VALUES
   (
-    1443,
+    1541,
     132,
     119,
     'components_creative_component_creative_items',
@@ -17788,7 +17788,7 @@ INSERT INTO
   )
 VALUES
   (
-    1444,
+    1542,
     138,
     120,
     'components_creative_component_creative_items',
@@ -17806,7 +17806,7 @@ INSERT INTO
   )
 VALUES
   (
-    1445,
+    1543,
     134,
     121,
     'components_creative_component_creative_items',
@@ -17824,7 +17824,7 @@ INSERT INTO
   )
 VALUES
   (
-    1446,
+    1544,
     136,
     122,
     'components_creative_component_creative_items',
@@ -17842,7 +17842,7 @@ INSERT INTO
   )
 VALUES
   (
-    1447,
+    1545,
     137,
     123,
     'components_creative_component_creative_items',
@@ -17860,7 +17860,7 @@ INSERT INTO
   )
 VALUES
   (
-    1448,
+    1546,
     133,
     124,
     'components_creative_component_creative_items',
@@ -17878,7 +17878,7 @@ INSERT INTO
   )
 VALUES
   (
-    1449,
+    1547,
     135,
     125,
     'components_creative_component_creative_items',
@@ -17896,7 +17896,7 @@ INSERT INTO
   )
 VALUES
   (
-    1450,
+    1548,
     139,
     126,
     'components_creative_component_creative_items',
@@ -17914,7 +17914,7 @@ INSERT INTO
   )
 VALUES
   (
-    1451,
+    1549,
     141,
     127,
     'components_creative_component_creative_items',
@@ -17932,7 +17932,7 @@ INSERT INTO
   )
 VALUES
   (
-    1452,
+    1550,
     140,
     128,
     'components_creative_component_creative_items',
@@ -17950,7 +17950,7 @@ INSERT INTO
   )
 VALUES
   (
-    1453,
+    1551,
     157,
     129,
     'components_creative_component_creative_items',
@@ -17968,7 +17968,7 @@ INSERT INTO
   )
 VALUES
   (
-    1454,
+    1552,
     143,
     130,
     'components_creative_component_creative_items',
@@ -17986,7 +17986,7 @@ INSERT INTO
   )
 VALUES
   (
-    1455,
+    1553,
     145,
     131,
     'components_creative_component_creative_items',
@@ -18004,7 +18004,7 @@ INSERT INTO
   )
 VALUES
   (
-    1456,
+    1554,
     144,
     132,
     'components_creative_component_creative_items',
@@ -18022,7 +18022,7 @@ INSERT INTO
   )
 VALUES
   (
-    1457,
+    1555,
     147,
     133,
     'components_creative_component_creative_items',
@@ -18040,7 +18040,7 @@ INSERT INTO
   )
 VALUES
   (
-    1458,
+    1556,
     142,
     134,
     'components_creative_component_creative_items',
@@ -18058,7 +18058,7 @@ INSERT INTO
   )
 VALUES
   (
-    1459,
+    1557,
     149,
     135,
     'components_creative_component_creative_items',
@@ -18076,7 +18076,7 @@ INSERT INTO
   )
 VALUES
   (
-    1460,
+    1558,
     150,
     136,
     'components_creative_component_creative_items',
@@ -18094,7 +18094,7 @@ INSERT INTO
   )
 VALUES
   (
-    1461,
+    1559,
     148,
     137,
     'components_creative_component_creative_items',
@@ -18112,7 +18112,7 @@ INSERT INTO
   )
 VALUES
   (
-    1462,
+    1560,
     152,
     138,
     'components_creative_component_creative_items',
@@ -18130,7 +18130,7 @@ INSERT INTO
   )
 VALUES
   (
-    1463,
+    1561,
     151,
     139,
     'components_creative_component_creative_items',
@@ -18148,7 +18148,7 @@ INSERT INTO
   )
 VALUES
   (
-    1464,
+    1562,
     153,
     140,
     'components_creative_component_creative_items',
@@ -18166,7 +18166,7 @@ INSERT INTO
   )
 VALUES
   (
-    1465,
+    1563,
     154,
     141,
     'components_creative_component_creative_items',
@@ -18184,7 +18184,7 @@ INSERT INTO
   )
 VALUES
   (
-    1466,
+    1564,
     155,
     142,
     'components_creative_component_creative_items',
@@ -18202,7 +18202,7 @@ INSERT INTO
   )
 VALUES
   (
-    1467,
+    1565,
     156,
     143,
     'components_creative_component_creative_items',
@@ -18220,7 +18220,7 @@ INSERT INTO
   )
 VALUES
   (
-    1468,
+    1566,
     132,
     144,
     'components_creative_component_creative_items',
@@ -18238,7 +18238,7 @@ INSERT INTO
   )
 VALUES
   (
-    1469,
+    1567,
     138,
     145,
     'components_creative_component_creative_items',
@@ -18256,7 +18256,7 @@ INSERT INTO
   )
 VALUES
   (
-    1470,
+    1568,
     134,
     146,
     'components_creative_component_creative_items',
@@ -18274,7 +18274,7 @@ INSERT INTO
   )
 VALUES
   (
-    1471,
+    1569,
     136,
     147,
     'components_creative_component_creative_items',
@@ -18292,7 +18292,7 @@ INSERT INTO
   )
 VALUES
   (
-    1472,
+    1570,
     137,
     148,
     'components_creative_component_creative_items',
@@ -18310,7 +18310,7 @@ INSERT INTO
   )
 VALUES
   (
-    1473,
+    1571,
     133,
     149,
     'components_creative_component_creative_items',
@@ -18328,7 +18328,7 @@ INSERT INTO
   )
 VALUES
   (
-    1474,
+    1572,
     135,
     150,
     'components_creative_component_creative_items',
@@ -18346,7 +18346,7 @@ INSERT INTO
   )
 VALUES
   (
-    1475,
+    1573,
     139,
     151,
     'components_creative_component_creative_items',
@@ -18364,7 +18364,7 @@ INSERT INTO
   )
 VALUES
   (
-    1476,
+    1574,
     141,
     152,
     'components_creative_component_creative_items',
@@ -18382,7 +18382,7 @@ INSERT INTO
   )
 VALUES
   (
-    1477,
+    1575,
     140,
     153,
     'components_creative_component_creative_items',
@@ -18400,7 +18400,7 @@ INSERT INTO
   )
 VALUES
   (
-    1478,
+    1576,
     146,
     154,
     'components_creative_component_creative_items',
@@ -18418,7 +18418,7 @@ INSERT INTO
   )
 VALUES
   (
-    1479,
+    1577,
     143,
     155,
     'components_creative_component_creative_items',
@@ -18436,7 +18436,7 @@ INSERT INTO
   )
 VALUES
   (
-    1480,
+    1578,
     145,
     156,
     'components_creative_component_creative_items',
@@ -18454,7 +18454,7 @@ INSERT INTO
   )
 VALUES
   (
-    1481,
+    1579,
     144,
     157,
     'components_creative_component_creative_items',
@@ -18472,7 +18472,7 @@ INSERT INTO
   )
 VALUES
   (
-    1482,
+    1580,
     147,
     158,
     'components_creative_component_creative_items',
@@ -18490,7 +18490,7 @@ INSERT INTO
   )
 VALUES
   (
-    1483,
+    1581,
     142,
     159,
     'components_creative_component_creative_items',
@@ -18508,7 +18508,7 @@ INSERT INTO
   )
 VALUES
   (
-    1484,
+    1582,
     149,
     160,
     'components_creative_component_creative_items',
@@ -18526,7 +18526,7 @@ INSERT INTO
   )
 VALUES
   (
-    1485,
+    1583,
     150,
     161,
     'components_creative_component_creative_items',
@@ -18544,7 +18544,7 @@ INSERT INTO
   )
 VALUES
   (
-    1486,
+    1584,
     148,
     162,
     'components_creative_component_creative_items',
@@ -18562,7 +18562,7 @@ INSERT INTO
   )
 VALUES
   (
-    1487,
+    1585,
     152,
     163,
     'components_creative_component_creative_items',
@@ -18580,7 +18580,7 @@ INSERT INTO
   )
 VALUES
   (
-    1488,
+    1586,
     151,
     164,
     'components_creative_component_creative_items',
@@ -18598,7 +18598,7 @@ INSERT INTO
   )
 VALUES
   (
-    1489,
+    1587,
     153,
     165,
     'components_creative_component_creative_items',
@@ -18616,7 +18616,7 @@ INSERT INTO
   )
 VALUES
   (
-    1490,
+    1588,
     154,
     166,
     'components_creative_component_creative_items',
