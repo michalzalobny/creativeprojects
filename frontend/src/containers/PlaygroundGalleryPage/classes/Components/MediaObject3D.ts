@@ -20,7 +20,6 @@ export class MediaObject3D extends InteractiveObject3D {
   _tweenOpacity = 0;
   _opacityTween: Tween<{ progress: number }> | null = null;
   _isVisible = false;
-  _strength = 0;
 
   constructor({ geometry }: Constructor) {
     super();
@@ -95,9 +94,6 @@ export class MediaObject3D extends InteractiveObject3D {
 
     if (this._mesh) this._mesh.material.uniforms.uTime.value = updateInfo.time;
 
-    if (this._mesh)
-      this._mesh.material.uniforms.uStrength.value = this._strength;
-
     if (this._intersectPoint && this._mesh) {
       this._mesh.material.uniforms.uMouse3D.value = this._intersectPoint;
     }
@@ -131,9 +127,5 @@ export class MediaObject3D extends InteractiveObject3D {
   set opacity(value: number) {
     if (this._mesh) this._mesh.material.uniforms.uOpacity.value = value;
     // this._masterOpacity = value;
-  }
-
-  set strength(value: number) {
-    this._strength = value;
   }
 }

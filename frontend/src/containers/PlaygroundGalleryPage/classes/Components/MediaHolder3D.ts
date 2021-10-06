@@ -147,6 +147,8 @@ export class MediaHolder3D extends MediaObject3D {
     if (this._scrollValues) {
       this._updateX(this._scrollValues.current.x);
       this._updateY(this._scrollValues.current.y);
+      if (this._mesh)
+        this._mesh.material.uniforms.uStrength.value = this._scrollValues.strength.current;
     }
     this._handleInfinityScroll();
   }
