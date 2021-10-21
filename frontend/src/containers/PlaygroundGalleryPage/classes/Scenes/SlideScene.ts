@@ -39,6 +39,10 @@ export class SlideScene extends ItemScene {
     target: SlideScene.defaultDepthValue,
   };
 
+  _groupIndex = {
+    last: SlideScene.groupsAmount - 1,
+  };
+
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
@@ -181,6 +185,23 @@ export class SlideScene extends ItemScene {
     );
   }
 
+  _onGroupIndexChange(newIndex: number) {
+    console.log('newIndex', newIndex);
+  }
+
+  _trackGoupIndex(updateInfo: UpdateInfo) {
+    const currentGroupIndex =
+      Math.abs(this._depthIndex.current) % SlideScene.groupsAmount;
+
+    const flooredIndex = Math.floor(currentGroupIndex);
+    const lastFlooredIndex = this._groupIndex.last;
+
+    this._groupIndex.last = flooredIndex;
+
+    if (flooredIndex - lastFlooredIndex !== 0)
+      this._onGroupIndexChange(flooredIndex);
+  }
+
   _positionGroups(updateInfo: UpdateInfo) {
     this._groups3DArray.forEach((group, key) => {
       // the value goes from 1 to 4 in a loop
@@ -208,6 +229,7 @@ export class SlideScene extends ItemScene {
     this._updateIndex(updateInfo);
     this._updateScrollValues(updateInfo);
     this._positionGroups(updateInfo);
+    this._trackGoupIndex(updateInfo);
   }
 
   destroy() {
