@@ -31,7 +31,6 @@ export class SlideScene extends ItemScene {
       current: 0,
       target: 0,
     },
-    scrollSpeed: { x: 0, y: 0 },
   };
   _depthIndex = {
     last: SlideScene.defaultDepthValue - 1,
@@ -129,9 +128,6 @@ export class SlideScene extends ItemScene {
     this._scrollValues.strength.current = 0;
     this._scrollValues.strength.target = 0;
 
-    this._scrollValues.scrollSpeed.x = 0;
-    this._scrollValues.scrollSpeed.y = 0;
-
     //Reset depth values
     this._depthIndex.target = SlideScene.defaultDepthValue;
     this._depthIndex.current = SlideScene.defaultDepthValue;
@@ -139,8 +135,6 @@ export class SlideScene extends ItemScene {
   }
 
   _updateScrollValues(updateInfo: UpdateInfo) {
-    this._scrollValues.target.y += this._scrollValues.scrollSpeed.y;
-
     //Update scroll direction
     if (this._scrollValues.current.x > this._scrollValues.last.x) {
       this._scrollValues.direction.x = 'left';
