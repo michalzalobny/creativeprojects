@@ -20,7 +20,6 @@ export class SlideScene extends ItemScene {
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 16;
-  static maxDepthZoom = 0.95;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
@@ -184,10 +183,11 @@ export class SlideScene extends ItemScene {
 
   _positionGroups(updateInfo: UpdateInfo) {
     this._groups3DArray.forEach((group, key) => {
+      // the value goes from 1 to 4 in a loop
       const finalScale =
-        (Math.abs(this._depthIndex.current - key) % SlideScene.groupsAmount) *
-          SlideScene.maxDepthZoom +
-        1; // the value goes : 1, 2, 3, 1, 2, 3, 1...
+        (Math.abs(this._depthIndex.current - key) % SlideScene.groupsAmount) +
+        1;
+
       group.scale.set(finalScale, finalScale, finalScale);
       group.position.z = finalScale * 0.1; //Places group with the biggest scale on top
     });
@@ -196,11 +196,8 @@ export class SlideScene extends ItemScene {
       // The value goes from 0 to 1 based on element scale
       const xO =
         (this._groups3DArray[item.groupIndex].scale.x - 1) /
-        SlideScene.maxDepthZoom /
         SlideScene.groupsAmount;
 
-      // item.opacity = 1 - Math.pow(normalizedOpacity * 2 - 1, 8);
-      // item.opacity = 4 * (Math.pow(-xO, 5) + Math.pow(-xO, 2));
       item.opacity = 7 * (Math.pow(-xO, 7) + Math.pow(-xO, 4));
     });
   }
