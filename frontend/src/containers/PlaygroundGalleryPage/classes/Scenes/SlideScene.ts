@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 
-import { UpdateInfo, Bounds, ScrollValues, ItemProps } from '../types';
+import { UpdateInfo, Bounds, ItemProps } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { lerp } from '../utils/lerp';
+import { GroupScroll } from '../Utility/GroupScroll';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -15,23 +16,12 @@ interface Constructor {
 export class SlideScene extends ItemScene {
   static lerpEase = 0.06;
   static wheelMultiplier = 0.0018;
-  static mouseMultiplier = 1;
-  static touchMultiplier = 1;
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 16;
 
   _scroll: Scroll;
-  _scrollValues: ScrollValues = {
-    current: { x: 0, y: 0 },
-    target: { x: 0, y: 0 },
-    last: { x: 0, y: 0 },
-    direction: { x: 'left', y: 'up' },
-    strength: {
-      current: 0,
-      target: 0,
-    },
-  };
+  _groupScrolls: GroupScroll[] = [];
   _depthIndex = {
     last: SlideScene.defaultDepthValue - 1,
     current: SlideScene.defaultDepthValue,
@@ -45,31 +35,18 @@ export class SlideScene extends ItemScene {
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
+
+    for (let i = 0; i < SlideScene.groupsAmount; i++) {
+      this._groupScrolls.push(new GroupScroll({ scroll: this._scroll }));
+    }
+
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
   }
 
-  _applyScroll = (x: number, y: number) => {
-    this._scrollValues.target.x -= x;
-    this._scrollValues.target.y += y;
-  };
-
-  _onScrollMouse = (e: THREE.Event) => {
-    this._applyScroll(
-      e.x * SlideScene.mouseMultiplier,
-      e.y * SlideScene.mouseMultiplier,
-    );
-  };
-  _onScrollTouch = (e: THREE.Event) => {
-    this._applyScroll(
-      e.x * SlideScene.touchMultiplier,
-      e.y * SlideScene.touchMultiplier,
-    );
-  };
   _onScrollWheel = (e: THREE.Event) => {
     const newTarget =
       this._depthIndex.target - e.y * SlideScene.wheelMultiplier;
-    // this._depthIndex.target = Math.min(Math.max(0, newTarget), 3);
     this._depthIndex.target = newTarget;
   };
 
@@ -79,15 +56,17 @@ export class SlideScene extends ItemScene {
 
   _addListeners() {
     super._addListeners();
-    this._scroll.addEventListener('mouse', this._onScrollMouse);
-    this._scroll.addEventListener('touch', this._onScrollTouch);
+    this._groupScrolls.forEach(el => {
+      el.addListeners();
+    });
     this._scroll.addEventListener('wheel', this._onScrollWheel);
   }
 
   _removeListeners() {
     super._removeListeners();
-    this._scroll.removeEventListener('mouse', this._onScrollMouse);
-    this._scroll.removeEventListener('touch', this._onScrollTouch);
+    this._groupScrolls.forEach(el => {
+      el.removeListeners();
+    });
     this._scroll.removeEventListener('wheel', this._onScrollWheel);
   }
 
@@ -115,18 +94,9 @@ export class SlideScene extends ItemScene {
   }
 
   _resetScrollValues() {
-    //Reset scroll values
-    this._scrollValues.current.x = 0;
-    this._scrollValues.current.y = 0;
-
-    this._scrollValues.target.x = 0;
-    this._scrollValues.target.y = 0;
-
-    this._scrollValues.last.x = 0;
-    this._scrollValues.last.y = 0;
-
-    this._scrollValues.strength.current = 0;
-    this._scrollValues.strength.target = 0;
+    this._groupScrolls.forEach(el => {
+      el.resetScrollValues();
+    });
 
     //Reset depth values
     this._depthIndex.target = SlideScene.defaultDepthValue;
@@ -134,58 +104,20 @@ export class SlideScene extends ItemScene {
     this._depthIndex.last = SlideScene.defaultDepthValue - 1;
   }
 
-  _updateScrollValues(updateInfo: UpdateInfo) {
-    //Update scroll direction
-    if (this._scrollValues.current.x > this._scrollValues.last.x) {
-      this._scrollValues.direction.x = 'left';
-    } else {
-      this._scrollValues.direction.x = 'right';
-    }
-
-    if (this._scrollValues.current.y > this._scrollValues.last.y) {
-      this._scrollValues.direction.y = 'up';
-    } else {
-      this._scrollValues.direction.y = 'down';
-    }
-
-    //Update scroll strength
-    const deltaX = this._scrollValues.current.x - this._scrollValues.last.x;
-    const deltaY = this._scrollValues.current.y - this._scrollValues.last.y;
-
-    this._scrollValues.strength.target = Math.sqrt(
-      deltaX * deltaX + deltaY * deltaY,
-    );
-
-    this._scrollValues.strength.current = lerp(
-      this._scrollValues.strength.current,
-      this._scrollValues.strength.target,
-      SlideScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.last.x = this._scrollValues.current.x;
-    this._scrollValues.last.y = this._scrollValues.current.y;
-
-    //lerp scroll
-    this._scrollValues.current.x = lerp(
-      this._scrollValues.current.x,
-      this._scrollValues.target.x,
-      SlideScene.lerpEase * updateInfo.slowDownFactor,
-    );
-
-    this._scrollValues.current.y = lerp(
-      this._scrollValues.current.y,
-      this._scrollValues.target.y,
-      SlideScene.lerpEase * updateInfo.slowDownFactor,
-    );
-  }
-
   _onGroupIndexChange(newIndex: number) {
-    console.log('newIndex', newIndex);
+    this._groupScrolls.forEach((el, key) => {
+      if (key === newIndex) {
+        el.isActive = true;
+      } else {
+        el.isActive = false;
+      }
+    });
   }
 
   _trackGoupIndex(updateInfo: UpdateInfo) {
     const currentGroupIndex =
-      Math.abs(this._depthIndex.current) % SlideScene.groupsAmount;
+      Math.abs(SlideScene.groupsAmount - 1 - this._depthIndex.current) %
+      SlideScene.groupsAmount;
 
     const flooredIndex = Math.floor(currentGroupIndex);
     const lastFlooredIndex = this._groupIndex.last;
@@ -221,9 +153,11 @@ export class SlideScene extends ItemScene {
     super.update(updateInfo);
     this._passValues();
     this._updateIndex(updateInfo);
-    this._updateScrollValues(updateInfo);
     this._positionGroups(updateInfo);
     this._trackGoupIndex(updateInfo);
+    this._groupScrolls.forEach(el => {
+      el.update(updateInfo);
+    });
   }
 
   destroy() {
@@ -243,9 +177,10 @@ export class SlideScene extends ItemScene {
 
   setItems(items: ItemProps[]) {
     super.setItems(items);
+
     //Passing scrollValues as reference for better performance
-    this._items3D.forEach(item => {
-      item.setScrollValues(this._scrollValues);
+    this._items3D.forEach((item, key) => {
+      item.setScrollValues(this._groupScrolls[item.groupIndex].scrollValues);
     });
   }
 }
