@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
-const MOBILE_GAP = 3;
-const SPACER_WIDTH = 14;
-const EL_WIDTH = 6.5;
+const MOBILE_GAP = 3 * 2;
+const SPACER_WIDTH = 14 * 2;
+const EL_WIDTH = 6.5 * 2;
 
 interface GallerySpacer {
   half?: boolean;
@@ -16,10 +16,10 @@ export const GalleryWrapper = styled.div`
   transform: translate(-50%, -50%);
   display: grid;
   grid-template-columns: 1fr;
-  grid-row-gap: ${MOBILE_GAP * 2}vw;
+  grid-row-gap: ${MOBILE_GAP * 2}vh;
   background: green;
-  padding: ${MOBILE_GAP}vw 0;
-  opacity: 0;
+  padding: ${MOBILE_GAP}vh 0;
+  opacity: 1;
 `;
 
 export const RowWrapper = styled.div`
@@ -30,7 +30,7 @@ export const RowWrapper = styled.div`
 
 export const GalleryItem = styled.div`
   position: relative;
-  width: ${EL_WIDTH}vw;
+  width: ${EL_WIDTH}vh;
   &:before {
     content: '';
     display: block;
@@ -42,12 +42,12 @@ export const GalleryItem = styled.div`
 `;
 
 export const GallerySpacer = styled.div<GallerySpacer>`
-  width: ${SPACER_WIDTH}vw;
+  width: ${SPACER_WIDTH}vh;
   ${props =>
     props.half &&
     css`
       /* width: ${SPACER_WIDTH / 2}vw; */
-      width: ${0}vw; 
+      width: ${0}vh; 
     `}
 
   position: relative;
