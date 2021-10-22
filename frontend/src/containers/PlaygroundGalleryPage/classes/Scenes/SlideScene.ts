@@ -53,9 +53,17 @@ export class SlideScene extends ItemScene {
     meta.content = 'width=device-width, user-scalable=no';
     document.getElementsByTagName('head')[0].appendChild(meta);
 
-    // const element = document.querySelector('#scene');
-
-    // And pass it to panzoom
+    document.addEventListener(
+      'touchmove',
+      event => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (event.scale !== 1) {
+          event.preventDefault();
+        }
+      },
+      { passive: false },
+    );
   }
 
   _onScrollWheel = (e: THREE.Event) => {
