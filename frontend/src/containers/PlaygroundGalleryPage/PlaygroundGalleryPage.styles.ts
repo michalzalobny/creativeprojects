@@ -19,7 +19,7 @@ export const GalleryWrapper = styled.div`
   grid-row-gap: ${MOBILE_GAP * 2}vh;
   background: green;
   padding: ${MOBILE_GAP}vh 0;
-  opacity: 1;
+  opacity: 0;
 `;
 
 export const RowWrapper = styled.div`

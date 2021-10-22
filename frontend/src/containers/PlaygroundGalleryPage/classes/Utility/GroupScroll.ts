@@ -10,7 +10,7 @@ export class GroupScroll {
   static lerpEase = 0.06;
   static mouseMultiplier = 0.6;
   static touchMultiplier = 0.6;
-  static inActiveScrollMultiplier = 0.1;
+  static inActiveScrollMultiplier = 0.05;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
