@@ -117,7 +117,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
     <>
       <Head {...props.head} />
       <Layout allProjects={props.allProjectsData} />
-      <S.Wrapper>
+      <S.Wrapper data-pinch="container">
         <Gallery />
         <S.CanvasWrapper
           variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}

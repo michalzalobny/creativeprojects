@@ -14,6 +14,7 @@ interface Constructor {
 }
 
 export class SlideScene extends ItemScene {
+  static panzoomName = '[data-pinch="container"]';
   static lerpEase = 0.06;
   static wheelMultiplier = 0.0018;
   static groupsAmount = 3;
@@ -42,6 +43,19 @@ export class SlideScene extends ItemScene {
 
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
+
+    const panEl = Array.from(
+      document.querySelectorAll(SlideScene.panzoomName),
+    )[0] as HTMLElement;
+
+    const meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, user-scalable=no';
+    document.getElementsByTagName('head')[0].appendChild(meta);
+
+    // const element = document.querySelector('#scene');
+
+    // And pass it to panzoom
   }
 
   _onScrollWheel = (e: THREE.Event) => {
