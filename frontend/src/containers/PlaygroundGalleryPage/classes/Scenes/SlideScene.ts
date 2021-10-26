@@ -6,6 +6,7 @@ import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { lerp } from '../utils/lerp';
 import { GroupScroll } from '../Utility/GroupScroll';
+import { TouchPinch } from '../Singletons/TouchPinch';
 
 interface Constructor {
   camera: THREE.PerspectiveCamera;
@@ -14,13 +15,13 @@ interface Constructor {
 }
 
 export class SlideScene extends ItemScene {
-  static panzoomName = '[data-pinch="container"]';
   static lerpEase = 0.06;
   static wheelMultiplier = 0.0018;
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 16;
 
+  _touchPinch = TouchPinch.getInstance();
   _scroll: Scroll;
   _groupScrolls: GroupScroll[] = [];
   _depthIndex = {
@@ -43,32 +44,16 @@ export class SlideScene extends ItemScene {
 
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
-
-    const panEl = Array.from(
-      document.querySelectorAll(SlideScene.panzoomName),
-    )[0] as HTMLElement;
-
-    // const meta = document.createElement('meta');
-    // meta.name = 'viewport';
-    // meta.content = 'width=device-width, user-scalable=no';
-    // document.getElementsByTagName('head')[0].appendChild(meta);
-
-    document.addEventListener(
-      'touchmove',
-      event => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        if (event.scale !== 1) {
-          event.preventDefault();
-        }
-      },
-      { passive: false },
-    );
   }
 
   _onScrollWheel = (e: THREE.Event) => {
     const newTarget =
       this._depthIndex.target - e.y * SlideScene.wheelMultiplier;
+    this._depthIndex.target = newTarget;
+  };
+
+  _onPinch = (e: THREE.Event) => {
+    const newTarget = this._depthIndex.target - e.distance * 0.01;
     this._depthIndex.target = newTarget;
   };
 
@@ -82,6 +67,7 @@ export class SlideScene extends ItemScene {
       el.addListeners();
     });
     this._scroll.addEventListener('wheel', this._onScrollWheel);
+    this._touchPinch.addEventListener('pinch', this._onPinch);
   }
 
   _removeListeners() {
