@@ -48,10 +48,10 @@ export class SlideScene extends ItemScene {
       document.querySelectorAll(SlideScene.panzoomName),
     )[0] as HTMLElement;
 
-    const meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, user-scalable=no';
-    document.getElementsByTagName('head')[0].appendChild(meta);
+    // const meta = document.createElement('meta');
+    // meta.name = 'viewport';
+    // meta.content = 'width=device-width, user-scalable=no';
+    // document.getElementsByTagName('head')[0].appendChild(meta);
 
     document.addEventListener(
       'touchmove',
