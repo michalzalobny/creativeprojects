@@ -5,6 +5,7 @@ import { Coords } from '../types';
 export class TouchPinch extends EventDispatcher {
   _delta: Coords = { x: 0, y: 0 };
   _deltaLast: Coords = { x: 0, y: 0 };
+  _distanceLast = 0;
   _isPinching = false;
 
   static _instance: TouchPinch | null;
@@ -55,10 +56,15 @@ export class TouchPinch extends EventDispatcher {
 
       const distance = Math.hypot(deltaDeltaX, deltaDeltaY);
 
-      this.dispatchEvent({ type: 'pinch', distance: distance });
+      const distance2 = Math.hypot(this._delta.x, this._delta.y);
+
+      const distanceSign = -Math.sign(distance2 - this._distanceLast);
+
+      this.dispatchEvent({ type: 'pinch', distance: distance * distanceSign });
 
       this._deltaLast.x = this._delta.x;
       this._deltaLast.y = this._delta.y;
+      this._distanceLast = distance2;
     }
   };
 
