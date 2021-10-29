@@ -20,7 +20,7 @@ export interface Bounds {
   height: number;
 }
 
-interface Coords {
+export interface Coords {
   x: number;
   y: number;
 }

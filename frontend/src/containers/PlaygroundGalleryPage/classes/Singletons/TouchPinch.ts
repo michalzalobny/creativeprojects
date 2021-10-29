@@ -1,17 +1,11 @@
 import { EventDispatcher } from 'three';
 
-import { UpdateInfo } from '../types';
-
-interface Mouse {
-  x: number;
-  y: number;
-}
+import { Coords } from '../types';
 
 export class TouchPinch extends EventDispatcher {
-  _delta: Mouse = { x: 0, y: 0 };
-  _deltaLast: Mouse = { x: 0, y: 0 };
+  _delta: Coords = { x: 0, y: 0 };
+  _deltaLast: Coords = { x: 0, y: 0 };
   _isPinching = false;
-  _isActive = false;
 
   static _instance: TouchPinch | null;
   static _canCreate = false;
@@ -59,19 +53,9 @@ export class TouchPinch extends EventDispatcher {
       const deltaDeltaX = this._delta.x - this._deltaLast.x;
       const deltaDeltaY = this._delta.y - this._deltaLast.y;
 
-      const sign = 1;
-
-      // sign = Math.sign(deltaDeltaY);
-      // if (Math.abs(deltaDeltaX) > Math.abs(deltaDeltaY)) {
-      //   // sign = Math.sign(deltaDeltaX);
-      // } else {
-      //   // sign = Math.sign(deltaDeltaY);
-      // }
-
       const distance = Math.hypot(deltaDeltaX, deltaDeltaY);
 
-      // this._isActive &&
-      this.dispatchEvent({ type: 'pinch', distance: distance * sign });
+      this.dispatchEvent({ type: 'pinch', distance: distance });
 
       this._deltaLast.x = this._delta.x;
       this._deltaLast.y = this._delta.y;
@@ -82,20 +66,6 @@ export class TouchPinch extends EventDispatcher {
     this._isPinching = false;
   };
 
-  _addMeta() {
-    const meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, user-scalable=no';
-    document.getElementsByTagName('head')[0].appendChild(meta);
-  }
-
-  _removeMeta() {
-    const meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width';
-    document.getElementsByTagName('head')[0].appendChild(meta);
-  }
-
   _addEvents() {
     window.addEventListener('touchstart', this._onTouchDown);
     window.addEventListener('touchmove', this._onTouchMove, {
@@ -103,16 +73,4 @@ export class TouchPinch extends EventDispatcher {
     });
     window.addEventListener('touchend', this._onTouchUp);
   }
-
-  enablePinch() {
-    this._isActive = true;
-    this._addMeta();
-  }
-
-  disablePinch() {
-    this._isActive = false;
-    this._removeMeta();
-  }
-
-  update(updateInfo: UpdateInfo) {}
 }
