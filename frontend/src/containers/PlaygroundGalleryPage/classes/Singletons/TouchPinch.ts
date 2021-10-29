@@ -55,20 +55,23 @@ export class TouchPinch extends EventDispatcher {
       const deltaDeltaY = this._delta.y - this._deltaLast.y;
 
       const distance = Math.sqrt(
-        Math.pow(deltaDeltaX, 2) + Math.pow(deltaDeltaY, 2),
-      );
-
-      const distance2 = Math.sqrt(
         Math.pow(this._delta.x, 2) + Math.pow(this._delta.y, 2),
       );
 
-      const distanceSign = -Math.sign(distance2 - this._distanceLast);
+      const deltaDistance = Math.sqrt(
+        Math.pow(deltaDeltaX, 2) + Math.pow(deltaDeltaY, 2),
+      );
 
-      this.dispatchEvent({ type: 'pinch', distance: distance * distanceSign });
+      const direction = -Math.sign(distance - this._distanceLast);
+
+      this.dispatchEvent({
+        type: 'pinch',
+        distance: deltaDistance * direction,
+      });
 
       this._deltaLast.x = this._delta.x;
       this._deltaLast.y = this._delta.y;
-      this._distanceLast = distance2;
+      this._distanceLast = distance;
     }
   };
 
