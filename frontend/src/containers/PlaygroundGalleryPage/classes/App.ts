@@ -6,7 +6,7 @@ import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
 import { SlideScene } from './Scenes/SlideScene';
 import { Preloader } from './Utility/Preloader';
-import { ItemProps } from './types';
+import { ItemProps, PreloadItem } from './types';
 
 interface Constructor {
   rendererWrapperEl: HTMLDivElement;
@@ -157,7 +157,7 @@ export class App extends THREE.EventDispatcher {
     this._slideScene.setItems(items);
   }
 
-  setImagesToPreload(images: string[]) {
-    this._preloader.images = images;
+  setImagesToPreload(items: PreloadItem[]) {
+    this._preloader.items = items;
   }
 }

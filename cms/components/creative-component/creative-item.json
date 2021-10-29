@@ -14,7 +14,8 @@
       "model": "file",
       "via": "related",
       "allowedTypes": [
-        "images"
+        "images",
+        "videos"
       ],
       "plugin": "upload",
       "required": false

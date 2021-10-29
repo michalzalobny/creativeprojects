@@ -65,12 +65,23 @@ export default function PlaygroundGalleryPage(props: PageProps) {
 
   const [isReady, setIsReady] = useState(false);
 
-  const imagesToPreload = useMemo(() => {
+  const itemsToPreload = useMemo(() => {
     return props.projectData.creativeItems.map((item, key) => {
       if (item.name === 'image') {
-        return item.image.url;
+        return {
+          src: item.image.url,
+          type: 'image',
+        };
+      } else if (item.name === 'video') {
+        return {
+          src: item.image.url,
+          type: 'video',
+        };
       }
-      return '';
+      return {
+        src: '',
+        type: '',
+      };
     });
   }, [props.projectData.creativeItems]);
 
@@ -110,8 +121,8 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   }, [carouselItems]);
 
   useEffect(() => {
-    if (myApp.current) myApp.current.setImagesToPreload(imagesToPreload);
-  }, [imagesToPreload]);
+    if (myApp.current) myApp.current.setImagesToPreload(itemsToPreload);
+  }, [itemsToPreload]);
 
   return (
     <>

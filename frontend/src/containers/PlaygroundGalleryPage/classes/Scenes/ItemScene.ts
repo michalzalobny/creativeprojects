@@ -5,6 +5,7 @@ import { UpdateInfo, ItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { Image3D } from '../Components/Medias/Image3D';
+import { Video3D } from '../Components/Medias/Video3D';
 import { MediaHolder3D } from '../Components/MediaHolder3D';
 import { TextureItems } from '../types';
 import { SlideScene } from './SlideScene';
@@ -87,15 +88,27 @@ export class ItemScene extends InteractiveScene {
           return;
         }
 
-        const item3D = new Image3D({
-          geometry: this._planeGeometry,
-          cardItem: item,
-          domEl,
-          galleryDomEl,
-        });
-        item3D.groupIndexValue = groupKey;
-        this._items3D.push(item3D);
-        this._groups3DArray[groupKey].add(item3D);
+        if (item.type === 'image') {
+          const item3D = new Image3D({
+            geometry: this._planeGeometry,
+            cardItem: item,
+            domEl,
+            galleryDomEl,
+          });
+          item3D.groupIndexValue = groupKey;
+          this._items3D.push(item3D);
+          this._groups3DArray[groupKey].add(item3D);
+        } else if (item.type === 'video') {
+          const item3D = new Video3D({
+            geometry: this._planeGeometry,
+            cardItem: item,
+            domEl,
+            galleryDomEl,
+          });
+          item3D.groupIndexValue = groupKey;
+          this._items3D.push(item3D);
+          this._groups3DArray[groupKey].add(item3D);
+        }
       });
     });
 
@@ -115,8 +128,8 @@ export class ItemScene extends InteractiveScene {
     this._textureItems = textureItems;
 
     this._items3D.forEach(el => {
-      if (el.cardItem.type === 'image')
-        (el as Image3D).textureItem = this._textureItems[el.cardItem.imageSrc];
+      // if (el.cardItem.type === 'image')
+      (el as Image3D).textureItem = this._textureItems[el.cardItem.imageSrc];
     });
   }
 

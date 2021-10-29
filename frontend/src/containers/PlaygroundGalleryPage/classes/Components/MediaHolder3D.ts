@@ -20,6 +20,7 @@ export class MediaHolder3D extends MediaObject3D {
   _scaleTranslate = { x: 0, y: 0 };
   _extra = { x: 0, y: 0 };
   _scrollValues: ScrollValues | null = null;
+  _ratioWidth = 1;
 
   constructor({ galleryDomEl, geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -49,7 +50,7 @@ export class MediaHolder3D extends MediaObject3D {
 
   _updateScale() {
     if (this._mesh) {
-      this._mesh.scale.x = this._domElBounds.width;
+      this._mesh.scale.x = this._domElBounds.height * this._ratioWidth;
       this._mesh.scale.y = this._domElBounds.height;
     }
   }

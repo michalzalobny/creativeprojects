@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 161 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 163 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1687 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1882 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1079,7 +1079,7 @@ VALUES
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
-  (120, 'image', NULL, NULL);
+  (120, 'video', NULL, NULL);
 INSERT INTO
   `components_creative_component_creative_items` (`id`, `name`, `description`, `filter`)
 VALUES
@@ -2452,7 +2452,7 @@ VALUES
   (
     44,
     'model_def_creative-component.creative-item',
-    '{\"uid\":\"creative-component.creative-item\",\"collectionName\":\"components_creative_component_creative_items\",\"info\":{\"name\":\"creativeItem\",\"icon\":\"address-book\",\"description\":\"\"},\"options\":{\"timestamps\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"image\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false},\"description\":{\"type\":\"richtext\"},\"filter\":{\"type\":\"string\"},\"secondaryImage\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false}}}',
+    '{\"uid\":\"creative-component.creative-item\",\"collectionName\":\"components_creative_component_creative_items\",\"info\":{\"name\":\"creativeItem\",\"icon\":\"address-book\",\"description\":\"\"},\"options\":{\"timestamps\":false},\"attributes\":{\"name\":{\"type\":\"string\"},\"image\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\",\"videos\"],\"plugin\":\"upload\",\"required\":false},\"description\":{\"type\":\"richtext\"},\"filter\":{\"type\":\"string\"},\"secondaryImage\":{\"model\":\"file\",\"via\":\"related\",\"allowedTypes\":[\"images\"],\"plugin\":\"upload\",\"required\":false}}}',
     'object',
     NULL,
     NULL
@@ -2893,7 +2893,7 @@ VALUES
     1,
     1,
     '2021-10-01 09:43:02',
-    '2021-10-26 13:47:54'
+    '2021-10-29 11:43:45'
   );
 
 # ------------------------------------------------------------
@@ -6165,7 +6165,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$k/sA1hHO89zXOR0t/D6DqOXRdBxJT17NjoERJcZAGrPt/fxY7v60e',
+    '$2b$10$NVdveJwohEIhRwUXJ.gTmubOB4Fzjl2VFniTD6WnQ8blAS9eHJRLW',
     NULL,
     NULL,
     1,
@@ -14812,6 +14812,50 @@ VALUES
     '2021-10-26 13:22:09',
     '2021-10-26 13:22:09'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    162,
+    'mov.mp4',
+    '',
+    '',
+    NULL,
+    NULL,
+    NULL,
+    'mov_c784d81c0b',
+    '.mp4',
+    'video/mp4',
+    788.49,
+    'https://res.cloudinary.com/dpv0ukspz/video/upload/v1635507399/mov_c784d81c0b.mp4',
+    'http://res.cloudinary.com/dpv0ukspz/video/upload/c_scale,dl_200,vs_6,w_250/mov_c784d81c0b.gif',
+    'cloudinary',
+    '{\"public_id\":\"mov_c784d81c0b\",\"resource_type\":\"video\"}',
+    1,
+    1,
+    '2021-10-29 11:36:39',
+    '2021-10-29 11:36:39'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -17796,7 +17840,7 @@ INSERT INTO
   )
 VALUES
   (
-    1638,
+    1833,
     158,
     12,
     'components_page_localized_heads',
@@ -17814,7 +17858,7 @@ INSERT INTO
   )
 VALUES
   (
-    1639,
+    1834,
     134,
     119,
     'components_creative_component_creative_items',
@@ -17832,8 +17876,8 @@ INSERT INTO
   )
 VALUES
   (
-    1640,
-    138,
+    1835,
+    162,
     120,
     'components_creative_component_creative_items',
     'image',
@@ -17850,7 +17894,7 @@ INSERT INTO
   )
 VALUES
   (
-    1641,
+    1836,
     134,
     121,
     'components_creative_component_creative_items',
@@ -17868,7 +17912,7 @@ INSERT INTO
   )
 VALUES
   (
-    1642,
+    1837,
     136,
     122,
     'components_creative_component_creative_items',
@@ -17886,7 +17930,7 @@ INSERT INTO
   )
 VALUES
   (
-    1643,
+    1838,
     137,
     123,
     'components_creative_component_creative_items',
@@ -17904,7 +17948,7 @@ INSERT INTO
   )
 VALUES
   (
-    1644,
+    1839,
     133,
     124,
     'components_creative_component_creative_items',
@@ -17922,7 +17966,7 @@ INSERT INTO
   )
 VALUES
   (
-    1645,
+    1840,
     135,
     125,
     'components_creative_component_creative_items',
@@ -17940,7 +17984,7 @@ INSERT INTO
   )
 VALUES
   (
-    1646,
+    1841,
     139,
     126,
     'components_creative_component_creative_items',
@@ -17958,7 +18002,7 @@ INSERT INTO
   )
 VALUES
   (
-    1647,
+    1842,
     141,
     127,
     'components_creative_component_creative_items',
@@ -17976,7 +18020,7 @@ INSERT INTO
   )
 VALUES
   (
-    1648,
+    1843,
     140,
     128,
     'components_creative_component_creative_items',
@@ -17994,7 +18038,7 @@ INSERT INTO
   )
 VALUES
   (
-    1649,
+    1844,
     157,
     129,
     'components_creative_component_creative_items',
@@ -18012,7 +18056,7 @@ INSERT INTO
   )
 VALUES
   (
-    1650,
+    1845,
     143,
     130,
     'components_creative_component_creative_items',
@@ -18030,7 +18074,7 @@ INSERT INTO
   )
 VALUES
   (
-    1651,
+    1846,
     145,
     131,
     'components_creative_component_creative_items',
@@ -18048,7 +18092,7 @@ INSERT INTO
   )
 VALUES
   (
-    1652,
+    1847,
     144,
     132,
     'components_creative_component_creative_items',
@@ -18066,7 +18110,7 @@ INSERT INTO
   )
 VALUES
   (
-    1653,
+    1848,
     147,
     133,
     'components_creative_component_creative_items',
@@ -18084,7 +18128,7 @@ INSERT INTO
   )
 VALUES
   (
-    1654,
+    1849,
     142,
     134,
     'components_creative_component_creative_items',
@@ -18102,7 +18146,7 @@ INSERT INTO
   )
 VALUES
   (
-    1655,
+    1850,
     149,
     135,
     'components_creative_component_creative_items',
@@ -18120,7 +18164,7 @@ INSERT INTO
   )
 VALUES
   (
-    1656,
+    1851,
     150,
     136,
     'components_creative_component_creative_items',
@@ -18138,7 +18182,7 @@ INSERT INTO
   )
 VALUES
   (
-    1657,
+    1852,
     148,
     137,
     'components_creative_component_creative_items',
@@ -18156,7 +18200,7 @@ INSERT INTO
   )
 VALUES
   (
-    1658,
+    1853,
     152,
     138,
     'components_creative_component_creative_items',
@@ -18174,7 +18218,7 @@ INSERT INTO
   )
 VALUES
   (
-    1659,
+    1854,
     151,
     139,
     'components_creative_component_creative_items',
@@ -18192,7 +18236,7 @@ INSERT INTO
   )
 VALUES
   (
-    1660,
+    1855,
     153,
     140,
     'components_creative_component_creative_items',
@@ -18210,7 +18254,7 @@ INSERT INTO
   )
 VALUES
   (
-    1661,
+    1856,
     154,
     141,
     'components_creative_component_creative_items',
@@ -18228,7 +18272,7 @@ INSERT INTO
   )
 VALUES
   (
-    1662,
+    1857,
     155,
     142,
     'components_creative_component_creative_items',
@@ -18246,7 +18290,7 @@ INSERT INTO
   )
 VALUES
   (
-    1663,
+    1858,
     156,
     143,
     'components_creative_component_creative_items',
@@ -18264,7 +18308,7 @@ INSERT INTO
   )
 VALUES
   (
-    1664,
+    1859,
     132,
     144,
     'components_creative_component_creative_items',
@@ -18282,7 +18326,7 @@ INSERT INTO
   )
 VALUES
   (
-    1665,
+    1860,
     138,
     145,
     'components_creative_component_creative_items',
@@ -18300,7 +18344,7 @@ INSERT INTO
   )
 VALUES
   (
-    1666,
+    1861,
     134,
     146,
     'components_creative_component_creative_items',
@@ -18318,7 +18362,7 @@ INSERT INTO
   )
 VALUES
   (
-    1667,
+    1862,
     136,
     147,
     'components_creative_component_creative_items',
@@ -18336,7 +18380,7 @@ INSERT INTO
   )
 VALUES
   (
-    1668,
+    1863,
     137,
     148,
     'components_creative_component_creative_items',
@@ -18354,7 +18398,7 @@ INSERT INTO
   )
 VALUES
   (
-    1669,
+    1864,
     133,
     149,
     'components_creative_component_creative_items',
@@ -18372,7 +18416,7 @@ INSERT INTO
   )
 VALUES
   (
-    1670,
+    1865,
     135,
     150,
     'components_creative_component_creative_items',
@@ -18390,7 +18434,7 @@ INSERT INTO
   )
 VALUES
   (
-    1671,
+    1866,
     139,
     151,
     'components_creative_component_creative_items',
@@ -18408,7 +18452,7 @@ INSERT INTO
   )
 VALUES
   (
-    1672,
+    1867,
     141,
     152,
     'components_creative_component_creative_items',
@@ -18426,7 +18470,7 @@ INSERT INTO
   )
 VALUES
   (
-    1673,
+    1868,
     140,
     153,
     'components_creative_component_creative_items',
@@ -18444,7 +18488,7 @@ INSERT INTO
   )
 VALUES
   (
-    1674,
+    1869,
     146,
     154,
     'components_creative_component_creative_items',
@@ -18462,7 +18506,7 @@ INSERT INTO
   )
 VALUES
   (
-    1675,
+    1870,
     143,
     155,
     'components_creative_component_creative_items',
@@ -18480,7 +18524,7 @@ INSERT INTO
   )
 VALUES
   (
-    1676,
+    1871,
     145,
     156,
     'components_creative_component_creative_items',
@@ -18498,7 +18542,7 @@ INSERT INTO
   )
 VALUES
   (
-    1677,
+    1872,
     144,
     157,
     'components_creative_component_creative_items',
@@ -18516,7 +18560,7 @@ INSERT INTO
   )
 VALUES
   (
-    1678,
+    1873,
     147,
     158,
     'components_creative_component_creative_items',
@@ -18534,7 +18578,7 @@ INSERT INTO
   )
 VALUES
   (
-    1679,
+    1874,
     142,
     159,
     'components_creative_component_creative_items',
@@ -18552,7 +18596,7 @@ INSERT INTO
   )
 VALUES
   (
-    1680,
+    1875,
     149,
     160,
     'components_creative_component_creative_items',
@@ -18570,7 +18614,7 @@ INSERT INTO
   )
 VALUES
   (
-    1681,
+    1876,
     150,
     161,
     'components_creative_component_creative_items',
@@ -18588,7 +18632,7 @@ INSERT INTO
   )
 VALUES
   (
-    1682,
+    1877,
     148,
     162,
     'components_creative_component_creative_items',
@@ -18606,7 +18650,7 @@ INSERT INTO
   )
 VALUES
   (
-    1683,
+    1878,
     152,
     163,
     'components_creative_component_creative_items',
@@ -18624,7 +18668,7 @@ INSERT INTO
   )
 VALUES
   (
-    1684,
+    1879,
     151,
     164,
     'components_creative_component_creative_items',
@@ -18642,7 +18686,7 @@ INSERT INTO
   )
 VALUES
   (
-    1685,
+    1880,
     153,
     165,
     'components_creative_component_creative_items',
@@ -18660,7 +18704,7 @@ INSERT INTO
   )
 VALUES
   (
-    1686,
+    1881,
     154,
     166,
     'components_creative_component_creative_items',

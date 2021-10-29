@@ -8,7 +8,7 @@ interface Constructor {
   galleryDomEl: HTMLElement;
 }
 
-export class Image3D extends MediaHolder3D {
+export class Video3D extends MediaHolder3D {
   _textureItem: TextureItem | null = null;
 
   constructor({ cardItem, galleryDomEl, domEl, geometry }: Constructor) {
