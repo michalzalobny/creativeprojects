@@ -37,7 +37,7 @@ export class Preloader extends EventDispatcher {
         video.muted = true;
         video.loop = true;
         video.controls = true;
-        video.playsInline = true;
+        // video.playsInline = true;
         video.autoplay = true;
         video.src = item.src;
         video.play();
