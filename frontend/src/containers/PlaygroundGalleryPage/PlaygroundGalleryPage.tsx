@@ -117,11 +117,15 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   }, []);
 
   useEffect(() => {
-    if (myApp.current) myApp.current.setItems(carouselItems);
+    window.requestAnimationFrame(() => {
+      if (myApp.current) myApp.current.setItems(carouselItems);
+    });
   }, [carouselItems]);
 
   useEffect(() => {
-    if (myApp.current) myApp.current.setImagesToPreload(itemsToPreload);
+    window.requestAnimationFrame(() => {
+      if (myApp.current) myApp.current.setImagesToPreload(itemsToPreload);
+    });
   }, [itemsToPreload]);
 
   return (
