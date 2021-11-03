@@ -89,9 +89,10 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
   return (
     <>
       <Wrapper>
-        <Cover animate={isReady ? 'animate' : 'initial'} />
+        <Cover initial="initial" animate={isReady ? 'animate' : 'initial'} />
         <ContentWrapper ref={scrollWrapper}>
           <ZoomWrapper
+            initial="initial"
             animate={isZoomed ? 'animate' : 'initial'}
             onPointerDown={() => {
               if (!isZoomed) {
@@ -104,11 +105,17 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
           >
             <RingWrapper>
               <Text
+                initial="initial"
                 animate={animateCircleIn && !isZoomed ? 'animate' : 'initial'}
               >
                 zoom in
               </Text>
-              <Text animate={isZoomed ? 'animate' : 'initial'}>quit zoom</Text>
+              <Text
+                initial="initial"
+                animate={isZoomed ? 'animate' : 'initial'}
+              >
+                quit zoom
+              </Text>
               <RingSvg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 87 87"
@@ -116,6 +123,7 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
               >
                 <g data-name="Layer 2">
                   <motion.path
+                    initial="initial"
                     d="M86.5 43.5a43 43 0 11-43-43 43 43 0 0143 43z"
                     fill="none"
                     stroke="#fff"
