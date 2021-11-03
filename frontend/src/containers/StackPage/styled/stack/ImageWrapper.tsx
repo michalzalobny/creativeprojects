@@ -17,18 +17,18 @@ export const ImageWrapper = styled.figure<Props>`
   }
 
   ${media.tablet} {
-    width: 650px;
+    width: 580px;
 
     &:before {
       content: '';
       display: block;
       width: 100%;
-      padding-bottom: 70%;
+      padding-bottom: 62%;
     }
     margin-bottom: 30px;
   }
 
   ${media.custom(sharedValues.containers.normal.breakpoint)} {
-    width: 650px;
+    width: 580px;
   }
 `;
