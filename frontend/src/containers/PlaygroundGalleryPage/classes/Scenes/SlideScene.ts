@@ -76,6 +76,7 @@ export class SlideScene extends ItemScene {
       el.removeListeners();
     });
     this._scroll.removeEventListener('wheel', this._onScrollWheel);
+    this._touchPinch.removeEventListener('pinch', this._onPinch);
   }
 
   _passValues() {
