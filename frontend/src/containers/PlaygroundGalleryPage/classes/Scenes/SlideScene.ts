@@ -25,7 +25,6 @@ export class SlideScene extends ItemScene {
   _scroll: Scroll;
   _groupScrolls: GroupScroll[] = [];
   _depthIndex = {
-    last: SlideScene.defaultDepthValue - 1,
     current: SlideScene.defaultDepthValue,
     target: SlideScene.defaultDepthValue,
   };
@@ -89,11 +88,8 @@ export class SlideScene extends ItemScene {
     //Loops depthIndex so that it never reaches negative value
     if (this._depthIndex.current < SlideScene.defaultDepthValue) {
       this._depthIndex.current += SlideScene.defaultDepthValue;
-      this._depthIndex.last += SlideScene.defaultDepthValue;
       this._depthIndex.target += SlideScene.defaultDepthValue;
     }
-
-    this._depthIndex.last = this._depthIndex.current;
 
     this._depthIndex.current = lerp(
       this._depthIndex.current,
@@ -110,7 +106,6 @@ export class SlideScene extends ItemScene {
     //Reset depth values
     this._depthIndex.target = SlideScene.defaultDepthValue;
     this._depthIndex.current = SlideScene.defaultDepthValue;
-    this._depthIndex.last = SlideScene.defaultDepthValue - 1;
   }
 
   _onGroupIndexChange(newIndex: number) {
