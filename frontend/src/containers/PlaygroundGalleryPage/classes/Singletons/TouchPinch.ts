@@ -86,10 +86,4 @@ export class TouchPinch extends EventDispatcher {
     });
     window.addEventListener('touchend', this._onTouchUp);
   }
-
-  removeEvents() {
-    window.removeEventListener('touchstart', this._onTouchDown);
-    window.removeEventListener('touchmove', this._onTouchMove);
-    window.removeEventListener('touchend', this._onTouchUp);
-  }
 }

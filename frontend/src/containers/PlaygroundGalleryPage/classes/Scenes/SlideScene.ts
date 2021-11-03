@@ -166,7 +166,6 @@ export class SlideScene extends ItemScene {
 
   destroy() {
     super.destroy();
-    this._touchPinch.removeEvents();
   }
 
   animateIn() {

@@ -8,6 +8,7 @@ import { PageWrapper } from 'components/PageWrapper/PageWrapper';
 import 'utils/styled/fontFace.css';
 import 'focus-visible';
 import { ExampleContextProvider } from 'context/ExampleContext';
+import { TouchPinch } from 'containers/PlaygroundGalleryPage/classes/Singletons/TouchPinch';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -19,6 +20,7 @@ export default function MyApp(props: AppProps) {
   }, [isInit]);
 
   useEffect(() => {
+    const x = TouchPinch.getInstance();
     //https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
     const updateVh = () => {
       // We execute the same script as before
