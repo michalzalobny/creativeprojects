@@ -128,7 +128,6 @@ export class ItemScene extends InteractiveScene {
     this._textureItems = textureItems;
 
     this._items3D.forEach(el => {
-      // if (el.cardItem.type === 'image')
       (el as Image3D).textureItem = this._textureItems[el.cardItem.imageSrc];
     });
   }

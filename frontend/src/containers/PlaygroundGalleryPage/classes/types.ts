@@ -61,7 +61,9 @@ export interface ItemProps {
   imageSrc: string;
 }
 
-export interface PreloadItem {
+interface PreloadItem {
   src: string;
   type: string;
 }
+
+export type PreloadItems = (PreloadItem | null)[];

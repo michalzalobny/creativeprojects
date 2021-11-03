@@ -1,11 +1,11 @@
 import { EventDispatcher } from 'three';
 import * as THREE from 'three';
 
-import { TextureItems, PreloadItem } from '../types';
+import { TextureItems, PreloadItems } from '../types';
 
 export class Preloader extends EventDispatcher {
   _assetsLoaded = 0;
-  _items: PreloadItem[] = [];
+  _items: PreloadItems = [];
   textureItems: TextureItems = {};
 
   constructor() {
@@ -14,7 +14,7 @@ export class Preloader extends EventDispatcher {
 
   _preloadTextures() {
     this._items.forEach(item => {
-      if (item.src === '') return this._onAssetLoaded(); //Skips loading empty entries
+      if (item === null) return this._onAssetLoaded(); //Skips loading empty entries
 
       if (item.type === 'image') {
         const texture = new THREE.Texture();
@@ -69,7 +69,7 @@ export class Preloader extends EventDispatcher {
     this.dispatchEvent({ type: 'loaded' });
   }
 
-  set items(items: PreloadItem[]) {
+  set items(items: PreloadItems) {
     this._items = items;
     this._preloadTextures();
   }

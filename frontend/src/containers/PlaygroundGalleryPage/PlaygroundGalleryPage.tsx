@@ -66,7 +66,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   const [isReady, setIsReady] = useState(false);
 
   const itemsToPreload = useMemo(() => {
-    return props.projectData.creativeItems.map((item, key) => {
+    return props.projectData.creativeItems.map(item => {
       if (item.name === 'image') {
         return {
           src: item.image.url,
@@ -78,10 +78,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
           type: 'video',
         };
       }
-      return {
-        src: '',
-        type: '',
-      };
+      return null;
     });
   }, [props.projectData.creativeItems]);
 
@@ -124,7 +121,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
 
   useEffect(() => {
     window.requestAnimationFrame(() => {
-      if (myApp.current) myApp.current.setImagesToPreload(itemsToPreload);
+      if (myApp.current) myApp.current.setItemsToPreload(itemsToPreload);
     });
   }, [itemsToPreload]);
 
