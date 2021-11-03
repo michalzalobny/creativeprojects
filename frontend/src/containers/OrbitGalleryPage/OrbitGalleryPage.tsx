@@ -59,7 +59,6 @@ export default function OrbitGalleryPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
   const myApp = useRef<App | null>(null);
-  const appTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const creativeItems = useMemo(
     () => [
@@ -79,19 +78,20 @@ export default function OrbitGalleryPage(props: PageProps) {
       return () => {};
     }
 
-    appTimeout.current = setTimeout(() => {
-      if (rendererWrapperEl.current) {
-        myApp.current = new App({
-          rendererWrapperEl: rendererWrapperEl.current,
-          items: creativeItems,
-          imagesToPreload,
-          setIsPanning,
-        });
-      }
-    }, 1);
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        if (rendererWrapperEl.current) {
+          myApp.current = new App({
+            rendererWrapperEl: rendererWrapperEl.current,
+            items: creativeItems,
+            imagesToPreload,
+            setIsPanning,
+          });
+        }
+      });
+    });
 
     return () => {
-      appTimeout.current && clearTimeout(appTimeout.current);
       myApp.current && myApp.current.destroy();
     };
   }, [creativeItems, imagesToPreload]);
