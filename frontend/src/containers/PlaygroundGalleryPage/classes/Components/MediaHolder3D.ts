@@ -61,7 +61,7 @@ export class MediaHolder3D extends MediaObject3D {
         -x +
         this._domElBounds.left -
         this._rendererBounds.width / 2 +
-        this._mesh.scale.x / 2 -
+        this._mesh.scale.x / this._ratioWidth / 2 - //Divide by ratioWidth to get real css dimensions
         this._extra.x -
         this._scaleTranslate.x;
     }
@@ -89,7 +89,7 @@ export class MediaHolder3D extends MediaObject3D {
   _handleInfinityScroll() {
     if (this._mesh && this._galleryDomElBounds && this._scrollValues) {
       // x axis
-      const scaleX = this._mesh.scale.x / 2;
+      const scaleX = this._mesh.scale.x / 2 / this._ratioWidth; //Divide by ratioWidth to get real css dimensions
       if (this._scrollValues.direction.x === 'left') {
         const x = this._mesh.position.x + scaleX;
 
