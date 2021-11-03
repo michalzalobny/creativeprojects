@@ -13,7 +13,7 @@ export const GalleryWrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1.2);
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: ${MOBILE_GAP * 2}vh;

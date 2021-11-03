@@ -16,7 +16,7 @@ interface Constructor {
 
 export class SlideScene extends ItemScene {
   static lerpEase = 0.06;
-  static wheelMultiplier = 0.0018;
+  static wheelMultiplier = 0.002;
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 16;
@@ -137,23 +137,23 @@ export class SlideScene extends ItemScene {
   }
 
   _positionGroups(updateInfo: UpdateInfo) {
+    const scaleArray: number[] = [];
     this._groups3DArray.forEach((group, key) => {
       // the value goes from 1 to 4 in a loop
       const finalScale =
         (Math.abs(this._depthIndex.current - key) % SlideScene.groupsAmount) +
         1;
 
-      group.scale.set(finalScale, finalScale, finalScale);
+      scaleArray[key] = finalScale;
+      const groupScale = finalScale * 0.8 - 0.5;
+      group.scale.set(groupScale, groupScale, groupScale); //Group scale is different from final scale to be able to adjust elements scales independantly and freely
       group.position.z = finalScale * 0.1; //Places group with the biggest scale on top
     });
 
     this._items3D.forEach((item, key) => {
       // The value goes from 0 to 1 based on element scale
-      const xO =
-        (this._groups3DArray[item.groupIndex].scale.x - 1) /
-        SlideScene.groupsAmount;
-
-      item.opacity = 7 * (Math.pow(-xO, 7) + Math.pow(-xO, 4));
+      const xO = (scaleArray[item.groupIndex] - 1) / SlideScene.groupsAmount;
+      item.opacity = 25 * (Math.pow(-xO, 7) + Math.pow(-xO, 6));
     });
   }
 

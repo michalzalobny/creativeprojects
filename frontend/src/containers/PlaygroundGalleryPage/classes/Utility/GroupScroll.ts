@@ -8,7 +8,7 @@ interface Constructor {
 
 export class GroupScroll {
   static lerpEase = 0.06;
-  static mouseMultiplier = 0.6;
+  static mouseMultiplier = 0.9;
   static touchMultiplier = 0.6;
   static inActiveScrollMultiplier = 0.05;
 
