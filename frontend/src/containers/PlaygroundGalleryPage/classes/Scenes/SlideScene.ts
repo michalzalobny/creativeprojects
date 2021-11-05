@@ -199,14 +199,14 @@ export class SlideScene extends ItemScene {
   }
 
   animateIn() {
-    this._animateDepth({ destination: 9.2, delay: 420, duration: 4400 });
+    this._animateDepth({ destination: 9.2, delay: 300, duration: 4400 });
 
     this._groupScrolls.forEach((el, key) => {
       const sign = key % 2 === 0 ? -1 : 1;
       el.animateScroll({
         destination: this._rendererBounds.height * sign * 2.36,
         duration: 3600,
-        delay: 420 + 1550,
+        delay: 300 + 1550,
       });
     });
 
