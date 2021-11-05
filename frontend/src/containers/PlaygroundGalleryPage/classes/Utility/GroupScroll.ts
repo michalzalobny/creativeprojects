@@ -35,6 +35,9 @@ export class GroupScroll {
   }
 
   _applyScroll = (x: number, y: number) => {
+    //Stops scroll animations if any user input occurs
+    if (this._scrollXTween) this._scrollXTween.stop();
+
     //If the scroll should not be active, only the tiny amount is applied to the scroll
     const multiplier = this._isActive
       ? 1
