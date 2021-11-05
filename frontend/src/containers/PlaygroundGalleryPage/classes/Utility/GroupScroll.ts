@@ -26,7 +26,6 @@ export class GroupScroll {
     },
   };
   _scrollTween: Tween<{ progress: number }> | null = null;
-  _isScrollTweenActive = false;
 
   _isActive = false;
 
@@ -36,8 +35,8 @@ export class GroupScroll {
   }
 
   _applyScroll = (x: number, y: number) => {
-    //Prevents from user interaction while animating
-    if (this._isScrollTweenActive) return;
+    //Stops scroll animations if any user input occurs
+    if (this._scrollTween) this._scrollTween.stop();
 
     //If the scroll should not be active, only the tiny amount is applied to the scroll
     const multiplier = this._isActive
@@ -145,8 +144,6 @@ export class GroupScroll {
 
     if (this._scrollTween) this._scrollTween.stop();
 
-    this._isScrollTweenActive = true;
-
     this._scrollTween = new TWEEN.Tween({
       progress: this._scrollValues.current.x,
     })
@@ -156,9 +153,6 @@ export class GroupScroll {
       .onUpdate(obj => {
         this._scrollValues.target.y = obj.progress;
         this._scrollValues.current.y = obj.progress;
-      })
-      .onComplete(() => {
-        this._isScrollTweenActive = false;
       });
 
     this._scrollTween.start();
