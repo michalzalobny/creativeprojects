@@ -195,7 +195,7 @@ export class SlideScene extends ItemScene {
   }
 
   animateIn() {
-    this._animateDepth({ destination: 6.2, delay: 800, duration: 3000 });
+    this._animateDepth({ destination: 6.2, delay: 620, duration: 3200 });
     this._items3D.forEach(el => {
       el.animateOpacity({ destination: 1 });
     });
