@@ -45,6 +45,7 @@ export class TouchPinch extends EventDispatcher {
   };
 
   _onTouchMove = (e: TouchEvent) => {
+    if (e.touches.length > 1) return;
     if (this._isPinching) {
       e.preventDefault();
 
