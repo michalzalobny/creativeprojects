@@ -30,6 +30,7 @@ export class SlideScene extends ItemScene {
     target: SlideScene.defaultDepthValue,
   };
   _depthTween: Tween<{ progress: number }> | null = null;
+  _isDepthTweenActive = false;
 
   _groupIndex = {
     last: SlideScene.groupsAmount - 1,
@@ -59,6 +60,8 @@ export class SlideScene extends ItemScene {
       this._depthTween.stop();
     }
 
+    this._isDepthTweenActive = true;
+
     this._depthTween = new TWEEN.Tween({ progress: this._depthIndex.current })
       .to({ progress: destination }, duration)
       .delay(delay)
@@ -66,18 +69,27 @@ export class SlideScene extends ItemScene {
       .onUpdate(obj => {
         this._depthIndex.target = obj.progress;
         this._depthIndex.current = obj.progress;
+      })
+      .onComplete(() => {
+        this._isDepthTweenActive = false;
       });
 
     this._depthTween.start();
   }
 
   _onScrollWheel = (e: THREE.Event) => {
+    //Prevents from user interaction while animating
+    if (this._isDepthTweenActive) return;
+
     const newTarget =
       this._depthIndex.target - e.y * SlideScene.wheelMultiplier;
     this._depthIndex.target = newTarget;
   };
 
   _onPinch = (e: THREE.Event) => {
+    //Prevents from user interaction while animating
+    if (this._isDepthTweenActive) return;
+
     const newTarget = this._depthIndex.target - e.distance * 0.01;
     this._depthIndex.target = newTarget;
   };
@@ -195,13 +207,13 @@ export class SlideScene extends ItemScene {
   }
 
   animateIn() {
-    this._animateDepth({ destination: 6.2, delay: 650, duration: 3300 });
+    this._animateDepth({ destination: 6.2, delay: 650, duration: 3100 });
 
     this._groupScrolls.forEach((el, key) => {
       const sign = key % 2 === 0 ? -1 : 1;
       el.animateScroll({
         destination: this._rendererBounds.height * sign * 2.36,
-        duration: 3300,
+        duration: 3100,
         delay: 650,
       });
     });
