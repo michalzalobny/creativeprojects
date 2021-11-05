@@ -109,10 +109,6 @@ export default class Document extends NextDocument {
           />
 
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta
-            name="viewport"
-            content="target-densitydpi=device-dpi; width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"
-          />
         </Head>
         <body>
           <Main />
