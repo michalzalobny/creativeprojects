@@ -1,5 +1,7 @@
+import TWEEN, { Tween } from '@tweenjs/tween.js';
+
 import { Scroll } from '../Singletons/Scroll';
-import { ScrollValues, UpdateInfo } from '../types';
+import { AnimateProps, ScrollValues, UpdateInfo } from '../types';
 import { lerp } from '../utils/lerp';
 
 interface Constructor {
@@ -23,6 +25,8 @@ export class GroupScroll {
       target: 0,
     },
   };
+  _scrollXTween: Tween<{ progress: number }> | null = null;
+
   _isActive = false;
 
   constructor(props: Constructor) {
@@ -125,6 +129,30 @@ export class GroupScroll {
 
   update(updateInfo: UpdateInfo) {
     this._updateScrollValues(updateInfo);
+  }
+
+  animateScroll(props: AnimateProps) {
+    const {
+      destination,
+      duration = 500,
+      delay = 0,
+      easing = TWEEN.Easing.Exponential.InOut,
+    } = props;
+
+    if (this._scrollXTween) this._scrollXTween.stop();
+
+    this._scrollXTween = new TWEEN.Tween({
+      progress: this._scrollValues.current.x,
+    })
+      .to({ progress: destination }, duration)
+      .delay(delay)
+      .easing(easing)
+      .onUpdate(obj => {
+        this._scrollValues.target.y = obj.progress;
+        this._scrollValues.current.y = obj.progress;
+      });
+
+    this._scrollXTween.start();
   }
 
   get scrollValues() {
