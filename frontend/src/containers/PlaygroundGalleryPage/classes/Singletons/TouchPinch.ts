@@ -33,9 +33,7 @@ export class TouchPinch extends EventDispatcher {
   }
 
   _onTouchDown = (e: TouchEvent) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    if (e.touches.length >= 2 || e.scale > 1) {
+    if (e.touches.length >= 2) {
       this._isPinching = true;
 
       this._delta.x = e.touches[0].pageX - e.touches[1].pageX;
