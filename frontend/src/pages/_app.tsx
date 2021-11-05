@@ -50,13 +50,46 @@ export default function MyApp(props: AppProps) {
       <GlobalStyles />
 
       <AnimatePresence exitBeforeEnter={false}>
-        <PageWrapper
-          router={router}
-          isInit={isInit}
-          key={router.route + router.locale}
-        >
-          <Component router={router} {...pageProps} />
-        </PageWrapper>
+        <>
+          <div
+            style={{
+              position: 'fixed',
+              zIndex: 20,
+              bottom: '20px',
+              right: '30px',
+              mixBlendMode: 'difference',
+              display: 'flex',
+            }}
+          >
+            <a
+              target="blank"
+              style={{ color: 'white', fontSize: 15, letterSpacing: 1.6 }}
+              href="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
+            >
+              Linkedin
+            </a>
+
+            <a
+              target="blank"
+              style={{
+                marginLeft: 20,
+                color: 'white',
+                fontSize: 15,
+                letterSpacing: 1.6,
+              }}
+              href="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
+            >
+              Github
+            </a>
+          </div>
+          <PageWrapper
+            router={router}
+            isInit={isInit}
+            key={router.route + router.locale}
+          >
+            <Component router={router} {...pageProps} />
+          </PageWrapper>
+        </>
       </AnimatePresence>
       {/* <FPSStats /> */}
     </ExampleContextProvider>
