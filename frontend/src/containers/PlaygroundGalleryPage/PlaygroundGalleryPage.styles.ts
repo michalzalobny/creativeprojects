@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
-const MOBILE_GAP = 3 * 2;
-const SPACER_WIDTH = 14 * 2;
-const EL_WIDTH = 6.5 * 2;
+const VERTICAL_GAP = 6;
+const HORIZONTAL_GAP = 28;
+const EL_WIDTH = 13;
 
 interface GallerySpacer {
   half?: boolean;
@@ -13,13 +13,19 @@ export const GalleryWrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1.2);
+  transform: translate(-50%, -50%) scale(1);
   display: grid;
   grid-template-columns: 1fr;
-  grid-row-gap: ${MOBILE_GAP * 2}vh;
-  background: green;
-  padding: ${MOBILE_GAP}vh 0;
+  grid-row-gap: ${VERTICAL_GAP * 2}vh;
+  padding: ${VERTICAL_GAP}vh 0;
   opacity: 0;
+  background: green;
+
+  @media (min-width: 768px) {
+    transform: translate(-50%, -50%) scale(1.2);
+    grid-row-gap: ${VERTICAL_GAP * 2}vh;
+    padding: ${VERTICAL_GAP}vh 0;
+  }
 `;
 
 export const RowWrapper = styled.div`
@@ -30,7 +36,8 @@ export const RowWrapper = styled.div`
 
 export const GalleryItem = styled.div`
   position: relative;
-  width: ${EL_WIDTH}vh;
+  width: ${EL_WIDTH * 0.85}vh;
+
   &:before {
     content: '';
     display: block;
@@ -39,19 +46,33 @@ export const GalleryItem = styled.div`
   }
 
   background: red;
+
+  @media (min-width: 768px) {
+    width: ${EL_WIDTH}vh;
+  }
 `;
 
 export const GallerySpacer = styled.div<GallerySpacer>`
-  width: ${SPACER_WIDTH}vh;
+  width: ${HORIZONTAL_GAP * 0.5}vh;
+
   ${props =>
     props.half &&
     css`
-      /* width: ${SPACER_WIDTH / 2}vw; */
-      width: ${0}vh; 
+      width: 0;
     `}
 
   position: relative;
   background: pink;
+
+  @media (min-width: 768px) {
+    width: ${HORIZONTAL_GAP}vh;
+
+    ${props =>
+      props.half &&
+      css`
+        width: 0;
+      `}
+  }
 `;
 
 export const CanvasWrapper = styled(motion.div)`
