@@ -1,6 +1,7 @@
 import * as THREE from 'three';
+import TWEEN, { Tween } from '@tweenjs/tween.js';
 
-import { UpdateInfo, Bounds, ItemProps } from '../types';
+import { UpdateInfo, Bounds, ItemProps, AnimateProps } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -28,6 +29,7 @@ export class SlideScene extends ItemScene {
     current: SlideScene.defaultDepthValue,
     target: SlideScene.defaultDepthValue,
   };
+  _depthTween: Tween<{ progress: number }> | null = null;
 
   _groupIndex = {
     last: SlideScene.groupsAmount - 1,
@@ -43,6 +45,30 @@ export class SlideScene extends ItemScene {
 
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
+  }
+
+  _animateDepth(props: AnimateProps) {
+    const {
+      destination,
+      duration = 500,
+      delay = 0,
+      easing = TWEEN.Easing.Exponential.InOut,
+    } = props;
+
+    if (this._depthTween) {
+      this._depthTween.stop();
+    }
+
+    this._depthTween = new TWEEN.Tween({ progress: this._depthIndex.current })
+      .to({ progress: destination }, duration)
+      .delay(delay)
+      .easing(easing)
+      .onUpdate(obj => {
+        this._depthIndex.target = obj.progress;
+        this._depthIndex.current = obj.progress;
+      });
+
+    this._depthTween.start();
   }
 
   _onScrollWheel = (e: THREE.Event) => {
@@ -169,6 +195,7 @@ export class SlideScene extends ItemScene {
   }
 
   animateIn() {
+    this._animateDepth({ destination: 6.2, delay: 800, duration: 3000 });
     this._items3D.forEach(el => {
       el.animateOpacity({ destination: 1 });
     });
