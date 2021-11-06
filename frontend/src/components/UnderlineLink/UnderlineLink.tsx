@@ -22,9 +22,9 @@ export const UnderlineLink = (props: UnderlineLinkProps) => {
         <ContentWrapper>
           <HoverWrapper>
             <ReplaceItem>
-              <Link href={linkHref} passHref>
-                <Text>{label}</Text>
-              </Link>
+              <Text href={linkHref} target="_blank">
+                {label}
+              </Text>
             </ReplaceItem>
           </HoverWrapper>
 
