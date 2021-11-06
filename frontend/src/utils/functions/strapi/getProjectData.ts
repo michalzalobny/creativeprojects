@@ -15,6 +15,7 @@ export async function getProjectData(urlSlug: string) {
             text
           },
           urlSlug,
+          isExternal,
           localizedHead{
             ogType,
             ogImage{

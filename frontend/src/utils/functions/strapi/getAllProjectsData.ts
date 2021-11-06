@@ -16,6 +16,7 @@ export async function getAllProjectsData() {
               text
             }
             urlSlug
+            isExternal
             localizedHead {
               ogType
               ogImage {

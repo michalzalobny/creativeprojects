@@ -17,10 +17,11 @@ export interface MenuItemProps {
   label: string;
   href: string;
   imageSrc: string;
+  isExternal: boolean;
 }
 
 export const MenuItem = memo<MenuItemProps>(props => {
-  const { href, imageSrc, label, ...rest } = props;
+  const { isExternal, href, imageSrc, label, ...rest } = props;
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { isHovered } = useHover(wrapperRef);
   const router = useRouter();
@@ -28,7 +29,16 @@ export const MenuItem = memo<MenuItemProps>(props => {
   return (
     <>
       <Wrapper style={{ zIndex: isHovered ? 4 : 2 }} ref={wrapperRef} {...rest}>
-        <HoverWrapper fullWidth onClick={() => router.push(href)}>
+        <HoverWrapper
+          fullWidth
+          onClick={() => {
+            if (isExternal) {
+              window.open(href, '_blank');
+            } else {
+              router.push(href);
+            }
+          }}
+        >
           <ReplaceItem>
             <LinkItem>{label}</LinkItem>
           </ReplaceItem>

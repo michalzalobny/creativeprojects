@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int(11) DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 25 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -215,9 +215,9 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `projects_urlslug_unique` (`urlSlug`)
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = latin1;
+  `isExternal` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 185 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 187 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 92 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 95 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_role
@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 163 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 164 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1882 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1885 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1343,6 +1343,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (12, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (13, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -1780,6 +1784,42 @@ VALUES
     12,
     12
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    25,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    25,
+    13
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    26,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    13,
+    13
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -1857,6 +1897,10 @@ INSERT INTO
   `components_page_localized_long_texts` (`id`, `language`, `text`)
 VALUES
   (12, 1, 'Playground Gallery made with THREE.js');
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (13, 1, 'Hero Transitions page made with THREEJS');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -1963,6 +2007,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (24, 'Playground Gallery', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (25, 'Hero Transitions', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (26, 'Hero Transitions', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -2408,7 +2460,7 @@ VALUES
   (
     40,
     'model_def_application::project.project',
-    '{\"uid\":\"application::project.project\",\"collectionName\":\"projects\",\"kind\":\"collectionType\",\"info\":{\"name\":\"project\",\"description\":\"\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"localizedHead\":{\"type\":\"component\",\"repeatable\":false,\"component\":\"page.localized-head\"},\"localizedName\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"page.localized-short-text\"},\"urlSlug\":{\"type\":\"uid\"},\"creativeItems\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"creative-component.creative-item\"},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
+    '{\"uid\":\"application::project.project\",\"collectionName\":\"projects\",\"kind\":\"collectionType\",\"info\":{\"name\":\"project\",\"description\":\"\"},\"options\":{\"increments\":true,\"timestamps\":[\"created_at\",\"updated_at\"],\"draftAndPublish\":false},\"attributes\":{\"localizedHead\":{\"type\":\"component\",\"repeatable\":false,\"component\":\"page.localized-head\"},\"localizedName\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"page.localized-short-text\"},\"creativeItems\":{\"type\":\"component\",\"repeatable\":true,\"component\":\"creative-component.creative-item\"},\"urlSlug\":{\"type\":\"string\"},\"isExternal\":{\"type\":\"boolean\",\"default\":false},\"created_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true},\"updated_by\":{\"model\":\"user\",\"plugin\":\"admin\",\"configurable\":false,\"writable\":false,\"private\":true}}}',
     'object',
     NULL,
     NULL
@@ -2419,7 +2471,7 @@ VALUES
   (
     41,
     'plugin_content_manager_configuration_content_types::application::project.project',
-    '{\"uid\":\"application::project.project\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"id\",\"defaultSortBy\":\"id\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"localizedHead\":{\"edit\":{\"label\":\"LocalizedHead\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedHead\",\"searchable\":false,\"sortable\":false}},\"localizedName\":{\"edit\":{\"label\":\"LocalizedName\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedName\",\"searchable\":false,\"sortable\":false}},\"urlSlug\":{\"edit\":{\"label\":\"UrlSlug\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"UrlSlug\",\"searchable\":true,\"sortable\":true}},\"creativeItems\":{\"edit\":{\"label\":\"CreativeItems\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"CreativeItems\",\"searchable\":false,\"sortable\":false}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"urlSlug\",\"created_at\",\"updated_at\"],\"edit\":[[{\"name\":\"localizedHead\",\"size\":12}],[{\"name\":\"localizedName\",\"size\":12}],[{\"name\":\"urlSlug\",\"size\":6}],[{\"name\":\"creativeItems\",\"size\":12}]],\"editRelations\":[]}}',
+    '{\"uid\":\"application::project.project\",\"settings\":{\"bulkable\":true,\"filterable\":true,\"searchable\":true,\"pageSize\":10,\"mainField\":\"id\",\"defaultSortBy\":\"id\",\"defaultSortOrder\":\"ASC\"},\"metadatas\":{\"id\":{\"edit\":{},\"list\":{\"label\":\"Id\",\"searchable\":true,\"sortable\":true}},\"localizedHead\":{\"edit\":{\"label\":\"LocalizedHead\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedHead\",\"searchable\":false,\"sortable\":false}},\"localizedName\":{\"edit\":{\"label\":\"LocalizedName\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"LocalizedName\",\"searchable\":false,\"sortable\":false}},\"creativeItems\":{\"edit\":{\"label\":\"CreativeItems\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"CreativeItems\",\"searchable\":false,\"sortable\":false}},\"urlSlug\":{\"edit\":{\"label\":\"UrlSlug\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"UrlSlug\",\"searchable\":true,\"sortable\":true}},\"isExternal\":{\"edit\":{\"label\":\"IsExternal\",\"description\":\"\",\"placeholder\":\"\",\"visible\":true,\"editable\":true},\"list\":{\"label\":\"IsExternal\",\"searchable\":true,\"sortable\":true}},\"created_at\":{\"edit\":{\"label\":\"Created_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Created_at\",\"searchable\":true,\"sortable\":true}},\"updated_at\":{\"edit\":{\"label\":\"Updated_at\",\"description\":\"\",\"placeholder\":\"\",\"visible\":false,\"editable\":true},\"list\":{\"label\":\"Updated_at\",\"searchable\":true,\"sortable\":true}}},\"layouts\":{\"list\":[\"id\",\"urlSlug\",\"created_at\",\"updated_at\"],\"edit\":[[{\"name\":\"localizedHead\",\"size\":12}],[{\"name\":\"localizedName\",\"size\":12}],[{\"name\":\"urlSlug\",\"size\":6}],[{\"name\":\"creativeItems\",\"size\":12}],[{\"name\":\"isExternal\",\"size\":4}]],\"editRelations\":[]}}',
     'object',
     '',
     ''
@@ -2686,7 +2738,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2695,7 +2748,8 @@ VALUES
     1,
     1,
     '2021-05-03 21:11:03',
-    '2021-05-30 21:40:24'
+    '2021-05-30 21:40:24',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2704,7 +2758,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2713,7 +2768,8 @@ VALUES
     1,
     1,
     '2021-05-04 17:59:07',
-    '2021-05-30 21:40:49'
+    '2021-05-30 21:40:49',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2722,7 +2778,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2731,7 +2788,8 @@ VALUES
     1,
     1,
     '2021-05-18 21:09:50',
-    '2021-05-30 21:41:14'
+    '2021-05-30 21:41:14',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2740,7 +2798,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2749,7 +2808,8 @@ VALUES
     1,
     1,
     '2021-06-02 22:36:47',
-    '2021-06-13 22:18:12'
+    '2021-06-13 22:18:12',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2758,7 +2818,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2767,7 +2828,8 @@ VALUES
     1,
     1,
     '2021-07-21 20:44:23',
-    '2021-07-21 20:44:23'
+    '2021-07-21 20:44:23',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2776,7 +2838,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2785,7 +2848,8 @@ VALUES
     1,
     1,
     '2021-07-27 10:24:18',
-    '2021-07-27 10:24:18'
+    '2021-07-27 10:24:18',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2794,7 +2858,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2803,7 +2868,8 @@ VALUES
     1,
     1,
     '2021-08-06 21:33:21',
-    '2021-08-07 13:47:18'
+    '2021-08-07 13:47:18',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2812,7 +2878,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2821,7 +2888,8 @@ VALUES
     1,
     1,
     '2021-08-25 09:30:18',
-    '2021-08-30 22:40:40'
+    '2021-08-30 22:40:40',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2830,7 +2898,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2839,7 +2908,8 @@ VALUES
     1,
     1,
     '2021-08-31 19:28:39',
-    '2021-09-06 19:35:23'
+    '2021-09-06 19:35:23',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2848,7 +2918,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2857,7 +2928,8 @@ VALUES
     1,
     1,
     '2021-09-08 14:00:59',
-    '2021-09-14 11:06:56'
+    '2021-09-14 11:06:56',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2866,7 +2938,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2875,7 +2948,8 @@ VALUES
     1,
     1,
     '2021-09-14 15:05:14',
-    '2021-09-20 09:53:11'
+    '2021-09-20 09:53:11',
+    NULL
   );
 INSERT INTO
   `projects` (
@@ -2884,7 +2958,8 @@ INSERT INTO
     `created_by`,
     `updated_by`,
     `created_at`,
-    `updated_at`
+    `updated_at`,
+    `isExternal`
   )
 VALUES
   (
@@ -2893,7 +2968,28 @@ VALUES
     1,
     1,
     '2021-10-01 09:43:02',
-    '2021-10-29 11:43:45'
+    '2021-10-29 11:43:45',
+    NULL
+  );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`,
+    `isExternal`
+  )
+VALUES
+  (
+    13,
+    'https://next-training-six.vercel.app/',
+    1,
+    1,
+    '2021-11-06 21:20:43',
+    '2021-11-06 21:25:06',
+    1
   );
 
 # ------------------------------------------------------------
@@ -6140,6 +6236,42 @@ VALUES
     166,
     12
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    185,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    13,
+    13
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    186,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    26,
+    13
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -6165,7 +6297,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$NVdveJwohEIhRwUXJ.gTmubOB4Fzjl2VFniTD6WnQ8blAS9eHJRLW',
+    '$2b$10$LS9OnYvC6DsejQcwW2/Uo..Daf7scngWVbrvNv6QH9mhLvKLR050e',
     NULL,
     NULL,
     1,
@@ -7685,54 +7817,10 @@ INSERT INTO
   )
 VALUES
   (
-    87,
-    'plugins::content-manager.explorer.create',
-    'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\"]',
-    '[]',
-    1,
-    '2021-09-14 15:03:53',
-    '2021-09-14 15:03:53'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
     88,
     'plugins::content-manager.explorer.read',
     'application::flow-page.flow-page',
     '[\"name\",\"language\",\"flowItems.name\",\"flowItems.image\",\"flowItems.description\",\"flowItems.filter\",\"flowItems.secondaryImage\",\"asideDescription\",\"slideImages\"]',
-    '[]',
-    1,
-    '2021-09-14 15:03:53',
-    '2021-09-14 15:03:53'
-  );
-INSERT INTO
-  `strapi_permission` (
-    `id`,
-    `action`,
-    `subject`,
-    `fields`,
-    `conditions`,
-    `role`,
-    `created_at`,
-    `updated_at`
-  )
-VALUES
-  (
-    89,
-    'plugins::content-manager.explorer.read',
-    'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\"]',
     '[]',
     1,
     '2021-09-14 15:03:53',
@@ -7773,14 +7861,58 @@ INSERT INTO
   )
 VALUES
   (
-    91,
-    'plugins::content-manager.explorer.update',
+    92,
+    'plugins::content-manager.explorer.create',
     'application::project.project',
-    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"urlSlug\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\"]',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\",\"urlSlug\",\"isExternal\"]',
     '[]',
     1,
-    '2021-09-14 15:03:53',
-    '2021-09-14 15:03:53'
+    '2021-11-06 21:24:57',
+    '2021-11-06 21:24:57'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    93,
+    'plugins::content-manager.explorer.read',
+    'application::project.project',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\",\"urlSlug\",\"isExternal\"]',
+    '[]',
+    1,
+    '2021-11-06 21:24:57',
+    '2021-11-06 21:24:57'
+  );
+INSERT INTO
+  `strapi_permission` (
+    `id`,
+    `action`,
+    `subject`,
+    `fields`,
+    `conditions`,
+    `role`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    94,
+    'plugins::content-manager.explorer.update',
+    'application::project.project',
+    '[\"localizedHead.localizedTitle.text\",\"localizedHead.localizedTitle.language\",\"localizedHead.localizedDescription.language\",\"localizedHead.localizedDescription.text\",\"localizedHead.ogType\",\"localizedHead.ogImage\",\"localizedName.text\",\"localizedName.language\",\"creativeItems.name\",\"creativeItems.image\",\"creativeItems.description\",\"creativeItems.filter\",\"creativeItems.secondaryImage\",\"urlSlug\",\"isExternal\"]',
+    '[]',
+    1,
+    '2021-11-06 21:24:57',
+    '2021-11-06 21:24:57'
   );
 
 # ------------------------------------------------------------
@@ -14856,6 +14988,50 @@ VALUES
     '2021-10-29 11:36:39',
     '2021-10-29 11:36:39'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    163,
+    'mynow.png',
+    '',
+    '',
+    1899,
+    957,
+    '{\"thumbnail\":{\"name\":\"thumbnail_mynow.png\",\"hash\":\"thumbnail_mynow_11eb68998f\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":123,\"size\":33.73,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636233519/thumbnail_mynow_11eb68998f.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_mynow_11eb68998f\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_mynow.png\",\"hash\":\"large_mynow_11eb68998f\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":504,\"size\":450.72,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636233521/large_mynow_11eb68998f.png\",\"provider_metadata\":{\"public_id\":\"large_mynow_11eb68998f\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_mynow.png\",\"hash\":\"medium_mynow_11eb68998f\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":378,\"size\":264.54,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636233522/medium_mynow_11eb68998f.png\",\"provider_metadata\":{\"public_id\":\"medium_mynow_11eb68998f\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_mynow.png\",\"hash\":\"small_mynow_11eb68998f\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":252,\"size\":123.41,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636233523/small_mynow_11eb68998f.png\",\"provider_metadata\":{\"public_id\":\"small_mynow_11eb68998f\",\"resource_type\":\"image\"}}}',
+    'mynow_11eb68998f',
+    '.png',
+    'image/png',
+    1420.04,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1636233518/mynow_11eb68998f.png',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"mynow_11eb68998f\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-11-06 21:18:42',
+    '2021-11-06 21:18:42'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -18709,6 +18885,24 @@ VALUES
     166,
     'components_creative_component_creative_items',
     'image',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    1884,
+    163,
+    13,
+    'components_page_localized_heads',
+    'ogImage',
     1
   );
 

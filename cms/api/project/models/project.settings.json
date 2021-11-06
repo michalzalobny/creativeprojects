@@ -21,13 +21,17 @@
       "repeatable": true,
       "component": "page.localized-short-text"
     },
-    "urlSlug": {
-      "type": "uid"
-    },
     "creativeItems": {
       "type": "component",
       "repeatable": true,
       "component": "creative-component.creative-item"
+    },
+    "urlSlug": {
+      "type": "string"
+    },
+    "isExternal": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

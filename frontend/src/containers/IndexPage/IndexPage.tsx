@@ -46,6 +46,7 @@ export default function IndexPage(props: IndexPageProps) {
           <ProjectsWrapper>
             {allProjectsData.map(el => (
               <MenuItemComp
+                isExternal={el.isExternal}
                 href={el.urlSlug}
                 imageSrc={el.localizedHead.ogImage.url}
                 label={getLocalizedText(
