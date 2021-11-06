@@ -1,6 +1,8 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import { Head } from 'utils/seo/Head';
+import { getLocalizedText } from 'utils/i18n';
 
 import { IndexPageProps } from './data';
 import { Wrapper } from './styled/Wrapper';
@@ -10,9 +12,13 @@ import { ContentWrapper } from './styled/ContentWrapper';
 import { Description } from './styled/Description';
 import { Name } from './styled/Name';
 import { InfoWrapper } from './styled/InfoWrapper';
+import { ProjectsWrapper } from './styled/ProjectsWrapper';
+import { MenuItemComp } from './styled/MenuItemComp';
 
 export default function IndexPage(props: IndexPageProps) {
-  const { pageData } = props;
+  const { allProjectsData, pageData } = props;
+
+  const router = useRouter();
 
   return (
     <>
@@ -37,6 +43,22 @@ export default function IndexPage(props: IndexPageProps) {
               linkHref="https://github.com/javusScriptus/creativeprojects/tree/master/frontend/src/containers"
             />
           </LinksWrapper>
+          <ProjectsWrapper>
+            {allProjectsData.map(el => (
+              <MenuItemComp
+                href={el.urlSlug}
+                imageSrc={el.localizedHead.ogImage.url}
+                label={getLocalizedText(
+                  el.localizedHead.localizedTitle,
+                  router.locale,
+                )}
+                key={getLocalizedText(
+                  el.localizedHead.localizedTitle,
+                  router.locale,
+                )}
+              />
+            ))}
+          </ProjectsWrapper>
         </ContentWrapper>
       </Wrapper>
     </>

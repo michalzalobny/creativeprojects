@@ -3,6 +3,8 @@ import { gql } from 'apollo-boost';
 
 import { HeadProps } from 'utils/seo/Head';
 
+import { ProjectData } from 'utils/types/strapi/ProjectData';
+import { getAllProjectsData } from 'utils/functions/strapi/getAllProjectsData';
 import { cmsApiClient } from 'utils/functions/getCmsApiClient';
 import { ISR_TIMEOUT } from 'utils/functions/getIsrTimeout';
 
@@ -13,6 +15,7 @@ interface PageData {
 
 export interface IndexPageProps {
   pageData: PageData;
+  allProjectsData: ProjectData[];
 }
 
 async function getPageData(locale: string) {
@@ -39,9 +42,11 @@ async function getPageData(locale: string) {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const pageData = await getPageData(locale);
+  const allProjectsData = await getAllProjectsData();
 
   return {
     props: {
+      allProjectsData,
       pageData,
     },
     revalidate: ISR_TIMEOUT,

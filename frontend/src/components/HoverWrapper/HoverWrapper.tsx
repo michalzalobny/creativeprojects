@@ -8,6 +8,7 @@ import { Wrapper } from './styled/Wrapper';
 import { AnimationWrapper } from './styled/AnimationWrapper';
 
 export interface HoverWrapperProps {
+  fullWidth?: boolean;
   children: React.ReactNode;
   myHref?: string;
   target?: string;
@@ -18,6 +19,7 @@ export interface HoverWrapperProps {
 
 export const HoverWrapper = (props: HoverWrapperProps) => {
   const {
+    fullWidth = false,
     dontUseHover,
     isAnimated,
     target,
@@ -34,7 +36,13 @@ export const HoverWrapper = (props: HoverWrapperProps) => {
     <>
       {myHref ? (
         <Link passHref href={myHref}>
-          <Wrapper target={target} as={motion.a} {...rest} ref={elRef}>
+          <Wrapper
+            fullWidth={fullWidth}
+            target={target}
+            as={motion.a}
+            {...rest}
+            ref={elRef}
+          >
             <AnimatePresence exitBeforeEnter={false}>
               <AnimationWrapper
                 initial="initial"
@@ -55,6 +63,7 @@ export const HoverWrapper = (props: HoverWrapperProps) => {
         </Link>
       ) : (
         <Wrapper
+          fullWidth={fullWidth}
           as={myHref === null ? motion.button : motion.span}
           {...rest}
           ref={elRef}

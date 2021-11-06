@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 
 import { HoverWrapper } from 'components/HoverWrapper/HoverWrapper';
 import { ReplaceItem } from 'components/Animations/ReplaceItem/ReplaceItem';

@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import { sharedValues } from 'utils/sharedValues';
-import { media, computeValue } from 'utils/responsive';
+import { media } from 'utils/responsive';
 
 interface Props {}
 
 export const LinkItem = styled(motion.a)<Props>`
-  font-family: 'Playfair';
-  color: ${sharedValues.colors.trueWhite};
-  ${sharedValues.fontPresets.normal};
-  white-space: nowrap;
-  font-size: 18px;
+  color: black;
+  font-size: 28px;
+  text-align: left;
   display: block;
   position: relative;
+  font-weight: 800;
+  text-transform: capitalize;
 
   ${media.tablet} {
-    font-size: 20px;
+    font-size: 50px;
   }
 `;

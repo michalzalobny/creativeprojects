@@ -1,91 +1,48 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import React, { memo, useRef } from 'react';
+import { useRouter } from 'next/router';
+
+import { HoverWrapper } from 'components/HoverWrapper/HoverWrapper';
+import { ReplaceItem } from 'components/Animations/ReplaceItem/ReplaceItem';
+import { useHover } from 'hooks/useHover';
 
 import { LinkItem } from './styled/LinkItem';
 import { Wrapper } from './styled/Wrapper';
-import { LinkWrapper } from './styled/LinkWrapper';
 import { ImageContainer } from './styled/ImageContainer';
 import { Parallax } from 'components/Animations/Parallax/Parallax';
 import { ImageWrapper } from './styled/ImageWrapper';
 import { Image } from './styled/Image';
 import { Underline } from './styled/Underline';
-import { useRouter } from 'next/router';
 
-export type MenuItem = {
+export interface MenuItemProps {
   label: string;
   href: string;
   imageSrc: string;
-};
-
-export interface MenuItemProps {
-  itemContent: MenuItem;
-  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const MenuItem = memo<MenuItemProps>(props => {
-  const { setShowMenu, itemContent, ...rest } = props;
+  const { href, imageSrc, label, ...rest } = props;
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const { isHovered } = useHover(wrapperRef);
   const router = useRouter();
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    const refEl = wrapperRef.current;
-
-    const onTouch = () => {
-      router.push(itemContent.href);
-      setShowMenu(false);
-      setIsHovered(false);
-    };
-
-    const onClick = () => {
-      router.push(itemContent.href);
-      setShowMenu(false);
-      setIsHovered(false);
-    };
-
-    refEl.addEventListener('touchend', onTouch);
-    refEl.addEventListener('click', onClick);
-
-    return () => {
-      refEl.removeEventListener('touchend', onTouch);
-      refEl.removeEventListener('click', onClick);
-    };
-  });
 
   return (
     <>
-      <Wrapper
-        style={{ zIndex: isHovered ? 2 : 1 }}
-        ref={wrapperRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        {...rest}
-      >
-        <LinkWrapper
-          initial="initial"
-          animate={isHovered ? 'animate' : 'initial'}
-        >
-          <LinkItem>
-            {itemContent.label}
-            <Underline />
-          </LinkItem>
-        </LinkWrapper>
+      <Wrapper style={{ zIndex: isHovered ? 4 : 2 }} ref={wrapperRef} {...rest}>
+        <HoverWrapper fullWidth onClick={() => router.push(href)}>
+          <ReplaceItem>
+            <LinkItem>{label}</LinkItem>
+          </ReplaceItem>
 
-        <ImageContainer
-          initial="initial"
-          animate={isHovered ? 'animate' : 'initial'}
-        >
-          <Parallax refElement={wrapperRef}>
-            <ImageWrapper>
-              <Image
-                initial="initial"
-                animate={isHovered ? 'animate' : 'initial'}
-                src={itemContent.imageSrc}
-              />
-            </ImageWrapper>
-          </Parallax>
-        </ImageContainer>
+          <Underline />
+
+          <ImageContainer>
+            <Parallax refElement={wrapperRef}>
+              <ImageWrapper>
+                <Image src={imageSrc} />
+              </ImageWrapper>
+            </Parallax>
+          </ImageContainer>
+        </HoverWrapper>
       </Wrapper>
     </>
   );

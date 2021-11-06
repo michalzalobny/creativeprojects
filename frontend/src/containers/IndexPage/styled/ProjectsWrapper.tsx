@@ -5,12 +5,10 @@ import { media } from 'utils/responsive';
 
 interface Props {}
 
-export const ContentWrapper = styled(motion.div)<Props>`
-  padding: 3.5rem;
+export const ProjectsWrapper = styled(motion.div)<Props>`
+  margin-top: 3.5rem;
 
   ${media.tablet} {
-    padding: 8rem 0;
-    max-width: 130rem;
-    margin: 0 auto;
+    margin-top: 8rem;
   }
 `;

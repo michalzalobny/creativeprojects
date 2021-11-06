@@ -7,10 +7,9 @@ interface Props {}
 
 export const ImageContainer = styled(motion.div)<Props>`
   position: absolute;
-  left: 50%;
+  right: 0;
   top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
+  transform: translate(0%, -50%);
   z-index: -1;
   pointer-events: none;
 `;
@@ -20,13 +19,13 @@ ImageContainer.defaultProps = {
     initial: {
       opacity: 0,
       scale: 0.6,
-      x: '-70%',
+      x: '0%',
       y: '-50%',
     },
     animate: {
       opacity: 1,
       scale: 1,
-      x: '-50%',
+      x: '0%',
       y: '-50%',
     },
   },
