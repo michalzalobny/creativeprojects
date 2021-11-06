@@ -1,14 +1,15 @@
 import React from 'react';
-import Link from 'next/link';
 
 import { Head } from 'utils/seo/Head';
 
 import { IndexPageProps } from './data';
 import { Wrapper } from './styled/Wrapper';
-import { LinkWrapper } from './styled/LinkWrapper';
 import { LinkComp } from './styled/LinkComp';
 import { LinksWrapper } from './styled/LinksWrapper';
 import { ContentWrapper } from './styled/ContentWrapper';
+import { Description } from './styled/Description';
+import { Name } from './styled/Name';
+import { InfoWrapper } from './styled/InfoWrapper';
 
 export default function IndexPage(props: IndexPageProps) {
   const { pageData } = props;
@@ -18,6 +19,11 @@ export default function IndexPage(props: IndexPageProps) {
       <Head {...pageData.head} />
       <Wrapper>
         <ContentWrapper>
+          <InfoWrapper>
+            <Name>Michal Zalobny</Name>
+            <Description>Creative Web Developer</Description>
+          </InfoWrapper>
+
           <LinksWrapper>
             <LinkComp label="michal.zalobny@gmail.com" linkHref="" isMail />
             <LinkComp

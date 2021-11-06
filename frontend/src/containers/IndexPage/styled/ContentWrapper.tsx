@@ -6,7 +6,7 @@ import { media } from 'utils/responsive';
 interface Props {}
 
 export const ContentWrapper = styled(motion.div)<Props>`
-  padding: 5rem;
+  padding: 3.5rem;
 
   ${media.tablet} {
     padding: 12rem 0;
