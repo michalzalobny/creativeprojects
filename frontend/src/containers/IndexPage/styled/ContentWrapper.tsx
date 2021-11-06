@@ -9,7 +9,7 @@ export const ContentWrapper = styled(motion.div)<Props>`
   padding: 3.5rem;
 
   ${media.tablet} {
-    padding: 8rem 0;
+    padding: 12rem 0;
     max-width: 130rem;
     margin: 0 auto;
   }
