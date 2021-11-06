@@ -6,7 +6,7 @@ import { media } from 'utils/responsive';
 interface Props {}
 
 export const Name = styled(motion.h2)<Props>`
-  font-weight: 400;
+  font-weight: 800;
   color: white;
   font-size: 28px;
 
