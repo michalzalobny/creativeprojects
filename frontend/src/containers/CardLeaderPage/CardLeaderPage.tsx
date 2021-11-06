@@ -77,7 +77,6 @@ export default function CardLeaderPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
 
       <SliderWrapper>
         {props.projectData.creativeItems.map((item, key) => {

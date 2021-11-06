@@ -13,7 +13,6 @@ export default function FlowPage(props: PageProps) {
       <Head {...props.head} />
 
       <Wrapper>
-        <Layout allProjects={props.allProjectsData} />
         <FlowApp pageData={props.pageData} />
       </Wrapper>
     </>

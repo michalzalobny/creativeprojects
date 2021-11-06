@@ -9,6 +9,7 @@ import 'utils/styled/fontFace.css';
 import 'focus-visible';
 import { ExampleContextProvider } from 'context/ExampleContext';
 import { TouchPinch } from 'containers/PlaygroundGalleryPage/classes/Singletons/TouchPinch';
+import { Layout } from 'components/Layout/Layout';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -51,37 +52,7 @@ export default function MyApp(props: AppProps) {
 
       <AnimatePresence exitBeforeEnter={false}>
         <>
-          <div
-            style={{
-              position: 'fixed',
-              zIndex: 20,
-              bottom: '20px',
-              right: '30px',
-              mixBlendMode: 'difference',
-              display: 'flex',
-            }}
-          >
-            <a
-              target="blank"
-              style={{ color: 'white', fontSize: 15, letterSpacing: 1.6 }}
-              href="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
-            >
-              Linkedin
-            </a>
-
-            <a
-              target="blank"
-              style={{
-                marginLeft: 20,
-                color: 'white',
-                fontSize: 15,
-                letterSpacing: 1.6,
-              }}
-              href="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
-            >
-              Github
-            </a>
-          </div>
+          <Layout />
           <PageWrapper
             router={router}
             isInit={isInit}

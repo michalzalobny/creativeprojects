@@ -11,7 +11,7 @@ export default function GlobePage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         <GlobeApp />
       </Wrapper>

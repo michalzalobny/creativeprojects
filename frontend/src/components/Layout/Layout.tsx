@@ -1,35 +1,16 @@
-import React, { memo } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 
-import { ProjectData } from 'utils/types/strapi/ProjectData';
-import { getLocalizedText } from 'utils/i18n';
-
-import { ToggleMenuComp } from './styled/ToggleMenuComp';
+import { InfoFooterComp } from './styled/InfoFooterComp';
 import { Wrapper } from './styled/Wrapper';
 
-interface LayoutProps {
-  allProjects: ProjectData[];
-}
+interface LayoutProps {}
 
-export const Layout = memo<LayoutProps>(props => {
-  const { locale } = useRouter();
+export const Layout = (props: LayoutProps) => {
   return (
     <>
       <Wrapper>
-        <ToggleMenuComp
-          barColor="#fff"
-          links={props.allProjects.map((project, key) => {
-            return {
-              label: getLocalizedText(project.localizedName, locale),
-              href: project.urlSlug,
-              imageSrc: project.localizedHead.ogImage.url,
-              key: project.localizedHead.ogImage.url,
-            };
-          })}
-        />
+        <InfoFooterComp />
       </Wrapper>
     </>
   );
-});
-
-Layout.displayName = 'Layout';
+};

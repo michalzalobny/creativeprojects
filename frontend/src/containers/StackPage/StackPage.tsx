@@ -98,7 +98,7 @@ export default function StackPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         {/* used for enabling nextjs caching */}
         {props.projectData.creativeItems.map(item => {

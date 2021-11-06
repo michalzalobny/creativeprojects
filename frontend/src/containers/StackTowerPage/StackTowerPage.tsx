@@ -20,7 +20,7 @@ export default function StackTowerPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         <CanvasWrapper>
           <StackTower />

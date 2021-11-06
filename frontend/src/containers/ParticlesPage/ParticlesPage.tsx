@@ -11,7 +11,7 @@ export default function ParticlesPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         <App creativeItems={props.projectData.creativeItems} />
       </Wrapper>

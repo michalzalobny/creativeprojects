@@ -60,7 +60,6 @@ export default function SpiralPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
 
       <HeadingWrapper animate={isVisible ? 'animate' : 'initial'}>
         <RevealItem>

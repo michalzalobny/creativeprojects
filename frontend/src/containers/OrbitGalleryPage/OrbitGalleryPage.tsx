@@ -99,7 +99,6 @@ export default function OrbitGalleryPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
 
       <Wrapper>
         <GalleryWrapper columnsCount={COLUMNS_COUNT} data-gallery="wrapper">

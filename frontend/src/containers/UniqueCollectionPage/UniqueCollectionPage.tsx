@@ -58,7 +58,7 @@ export default function UniqueCollectionPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         <DescriptionWrapper
           data-cfilter="treccia"

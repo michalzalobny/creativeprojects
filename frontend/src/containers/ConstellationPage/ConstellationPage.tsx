@@ -25,7 +25,7 @@ export default function ConstellationPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         <CanvasWrapper ref={rendererWrapperEl} />
       </Wrapper>

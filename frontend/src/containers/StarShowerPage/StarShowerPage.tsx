@@ -45,7 +45,7 @@ export default function StarShowerPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <Wrapper>
         <CanvasWrapper ref={rendererWrapperEl} />
         <InfoWrapper animate={hideInfo ? 'animate' : 'initial'}>

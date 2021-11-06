@@ -128,7 +128,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   return (
     <>
       <Head {...props.head} />
-      <Layout allProjects={props.allProjectsData} />
+
       <S.Wrapper>
         <Gallery />
         <S.CanvasWrapper
