@@ -12,19 +12,22 @@ import { Underline } from './styled/Underline';
 export interface UnderlineLinkProps {
   linkHref: string;
   label: string;
+  isMail?: boolean;
+  isExternal?: boolean;
 }
 
 export const UnderlineLink = (props: UnderlineLinkProps) => {
-  const { label, linkHref, ...rest } = props;
+  const { isExternal, isMail, label, linkHref, ...rest } = props;
   return (
     <>
       <Wrapper {...rest}>
-        <ContentWrapper>
+        <ContentWrapper
+          href={`${isMail ? `mailto:${linkHref}` : linkHref}`}
+          target={`${isMail || !isExternal ? '_self' : '_blank'}`}
+        >
           <HoverWrapper>
             <ReplaceItem>
-              <Text href={linkHref} target="_blank">
-                {label}
-              </Text>
+              <Text>{label}</Text>
             </ReplaceItem>
           </HoverWrapper>
 

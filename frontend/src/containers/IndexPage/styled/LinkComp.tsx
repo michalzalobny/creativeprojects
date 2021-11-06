@@ -3,4 +3,8 @@ import { UnderlineLink } from 'components/UnderlineLink/UnderlineLink';
 
 interface Props {}
 
-export const LinkComp = styled(UnderlineLink)<Props>``;
+export const LinkComp = styled(UnderlineLink)<Props>`
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+`;

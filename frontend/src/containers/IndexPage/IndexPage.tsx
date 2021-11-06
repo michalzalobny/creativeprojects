@@ -18,9 +18,16 @@ export default function IndexPage(props: IndexPageProps) {
       <Wrapper>
         <LinksWrapper>
           <LinkComp
+            isExternal
             label="LinkedIn"
             linkHref="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
           />
+          <LinkComp
+            isExternal
+            label="Github"
+            linkHref="https://github.com/javusScriptus/creativeprojects/tree/master/frontend/src/containers"
+          />
+          <LinkComp label="michal.zalobny@gmail.com" linkHref="" isMail />
         </LinksWrapper>
         <Link passHref href={'/test'}>
           <LinkWrapper>Test</LinkWrapper>
