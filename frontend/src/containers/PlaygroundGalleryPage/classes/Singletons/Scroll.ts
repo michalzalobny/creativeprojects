@@ -124,7 +124,7 @@ export class Scroll extends EventDispatcher {
     window.addEventListener('mouseup', this._onTouchUp);
 
     window.addEventListener('touchstart', this._onTouchDown);
-    window.addEventListener('touchmove', this._onTouchMove);
+    window.addEventListener('touchmove', this._onTouchMove, { passive: true });
     window.addEventListener('touchend', this._onTouchUp);
 
     window.addEventListener('resize', this._onResize);
