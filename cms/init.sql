@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 164 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 165 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1885 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1886 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1280,8 +1280,8 @@ INSERT INTO
 VALUES
   (
     1,
-    'Creative Projects',
-    'Creative projects website featuring THREE.js with React.js projects',
+    'Michal Zalobny 2021 Portfolio',
+    'All the projects made in 2021 using such technologies as ThreeJS or 2D Canvas API',
     'website',
     1
   );
@@ -2683,7 +2683,7 @@ VALUES
     1,
     1,
     '2021-03-27 18:55:20',
-    '2021-05-03 23:19:27'
+    '2021-11-06 21:44:23'
   );
 
 # ------------------------------------------------------------
@@ -15032,22 +15032,55 @@ VALUES
     '2021-11-06 21:18:42',
     '2021-11-06 21:18:42'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    164,
+    'Poszz.png',
+    '',
+    '',
+    1871,
+    953,
+    '{\"thumbnail\":{\"name\":\"thumbnail_Poszz.png\",\"hash\":\"thumbnail_Poszz_1758d5e024\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":245,\"height\":125,\"size\":10.25,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636235058/thumbnail_Poszz_1758d5e024.png\",\"provider_metadata\":{\"public_id\":\"thumbnail_Poszz_1758d5e024\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_Poszz.png\",\"hash\":\"large_Poszz_1758d5e024\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":1000,\"height\":509,\"size\":75.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636235059/large_Poszz_1758d5e024.png\",\"provider_metadata\":{\"public_id\":\"large_Poszz_1758d5e024\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_Poszz.png\",\"hash\":\"medium_Poszz_1758d5e024\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":750,\"height\":382,\"size\":50.09,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636235060/medium_Poszz_1758d5e024.png\",\"provider_metadata\":{\"public_id\":\"medium_Poszz_1758d5e024\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_Poszz.png\",\"hash\":\"small_Poszz_1758d5e024\",\"ext\":\".png\",\"mime\":\"image/png\",\"width\":500,\"height\":255,\"size\":28.36,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1636235061/small_Poszz_1758d5e024.png\",\"provider_metadata\":{\"public_id\":\"small_Poszz_1758d5e024\",\"resource_type\":\"image\"}}}',
+    'Poszz_1758d5e024',
+    '.png',
+    'image/png',
+    147.14,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1636235057/Poszz_1758d5e024.png',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"Poszz_1758d5e024\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2021-11-06 21:44:20',
+    '2021-11-06 21:44:20'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
 # ------------------------------------------------------------
 
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
-  (2, 2, 1, 'components_page_heads', 'ogImage', 1);
 INSERT INTO
   `upload_file_morph` (
     `id`,
@@ -18905,6 +18938,17 @@ VALUES
     'ogImage',
     1
   );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (1885, 164, 1, 'components_page_heads', 'ogImage', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users-permissions_permission
