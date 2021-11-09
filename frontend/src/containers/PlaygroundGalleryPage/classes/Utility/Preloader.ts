@@ -1,5 +1,6 @@
 import { EventDispatcher } from 'three';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import { TextureItems, PreloadItems } from '../types';
 
@@ -7,6 +8,7 @@ export class Preloader extends EventDispatcher {
   _assetsLoaded = 0;
   _items: PreloadItems = [];
   textureItems: TextureItems = {};
+  _gltfLoader = new GLTFLoader();
 
   constructor() {
     super();
@@ -51,6 +53,10 @@ export class Preloader extends EventDispatcher {
           };
           this._onAssetLoaded();
         };
+      } else if (item.type === '3dmodel') {
+        this._gltfLoader.load(item.src, gltf => {
+          console.log(gltf);
+        });
       }
     });
   }
