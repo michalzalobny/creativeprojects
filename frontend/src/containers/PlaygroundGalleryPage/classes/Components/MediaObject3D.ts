@@ -90,8 +90,6 @@ export class MediaObject3D extends InteractiveObject3D {
   update(updateInfo: UpdateInfo) {
     super.update(updateInfo);
 
-    // this._updateOpacity();
-
     if (this._mesh) this._mesh.material.uniforms.uTime.value = updateInfo.time;
 
     if (this._intersectPoint && this._mesh) {
@@ -113,7 +111,7 @@ export class MediaObject3D extends InteractiveObject3D {
     this._intersectPoint = point;
   }
 
-  set rendererBounds(bounds: Bounds) {
+  setRendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
 
     if (this._mesh) {
@@ -124,8 +122,7 @@ export class MediaObject3D extends InteractiveObject3D {
     }
   }
 
-  set opacity(value: number) {
+  setOpacity(value: number) {
     if (this._mesh) this._mesh.material.uniforms.uOpacity.value = value;
-    // this._masterOpacity = value;
   }
 }

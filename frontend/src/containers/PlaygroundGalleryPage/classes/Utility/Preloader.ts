@@ -1,13 +1,13 @@
 import { EventDispatcher } from 'three';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { GLTFLoader, GLTF } from 'three-stdlib';
 
-import { TextureItems, PreloadItems } from '../types';
+import { MediaItems, PreloadItems } from '../types';
 
 export class Preloader extends EventDispatcher {
   _assetsLoaded = 0;
   _items: PreloadItems = [];
-  textureItems: TextureItems = {};
+  mediaItems: MediaItems = {};
   _gltfLoader = new GLTFLoader();
 
   constructor() {
@@ -26,8 +26,8 @@ export class Preloader extends EventDispatcher {
         image.onload = () => {
           texture.image = image;
           texture.needsUpdate = true;
-          this.textureItems[item.src] = {
-            texture,
+          this.mediaItems[item.src] = {
+            item: texture,
             naturalWidth: image.naturalWidth,
             naturalHeight: image.naturalHeight,
           };
@@ -46,17 +46,31 @@ export class Preloader extends EventDispatcher {
 
         video.oncanplay = () => {
           const texture = new THREE.VideoTexture(video);
-          this.textureItems[item.src] = {
-            texture,
+          this.mediaItems[item.src] = {
+            item: texture,
             naturalWidth: video.videoWidth,
             naturalHeight: video.videoHeight,
           };
           this._onAssetLoaded();
         };
       } else if (item.type === '3dmodel') {
-        this._gltfLoader.load(item.src, gltf => {
-          console.log(gltf);
-        });
+        this._gltfLoader.load(
+          item.src,
+          (gltf: GLTF) => {
+            this.mediaItems[item.src] = {
+              item: gltf.scene,
+              naturalWidth: gltf.scene.children[0].scale.x,
+              naturalHeight: gltf.scene.children[0].scale.y,
+            };
+
+            this._onAssetLoaded();
+          },
+          progress => {},
+          error => {
+            console.warn('3D model loading failed', error);
+            this._onAssetLoaded();
+          },
+        );
       }
     });
   }

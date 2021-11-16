@@ -6,8 +6,9 @@ import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
 import { Image3D } from '../Components/Medias/Image3D';
 import { Video3D } from '../Components/Medias/Video3D';
+import { Model3D } from '../Components/Medias/Model3D';
 import { MediaHolder3D } from '../Components/MediaHolder3D';
-import { TextureItems } from '../types';
+import { MediaItems } from '../types';
 import { SlideScene } from './SlideScene';
 
 interface Constructor {
@@ -19,7 +20,7 @@ export class ItemScene extends InteractiveScene {
   _planeGeometry = new THREE.PlaneGeometry(1, 1, 50, 50);
   _items3D: MediaHolder3D[] = [];
   _groups3DArray: THREE.Group[] = [];
-  _textureItems: TextureItems = {};
+  _mediaItems: MediaItems = {};
 
   constructor({ camera, mouseMove }: Constructor) {
     super({ camera, mouseMove });
@@ -50,7 +51,7 @@ export class ItemScene extends InteractiveScene {
 
   _onResize() {
     this._items3D.forEach(item => {
-      item.rendererBounds = this._rendererBounds;
+      item.setRendererBounds(this._rendererBounds);
       item.onResize();
     });
   }
@@ -108,6 +109,16 @@ export class ItemScene extends InteractiveScene {
           item3D.groupIndexValue = groupKey;
           this._items3D.push(item3D);
           this._groups3DArray[groupKey].add(item3D);
+        } else if (item.type === '3dmodel') {
+          const item3D = new Model3D({
+            geometry: this._planeGeometry,
+            cardItem: item,
+            domEl,
+            galleryDomEl,
+          });
+          item3D.groupIndexValue = groupKey;
+          this._items3D.push(item3D);
+          this._groups3DArray[groupKey].add(item3D);
         }
       });
     });
@@ -124,11 +135,11 @@ export class ItemScene extends InteractiveScene {
     this._onResize();
   }
 
-  set textureItems(textureItems: TextureItems) {
-    this._textureItems = textureItems;
+  set mediaItems(mediaItems: MediaItems) {
+    this._mediaItems = mediaItems;
 
     this._items3D.forEach(el => {
-      (el as Image3D).textureItem = this._textureItems[el.cardItem.imageSrc];
+      (el as Image3D).mediaItem = this._mediaItems[el.cardItem.imageSrc];
     });
   }
 

@@ -1,13 +1,12 @@
-import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import * as THREE from 'three';
 
-export interface TextureItem {
-  texture: THREE.Texture;
+export interface MediaItem {
+  item: THREE.Texture | THREE.Group;
   naturalWidth: number;
   naturalHeight: number;
 }
 
-export type TextureItems = Record<string, TextureItem>;
+export type MediaItems = Record<string, MediaItem>;
 
 export interface UpdateInfo {
   slowDownFactor: number;

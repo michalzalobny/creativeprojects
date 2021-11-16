@@ -41,6 +41,7 @@
     "shortid": "2.2.15",
     "styled-components": "5.2.0",
     "three": "^0.128.0",
+    "three-stdlib": "^2.5.9",
     "xregexp": "^5.0.2"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { MediaHolder3D } from '../MediaHolder3D';
-import { ItemProps, TextureItem } from '../../types';
+import { ItemProps, MediaItem } from '../../types';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -9,26 +9,26 @@ interface Constructor {
 }
 
 export class Image3D extends MediaHolder3D {
-  _textureItem: TextureItem | null = null;
+  _mediaItem: MediaItem | null = null;
 
   constructor({ cardItem, galleryDomEl, domEl, geometry }: Constructor) {
     super({ domEl, galleryDomEl, cardItem, geometry });
   }
 
   _updateTexture() {
-    if (this._material && this._textureItem && this._mesh) {
-      this._material.uniforms.tMap.value = this._textureItem.texture;
+    if (this._material && this._mediaItem && this._mesh) {
+      this._material.uniforms.tMap.value = this._mediaItem.item;
 
       this._material.uniforms.uImageSizes.value = [
-        this._textureItem.naturalWidth,
-        this._textureItem.naturalHeight,
+        this._mediaItem.naturalWidth,
+        this._mediaItem.naturalHeight,
       ];
     }
   }
 
-  set textureItem(textureItem: TextureItem) {
-    this._textureItem = textureItem;
-    this._ratioWidth = textureItem.naturalWidth / textureItem.naturalHeight;
+  set mediaItem(mediaItem: MediaItem) {
+    this._mediaItem = mediaItem;
+    this._ratioWidth = mediaItem.naturalWidth / mediaItem.naturalHeight;
     this._updateTexture();
     this.onResize();
   }

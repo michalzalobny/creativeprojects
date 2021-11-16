@@ -35,6 +35,8 @@ export class SlideScene extends ItemScene {
     last: SlideScene.groupsAmount - 1,
   };
 
+  _ambientLight = new THREE.AmbientLight();
+
   constructor({ camera, mouseMove, scroll }: Constructor) {
     super({ camera, mouseMove });
     this._scroll = scroll;
@@ -45,6 +47,9 @@ export class SlideScene extends ItemScene {
 
     this._addListeners();
     this._intersectiveBackground3D.setPlaneDepth(0);
+
+    //Used to lighten up the 3d models
+    this.add(this._ambientLight);
   }
 
   _animateDepth(props: AnimateProps) {
@@ -179,7 +184,7 @@ export class SlideScene extends ItemScene {
     this._items3D.forEach((item, key) => {
       // The value goes from 0 to 1 based on element scale
       const xO = (scaleArray[item.groupIndex] - 1) / SlideScene.groupsAmount;
-      item.opacity = 25 * (Math.pow(-xO, 7) + Math.pow(-xO, 6));
+      item.setOpacity(25 * (Math.pow(-xO, 7) + Math.pow(-xO, 6)));
     });
   }
 
@@ -196,6 +201,7 @@ export class SlideScene extends ItemScene {
 
   destroy() {
     super.destroy();
+    this.remove(this._ambientLight);
   }
 
   animateIn() {

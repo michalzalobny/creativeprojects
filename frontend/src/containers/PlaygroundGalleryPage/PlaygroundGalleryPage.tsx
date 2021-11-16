@@ -77,6 +77,11 @@ export default function PlaygroundGalleryPage(props: PageProps) {
           src: item.image.url,
           type: 'video',
         };
+      } else if (item.name === '3dmodel') {
+        return {
+          src: item.image.url,
+          type: '3dmodel',
+        };
       }
       return null;
     });
