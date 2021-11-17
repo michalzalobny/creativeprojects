@@ -84,8 +84,8 @@ export class Model3D extends MediaHolder3D {
   }
 
   set mediaItem(mediaItem: MediaItem) {
-    this._3dModelGroup = mediaItem.item as THREE.Group;
-    if (!this._mesh) return;
+    if (!mediaItem) return;
+    this._3dModelGroup = mediaItem.item.clone() as THREE.Group;
 
     //Get the natural model dimenstions set earlier in Preloader Utility
     this._3dModelDimensions.x = mediaItem.naturalWidth;

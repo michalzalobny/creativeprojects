@@ -16,7 +16,8 @@ export class Preloader extends EventDispatcher {
 
   _preloadTextures() {
     this._items.forEach(item => {
-      if (item === null) return this._onAssetLoaded(); //Skips loading empty entries
+      //Skips loading empty or already loaded entries
+      if (item === null) return this._onAssetLoaded();
 
       if (item.type === 'image') {
         const texture = new THREE.Texture();
