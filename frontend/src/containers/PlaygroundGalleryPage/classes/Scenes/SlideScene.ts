@@ -21,13 +21,14 @@ export class SlideScene extends ItemScene {
   static groupsAmount = 3;
   static defaultDepthValue = SlideScene.groupsAmount;
   static itemsPerGroup = 16;
+  static defaultDepthIndex = 0.2;
 
   _touchPinch = TouchPinch.getInstance();
   _scroll: Scroll;
   _groupScrolls: GroupScroll[] = [];
   _depthIndex = {
-    current: SlideScene.defaultDepthValue,
-    target: SlideScene.defaultDepthValue,
+    current: SlideScene.defaultDepthIndex,
+    target: SlideScene.defaultDepthIndex,
   };
   _depthTween: Tween<{ progress: number }> | null = null;
 
@@ -139,8 +140,8 @@ export class SlideScene extends ItemScene {
     });
 
     //Reset depth values
-    this._depthIndex.target = SlideScene.defaultDepthValue;
-    this._depthIndex.current = SlideScene.defaultDepthValue;
+    this._depthIndex.target = SlideScene.defaultDepthIndex;
+    this._depthIndex.current = SlideScene.defaultDepthIndex;
   }
 
   _onGroupIndexChange(newIndex: number) {
