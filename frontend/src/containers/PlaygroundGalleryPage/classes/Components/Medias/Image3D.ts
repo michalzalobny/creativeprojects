@@ -29,7 +29,7 @@ export class Image3D extends MediaHolder3D {
 
   set mediaItem(mediaItem: MediaItem) {
     this._mediaItem = mediaItem;
-    this._ratioHeight = getRandFloat(0.55, 1.75);
+    this._ratioHeight = getRandFloat(0.6, 1.55);
     this._ratioWidth =
       (mediaItem.naturalWidth / mediaItem.naturalHeight) * this._ratioHeight;
     this._updateTexture();
