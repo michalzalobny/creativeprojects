@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
-const VERTICAL_GAP = 10;
-const HORIZONTAL_GAP = 40;
+const VERTICAL_GAP = 6 * 1.3;
+const HORIZONTAL_GAP = 28 * 1.3;
 const EL_WIDTH = 13;
 
 interface GallerySpacer {
