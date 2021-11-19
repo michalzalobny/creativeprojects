@@ -1,5 +1,6 @@
 import { MediaHolder3D } from '../MediaHolder3D';
 import { ItemProps, MediaItem } from '../../types';
+import { getRandFloat } from '../../utils/getRand';
 
 interface Constructor {
   geometry: THREE.PlaneGeometry;
@@ -28,7 +29,9 @@ export class Video3D extends MediaHolder3D {
 
   set mediaItem(mediaItem: MediaItem) {
     this._mediaItem = mediaItem;
-    this._ratioWidth = mediaItem.naturalWidth / mediaItem.naturalHeight;
+    this._ratioHeight = getRandFloat(0.75, 1.4);
+    this._ratioWidth =
+      (mediaItem.naturalWidth / mediaItem.naturalHeight) * this._ratioHeight;
     this._updateTexture();
     this.onResize();
   }

@@ -20,7 +20,8 @@ export class MediaHolder3D extends MediaObject3D {
   _scaleTranslate = { x: 0, y: 0 };
   _extra = { x: 0, y: 0 };
   _scrollValues: ScrollValues | null = null;
-  _ratioWidth = 1;
+  _ratioWidth = 1; //Updated in Medias components
+  _ratioHeight = 1; //Updated in Medias components
 
   constructor({ galleryDomEl, geometry, cardItem, domEl }: Constructor) {
     super({ geometry });
@@ -51,7 +52,7 @@ export class MediaHolder3D extends MediaObject3D {
   _updateScale() {
     if (this._mesh) {
       this._mesh.scale.x = this._domElBounds.height * this._ratioWidth;
-      this._mesh.scale.y = this._domElBounds.height;
+      this._mesh.scale.y = this._domElBounds.height * this._ratioHeight;
     }
   }
 
@@ -73,7 +74,7 @@ export class MediaHolder3D extends MediaObject3D {
         -y -
         this._domElBounds.top +
         this._rendererBounds.height / 2 -
-        this._mesh.scale.y / 2 -
+        this._mesh.scale.y / this._ratioHeight / 2 - //Divide by ratioHeight to get real css dimension
         this._extra.y -
         this._scaleTranslate.y;
     }
@@ -105,7 +106,7 @@ export class MediaHolder3D extends MediaObject3D {
       }
 
       // y axis
-      const scaleY = this._mesh.scale.y / 2;
+      const scaleY = this._mesh.scale.y / 2 / this._ratioHeight; //Divide by ratioHeight to get real css dimensions
       if (this._scrollValues.direction.y === 'up') {
         const y = this._mesh.position.y + scaleY;
 

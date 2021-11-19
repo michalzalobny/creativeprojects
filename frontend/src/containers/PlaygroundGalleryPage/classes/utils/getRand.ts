@@ -3,5 +3,5 @@ export const getRandInt = (minimum: number, maximum: number): number => {
 };
 
 export const getRandFloat = (minimum: number, maximum: number): number => {
-  return Math.random() * (maximum - minimum + 1) + minimum;
+  return Math.random() * (maximum - minimum) + minimum;
 };
