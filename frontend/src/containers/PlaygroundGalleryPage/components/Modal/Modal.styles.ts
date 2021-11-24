@@ -1,5 +1,4 @@
-import styled, { css } from 'styled-components';
-import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: absolute;
@@ -9,8 +8,8 @@ export const Wrapper = styled.div`
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3); //sharedValues.colors.gray
-  backdrop-filter: saturate(170%) blur(8px);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: saturate(180%) blur(8px);
 `;
 
 export const ModalWrapper = styled.div`
@@ -31,7 +30,8 @@ export const ModalBackground = styled.div`
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  background: rgba(60, 60, 60, 0.4); //sharedValues.colors.gray
+  background-color: #f7f7f7;
+  opacity: 0.1;
   backdrop-filter: blur(10px);
 `;
 
@@ -46,7 +46,7 @@ export const Top = styled.div`
 `;
 
 export const Bottom = styled.div`
-  background: rgba(45, 45, 45, 1);
+  background-color: #262626;
   padding: 40px;
   color: white;
   font-weight: 300;
