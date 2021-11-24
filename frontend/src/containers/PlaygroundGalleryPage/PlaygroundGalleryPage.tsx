@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 import { Head } from 'utils/seo/Head';
-import { Layout } from 'components/Layout/Layout';
 
 import { App } from './classes/App';
 import { ItemProps } from './classes/types';
 import { PageProps } from './data';
 import * as S from './PlaygroundGalleryPage.styles';
+import { Modal } from './components/Modal/Modal';
 
 const Gallery = () => {
   return (
@@ -135,6 +135,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
       <Head {...props.head} />
 
       <S.Wrapper>
+        <Modal />
         <Gallery />
         <S.CanvasWrapper
           variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
