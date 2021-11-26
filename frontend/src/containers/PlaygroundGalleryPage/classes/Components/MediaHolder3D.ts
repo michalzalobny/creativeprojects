@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+import { appState } from '../../appState';
 import { ItemProps, UpdateInfo, ScrollValues } from '../types';
 import { MediaObject3D } from './MediaObject3D';
 
@@ -124,6 +125,8 @@ export class MediaHolder3D extends MediaObject3D {
   }
 
   onMouseEnter() {
+    if (appState.app && appState.app.isModalOpened) return;
+
     super.onMouseEnter();
     document.body.style.cursor = 'pointer';
     this.dispatchEvent({ type: 'pointerover' });

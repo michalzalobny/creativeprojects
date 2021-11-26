@@ -1,67 +1,21 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 import { Head } from 'utils/seo/Head';
 
+import { ModalItem } from './classes/types';
 import { App } from './classes/App';
 import { ItemProps } from './classes/types';
 import { PageProps } from './data';
 import * as S from './PlaygroundGalleryPage.styles';
 import { Modal } from './components/Modal/Modal';
-
-const Gallery = () => {
-  return (
-    <S.GalleryWrapper data-playground="wrapper">
-      <S.RowWrapper>
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="0" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="1" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="2" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="3" />
-        <S.GallerySpacer half />
-      </S.RowWrapper>
-      <S.RowWrapper>
-        <S.GallerySpacer half />
-        <S.GalleryItem data-playground-item="4" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="5" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="6" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="7" />
-        <S.GallerySpacer />
-      </S.RowWrapper>
-      <S.RowWrapper>
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="8" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="9" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="10" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="11" />
-        <S.GallerySpacer half />
-      </S.RowWrapper>
-      <S.RowWrapper>
-        <S.GallerySpacer half />
-        <S.GalleryItem data-playground-item="12" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="13" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="14" />
-        <S.GallerySpacer />
-        <S.GalleryItem data-playground-item="15" />
-        <S.GallerySpacer />
-      </S.RowWrapper>
-    </S.GalleryWrapper>
-  );
-};
+import { appState } from './appState';
 
 export default function PlaygroundGalleryPage(props: PageProps) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalItem, setModalItem] = useState<null | ModalItem>(null);
+
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
-  const myApp = useRef<App | null>(null);
 
   const [isReady, setIsReady] = useState(false);
 
@@ -105,38 +59,80 @@ export default function PlaygroundGalleryPage(props: PageProps) {
     }
 
     if (rendererWrapperEl.current) {
-      myApp.current = new App({
+      appState.app = new App({
         rendererWrapperEl: rendererWrapperEl.current,
         setIsReady,
+        setModalItem,
+        setShowModal,
       });
     }
 
     return () => {
-      if (myApp.current) {
-        myApp.current.destroy();
+      if (appState.app) {
+        appState.app.destroy();
+        appState.app = null;
       }
     };
   }, []);
 
   useEffect(() => {
     window.requestAnimationFrame(() => {
-      if (myApp.current) myApp.current.setItems(carouselItems);
+      if (appState.app) appState.app.setItems(carouselItems);
     });
   }, [carouselItems]);
 
   useEffect(() => {
     window.requestAnimationFrame(() => {
-      if (myApp.current) myApp.current.setItemsToPreload(itemsToPreload);
+      if (appState.app) appState.app.setItemsToPreload(itemsToPreload);
     });
   }, [itemsToPreload]);
+
+  useEffect(() => {
+    if (showModal) {
+      appState.app && appState.app.setIsModalOpened(true);
+    } else {
+      appState.app && appState.app.setIsModalOpened(false);
+    }
+  }, [showModal]);
 
   return (
     <>
       <Head {...props.head} />
 
       <S.Wrapper>
-        <Modal />
-        <Gallery />
+        <AnimatePresence>
+          {showModal && (
+            <Modal
+              modalItem={modalItem}
+              setShowModal={setShowModal}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            />
+          )}
+        </AnimatePresence>
+
+        <S.GalleryWrapper data-playground="wrapper">
+          {[...Array(4)].map((_, rowKey) => {
+            return (
+              <S.RowWrapper key={rowKey + 'row'}>
+                {[...Array(4)].map((_, elKey) => {
+                  return (
+                    <React.Fragment key={elKey + 'el'}>
+                      {elKey === 0 && (
+                        <S.GallerySpacer half={rowKey % 2 !== 0} />
+                      )}
+                      <S.GalleryItem
+                        data-playground-item={elKey + rowKey * 4}
+                      />
+                      <S.GallerySpacer half={elKey === 3 && rowKey % 2 === 0} />
+                    </React.Fragment>
+                  );
+                })}
+              </S.RowWrapper>
+            );
+          })}
+        </S.GalleryWrapper>
         <S.CanvasWrapper
           variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
           initial="initial"

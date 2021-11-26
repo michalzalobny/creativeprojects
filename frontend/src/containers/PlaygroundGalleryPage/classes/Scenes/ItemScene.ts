@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { chunk } from 'lodash';
 
+import { appState } from '../../appState';
 import { UpdateInfo, ItemProps, Bounds } from '../types';
 import { InteractiveScene } from './InteractiveScene';
 import { MouseMove } from '../Singletons/MouseMove';
@@ -26,14 +27,21 @@ export class ItemScene extends InteractiveScene {
     super({ camera, mouseMove });
   }
 
-  _handleItemClick(index: number) {
-    console.log(`item index: ${index}`);
+  _handleItemClick(itemClicked: ItemProps) {
+    if (appState.app && !appState.app.isModalOpened) {
+      appState.app.setShowModalReact(true);
+      appState.app.setModalItemReact({
+        buttonHref: '',
+        buttonLabel: 'button label',
+        description: ' my description',
+        mediaSrc: itemClicked.imageSrc,
+        mediaType: itemClicked.type,
+      });
+    }
   }
 
   _onItemClick = (e: THREE.Event) => {
-    const indexClicked = this._items3D.findIndex(el => el === e.target);
-
-    this._handleItemClick(indexClicked);
+    this._handleItemClick(e.target.cardItem);
   };
 
   _destroyItems() {

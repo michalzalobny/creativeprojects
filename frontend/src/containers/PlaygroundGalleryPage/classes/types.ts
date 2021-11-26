@@ -66,3 +66,11 @@ interface PreloadItem {
 }
 
 export type PreloadItems = (PreloadItem | null)[];
+
+export interface ModalItem {
+  description: string;
+  buttonLabel: string;
+  buttonHref: string;
+  mediaSrc: string;
+  mediaType: string;
+}

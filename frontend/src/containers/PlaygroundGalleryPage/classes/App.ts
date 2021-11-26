@@ -6,11 +6,13 @@ import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
 import { SlideScene } from './Scenes/SlideScene';
 import { Preloader } from './Utility/Preloader';
-import { ItemProps, PreloadItems } from './types';
+import { ItemProps, PreloadItems, ModalItem } from './types';
 
 interface Constructor {
   rendererWrapperEl: HTMLDivElement;
   setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalItem: React.Dispatch<React.SetStateAction<ModalItem | null>>;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export class App extends THREE.EventDispatcher {
@@ -28,11 +30,21 @@ export class App extends THREE.EventDispatcher {
   _scroll = Scroll.getInstance();
   _preloader = new Preloader();
   _slideScene: SlideScene;
-  _setIsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  _setIsReadyReact: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalItemReact: React.Dispatch<React.SetStateAction<ModalItem | null>>;
+  setShowModalReact: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalOpened = false;
 
-  constructor({ setIsReady, rendererWrapperEl }: Constructor) {
+  constructor({
+    setModalItem,
+    setShowModal,
+    setIsReady,
+    rendererWrapperEl,
+  }: Constructor) {
     super();
-    this._setIsReady = setIsReady;
+    this.setModalItemReact = setModalItem;
+    this.setShowModalReact = setShowModal;
+    this._setIsReadyReact = setIsReady;
     this._rendererWrapperEl = rendererWrapperEl;
     this._canvas = document.createElement('canvas');
     this._rendererWrapperEl.appendChild(this._canvas);
@@ -86,7 +98,7 @@ export class App extends THREE.EventDispatcher {
 
   _onAssetsLoaded = (e: THREE.Event) => {
     this._slideScene.mediaItems = (e.target as Preloader).mediaItems;
-    this._setIsReady(true);
+    this._setIsReadyReact(true);
     this._slideScene.animateIn();
   };
 
@@ -155,6 +167,10 @@ export class App extends THREE.EventDispatcher {
 
   setItems(items: ItemProps[]) {
     this._slideScene.setItems(items);
+  }
+
+  setIsModalOpened(value: boolean) {
+    this.isModalOpened = value;
   }
 
   setItemsToPreload(items: PreloadItems) {
