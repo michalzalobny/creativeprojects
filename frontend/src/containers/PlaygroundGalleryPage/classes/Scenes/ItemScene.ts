@@ -28,13 +28,14 @@ export class ItemScene extends InteractiveScene {
   }
 
   _handleItemClick(itemClicked: ItemProps) {
+    if (!itemClicked.buttonHref) return;
+
     if (appState.app && !appState.app.isModalOpened) {
       appState.app.setShowModalReact(true);
       appState.app.setModalItemReact({
-        buttonHref: '',
-        buttonLabel: 'Editable CTA',
-        description:
-          'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+        buttonHref: itemClicked.buttonHref,
+        buttonLabel: itemClicked.buttonLabel,
+        description: itemClicked.description,
         mediaSrc: itemClicked.mediaSrc,
         mediaType: itemClicked.type,
       });

@@ -58,6 +58,9 @@ export interface ItemProps {
   itemKeyReverse: number;
   type: string;
   mediaSrc: string;
+  buttonHref: string;
+  buttonLabel: string;
+  description: string;
 }
 
 interface PreloadItem {

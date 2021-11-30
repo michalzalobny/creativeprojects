@@ -48,6 +48,10 @@ export default function PlaygroundGalleryPage(props: PageProps) {
         itemKey: key + 1,
         itemKeyReverse: props.projectData.creativeItems.length - key,
         type: item.name,
+        buttonHref: item.name === '3dmodel' ? '' : '/test',
+        buttonLabel: 'EDITABLE CTA',
+        description:
+          'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       };
       return slideItem;
     });
