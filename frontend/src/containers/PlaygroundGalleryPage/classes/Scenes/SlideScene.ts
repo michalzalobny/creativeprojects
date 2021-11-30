@@ -177,7 +177,7 @@ export class SlideScene extends ItemScene {
         1;
 
       scaleArray[key] = finalScale;
-      const groupScale = finalScale * 0.8 - 0.5;
+      const groupScale = finalScale * 0.8 - 0.75;
       group.scale.set(groupScale, groupScale, groupScale); //Group scale is different from final scale to be able to adjust elements scales independantly and freely
       group.position.z = finalScale * 0.1; //Places group with the biggest scale on top
     });
