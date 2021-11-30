@@ -44,7 +44,7 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   const carouselItems = useMemo(() => {
     return props.projectData.creativeItems.map((item, key) => {
       const slideItem: ItemProps = {
-        imageSrc: item.image.url,
+        mediaSrc: item.image.url,
         itemKey: key + 1,
         itemKeyReverse: props.projectData.creativeItems.length - key,
         type: item.name,

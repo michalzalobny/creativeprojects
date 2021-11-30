@@ -35,7 +35,7 @@ export class ItemScene extends InteractiveScene {
         buttonLabel: 'Editable CTA',
         description:
           'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
-        mediaSrc: itemClicked.imageSrc,
+        mediaSrc: itemClicked.mediaSrc,
         mediaType: itemClicked.type,
       });
     }
@@ -148,7 +148,7 @@ export class ItemScene extends InteractiveScene {
     this._mediaItems = mediaItems;
 
     this._items3D.forEach(el => {
-      (el as Image3D).mediaItem = this._mediaItems[el.cardItem.imageSrc];
+      (el as Image3D).mediaItem = this._mediaItems[el.cardItem.mediaSrc];
     });
   }
 
