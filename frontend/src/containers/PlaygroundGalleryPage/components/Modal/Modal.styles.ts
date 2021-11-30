@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+import { MediaRenderer } from '../MediaRenderer/MediaRenderer';
+
 export const Wrapper = styled(motion.div)`
   position: absolute;
   z-index: 2;
@@ -48,13 +50,8 @@ export const ModalBackground = styled.div`
 `;
 
 export const Top = styled.div`
-  width: 100%;
-  &:before {
-    content: '';
-    width: 100%;
-    display: block;
-    padding-bottom: 56.25%;
-  }
+  position: relative;
+  margin: 30px;
 `;
 
 export const Bottom = styled.div`
@@ -126,4 +123,23 @@ export const ButtonWrapper = styled.div`
   padding: 14px 30px;
   border: 1px solid white;
   display: inline-block;
+`;
+
+export const MediaRendererWrapper = styled.div`
+  position: relative;
+
+  &:before {
+    content: '';
+    width: 100%;
+    display: block;
+    padding-bottom: 56.25%;
+  }
+`;
+
+export const MediaRendererComp = styled(MediaRenderer)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;

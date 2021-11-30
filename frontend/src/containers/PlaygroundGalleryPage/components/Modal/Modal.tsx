@@ -83,7 +83,11 @@ export const Modal = (props: ModalProps) => {
               variants={modalWrapperV}
             >
               <S.ModalBackground />
-              <S.Top></S.Top>
+              <S.Top>
+                <S.MediaRendererWrapper>
+                  <S.MediaRendererComp />
+                </S.MediaRendererWrapper>
+              </S.Top>
               <S.Bottom>
                 <S.Description>{modalItem?.description}</S.Description>
                 <S.ButtonWrapper>{modalItem?.buttonLabel}</S.ButtonWrapper>
