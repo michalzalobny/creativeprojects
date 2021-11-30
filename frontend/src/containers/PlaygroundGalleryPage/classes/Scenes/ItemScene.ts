@@ -33,7 +33,8 @@ export class ItemScene extends InteractiveScene {
       appState.app.setModalItemReact({
         buttonHref: '',
         buttonLabel: 'button label',
-        description: ' my description',
+        description:
+          'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
         mediaSrc: itemClicked.imageSrc,
         mediaType: itemClicked.type,
       });

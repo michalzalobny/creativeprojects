@@ -69,8 +69,8 @@ export const CloseButtonWrapper = styled.button`
   pointer-events: initial;
   cursor: pointer;
   z-index: 2;
-  left: calc(100% + 20px);
-  top: 0;
+  bottom: calc(100% + 20px);
+  right: 0;
   width: 50px;
   height: 50px;
 
@@ -94,6 +94,11 @@ export const CloseButtonWrapper = styled.button`
   &:after {
     transform: translate(-50%, -50%) rotate(-45deg);
   }
+
+  @media (min-width: 768px) {
+    left: calc(100% + 20px);
+    top: 0;
+  }
 `;
 
 export const CloseButtonBackground = styled.div`
@@ -106,4 +111,8 @@ export const CloseButtonBackground = styled.div`
   background-color: #f7f7f7;
   opacity: 0.1;
   border-radius: 50%;
+`;
+
+export const Description = styled.p`
+  font-size: 14px;
 `;
