@@ -85,7 +85,10 @@ export const Modal = (props: ModalProps) => {
               <S.ModalBackground />
               <S.Top>
                 <S.MediaRendererWrapper>
-                  <S.MediaRendererComp />
+                  <S.MediaRendererComp
+                    mediaSrc={modalItem?.mediaSrc}
+                    mediaType={modalItem?.mediaType}
+                  />
                 </S.MediaRendererWrapper>
               </S.Top>
               <S.Bottom>
