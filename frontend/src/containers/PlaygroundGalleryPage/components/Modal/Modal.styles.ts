@@ -20,7 +20,25 @@ export const ModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 638px;
+  width: 90%;
+  max-width: 374px;
+
+  @media (min-width: 768px) {
+    width: 558px;
+    max-width: initial;
+  }
+
+  @media (min-width: 1024px) {
+    width: 638px;
+  }
+
+  @media (min-width: 1280px) {
+    width: 602px;
+  }
+
+  @media (min-width: 1440px) {
+    width: 674px;
+  }
 `;
 
 export const ModalWrapper = styled(motion.div)`
@@ -51,7 +69,11 @@ export const ModalBackground = styled.div`
 
 export const Top = styled.div`
   position: relative;
-  margin: 30px;
+  margin: 20px;
+
+  @media (min-width: 768px) {
+    margin: 30px;
+  }
 `;
 
 export const Bottom = styled.div`
