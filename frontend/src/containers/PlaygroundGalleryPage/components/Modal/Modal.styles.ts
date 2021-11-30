@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 30%;
+  width: 638px;
 `;
 
 export const ModalWrapper = styled(motion.div)`
@@ -59,7 +59,7 @@ export const Top = styled.div`
 
 export const Bottom = styled.div`
   background-color: #262626;
-  padding: 40px;
+  padding: 20px;
   color: white;
   font-weight: 300;
 `;
@@ -115,4 +115,15 @@ export const CloseButtonBackground = styled.div`
 
 export const Description = styled.p`
   font-size: 14px;
+  margin-top: 10px;
+`;
+
+export const ButtonWrapper = styled.div`
+  margin-top: 30px;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  padding: 14px 30px;
+  border: 1px solid white;
+  display: inline-block;
 `;

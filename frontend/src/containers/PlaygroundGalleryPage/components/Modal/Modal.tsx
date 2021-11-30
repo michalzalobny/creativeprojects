@@ -86,6 +86,7 @@ export const Modal = (props: ModalProps) => {
               <S.Top></S.Top>
               <S.Bottom>
                 <S.Description>{modalItem?.description}</S.Description>
+                <S.ButtonWrapper>{modalItem?.buttonLabel}</S.ButtonWrapper>
               </S.Bottom>
             </S.ModalWrapper>
           </S.TranslateWrapper>

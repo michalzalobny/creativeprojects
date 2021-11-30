@@ -32,7 +32,7 @@ export class ItemScene extends InteractiveScene {
       appState.app.setShowModalReact(true);
       appState.app.setModalItemReact({
         buttonHref: '',
-        buttonLabel: 'button label',
+        buttonLabel: 'Editable CTA',
         description:
           'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
         mediaSrc: itemClicked.imageSrc,
