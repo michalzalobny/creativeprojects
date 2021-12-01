@@ -93,6 +93,10 @@ export const CloseButtonWrapper = styled.button`
   right: 0;
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+  background-color: transparent;
+  overflow: hidden;
+  border: 0;
 
   &:before,
   &:after {
@@ -130,7 +134,6 @@ export const CloseButtonBackground = styled.div`
   left: 0;
   background-color: #f7f7f7;
   opacity: 0.1;
-  border-radius: 50%;
 `;
 
 export const Description = styled.p`
