@@ -54,7 +54,7 @@ export const TranslateWrapper = styled(motion.div)`
   overflow: hidden;
 `;
 
-export const ModalBackground = styled.div`
+export const ModalBackground = styled(motion.div)`
   position: absolute;
   z-index: -1;
   top: 50%;
@@ -62,6 +62,7 @@ export const ModalBackground = styled.div`
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
+  border-radius: 10px;
   background-color: #f7f7f7;
   opacity: 0.1;
   backdrop-filter: blur(10px);

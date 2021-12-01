@@ -1,6 +1,13 @@
 import React from 'react';
 
 import { ModalItem } from '../../classes/types';
+import {
+  defaultTransition,
+  translateWrapperV,
+  modalBackgroundV,
+  modalWrapperV,
+  wrapperV,
+} from './Modal.motion';
 import * as S from './Modal.styles';
 
 export interface ModalProps {
@@ -13,59 +20,6 @@ export interface ModalProps {
 
 export const Modal = (props: ModalProps) => {
   const { modalItem, setShowModal, ...rest } = props;
-
-  const defaultTransition = {
-    type: 'tween',
-    duration: 0.65,
-    easing: 'easeInOut',
-  };
-
-  const wrapperV = {
-    initial: {
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-    },
-    exit: {
-      opacity: 0,
-    },
-  };
-
-  const translateWrapperV = {
-    initial: {
-      y: '-100%',
-      scale: 0.92,
-    },
-    animate: {
-      y: '0%',
-      scale: 1,
-    },
-    exit: {
-      y: '-100%',
-      scale: 0.92,
-      transition: {
-        delay: 0.15,
-        ...defaultTransition,
-      },
-    },
-  };
-
-  const modalWrapperV = {
-    initial: {
-      y: '100%',
-    },
-    animate: {
-      y: '0%',
-    },
-    exit: {
-      y: '100%',
-      transition: {
-        delay: 0.15,
-        ...defaultTransition,
-      },
-    },
-  };
 
   return (
     <>
@@ -82,12 +36,15 @@ export const Modal = (props: ModalProps) => {
               transition={defaultTransition}
               variants={modalWrapperV}
             >
-              <S.ModalBackground />
+              <S.ModalBackground
+                transition={defaultTransition}
+                variants={modalBackgroundV}
+              />
               <S.Top>
                 <S.MediaRendererWrapper>
                   <S.MediaRendererComp
-                    mediaSrc={modalItem?.mediaSrc}
-                    mediaType={modalItem?.mediaType}
+                    mediaSrc={modalItem?.mediaSrc || ''}
+                    mediaType={modalItem?.mediaType || ''}
                   />
                 </S.MediaRendererWrapper>
               </S.Top>
