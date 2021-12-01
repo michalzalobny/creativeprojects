@@ -119,6 +119,12 @@ export const CloseButtonWrapper = styled.button`
     transform: translate(-50%, -50%) rotate(-45deg);
   }
 
+  transition: transform 0.4s;
+
+  &:hover {
+    transform: rotate(-90deg);
+  }
+
   @media (min-width: 768px) {
     left: calc(100% + 20px);
     top: 0;
