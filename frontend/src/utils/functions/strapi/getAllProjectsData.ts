@@ -8,7 +8,7 @@ export async function getAllProjectsData() {
     .query({
       query: gql`
         {
-          projects {
+          projects(sort: "id:desc") {
             localizedName {
               language {
                 code
