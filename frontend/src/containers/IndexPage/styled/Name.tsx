@@ -10,7 +10,7 @@ export const Name = styled(motion.h2)<Props>`
   color: white;
   font-size: 28px;
 
-  text-transform: uppercase;
+  // text-transform: uppercase;
 
   ${media.tablet} {
     font-size: 30px;
