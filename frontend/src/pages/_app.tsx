@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
+import FontFaceObserver from 'fontfaceobserver';
 
 import { GlobalStyles } from 'utils/styled/GlobalStyles';
 import { PageWrapper } from 'components/PageWrapper/PageWrapper';
@@ -46,10 +47,55 @@ export default function MyApp(props: AppProps) {
     }
   }, [router.route + router.locale]);
 
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const fontA = new FontFaceObserver('Open Sans');
+    const fontB = new FontFaceObserver('1');
+    const fontC = new FontFaceObserver('2');
+    const fontD = new FontFaceObserver('Playfair');
+
+    const maxTimeout = 1000;
+
+    Promise.all([
+      fontA.load(null, maxTimeout),
+      fontB.load(null, maxTimeout),
+      fontC.load(null, maxTimeout),
+      fontD.load(null, maxTimeout),
+    ])
+      .then(
+        () => {
+          setIsReady(true);
+        },
+        () => {
+          console.warn(`Fonts were loading too long (over ${maxTimeout}ms)`);
+          setIsReady(true);
+        },
+      )
+      .catch(err => {
+        console.warn('Some critical font are not available:', err);
+        setIsReady(true);
+      });
+
+    return () => {};
+  }, []);
+
   return (
     <ExampleContextProvider>
       <GlobalStyles />
 
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'white',
+          zIndex: 200,
+          display: isReady ? 'none' : 'initial',
+        }}
+      ></div>
       <AnimatePresence exitBeforeEnter={false}>
         <>
           <Layout />
