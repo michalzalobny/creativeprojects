@@ -11,7 +11,7 @@
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` longtext,
   `filter` varchar(255) DEFAULT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `components_creative_component_creative_items` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_heads` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `description` longtext,
   `ogType` varchar(255) DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `components_page_heads` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_links` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `label` varchar(255) DEFAULT NULL,
   `href` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -47,47 +47,47 @@ CREATE TABLE IF NOT EXISTS `components_page_links` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int(10) unsigned NOT NULL,
+  `order` int unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int(11) NOT NULL,
-  `components_page_localized_head_id` int(10) unsigned NOT NULL,
+  `component_id` int NOT NULL,
+  `components_page_localized_head_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `language` int(11) DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `language` int DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_rich_texts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `text` longtext,
-  `language` int(11) DEFAULT NULL,
+  `language` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -96,18 +96,18 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_rich_texts` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `text` varchar(255) DEFAULT NULL,
-  `language` int(11) DEFAULT NULL,
+  `language` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 27 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `components_page_videos` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `videoURI` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `components_page_videos` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `core_store` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
   `value` longtext,
   `type` varchar(255) DEFAULT NULL,
@@ -131,11 +131,11 @@ CREATE TABLE IF NOT EXISTS `core_store` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `flow_pages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `language` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `language` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `asideDescription` longtext,
@@ -147,12 +147,12 @@ CREATE TABLE IF NOT EXISTS `flow_pages` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `flow_pages_components` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int(10) unsigned NOT NULL,
+  `order` int unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int(11) NOT NULL,
-  `flow_page_id` int(10) unsigned NOT NULL,
+  `component_id` int NOT NULL,
+  `flow_page_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_page_id_fk` (`flow_page_id`),
   CONSTRAINT `flow_page_id_fk` FOREIGN KEY (`flow_page_id`) REFERENCES `flow_pages` (`id`) ON DELETE CASCADE
@@ -163,11 +163,11 @@ CREATE TABLE IF NOT EXISTS `flow_pages_components` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `index_pages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `language` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `language` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -178,12 +178,12 @@ CREATE TABLE IF NOT EXISTS `index_pages` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `index_pages_components` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int(10) unsigned NOT NULL,
+  `order` int unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int(11) NOT NULL,
-  `index_page_id` int(10) unsigned NOT NULL,
+  `component_id` int NOT NULL,
+  `index_page_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_page_id_fk` (`index_page_id`),
   CONSTRAINT `index_page_id_fk` FOREIGN KEY (`index_page_id`) REFERENCES `index_pages` (`id`) ON DELETE CASCADE
@@ -194,11 +194,11 @@ CREATE TABLE IF NOT EXISTS `index_pages_components` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `languages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -209,38 +209,38 @@ CREATE TABLE IF NOT EXISTS `languages` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `projects` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `urlSlug` varchar(255) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `isExternal` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `projects_components` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `field` varchar(255) NOT NULL,
-  `order` int(10) unsigned NOT NULL,
+  `order` int unsigned NOT NULL,
   `component_type` varchar(255) NOT NULL,
-  `component_id` int(11) NOT NULL,
-  `project_id` int(10) unsigned NOT NULL,
+  `component_id` int NOT NULL,
+  `project_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 187 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 189 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_administrator` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -259,12 +259,12 @@ CREATE TABLE IF NOT EXISTS `strapi_administrator` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_permission` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
   `subject` varchar(255) DEFAULT NULL,
   `fields` longtext,
   `conditions` longtext,
-  `role` int(11) DEFAULT NULL,
+  `role` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `strapi_permission` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_role` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -291,9 +291,9 @@ CREATE TABLE IF NOT EXISTS `strapi_role` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_users_roles` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `role_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = latin1;
 
@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `strapi_users_roles` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `strapi_webhooks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `url` longtext,
   `headers` longtext,
@@ -316,12 +316,12 @@ CREATE TABLE IF NOT EXISTS `strapi_webhooks` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `upload_file` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `alternativeText` varchar(255) DEFAULT NULL,
   `caption` varchar(255) DEFAULT NULL,
-  `width` int(11) DEFAULT NULL,
-  `height` int(11) DEFAULT NULL,
+  `width` int DEFAULT NULL,
+  `height` int DEFAULT NULL,
   `formats` longtext,
   `hash` varchar(255) NOT NULL,
   `ext` varchar(255) DEFAULT NULL,
@@ -331,41 +331,41 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `previewUrl` varchar(255) DEFAULT NULL,
   `provider` varchar(255) NOT NULL,
   `provider_metadata` longtext,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 167 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 169 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `upload_file_morph` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `upload_file_id` int(11) DEFAULT NULL,
-  `related_id` int(11) DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `upload_file_id` int DEFAULT NULL,
+  `related_id` int DEFAULT NULL,
   `related_type` longtext,
   `field` longtext,
-  `order` int(11) DEFAULT NULL,
+  `order` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2131 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 2133 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users-permissions_permission` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
   `controller` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   `policy` varchar(255) DEFAULT NULL,
-  `role` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `role` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 209 DEFAULT CHARSET = latin1;
 
@@ -374,12 +374,12 @@ CREATE TABLE IF NOT EXISTS `users-permissions_permission` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users-permissions_role` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users-permissions_role_type_unique` (`type`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = latin1;
@@ -389,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `users-permissions_role` (
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users-permissions_user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `provider` varchar(255) DEFAULT NULL,
@@ -398,9 +398,9 @@ CREATE TABLE IF NOT EXISTS `users-permissions_user` (
   `confirmationToken` varchar(255) DEFAULT NULL,
   `confirmed` tinyint(1) DEFAULT NULL,
   `blocked` tinyint(1) DEFAULT NULL,
-  `role` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `role` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -1280,8 +1280,8 @@ INSERT INTO
 VALUES
   (
     1,
-    'Michal Zalobny 2021 Portfolio',
-    'All the projects made in 2021 using such technologies as ThreeJS or 2D Canvas API',
+    'Michal Zalobny Portfolio',
+    'All the projects made using such technologies as ThreeJS or 2D Canvas API',
     'website',
     1
   );
@@ -1347,6 +1347,10 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (13, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (14, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -1820,6 +1824,42 @@ VALUES
     13,
     13
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    27,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    27,
+    14
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    28,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    14,
+    14
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -1901,6 +1941,14 @@ INSERT INTO
   `components_page_localized_long_texts` (`id`, `language`, `text`)
 VALUES
   (13, 1, 'Hero Transitions page made with THREEJS');
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (
+    14,
+    1,
+    'Shaders Playground based on the Book Of Shaders'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -2015,6 +2063,14 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (26, 'Hero Transitions', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (27, 'Shaders Playground', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (28, 'Shaders Playground', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -2683,7 +2739,7 @@ VALUES
     1,
     1,
     '2021-03-27 18:55:20',
-    '2021-11-06 21:44:23'
+    '2022-01-04 11:24:39'
   );
 
 # ------------------------------------------------------------
@@ -2989,6 +3045,26 @@ VALUES
     1,
     '2021-11-06 21:20:43',
     '2021-11-06 21:25:06',
+    1
+  );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`,
+    `isExternal`
+  )
+VALUES
+  (
+    14,
+    'https://book-of-shaders-playground.vercel.app/',
+    1,
+    1,
+    '2022-01-04 11:21:26',
+    '2022-01-04 11:21:26',
     1
   );
 
@@ -6272,6 +6348,42 @@ VALUES
     26,
     13
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    187,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    14,
+    14
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    188,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    28,
+    14
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -6297,7 +6409,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$2BBbfVcfRD3PDqpLA66mZ.s4BhorP9fm2paoyXybiJrjuXDkRER6O',
+    '$2b$10$gdPVSa/i/zh/5qxXq1kTQu7qYQiXPO4GZiC0m8Szk0cFmbqJ5cc.K',
     NULL,
     NULL,
     1,
@@ -15164,6 +15276,94 @@ VALUES
     '2021-11-15 10:50:28',
     '2021-11-15 10:50:28'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    167,
+    '1.jpg',
+    '',
+    '',
+    1368,
+    821,
+    '{\"thumbnail\":{\"name\":\"thumbnail_1.jpg\",\"hash\":\"thumbnail_1_577e8c60f4\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":147,\"size\":5.75,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295234/thumbnail_1_577e8c60f4.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_1_577e8c60f4\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_1.jpg\",\"hash\":\"large_1_577e8c60f4\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":600,\"size\":40.03,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295235/large_1_577e8c60f4.jpg\",\"provider_metadata\":{\"public_id\":\"large_1_577e8c60f4\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_1.jpg\",\"hash\":\"medium_1_577e8c60f4\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":450,\"size\":27.06,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295236/medium_1_577e8c60f4.jpg\",\"provider_metadata\":{\"public_id\":\"medium_1_577e8c60f4\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_1.jpg\",\"hash\":\"small_1_577e8c60f4\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":300,\"size\":15.54,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295236/small_1_577e8c60f4.jpg\",\"provider_metadata\":{\"public_id\":\"small_1_577e8c60f4\",\"resource_type\":\"image\"}}}',
+    '1_577e8c60f4',
+    '.jpg',
+    'image/jpeg',
+    59.47,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295233/1_577e8c60f4.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"1_577e8c60f4\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-01-04 11:20:37',
+    '2022-01-04 11:20:37'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    168,
+    'og.jpg',
+    '',
+    '',
+    1520,
+    830,
+    '{\"thumbnail\":{\"name\":\"thumbnail_og.jpg\",\"hash\":\"thumbnail_og_4107ef2bd5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":134,\"size\":4.52,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295266/thumbnail_og_4107ef2bd5.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_og_4107ef2bd5\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_og.jpg\",\"hash\":\"large_og_4107ef2bd5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":546,\"size\":29.34,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295266/large_og_4107ef2bd5.jpg\",\"provider_metadata\":{\"public_id\":\"large_og_4107ef2bd5\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_og.jpg\",\"hash\":\"medium_og_4107ef2bd5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":410,\"size\":20.09,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295267/medium_og_4107ef2bd5.jpg\",\"provider_metadata\":{\"public_id\":\"medium_og_4107ef2bd5\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_og.jpg\",\"hash\":\"small_og_4107ef2bd5\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":273,\"size\":11.53,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295268/small_og_4107ef2bd5.jpg\",\"provider_metadata\":{\"public_id\":\"small_og_4107ef2bd5\",\"resource_type\":\"image\"}}}',
+    'og_4107ef2bd5',
+    '.jpg',
+    'image/jpeg',
+    50.41,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1641295265/og_4107ef2bd5.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"og_4107ef2bd5\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-01-04 11:21:08',
+    '2022-01-04 11:21:08'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -18154,17 +18354,6 @@ INSERT INTO
     `order`
   )
 VALUES
-  (1885, 164, 1, 'components_page_heads', 'ogImage', 1);
-INSERT INTO
-  `upload_file_morph` (
-    `id`,
-    `upload_file_id`,
-    `related_id`,
-    `related_type`,
-    `field`,
-    `order`
-  )
-VALUES
   (
     2082,
     158,
@@ -19037,6 +19226,35 @@ VALUES
     'image',
     1
   );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    2131,
+    168,
+    14,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (2132, 164, 1, 'components_page_heads', 'ogImage', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users-permissions_permission

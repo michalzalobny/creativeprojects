@@ -15,9 +15,7 @@ export const InfoFooter = (props: InfoFooterProps) => {
       <Wrapper {...rest}>
         <ContentWrapper>
           <Name>Michal Zalobny</Name>
-          <Text>
-            portfolio <span style={{ fontWeight: 800 }}>2021</span>
-          </Text>
+          <Text>portfolio</Text>
 
           <LinkComp
             isExternal
