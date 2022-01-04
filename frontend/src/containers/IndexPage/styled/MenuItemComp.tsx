@@ -6,6 +6,6 @@ interface Props {}
 
 export const MenuItemComp = styled(MenuItem)<Props>`
   &:not(:last-child) {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
 `;
