@@ -136,7 +136,7 @@ export const Parallax = (props: ParallaxProps) => {
 
   useEffect(() => {
     resumeAppFrame();
-    let refElementCurrent;
+    let refElementCurrent: HTMLElement | null;
 
     window.addEventListener('visibilitychange', onVisibilityChange);
     if (refElement) {
