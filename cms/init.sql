@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 169 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 170 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2133 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 2135 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1281,7 +1281,7 @@ VALUES
   (
     1,
     'Michal Zalobny Portfolio',
-    'All the projects made using such technologies as ThreeJS or 2D Canvas API',
+    'Personal projects made using such technologies as ThreeJS or 2D Canvas API',
     'website',
     1
   );
@@ -2739,7 +2739,7 @@ VALUES
     1,
     1,
     '2021-03-27 18:55:20',
-    '2022-01-04 11:24:39'
+    '2022-01-04 11:46:08'
   );
 
 # ------------------------------------------------------------
@@ -15364,6 +15364,50 @@ VALUES
     '2022-01-04 11:21:08',
     '2022-01-04 11:21:08'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    169,
+    'og1.jpg',
+    '',
+    '',
+    1611,
+    771,
+    '{\"thumbnail\":{\"name\":\"thumbnail_og1.jpg\",\"hash\":\"thumbnail_og1_450eebb08f\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":117,\"size\":4.4,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641296762/thumbnail_og1_450eebb08f.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_og1_450eebb08f\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_og1.jpg\",\"hash\":\"large_og1_450eebb08f\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":479,\"size\":37.38,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641296763/large_og1_450eebb08f.jpg\",\"provider_metadata\":{\"public_id\":\"large_og1_450eebb08f\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_og1.jpg\",\"hash\":\"medium_og1_450eebb08f\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":359,\"size\":23.62,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641296764/medium_og1_450eebb08f.jpg\",\"provider_metadata\":{\"public_id\":\"medium_og1_450eebb08f\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_og1.jpg\",\"hash\":\"small_og1_450eebb08f\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":239,\"size\":12.45,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1641296764/small_og1_450eebb08f.jpg\",\"provider_metadata\":{\"public_id\":\"small_og1_450eebb08f\",\"resource_type\":\"image\"}}}',
+    'og1_450eebb08f',
+    '.jpg',
+    'image/jpeg',
+    78.76,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1641296761/og1_450eebb08f.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"og1_450eebb08f\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-01-04 11:46:05',
+    '2022-01-04 11:46:05'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -19254,7 +19298,7 @@ INSERT INTO
     `order`
   )
 VALUES
-  (2132, 164, 1, 'components_page_heads', 'ogImage', 1);
+  (2134, 169, 1, 'components_page_heads', 'ogImage', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users-permissions_permission
