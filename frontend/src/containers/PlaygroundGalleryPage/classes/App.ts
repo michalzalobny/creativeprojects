@@ -192,5 +192,12 @@ export class App extends THREE.EventDispatcher {
       this.setIsModalOpened(false);
       this.setShowModalReact(false);
     }
+
+    //Disables user-select if app is active
+    if (this.isActive) {
+      document.getElementsByTagName('body')[0].style.userSelect = 'none';
+    } else {
+      document.getElementsByTagName('body')[0].style.userSelect = 'initial';
+    }
   }
 }
