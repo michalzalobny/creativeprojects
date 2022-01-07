@@ -1,5 +1,6 @@
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
+import { appState } from '../../appState';
 import { Scroll } from '../Singletons/Scroll';
 import { AnimateProps, ScrollValues, UpdateInfo } from '../types';
 import { lerp } from '../utils/lerp';
@@ -11,8 +12,8 @@ interface Constructor {
 export class GroupScroll {
   static lerpEase = 0.06;
   static mouseMultiplier = 0.9;
-  static touchMultiplier = 0.6;
-  static inActiveScrollMultiplier = 0.91;
+  static touchMultiplier = 1;
+  static inActiveScrollMultiplier = 0.89;
 
   _scroll: Scroll;
   _scrollValues: ScrollValues = {
@@ -37,6 +38,10 @@ export class GroupScroll {
   _applyScroll = (x: number, y: number) => {
     //Stops scroll animations if any user input occurs
     if (this._scrollTween) this._scrollTween.stop();
+
+    //Stop the actions if the app is not active or modal is currently opened
+    if (appState.app && !appState.app.isActive) return;
+    if (appState.app && appState.app.isModalOpened) return;
 
     //If the scroll should not be active, only the tiny amount is applied to the scroll
     const multiplier = this._isActive

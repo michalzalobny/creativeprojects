@@ -99,10 +99,35 @@ export default function PlaygroundGalleryPage(props: PageProps) {
     }
   }, [showModal]);
 
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    if (!appState.app) return;
+    appState.app.setIsActive(isActive);
+  }, [isActive]);
+
   return (
     <>
       <Head {...props.head} />
 
+      <div
+        onClick={() => setIsActive(prev => !prev)}
+        style={{
+          cursor: 'pointer',
+          position: 'fixed',
+          zIndex: 1000,
+          bottom: 15,
+          left: 10,
+          fontSize: 14,
+          background: 'transparent',
+          border: '1px solid white',
+          borderRadius: 8,
+          padding: '6px 15px',
+          color: 'white',
+        }}
+      >
+        {isActive ? 'Active' : 'Not active'}
+      </div>
       <S.Wrapper>
         <AnimatePresence>
           {showModal && (

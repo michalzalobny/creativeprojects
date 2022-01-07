@@ -54,16 +54,6 @@ export class MediaObject3D extends InteractiveObject3D {
     this.add(this._mesh);
   }
 
-  _updateOpacity() {
-    if (this._mesh) {
-      const computedOpacity =
-        Math.min(this._masterOpacity, 1) * this._tweenOpacity;
-
-      this._mesh.material.uniforms.uOpacity.value = computedOpacity;
-      this._isVisible = computedOpacity > 0;
-    }
-  }
-
   animateOpacity(props: AnimateProps) {
     const {
       destination,
@@ -123,6 +113,9 @@ export class MediaObject3D extends InteractiveObject3D {
   }
 
   setOpacity(value: number) {
-    if (this._mesh) this._mesh.material.uniforms.uOpacity.value = value;
+    if (this._mesh) {
+      this._mesh.material.uniforms.uOpacity.value = value;
+      this._isVisible = value > InteractiveObject3D.visibilityThreshold;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 
+import { appState } from '../../appState';
 import { UpdateInfo, Bounds, ItemProps, AnimateProps } from '../types';
 import { Scroll } from '../Singletons/Scroll';
 import { ItemScene } from './ItemScene';
@@ -79,6 +80,10 @@ export class SlideScene extends ItemScene {
     //Stops depth animation if any user input occurs
     if (this._depthTween) this._depthTween.stop();
 
+    //Stop the actions if the app is not active or modal is currently opened
+    if (appState.app && !appState.app.isActive) return;
+    if (appState.app && appState.app.isModalOpened) return;
+
     const newTarget =
       this._depthIndex.target - e.y * SlideScene.wheelMultiplier;
     this._depthIndex.target = newTarget;
@@ -87,6 +92,10 @@ export class SlideScene extends ItemScene {
   _onPinch = (e: THREE.Event) => {
     //Stops depth animation if any user input occurs
     if (this._depthTween) this._depthTween.stop();
+
+    //Stop the actions if the app is not active or modal is currently opened
+    if (appState.app && !appState.app.isActive) return;
+    if (appState.app && appState.app.isModalOpened) return;
 
     const newTarget = this._depthIndex.target - e.distance * 0.01;
     this._depthIndex.target = newTarget;

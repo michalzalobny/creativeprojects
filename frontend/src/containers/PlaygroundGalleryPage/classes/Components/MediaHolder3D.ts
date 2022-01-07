@@ -125,7 +125,10 @@ export class MediaHolder3D extends MediaObject3D {
   }
 
   onMouseEnter() {
+    //Stop the actions if the app is not active or modal is currently opened or element is not visible
+    if (appState.app && !appState.app.isActive) return;
     if (appState.app && appState.app.isModalOpened) return;
+    if (!this._isVisible) return;
 
     super.onMouseEnter();
     document.body.style.cursor = 'pointer';
@@ -136,6 +139,12 @@ export class MediaHolder3D extends MediaObject3D {
     super.onMouseLeave();
     document.body.style.cursor = 'initial';
     this.dispatchEvent({ type: 'pointerleft' });
+  }
+
+  onClick() {
+    //Don't perform onClick if the item is barely visible
+    if (!this._isVisible) return;
+    super.onClick();
   }
 
   onResize() {

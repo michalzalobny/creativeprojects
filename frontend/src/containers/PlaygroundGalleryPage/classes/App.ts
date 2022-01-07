@@ -34,6 +34,7 @@ export class App extends THREE.EventDispatcher {
   setModalItemReact: React.Dispatch<React.SetStateAction<ModalItem | null>>;
   setShowModalReact: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpened = false;
+  isActive = false;
 
   constructor({
     setModalItem,
@@ -175,5 +176,15 @@ export class App extends THREE.EventDispatcher {
 
   setItemsToPreload(items: PreloadItems) {
     this._preloader.items = items;
+  }
+
+  setIsActive(value: boolean) {
+    this.isActive = value;
+
+    //Automatically closes modal if the app becomes not active
+    if (!this.isActive) {
+      this.setIsModalOpened(false);
+      this.setShowModalReact(false);
+    }
   }
 }
