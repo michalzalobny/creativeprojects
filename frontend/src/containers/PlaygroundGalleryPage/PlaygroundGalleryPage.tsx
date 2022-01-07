@@ -113,8 +113,10 @@ export default function PlaygroundGalleryPage(props: PageProps) {
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
-    if (!appState.app) return;
-    appState.app.setIsActive(isActive);
+    window.requestAnimationFrame(() => {
+      if (!appState.app) return;
+      appState.app.setIsActive(isActive);
+    });
   }, [isActive]);
 
   return (

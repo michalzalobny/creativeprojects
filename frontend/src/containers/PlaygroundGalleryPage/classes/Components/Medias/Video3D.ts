@@ -28,6 +28,7 @@ export class Video3D extends MediaHolder3D {
   }
 
   set mediaItem(mediaItem: MediaItem) {
+    if (!mediaItem.naturalHeight || !mediaItem.naturalWidth) return;
     this._mediaItem = mediaItem;
     this._ratioHeight = getRandFloat(0.65, 1.55);
     this._ratioWidth =
