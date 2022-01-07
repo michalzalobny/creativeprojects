@@ -1,6 +1,7 @@
 import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 import { debounce } from 'lodash';
+import { NextRouter } from 'next/router';
 
 import { MouseMove } from './Singletons/MouseMove';
 import { Scroll } from './Singletons/Scroll';
@@ -35,6 +36,7 @@ export class App extends THREE.EventDispatcher {
   setShowModalReact: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpened = false;
   isActive = false;
+  reactRouter: NextRouter | null = null;
 
   constructor({
     setModalItem,
@@ -176,6 +178,10 @@ export class App extends THREE.EventDispatcher {
 
   setItemsToPreload(items: PreloadItems) {
     this._preloader.items = items;
+  }
+
+  setReactRouter(router: NextRouter) {
+    this.reactRouter = router;
   }
 
   setIsActive(value: boolean) {

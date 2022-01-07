@@ -58,8 +58,10 @@ export interface ItemProps {
   itemKeyReverse: number;
   type: string;
   mediaSrc: string;
-  buttonHref: string;
+  itemHref: string;
+  isHrefExternal: boolean;
   buttonLabel: string;
+  dontOpenModal: boolean;
   description: string;
 }
 
@@ -74,6 +76,7 @@ export interface ModalItem {
   description: string;
   buttonLabel: string;
   buttonHref: string;
+  isHrefExternal: boolean;
   mediaSrc: string;
   mediaType: string;
 }

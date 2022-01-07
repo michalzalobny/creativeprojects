@@ -122,7 +122,7 @@ export const CloseButtonWrapper = styled.button`
   transition: transform 0.4s;
 
   &:hover {
-    transform: rotate(-90deg);
+    /* transform: rotate(-90deg); */
   }
 
   @media (min-width: 768px) {
@@ -155,6 +155,8 @@ export const ButtonWrapper = styled.div`
   padding: 14px 30px;
   border: 1px solid white;
   display: inline-block;
+  pointer-events: initial;
+  color: white;
 `;
 
 export const MediaRendererWrapper = styled.div`

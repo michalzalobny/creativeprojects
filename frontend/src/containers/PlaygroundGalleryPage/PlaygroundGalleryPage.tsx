@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
 
 import { Head } from 'utils/seo/Head';
 
@@ -14,6 +15,8 @@ import { appState } from './appState';
 export default function PlaygroundGalleryPage(props: PageProps) {
   const [showModal, setShowModal] = useState(false);
   const [modalItem, setModalItem] = useState<null | ModalItem>(null);
+
+  const router = useRouter();
 
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
 
@@ -48,8 +51,10 @@ export default function PlaygroundGalleryPage(props: PageProps) {
         itemKey: key + 1,
         itemKeyReverse: props.projectData.creativeItems.length - key,
         type: item.name,
-        buttonHref: item.name === '3dmodel' ? '' : '/test',
-        buttonLabel: 'EDITABLE CTA',
+        itemHref: 'https://www.youtube.com/',
+        isHrefExternal: true,
+        buttonLabel: 'View Link',
+        dontOpenModal: false,
         description:
           'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       };
@@ -78,6 +83,12 @@ export default function PlaygroundGalleryPage(props: PageProps) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (appState.app) {
+      appState.app.setReactRouter(router);
+    }
+  }, [router]);
 
   useEffect(() => {
     window.requestAnimationFrame(() => {

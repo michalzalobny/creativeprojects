@@ -28,18 +28,29 @@ export class ItemScene extends InteractiveScene {
   }
 
   _handleItemClick(itemClicked: ItemProps) {
-    if (!itemClicked.buttonHref) return;
+    //Dont react if no href is provided
+    if (!itemClicked.itemHref) return;
+    if (!appState.app) return;
 
-    if (appState.app && !appState.app.isModalOpened) {
-      appState.app.setShowModalReact(true);
-      appState.app.setModalItemReact({
-        buttonHref: itemClicked.buttonHref,
-        buttonLabel: itemClicked.buttonLabel,
-        description: itemClicked.description,
-        mediaSrc: itemClicked.mediaSrc,
-        mediaType: itemClicked.type,
-      });
+    //If no modal should open or 3d model is clicked then navigate immediately
+    if (itemClicked.dontOpenModal || itemClicked.type === '3dmodel') {
+      if (itemClicked.isHrefExternal) {
+        window.open(itemClicked.itemHref, '_blank');
+      } else {
+        appState.app.reactRouter?.push(itemClicked.itemHref);
+      }
+      return;
     }
+
+    appState.app.setShowModalReact(true);
+    appState.app.setModalItemReact({
+      buttonHref: itemClicked.itemHref,
+      isHrefExternal: itemClicked.isHrefExternal,
+      buttonLabel: itemClicked.buttonLabel,
+      description: itemClicked.description,
+      mediaSrc: itemClicked.mediaSrc,
+      mediaType: itemClicked.type,
+    });
   }
 
   _onItemClick = (e: THREE.Event) => {

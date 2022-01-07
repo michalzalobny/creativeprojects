@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { LinkHandler } from '../LinkHandler/LinkHandler';
 import { ModalItem } from '../../classes/types';
 import {
   defaultTransition,
@@ -50,7 +51,12 @@ export const Modal = (props: ModalProps) => {
               </S.Top>
               <S.Bottom>
                 <S.Description>{modalItem?.description}</S.Description>
-                <S.ButtonWrapper>{modalItem?.buttonLabel}</S.ButtonWrapper>
+                <LinkHandler
+                  isExternal={modalItem?.isHrefExternal}
+                  elHref={modalItem?.buttonHref || ''}
+                >
+                  <S.ButtonWrapper>{modalItem?.buttonLabel}</S.ButtonWrapper>
+                </LinkHandler>
               </S.Bottom>
             </S.ModalWrapper>
           </S.TranslateWrapper>
