@@ -29,8 +29,8 @@ export class Preloader extends EventDispatcher {
           texture.needsUpdate = true;
           this.mediaItems[item.src] = {
             item: texture,
-            naturalWidth: image.naturalWidth,
-            naturalHeight: image.naturalHeight,
+            naturalWidth: image.naturalWidth || 1,
+            naturalHeight: image.naturalHeight || 1,
           };
           this._onAssetLoaded();
         };
@@ -49,8 +49,8 @@ export class Preloader extends EventDispatcher {
           const texture = new THREE.VideoTexture(video);
           this.mediaItems[item.src] = {
             item: texture,
-            naturalWidth: video.videoWidth,
-            naturalHeight: video.videoHeight,
+            naturalWidth: video.videoWidth || 1,
+            naturalHeight: video.videoHeight || 1,
           };
           this._onAssetLoaded();
         };
@@ -60,8 +60,8 @@ export class Preloader extends EventDispatcher {
           (gltf: GLTF) => {
             this.mediaItems[item.src] = {
               item: gltf.scene,
-              naturalWidth: gltf.scene.children[0].scale.x,
-              naturalHeight: gltf.scene.children[0].scale.y,
+              naturalWidth: gltf.scene.children[0].scale.x || 1,
+              naturalHeight: gltf.scene.children[0].scale.y || 1,
             };
 
             this._onAssetLoaded();
