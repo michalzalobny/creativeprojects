@@ -85,7 +85,7 @@ export class App extends THREE.EventDispatcher {
       (180 / Math.PI);
 
     this._renderer.setSize(rendererBounds.width, rendererBounds.height);
-    this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this._renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
     this._camera.updateProjectionMatrix();
 
     this._slideScene.setRendererBounds(rendererBounds);
