@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Head } from 'utils/seo/Head';
@@ -19,6 +19,11 @@ export default function IndexPage(props: IndexPageProps) {
   const { allProjectsData, pageData } = props;
 
   const router = useRouter();
+
+  const allProjectsDataFiltered = useMemo(
+    () => allProjectsData.filter(el => el.urlSlug !== 'playground-gallery'),
+    [allProjectsData],
+  );
 
   return (
     <>
@@ -44,7 +49,7 @@ export default function IndexPage(props: IndexPageProps) {
             />
           </LinksWrapper>
           <ProjectsWrapper>
-            {allProjectsData.map(el => (
+            {allProjectsDataFiltered.map(el => (
               <MenuItemComp
                 isExternal={el.isExternal}
                 href={el.urlSlug}
