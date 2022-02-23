@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `ogType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_heads_components
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_heads_components` (
   PRIMARY KEY (`id`),
   KEY `components_page_localized_head_id_fk` (`components_page_localized_head_id`),
   CONSTRAINT `components_page_localized_head_id_fk` FOREIGN KEY (`components_page_localized_head_id`) REFERENCES `components_page_localized_heads` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_long_texts
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_long_texts` (
   `language` int DEFAULT NULL,
   `text` longtext,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_localized_rich_texts
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `components_page_localized_short_texts` (
   `text` varchar(255) DEFAULT NULL,
   `language` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 29 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: components_page_videos
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `isExternal` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: projects_components
@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `projects_components` (
   PRIMARY KEY (`id`),
   KEY `project_id_fk` (`project_id`),
   CONSTRAINT `project_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 189 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 193 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: strapi_administrator
@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 170 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 173 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2135 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 2138 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -1351,6 +1351,14 @@ INSERT INTO
   `components_page_localized_heads` (`id`, `ogType`)
 VALUES
   (14, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (17, 'website');
+INSERT INTO
+  `components_page_localized_heads` (`id`, `ogType`)
+VALUES
+  (18, 'website');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_heads_components
@@ -1860,6 +1868,78 @@ VALUES
     14,
     14
   );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    31,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    31,
+    17
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    32,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    15,
+    17
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    33,
+    'localizedTitle',
+    1,
+    'components_page_localized_short_texts',
+    33,
+    18
+  );
+INSERT INTO
+  `components_page_localized_heads_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `components_page_localized_head_id`
+  )
+VALUES
+  (
+    34,
+    'localizedDescription',
+    1,
+    'components_page_localized_long_texts',
+    16,
+    18
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_localized_long_texts
@@ -1948,6 +2028,22 @@ VALUES
     14,
     1,
     'Shaders Playground based on the Book Of Shaders'
+  );
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (
+    15,
+    1,
+    'All custom components I have made and constantly trying to improve. I use them mostly in my React applications, but all of them might be easily transfered and used with pure css and js.'
+  );
+INSERT INTO
+  `components_page_localized_long_texts` (`id`, `language`, `text`)
+VALUES
+  (
+    16,
+    1,
+    'Interactive visualiser for a 3D raymarching engine written in GLSL and computed in a fragment shader on the 2D Plane.'
   );
 
 # ------------------------------------------------------------
@@ -2071,6 +2167,22 @@ INSERT INTO
   `components_page_localized_short_texts` (`id`, `text`, `language`)
 VALUES
   (28, 'Shaders Playground', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (31, 'NextJS Sandbox', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (32, 'NextJS Sandbox', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (33, 'Raymarching Engine Visualiser', 1);
+INSERT INTO
+  `components_page_localized_short_texts` (`id`, `text`, `language`)
+VALUES
+  (34, 'Raymarching Engine Visualiser', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: components_page_videos
@@ -3064,7 +3176,47 @@ VALUES
     1,
     1,
     '2022-01-04 11:21:26',
-    '2022-01-04 11:21:26',
+    '2022-02-23 09:23:02',
+    1
+  );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`,
+    `isExternal`
+  )
+VALUES
+  (
+    17,
+    'https://next-sandbox-three.vercel.app',
+    1,
+    1,
+    '2022-02-23 09:26:24',
+    '2022-02-23 09:26:24',
+    1
+  );
+INSERT INTO
+  `projects` (
+    `id`,
+    `urlSlug`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`,
+    `isExternal`
+  )
+VALUES
+  (
+    18,
+    'https://raymarching-engine-visualiser.vercel.app',
+    1,
+    1,
+    '2022-02-23 09:29:45',
+    '2022-02-23 09:29:45',
     1
   );
 
@@ -6384,6 +6536,78 @@ VALUES
     28,
     14
   );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    189,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    17,
+    17
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    190,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    32,
+    17
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    191,
+    'localizedHead',
+    1,
+    'components_page_localized_heads',
+    18,
+    18
+  );
+INSERT INTO
+  `projects_components` (
+    `id`,
+    `field`,
+    `order`,
+    `component_type`,
+    `component_id`,
+    `project_id`
+  )
+VALUES
+  (
+    192,
+    'localizedName',
+    1,
+    'components_page_localized_short_texts',
+    34,
+    18
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: strapi_administrator
@@ -6409,7 +6633,7 @@ VALUES
     'Root',
     'root',
     'root@root.com',
-    '$2b$10$gdPVSa/i/zh/5qxXq1kTQu7qYQiXPO4GZiC0m8Szk0cFmbqJ5cc.K',
+    '$2b$10$kZJeB4PNFq.u/EwFh0HlsuXn4BYmdvobsuetvgn9C4Qn1ZCuc3JuC',
     NULL,
     NULL,
     1,
@@ -15408,6 +15632,138 @@ VALUES
     '2022-01-04 11:46:05',
     '2022-01-04 11:46:05'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    170,
+    'og_iurubt.jpg',
+    '',
+    '',
+    1318,
+    826,
+    '{\"thumbnail\":{\"name\":\"thumbnail_og_iurubt.jpg\",\"hash\":\"thumbnail_og_iurubt_4288fd1a2d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":154,\"size\":7.44,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608175/thumbnail_og_iurubt_4288fd1a2d.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_og_iurubt_4288fd1a2d\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_og_iurubt.jpg\",\"hash\":\"large_og_iurubt_4288fd1a2d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":627,\"size\":60.77,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608176/large_og_iurubt_4288fd1a2d.jpg\",\"provider_metadata\":{\"public_id\":\"large_og_iurubt_4288fd1a2d\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_og_iurubt.jpg\",\"hash\":\"medium_og_iurubt_4288fd1a2d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":470,\"size\":40.93,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608177/medium_og_iurubt_4288fd1a2d.jpg\",\"provider_metadata\":{\"public_id\":\"medium_og_iurubt_4288fd1a2d\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_og_iurubt.jpg\",\"hash\":\"small_og_iurubt_4288fd1a2d\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":313,\"size\":22.26,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608178/small_og_iurubt_4288fd1a2d.jpg\",\"provider_metadata\":{\"public_id\":\"small_og_iurubt_4288fd1a2d\",\"resource_type\":\"image\"}}}',
+    'og_iurubt_4288fd1a2d',
+    '.jpg',
+    'image/jpeg',
+    89.64,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608175/og_iurubt_4288fd1a2d.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"og_iurubt_4288fd1a2d\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-02-23 09:22:58',
+    '2022-02-23 09:22:58'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    171,
+    'og-100_eql6tx.jpg',
+    '',
+    '',
+    1200,
+    630,
+    '{\"thumbnail\":{\"name\":\"thumbnail_og-100_eql6tx.jpg\",\"hash\":\"thumbnail_og_100_eql6tx_70a1d7ed0a\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":129,\"size\":3.24,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608323/thumbnail_og_100_eql6tx_70a1d7ed0a.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_og_100_eql6tx_70a1d7ed0a\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_og-100_eql6tx.jpg\",\"hash\":\"large_og_100_eql6tx_70a1d7ed0a\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":525,\"size\":22.03,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608324/large_og_100_eql6tx_70a1d7ed0a.jpg\",\"provider_metadata\":{\"public_id\":\"large_og_100_eql6tx_70a1d7ed0a\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_og-100_eql6tx.jpg\",\"hash\":\"medium_og_100_eql6tx_70a1d7ed0a\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":394,\"size\":14.87,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608325/medium_og_100_eql6tx_70a1d7ed0a.jpg\",\"provider_metadata\":{\"public_id\":\"medium_og_100_eql6tx_70a1d7ed0a\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_og-100_eql6tx.jpg\",\"hash\":\"small_og_100_eql6tx_70a1d7ed0a\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":263,\"size\":8.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608326/small_og_100_eql6tx_70a1d7ed0a.jpg\",\"provider_metadata\":{\"public_id\":\"small_og_100_eql6tx_70a1d7ed0a\",\"resource_type\":\"image\"}}}',
+    'og_100_eql6tx_70a1d7ed0a',
+    '.jpg',
+    'image/jpeg',
+    27.55,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608322/og_100_eql6tx_70a1d7ed0a.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"og_100_eql6tx_70a1d7ed0a\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-02-23 09:25:27',
+    '2022-02-23 09:25:27'
+  );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    172,
+    'og_jsowpe.jpg',
+    '',
+    '',
+    1546,
+    814,
+    '{\"thumbnail\":{\"name\":\"thumbnail_og_jsowpe.jpg\",\"hash\":\"thumbnail_og_jsowpe_e9ca996d40\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":129,\"size\":3.65,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608496/thumbnail_og_jsowpe_e9ca996d40.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_og_jsowpe_e9ca996d40\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_og_jsowpe.jpg\",\"hash\":\"large_og_jsowpe_e9ca996d40\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":527,\"size\":24.64,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608497/large_og_jsowpe_e9ca996d40.jpg\",\"provider_metadata\":{\"public_id\":\"large_og_jsowpe_e9ca996d40\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_og_jsowpe.jpg\",\"hash\":\"medium_og_jsowpe_e9ca996d40\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":395,\"size\":16.12,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608498/medium_og_jsowpe_e9ca996d40.jpg\",\"provider_metadata\":{\"public_id\":\"medium_og_jsowpe_e9ca996d40\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_og_jsowpe.jpg\",\"hash\":\"small_og_jsowpe_e9ca996d40\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":263,\"size\":9.17,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608498/small_og_jsowpe_e9ca996d40.jpg\",\"provider_metadata\":{\"public_id\":\"small_og_jsowpe_e9ca996d40\",\"resource_type\":\"image\"}}}',
+    'og_jsowpe_e9ca996d40',
+    '.jpg',
+    'image/jpeg',
+    47.49,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1645608496/og_jsowpe_e9ca996d40.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"og_jsowpe_e9ca996d40\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-02-23 09:28:19',
+    '2022-02-23 09:28:19'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -19280,9 +19636,20 @@ INSERT INTO
     `order`
   )
 VALUES
+  (2134, 169, 1, 'components_page_heads', 'ogImage', 1);
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
   (
-    2131,
-    168,
+    2135,
+    170,
     14,
     'components_page_localized_heads',
     'ogImage',
@@ -19298,7 +19665,32 @@ INSERT INTO
     `order`
   )
 VALUES
-  (2134, 169, 1, 'components_page_heads', 'ogImage', 1);
+  (
+    2136,
+    171,
+    17,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
+INSERT INTO
+  `upload_file_morph` (
+    `id`,
+    `upload_file_id`,
+    `related_id`,
+    `related_type`,
+    `field`,
+    `order`
+  )
+VALUES
+  (
+    2137,
+    172,
+    18,
+    'components_page_localized_heads',
+    'ogImage',
+    1
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users-permissions_permission
