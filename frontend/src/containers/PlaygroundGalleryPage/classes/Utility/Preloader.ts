@@ -1,6 +1,6 @@
 import { EventDispatcher } from 'three';
 import * as THREE from 'three';
-import { GLTFLoader, GLTF } from 'three-stdlib';
+import { GLTFLoader, GLTF, DRACOLoader } from 'three-stdlib';
 
 import { MediaItems, PreloadItems } from '../types';
 
@@ -8,10 +8,13 @@ export class Preloader extends EventDispatcher {
   _assetsLoaded = 0;
   _items: PreloadItems = [];
   mediaItems: MediaItems = {};
+  _dracoLoader = new DRACOLoader();
   _gltfLoader = new GLTFLoader();
 
   constructor() {
     super();
+    this._dracoLoader.setDecoderPath('/draco/');
+    this._gltfLoader.setDRACOLoader(this._dracoLoader);
   }
 
   _preloadTextures() {
