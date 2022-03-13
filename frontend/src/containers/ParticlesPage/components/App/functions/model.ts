@@ -75,7 +75,7 @@ export const model = ({
         uTime: { value: 0 },
         uScrollY: { value: 0 },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 1) },
         uPointSize: { value: 2.2 },
         uScrollAnimation: { value: 0 },
         uCameraZ: { value: appObj.camera.position.z },
