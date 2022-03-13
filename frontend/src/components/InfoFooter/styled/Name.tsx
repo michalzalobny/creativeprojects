@@ -5,7 +5,8 @@ import { media } from 'utils/responsive';
 
 interface Props {}
 
-export const Name = styled(motion.h4)<Props>`
+export const Name = styled(motion.span)<Props>`
+  display: inline-block;
   font-weight: 400;
   color: white;
   font-size: 14px;
