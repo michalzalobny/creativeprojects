@@ -14,8 +14,10 @@ export const InfoFooter = (props: InfoFooterProps) => {
     <>
       <Wrapper {...rest}>
         <ContentWrapper>
-          <Name>Michal Zalobny</Name>
-          <Text>portfolio 2021</Text>
+          <h1>
+            <Name>Michal Zalobny</Name>
+            <Text>portfolio 2021</Text>
+          </h1>
 
           <LinkComp
             isExternal

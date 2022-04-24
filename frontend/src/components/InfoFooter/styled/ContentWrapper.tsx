@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 interface Props {}
 
-export const ContentWrapper = styled(motion.h1)<Props>`
+export const ContentWrapper = styled(motion.div)<Props>`
   display: flex;
   align-items: center;
 `;
