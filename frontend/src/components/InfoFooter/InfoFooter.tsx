@@ -15,17 +15,22 @@ export const InfoFooter = (props: InfoFooterProps) => {
       <Wrapper {...rest}>
         <ContentWrapper>
           <Name>Michal Zalobny</Name>
-          <Text>portfolio</Text>
+          <Text>portfolio 2021</Text>
 
           <LinkComp
             isExternal
-            label="LinkedIn"
-            linkHref="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
+            label="Twitter"
+            linkHref="https://twitter.com/zalobnymichal"
           />
           <LinkComp
             isExternal
             label="Github"
             linkHref="https://github.com/javusScriptus/creativeprojects/tree/master/frontend/src/containers"
+          />
+          <LinkComp
+            isExternal
+            label="LinkedIn"
+            linkHref="https://www.linkedin.com/in/michal-zalobny-1a8257204/"
           />
         </ContentWrapper>
       </Wrapper>
