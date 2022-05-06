@@ -22,7 +22,7 @@ export const InfoFooter = (props: InfoFooterProps) => {
           <LinkComp
             isExternal
             label="Twitter"
-            linkHref="https://twitter.com/zalobnymichal"
+            linkHref="https://twitter.com/michalzalobny"
           />
           <LinkComp
             isExternal

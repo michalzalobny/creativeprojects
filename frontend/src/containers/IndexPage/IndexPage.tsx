@@ -39,7 +39,7 @@ export default function IndexPage(props: IndexPageProps) {
             <LinkComp
               isExternal
               label="Twitter"
-              linkHref="https://twitter.com/zalobnymichal"
+              linkHref="https://twitter.com/michalzalobny"
             />
             <LinkComp
               isExternal
