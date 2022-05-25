@@ -16,11 +16,11 @@ export const Layout = (props: LayoutProps) => {
       <Wrapper>
         <InfoFooterComp />
       </Wrapper>
-      {router.pathname !== '/' && (
+      {/* {router.pathname !== '/' && (
         <BackWrapper>
           <BackButton />
         </BackWrapper>
-      )}
+      )} */}
     </>
   );
 };
