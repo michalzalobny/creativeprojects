@@ -44,7 +44,7 @@ export default function IndexPage(props: IndexPageProps) {
             <LinkComp
               isExternal
               label="Github"
-              linkHref="https://github.com/javusScriptus"
+              linkHref="https://github.com/michalzalobny"
             />
             <LinkComp
               isExternal
