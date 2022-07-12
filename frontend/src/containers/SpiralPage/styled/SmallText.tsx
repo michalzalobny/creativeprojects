@@ -5,7 +5,7 @@ import { media } from 'utils/responsive';
 
 interface Props {}
 
-const strokeColor = '#0e5a04';
+const strokeColor = '#D39B2A';
 
 export const SmallText = styled(RichText)<Props>`
   font-size: 4vw;
