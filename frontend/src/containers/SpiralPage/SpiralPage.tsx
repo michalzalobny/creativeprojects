@@ -64,7 +64,7 @@ export default function SpiralPage(props: PageProps) {
 
       <HeadingWrapper animate={isVisible ? 'animate' : 'initial'}>
         <RevealItem>
-          <SmallText text="the spiral space" />
+          <SmallText text="the spiral space webb" />
         </RevealItem>
 
         <RevealItem>
