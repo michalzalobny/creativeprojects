@@ -25,12 +25,12 @@ void main(){
 
     // Cursor animation
     float dist = distance(position.xy, uMouse3D.xy);
-    float area = 1.- smoothstep(0., 50., dist);
+    float area = 1.- smoothstep(0., 45., dist);
     stablePosition.z += dist * 0.1;
 
-    stablePosition.x += 3.*sin(uTime * 0.001 * aRandom) * area;
-    stablePosition.y += 3.*cos(uTime * 0.001 * aRandom) * area;
-    stablePosition.z += 3.*cos(uTime * 0.001 * aRandom) * area;
+    stablePosition.x += 5.5 *sin(uTime * 0.001 * aRandom) * area;
+    stablePosition.y += 5.5 *cos(uTime * 0.001 * aRandom) * area;
+    stablePosition.z += 12.*cos(uTime * 0.001 * aRandom) * area;
     
     vec4 modelPosition = modelMatrix * vec4(stablePosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
