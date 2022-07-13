@@ -74,4 +74,6 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration:none;
   }
 
+
+
 `;

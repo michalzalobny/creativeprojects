@@ -21,10 +21,10 @@ export class StoryScene extends InteractiveScene {
   }
 
   _onItemOver = (e: THREE.Event) => {
-    this._setHoveredItem(e.target);
+    // this._setHoveredItem(e.target);
   };
   _onItemLeft = (e: THREE.Event) => {
-    this._setHoveredItem(null);
+    // this._setHoveredItem(null);
   };
 
   _onItemLoaded = (e: THREE.Event) => {

@@ -4,6 +4,8 @@ uniform float uPixelRatio;
 uniform vec3 uMouse3D;
 uniform float uProgress;
 
+varying float vRandom;
+
 attribute float aRandom;
 attribute vec3 position2;
 
@@ -38,4 +40,6 @@ void main(){
     gl_Position = projectedPosition;
     gl_PointSize = uSize * uPixelRatio;
     gl_PointSize *= (1.0/ - viewPosition.z);
+
+    vRandom = aRandom;
 }

@@ -17,10 +17,10 @@ export class SpiralSpline3D extends InteractiveObject3D {
   _intersectPoint: THREE.Vector3 | null = null;
   _rendererBounds: Bounds = { height: 100, width: 100 };
   _progressTween: Tween<{ progress: number }> | null = null;
-  _progress = 0;
+  _progress = 0.91;
   depth: number;
 
-  constructor(radius = 100, loops = 5, density = 1, depth = 50) {
+  constructor(radius = 105, loops = 5, density = 1, depth = 50) {
     super();
     this._radius = radius;
     this._loops = loops;
@@ -83,7 +83,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
       transparent: true,
       uniforms: {
         uPixelRatio: { value: 1 },
-        uSize: { value: 365 },
+        uSize: { value: 345 },
         uTime: { value: 0 },
         uProgress: { value: this._progress },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
@@ -144,8 +144,9 @@ export class SpiralSpline3D extends InteractiveObject3D {
     }
 
     this._progressTween = new TWEEN.Tween({ progress: this._progress })
-      .to({ progress: destination }, 4000)
+      .to({ progress: destination }, 3200)
       .easing(TWEEN.Easing.Exponential.InOut)
+      .delay(1500)
       .onUpdate(obj => {
         if (!this._mesh) {
           return;

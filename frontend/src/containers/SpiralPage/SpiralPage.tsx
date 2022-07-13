@@ -28,7 +28,7 @@ export default function SpiralPage(props: PageProps) {
   useEffect(() => {
     const myTimeout = setTimeout(() => {
       setIsVisible(true);
-    }, 1200);
+    }, 1200 + 1500);
 
     return () => {
       clearTimeout(myTimeout);
@@ -63,7 +63,7 @@ export default function SpiralPage(props: PageProps) {
 
       <HeadingWrapper animate={isVisible ? 'animate' : 'initial'}>
         <RevealItem>
-          <SmallText text="the spiral" />
+          <SmallText text="the spiral space" />
         </RevealItem>
 
         <RevealItem>
@@ -89,9 +89,13 @@ export default function SpiralPage(props: PageProps) {
         </RevealItem>
       </HeadingWrapper>
 
-      <Wrapper>
-        <CanvasWrapper ref={rendererWrapperEl} />
-      </Wrapper>
+      <div
+        style={{ width: '100%', height: '100%', backgroundColor: '#00070c' }}
+      >
+        <Wrapper data-spiral="wrapper">
+          <CanvasWrapper ref={rendererWrapperEl} />
+        </Wrapper>
+      </div>
     </>
   );
 }

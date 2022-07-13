@@ -14,10 +14,10 @@ export class SpiralScene extends StoryScene {
   static scrollYMultiplier = 0.008;
   static zeroProgressOffset = 0.452;
   static itemSpacing = 0.056;
-  static opacityAppearStart = 0.3;
+  static opacityAppearStart = 0.24;
   static opacityDistance = 15;
 
-  _spiralSpline = new SpiralSpline3D(100, 5, 1, 50);
+  _spiralSpline = new SpiralSpline3D();
   _scroll: Scroll;
   _currentIndexFloat = 0;
   _targetIndexFloat = 0;
@@ -87,7 +87,7 @@ export class SpiralScene extends StoryScene {
   _animateSpiralIn(targetIndex: number) {
     super._animateSpiralIn(targetIndex);
     this._canHoverObject = false;
-    const itemsToScroll = this._storyItems.length - 1;
+    const itemsToScroll = Math.floor((this._storyItems.length - 1) * 0.45);
     const startIndex = Math.min(itemsToScroll, 100);
 
     this._currentIndexFloat = startIndex;
@@ -100,8 +100,8 @@ export class SpiralScene extends StoryScene {
     this._animateSpiralInTween = new TWEEN.Tween({
       progress: this._targetIndexFloat,
     })
-      .to({ progress: targetIndex }, 2500)
-      .delay(0)
+      .to({ progress: targetIndex }, 3000)
+      .delay(1500)
       .easing(TWEEN.Easing.Exponential.InOut)
       .onUpdate(obj => {
         this._targetIndexFloat = obj.progress;
@@ -168,6 +168,12 @@ export class SpiralScene extends StoryScene {
   }
 
   _onSpiralLoaded() {
+    const wrapper = document.querySelector(
+      '[data-spiral="wrapper"]',
+    ) as HTMLElement;
+
+    wrapper.style.opacity = '1';
+
     super._onSpiralLoaded();
     this._animateSpiralIn(0);
     this._spiralSpline.animateProgress(1);
