@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 206 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 207 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: upload_file_morph
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `upload_file_morph` (
   `field` longtext,
   `order` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2201 DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB AUTO_INCREMENT = 2216 DEFAULT CHARSET = latin1;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users-permissions_permission
@@ -3104,7 +3104,7 @@ VALUES
     1,
     1,
     '2021-08-06 21:33:21',
-    '2022-07-12 23:53:51',
+    '2022-07-13 00:30:23',
     NULL
   );
 INSERT INTO
@@ -17262,6 +17262,50 @@ VALUES
     '2022-07-12 23:52:16',
     '2022-07-12 23:52:16'
   );
+INSERT INTO
+  `upload_file` (
+    `id`,
+    `name`,
+    `alternativeText`,
+    `caption`,
+    `width`,
+    `height`,
+    `formats`,
+    `hash`,
+    `ext`,
+    `mime`,
+    `size`,
+    `url`,
+    `previewUrl`,
+    `provider`,
+    `provider_metadata`,
+    `created_by`,
+    `updated_by`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  (
+    206,
+    'miniatura.jpg',
+    '',
+    '',
+    1715,
+    865,
+    '{\"thumbnail\":{\"name\":\"thumbnail_miniatura.jpg\",\"hash\":\"thumbnail_miniatura_5c21647816\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":245,\"height\":124,\"size\":4.66,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1657672215/thumbnail_miniatura_5c21647816.jpg\",\"provider_metadata\":{\"public_id\":\"thumbnail_miniatura_5c21647816\",\"resource_type\":\"image\"}},\"large\":{\"name\":\"large_miniatura.jpg\",\"hash\":\"large_miniatura_5c21647816\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":1000,\"height\":504,\"size\":43.1,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1657672216/large_miniatura_5c21647816.jpg\",\"provider_metadata\":{\"public_id\":\"large_miniatura_5c21647816\",\"resource_type\":\"image\"}},\"medium\":{\"name\":\"medium_miniatura.jpg\",\"hash\":\"medium_miniatura_5c21647816\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":750,\"height\":378,\"size\":27.17,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1657672217/medium_miniatura_5c21647816.jpg\",\"provider_metadata\":{\"public_id\":\"medium_miniatura_5c21647816\",\"resource_type\":\"image\"}},\"small\":{\"name\":\"small_miniatura.jpg\",\"hash\":\"small_miniatura_5c21647816\",\"ext\":\".jpg\",\"mime\":\"image/jpeg\",\"width\":500,\"height\":252,\"size\":15,\"path\":null,\"url\":\"https://res.cloudinary.com/dpv0ukspz/image/upload/v1657672218/small_miniatura_5c21647816.jpg\",\"provider_metadata\":{\"public_id\":\"small_miniatura_5c21647816\",\"resource_type\":\"image\"}}}',
+    'miniatura_5c21647816',
+    '.jpg',
+    'image/jpeg',
+    96.31,
+    'https://res.cloudinary.com/dpv0ukspz/image/upload/v1657672215/miniatura_5c21647816.jpg',
+    NULL,
+    'cloudinary',
+    '{\"public_id\":\"miniatura_5c21647816\",\"resource_type\":\"image\"}',
+    1,
+    1,
+    '2022-07-13 00:30:18',
+    '2022-07-13 00:30:18'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: upload_file_morph
@@ -21002,8 +21046,8 @@ INSERT INTO
   )
 VALUES
   (
-    2186,
-    37,
+    2201,
+    206,
     7,
     'components_page_localized_heads',
     'ogImage',
@@ -21020,7 +21064,7 @@ INSERT INTO
   )
 VALUES
   (
-    2187,
+    2202,
     190,
     178,
     'components_creative_component_creative_items',
@@ -21038,7 +21082,7 @@ INSERT INTO
   )
 VALUES
   (
-    2188,
+    2203,
     189,
     179,
     'components_creative_component_creative_items',
@@ -21056,7 +21100,7 @@ INSERT INTO
   )
 VALUES
   (
-    2189,
+    2204,
     193,
     180,
     'components_creative_component_creative_items',
@@ -21074,7 +21118,7 @@ INSERT INTO
   )
 VALUES
   (
-    2190,
+    2205,
     192,
     181,
     'components_creative_component_creative_items',
@@ -21092,7 +21136,7 @@ INSERT INTO
   )
 VALUES
   (
-    2191,
+    2206,
     191,
     182,
     'components_creative_component_creative_items',
@@ -21110,7 +21154,7 @@ INSERT INTO
   )
 VALUES
   (
-    2192,
+    2207,
     194,
     183,
     'components_creative_component_creative_items',
@@ -21128,7 +21172,7 @@ INSERT INTO
   )
 VALUES
   (
-    2193,
+    2208,
     204,
     184,
     'components_creative_component_creative_items',
@@ -21146,7 +21190,7 @@ INSERT INTO
   )
 VALUES
   (
-    2194,
+    2209,
     205,
     185,
     'components_creative_component_creative_items',
@@ -21164,7 +21208,7 @@ INSERT INTO
   )
 VALUES
   (
-    2195,
+    2210,
     196,
     189,
     'components_creative_component_creative_items',
@@ -21182,7 +21226,7 @@ INSERT INTO
   )
 VALUES
   (
-    2196,
+    2211,
     202,
     186,
     'components_creative_component_creative_items',
@@ -21200,7 +21244,7 @@ INSERT INTO
   )
 VALUES
   (
-    2197,
+    2212,
     203,
     187,
     'components_creative_component_creative_items',
@@ -21218,7 +21262,7 @@ INSERT INTO
   )
 VALUES
   (
-    2198,
+    2213,
     199,
     190,
     'components_creative_component_creative_items',
@@ -21236,7 +21280,7 @@ INSERT INTO
   )
 VALUES
   (
-    2199,
+    2214,
     201,
     188,
     'components_creative_component_creative_items',
@@ -21254,7 +21298,7 @@ INSERT INTO
   )
 VALUES
   (
-    2200,
+    2215,
     200,
     191,
     'components_creative_component_creative_items',
