@@ -15,6 +15,7 @@ import { PageProps } from './data';
 import { HeadingWrapper } from './styled/HeadingWrapper';
 import { Text } from './styled/Text';
 import { SmallText } from './styled/SmallText';
+import { InspiredText, InspiredWrapper } from './styled/Inspired';
 
 export default function SpiralPage(props: PageProps) {
   const rendererWrapperEl = useRef<HTMLDivElement>(null);
@@ -88,6 +89,16 @@ export default function SpiralPage(props: PageProps) {
           </SlideItemWithKey>
         </RevealItem>
       </HeadingWrapper>
+
+      <InspiredWrapper>
+        <a
+          href="https://monopo.london/work/yonex-75th-campaign"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <InspiredText>Inspired by Monopo creation</InspiredText>
+        </a>
+      </InspiredWrapper>
 
       <div
         style={{ width: '100%', height: '100%', backgroundColor: '#00070c' }}
