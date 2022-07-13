@@ -87,7 +87,7 @@ export class SpiralScene extends StoryScene {
   _animateSpiralIn(targetIndex: number) {
     super._animateSpiralIn(targetIndex);
     this._canHoverObject = false;
-    const itemsToScroll = Math.floor((this._storyItems.length - 1) * 0.45);
+    const itemsToScroll = Math.floor((this._storyItems.length - 1) * 0.5);
     const startIndex = Math.min(itemsToScroll, 100);
 
     this._currentIndexFloat = startIndex;
