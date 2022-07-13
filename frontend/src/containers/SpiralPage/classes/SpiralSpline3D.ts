@@ -83,7 +83,7 @@ export class SpiralSpline3D extends InteractiveObject3D {
       transparent: true,
       uniforms: {
         uPixelRatio: { value: 1 },
-        uSize: { value: 345 },
+        uSize: { value: 565 },
         uTime: { value: 0 },
         uProgress: { value: this._progress },
         uMouse3D: { value: new THREE.Vector3(0, 0, 0) },
