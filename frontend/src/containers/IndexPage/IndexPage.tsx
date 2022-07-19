@@ -21,7 +21,12 @@ export default function IndexPage(props: IndexPageProps) {
   const router = useRouter();
 
   const allProjectsDataFiltered = useMemo(
-    () => allProjectsData.filter(el => el.urlSlug !== 'playground-gallery'),
+    () =>
+      allProjectsData.filter(
+        el =>
+          el.urlSlug !== 'playground-gallery' &&
+          el.urlSlug !== 'https://next-sandbox-three.vercel.app',
+      ),
     [allProjectsData],
   );
 
