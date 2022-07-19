@@ -8,7 +8,6 @@ export const Wrapper = styled(motion.div)<Props>`
   min-width: 100%;
   height: 100%;
   background-color: #ffffff;
-  /* background-color: #d4d4d4; */
   user-select: none;
   pointer-events: none;
   overflow: hidden;
