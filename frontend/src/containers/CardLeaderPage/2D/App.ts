@@ -36,8 +36,8 @@ export class App {
 
       this._canvas.width = w * ratio;
       this._canvas.height = h * ratio;
-      this._canvas.style.width = w + 'px';
       this._canvas.style.height = h + 'px';
+      this._canvas.style.width = w + 'px';
       this._ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     }
   }
