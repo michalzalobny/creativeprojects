@@ -111,4 +111,4 @@ export const FlowApp = memo<FlowAppProps>(props => {
   );
 });
 
-FlowApp.displayName = 'FlowApp';
+FlowApp.displayName = 'Flow';
