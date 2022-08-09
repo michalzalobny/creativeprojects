@@ -11,18 +11,18 @@ import { CreativeItem } from 'utils/types/strapi/CreativeItem';
 import { ImageMediaProps } from 'utils/types/Media';
 import { getAllProjectsData } from 'utils/functions/strapi/getAllProjectsData';
 
-export interface PageData {
-  name: string;
-  flowItems: CreativeItem[];
-  slideImages: ImageMediaProps[];
-  asideDescription: string;
-}
-
 export interface PageProps {
   head: HeadProps;
   projectData: ProjectData;
   allProjectsData: ProjectData[];
   pageData: PageData;
+}
+
+export interface PageData {
+  name: string;
+  flowItems: CreativeItem[];
+  slideImages: ImageMediaProps[];
+  asideDescription: string;
 }
 
 async function getPageData(locale: string) {
