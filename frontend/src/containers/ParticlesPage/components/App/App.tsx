@@ -22,10 +22,6 @@ export const App = memo<AppProps>(props => {
 
   const refsToOffset = useRef<HTMLDivElement[]>([]);
 
-  const updateRefsToOffset = itemObj => {
-    refsToOffset.current = refsToOffset.current.concat(itemObj);
-  };
-
   const [isReady, setIsReady] = useState(false);
 
   const [currentSlide, setCurrentSlide] = useState(0);
