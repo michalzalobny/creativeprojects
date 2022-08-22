@@ -2,10 +2,10 @@ import { GetStaticProps } from 'next';
 
 import { HeadProps } from 'utils/seo/Head';
 import { ISR_TIMEOUT } from 'utils/functions/getIsrTimeout';
-import { getLocalizedText } from 'utils/i18n';
 import { ProjectData } from 'utils/types/strapi/ProjectData';
 import { getProjectData } from 'utils/functions/strapi/getProjectData';
 import { getAllProjectsData } from 'utils/functions/strapi/getAllProjectsData';
+import { getLocalizedText } from 'utils/i18n';
 
 export interface PageProps {
   head: HeadProps;
