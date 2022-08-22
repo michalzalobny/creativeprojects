@@ -152,7 +152,6 @@ export const GlobeApp = memo<GlobeAppProps>(props => {
           <canvas ref={canvasRef} />
         </RendererWrapper>
 
-        {/* canvas used to get points for point map */}
         <canvas
           style={{
             position: 'absolute',
